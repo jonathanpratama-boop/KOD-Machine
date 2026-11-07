@@ -23,6 +23,7 @@ body{font:14px/1.55 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}.page
 @media(max-width:650px){.page{padding:8px 10px 24px}.masthead{padding:8px}.brand span{font-size:12px;padding:0;border:0;letter-spacing:.4px}.brand b{font-size:25px}.snapshot{font-size:12px;max-width:190px}.snapshot strong{font-size:12px}.hero{display:block;padding:18px 4px 16px}h1{font-size:26px;letter-spacing:-.6px}.intro{font-size:12px}.stats{margin-top:14px;padding:0;border:1px solid var(--line)}.stat{padding:9px}.stat b{font-size:28px}.stat span{font-size:12px}.brief{margin-bottom:16px}.brief>div{padding:10px}.brief strong{font-size:13px}.brief p{font-size:12px}.toolbar{align-items:stretch;gap:9px}.toolbar h2{font-size:14px}.toolbar p{font-size:12px}.search input{width:100%;font-size:13px}.experiment{grid-template-columns:1fr 1fr;padding:14px 10px;gap:14px}.experiment[data-cloud="true"]{padding-left:7px}.experiment>div:first-child{grid-column:1/-1}.experiment h3{font-size:15px}.question{font-size:13px}.evidence strong{font-size:26px}.health{gap:8px}.checked,.check-state{font-size:12px}.archive{padding:11px}.archive>summary span{margin-top:4px}footer{font-size:12px}}
 
 .experiment.attn-warn{border-left:3px solid var(--amber);padding-left:9px;background:#17140a}.experiment.attn-bad{border-left:3px solid var(--red);padding-left:9px;background:#1a0f0e}.change{font-size:13px;margin:7px 0 0;color:var(--muted)}.change.up{color:#6fdf9a}.brief>div.alert{background:#2a2110}.brief>div.alert small{color:var(--amber)}
+.cloud-results{grid-column:1/-1;min-width:0;border-top:1px solid var(--line);padding-top:10px}.cloud-result-heading{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px}.cloud-result-heading b{color:#e0e5e9}.cloud-result-heading span{color:var(--muted)}.cloud-results table{width:100%;table-layout:fixed;border-collapse:collapse;margin:8px 0;font-size:12px}.cloud-results th,.cloud-results td{text-align:right;padding:7px 9px;border-bottom:1px solid var(--line);overflow-wrap:anywhere;vertical-align:top}.cloud-results th{font-size:11px;font-weight:500;color:var(--muted);background:#18212a}.cloud-results th:first-child,.cloud-results td:first-child{text-align:left;width:14%}.cloud-results .positive{color:#6fdf9a}.cloud-results .negative{color:#ff8e85}.cloud-results .result-note{font-size:12px;color:var(--muted);margin:5px 0}.cloud-results .result-warning{color:var(--amber)}.cloud-results .event-line{font-size:12px;margin:5px 0;color:#b0bbc4}@media(max-width:650px){.cloud-results th,.cloud-results td{padding:6px 3px;font-size:11px}.cloud-results th:first-child,.cloud-results td:first-child{width:15%}.cloud-result-heading{display:block}.cloud-result-heading span{display:block;margin-top:3px}}
 @media print{body{background:white;color:black}.page{padding:0}.archive{display:none}.experiment,.experiment:nth-child(even),.experiment[data-cloud="true"]{background:white;break-inside:avoid}.search,.download{display:none}}
 </style>
 </head>
@@ -45,7 +46,8 @@ const build = data.build[0];
 const summary = data.summary[0];
 const programs = new Map(data.programs.map(program => [program.id, program]));
 const server = new Map(data.server.map(study => [study.study, study]));
-const ongoing = data.experiments.filter(experiment => experiment.group !== 'closed');
+const cloudResults = data.cloud_results?.schema === 'KOD_R2_RESULTS_V1' ? data.cloud_results : null;
+const ongoing = data.experiments.filter(experiment => experiment.group !== 'closed').map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
 const historical = data.experiments.filter(experiment => experiment.group === 'closed');
 const count = value => value == null ? '—' : new Intl.NumberFormat('en-US').format(value);
 const text = value => value == null ? '' : String(value);
@@ -221,6 +223,14 @@ function detailBlock(label, content) {
 }
 function evidence(experiment) {
   const box = element('div','evidence');
+  if (experiment.id === 'srv:research_r2' && cloudResults) {
+    box.append(element('strong','',count(cloudResults.events_with_completed_24h)),element('p','metric-label','independent events with a 24-hour result'));
+    box.append(element('p','capture',count(cloudResults.independent_events) + ' independent ' + (cloudResults.independent_events === 1 ? 'event' : 'events') + ' recorded'));
+    const coverage = cloudResults.coverage?.on_time_fraction;
+    box.append(element('p','capture',coverage == null ? 'On-time coverage unavailable' : (coverage * 100).toFixed(2) + '% of minute readings received on time'));
+    box.append(element('p','requirement','Four timing entries on one event count as one independent event.'));
+    return box;
+  }
   const trendDays = experiment.id === 'trend_core_paper';
   const number = element('strong','',count(trendDays ? experiment.collected : experiment.scored));
   if (experiment.needed != null) number.append(element('span','denominator',' / ' + count(experiment.needed)));
@@ -256,6 +266,50 @@ function evidence(experiment) {
   box.append(changeLine(experiment));
   return box;
 }
+function cloudResultBlock() {
+  const results = cloudResults;
+  const box = element('div','cloud-results');
+  const heading = element('div','cloud-result-heading');
+  heading.append(element('b','','24-hour results by checking speed'),element('span','','Results read ' + date(results.as_of,true)));
+  box.append(heading);
+  const table = element('table');table.setAttribute('aria-label','Cloud study 24-hour returns by checking speed');
+  const head = element('thead'), titles = element('tr');
+  for (const title of ['Check every','Completed / entered','Mean net return','vs BTC/ETH','vs similar coins']) titles.append(element('th','',title));
+  for (const cell of titles.children) cell.setAttribute('scope','col');
+  head.append(titles);table.append(head);
+  const body = element('tbody');
+  const metric = (value, unit, missing) => {
+    if (value == null || !Number.isFinite(value)) return element('td','',missing);
+    return element('td',value > 0 ? 'positive' : value < 0 ? 'negative' : '',(value > 0 ? '+' : value < 0 ? '−' : '') + Math.abs(value * 100).toFixed(2) + unit);
+  };
+  for (const arm of results.arms.slice().sort((a,b)=>a.minutes-b.minutes)) {
+    const row = element('tr');
+    row.append(element('td','',arm.minutes + ' min'),element('td','',count(arm.completed_24h) + ' / ' + count(arm.event_entries)));
+    const missing = arm.awaiting_24h > 0 && arm.completed_24h === 0 ? 'Pending' : 'Unavailable';
+    const controls = metric(arm.mean_control_excess,' pp',arm.completed_control_pairs > 0 ? missing : 'Unavailable');
+    if (arm.mean_control_excess != null && arm.completed_control_pairs > 0) controls.append(element('div','',count(arm.completed_control_pairs) + ' paired ' + (arm.completed_control_pairs === 1 ? 'event' : 'events')));
+    row.append(metric(arm.mean_net_return,'%',missing),metric(arm.mean_benchmark_excess,' pp',missing),controls);
+    body.append(row);
+  }
+  table.append(body);box.append(table);
+  box.append(element('p','result-note','Net returns use recorded midpoint quotes minus an assumed 2 percentage points for round-trip costs. Quoted prices are estimates of execution. Differences are percentage points (pp).'));
+  const inputs = results.comparison_inputs || {};
+  const ready = inputs.status === 'READY';
+  box.append(element('p','result-note' + (ready ? '' : ' result-warning'),(ready ? 'Comparison inputs ready for future events' : 'Comparison inputs: ' + text(inputs.status || 'unavailable').toLowerCase().replaceAll('_',' ')) + ' · ' + count(inputs.eligible_symbols) + ' / ' + count(inputs.total_symbols) + ' coins eligible' + (inputs.as_of ? ' · checked ' + date(inputs.as_of,true) : '')));
+  if (results.events_without_controls > 0) box.append(element('p','result-note result-warning',count(results.events_without_controls) + (results.events_without_controls === 1 ? ' recorded event has' : ' recorded events have') + ' no matched comparison coins. Those earlier comparisons remain unavailable.'));
+  if (results.next_primary_due_at) box.append(element('p','result-note','Next 24-hour outcome due ' + date(results.next_primary_due_at,true) + '. It appears here after a later report is saved.'));
+  for (const event of results.events) {
+    const complete = event.arms.filter(arm=>arm.primary_status === 'COMPLETE').length;
+    const missing = event.arms.filter(arm=>arm.primary_status === 'CENSORED').length;
+    let status = complete ? count(complete) + ' of 4 timing results complete' : missing ? count(missing) + ' timing results unavailable' : '24-hour result pending';
+    if (!complete && event.primary_deadline_at) status += ' · due ' + date(event.primary_deadline_at,true);
+    box.append(element('p','event-line',event.symbol + ' · observed ' + date(event.reference_at,true) + ' · ' + status));
+  }
+  const source = element('a','source-path','Latest saved outcome data');
+  source.href = 'https://github.com/jonathanpratama-boop/KOD-Machine/blob/claude/hopeful-hypatia-ktzpog/tools/status/dashboard/cloud_results.json';
+  source.target = '_blank'; source.rel = 'noopener noreferrer'; box.append(source);
+  return box;
+}
 function review(experiment) {
   const box = element('div');
   const r2 = experiment.id === 'srv:research_r2';
@@ -287,7 +341,7 @@ function rowStatus(experiment) {
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
   const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
   const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
-  return problem ? 'bad' : stale ? 'warn' : 'ok';
+  return problem ? 'bad' : stale || /STALE|UNKNOWN/.test(experiment.state) ? 'warn' : 'ok';
 }
 const WIB_DAY=ms=>new Date(ms+7*3600000).toISOString().slice(0,10);
 const historyBy=new Map();
@@ -315,8 +369,9 @@ function health(experiment) {
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
   const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
   const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
-  const label=stale ? 'Update overdue' : problem ? 'Needs attention' : experiment.plumbing ? 'Collecting' : 'Running';
-  box.append(element('span','tag' + (stale ? ' warn' : problem ? ' bad' : ''),label),element('p','checked',date(experiment.as_of,true)));
+  const unknown=/STALE|UNKNOWN/.test(experiment.state);
+  const label=stale ? 'Update overdue' : problem ? 'Needs attention' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
+  box.append(element('span','tag' + (stale || unknown ? ' warn' : problem ? ' bad' : ''),label),element('p','checked',date(experiment.as_of,true)));
   box.append(element('p','check-state',stale ? experiment.state.charAt(0) + experiment.state.slice(1).toLowerCase() + ' at last update' : age(experiment.as_of)));
   return box;
 }
@@ -326,6 +381,7 @@ function experimentRow(experiment) {
   const status=rowStatus(experiment); if (status!=='ok') row.classList.add('attn-'+status);
   const heading=element('div');heading.append(element('p','category',programs.get(experiment.program)?.name || 'Research'),element('h3','',wording(experiment,'name',experiment.short || experiment.name)),element('p','question',wording(experiment,'question',experiment.plain)));
   row.append(heading,evidence(experiment),review(experiment),health(experiment));
+  if (experiment.id === 'srv:research_r2' && cloudResults) row.append(cloudResultBlock());
   const details=element('details','detail');details.append(element('summary','','Rules, notes & sources'));
   const content=element('div','detail-content');
   content.append(detailBlock('Source notes',text(experiment.note) || 'No additional notes.'),detailBlock('What happens next · source note',text(experiment.next_milestone)));
