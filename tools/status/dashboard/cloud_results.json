@@ -1,0 +1,112 @@
+{
+  "arms": [
+    {
+      "awaiting_24h": 1,
+      "censored_24h": 0,
+      "completed_24h": 0,
+      "completed_control_pairs": 0,
+      "event_entries": 1,
+      "mean_benchmark_excess": null,
+      "mean_control_excess": null,
+      "mean_net_return": null,
+      "median_net_return": null,
+      "minutes": 1
+    },
+    {
+      "awaiting_24h": 1,
+      "censored_24h": 0,
+      "completed_24h": 0,
+      "completed_control_pairs": 0,
+      "event_entries": 1,
+      "mean_benchmark_excess": null,
+      "mean_control_excess": null,
+      "mean_net_return": null,
+      "median_net_return": null,
+      "minutes": 5
+    },
+    {
+      "awaiting_24h": 1,
+      "censored_24h": 0,
+      "completed_24h": 0,
+      "completed_control_pairs": 0,
+      "event_entries": 1,
+      "mean_benchmark_excess": null,
+      "mean_control_excess": null,
+      "mean_net_return": null,
+      "median_net_return": null,
+      "minutes": 30
+    },
+    {
+      "awaiting_24h": 1,
+      "censored_24h": 0,
+      "completed_24h": 0,
+      "completed_control_pairs": 0,
+      "event_entries": 1,
+      "mean_benchmark_excess": null,
+      "mean_control_excess": null,
+      "mean_net_return": null,
+      "median_net_return": null,
+      "minutes": 240
+    }
+  ],
+  "as_of": "2026-11-07T05:58:42.082784Z",
+  "comparison_inputs": {
+    "as_of": "2026-11-07T05:53:00.000000Z",
+    "eligible_symbols": 130,
+    "status": "READY",
+    "total_symbols": 130
+  },
+  "coverage": {
+    "on_time_fraction": 0.6013986013986014
+  },
+  "events": [
+    {
+      "arms": [
+        {
+          "benchmark_excess": null,
+          "control_excess": null,
+          "entry_at": "2026-11-06T10:01:08.230351Z",
+          "minutes": 1,
+          "net_return": null,
+          "primary_status": "AWAIT_EXIT"
+        },
+        {
+          "benchmark_excess": null,
+          "control_excess": null,
+          "entry_at": "2026-11-06T10:02:07.629970Z",
+          "minutes": 5,
+          "net_return": null,
+          "primary_status": "AWAIT_EXIT"
+        },
+        {
+          "benchmark_excess": null,
+          "control_excess": null,
+          "entry_at": "2026-11-06T10:12:08.634011Z",
+          "minutes": 30,
+          "net_return": null,
+          "primary_status": "AWAIT_EXIT"
+        },
+        {
+          "benchmark_excess": null,
+          "control_excess": null,
+          "entry_at": "2026-11-06T10:12:08.634011Z",
+          "minutes": 240,
+          "net_return": null,
+          "primary_status": "AWAIT_EXIT"
+        }
+      ],
+      "controls_status": "UNAVAILABLE_PRE_EVENT_FEATURES",
+      "event_id": "ONEUSDT:1793955600",
+      "primary_deadline_at": "2026-11-07T10:00:00.135278Z",
+      "reference_at": "2026-11-06T10:00:00.135278Z",
+      "symbol": "ONEUSDT"
+    }
+  ],
+  "events_with_completed_24h": 0,
+  "events_without_controls": 1,
+  "independent_events": 1,
+  "next_primary_due_at": "2026-11-07T10:00:00.135278Z",
+  "schema": "KOD_R2_RESULTS_V1",
+  "status": "RUNNING",
+  "study_id": "research-r2-20261105T181200Z"
+}

@@ -32,6 +32,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
+    parser.add_argument("--results", type=Path, help="Current cloud event and return records")
     args = parser.parse_args()
 
     template_path = Path(__file__).with_name("one_page.html")
@@ -49,10 +50,21 @@ def main() -> int:
             missing.append(name)
     if missing:
         raise SystemExit(f"missing datasets in {args.data}: {', '.join(missing)}")
+    results_path = args.results or args.data / "cloud_results.json"
+    if results_path.exists():
+        results = json.loads(results_path.read_text(encoding="utf-8"))
+        if not isinstance(results, dict) or results.get("schema") != "KOD_R2_RESULTS_V1":
+            raise SystemExit("results must be a KOD_R2_RESULTS_V1 object")
+        arms = results.get("arms", [])
+        if sorted(arm.get("minutes") for arm in arms) != [1, 5, 30, 240]:
+            raise SystemExit("results must contain the four fixed timing arms")
+        data["cloud_results"] = results
+    elif args.results:
+        raise SystemExit(f"results file does not exist: {args.results}")
 
     # Keep embedded JSON inside its script element, even if a source includes HTML.
     embedded = (
-        json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+        json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
         .replace("<", "\\u003c")
         .replace("\u2028", "\\u2028")
         .replace("\u2029", "\\u2029")
@@ -66,3 +78,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
