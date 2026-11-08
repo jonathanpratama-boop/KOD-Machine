@@ -26,6 +26,12 @@ def main():
         raise ValueError('Predictions changed after inference finished')
     if hashlib.sha256((HERE / 'protocol.json').read_bytes()).hexdigest() != manifest['protocol_sha256']:
         raise ValueError('Protocol changed during the run')
+    protocol = json.loads((HERE / 'protocol.json').read_text())
+    cohort_hash = hashlib.sha256((HERE / 'cohort.csv').read_bytes()).hexdigest()
+    if cohort_hash != manifest['cohort_sha256'] or cohort_hash != protocol['cohort']['cohort_sha256']:
+        raise ValueError('Cohort differs from the frozen selection')
+    if hashlib.sha256((args.data / 'input_manifest.jsonl').read_bytes()).hexdigest() != manifest['input_manifest_sha256']:
+        raise ValueError('Input manifest changed during the run')
     check = json.loads((HERE / 'results' / 'LOOKAHEAD_CHECK.json').read_text())
     if check.get('verdict') != 'PASS':
         raise ValueError('Look-ahead check must pass before scoring')
