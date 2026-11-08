@@ -209,8 +209,8 @@ class Repo:
     def head(self, ref: str | None = None) -> str:
         return (self.git("rev-parse", ref or self.ref) or "").strip()
 
-    def last_commit(self, path: str) -> str | None:
-        out = (self.git("log", "-1", "--format=%cI", self.ref, "--", path) or "").strip()
+    def last_commit(self, path: str, ref: str | None = None) -> str | None:
+        out = (self.git("log", "-1", "--format=%cI", ref or self.ref, "--", path) or "").strip()
         return norm_iso(out) if out else None
 
     def first_commit(self, path: str) -> str | None:
@@ -1310,9 +1310,11 @@ def dig(obj, dotted: str):
 def read_closed_record(ctx: Ctx, p: dict) -> dict:
     """A closed study: CLOSED only while its verdict record still exists and still says what the
     registry says (must_contain strings, optional JSON key == value checks). as_of = newest commit
-    of those files."""
+    of those files. Optional "ref": read the record from that ref instead of the ledger ref (for a
+    study whose record lives on a research branch)."""
+    ref = p.get("ref")
     problems, paths = [], [p["record"]]
-    text = ctx.kod.text(p["record"])
+    text = ctx.kod.text(p["record"], ref)
     problems += [
         f"record no longer states {s!r}" for s in p.get("must_contain", []) if s not in text
     ]
@@ -1320,7 +1322,7 @@ def read_closed_record(ctx: Ctx, p: dict) -> dict:
     for check in checks if isinstance(checks, list) else [checks]:
         if check["path"] not in paths:
             paths.append(check["path"])
-        value = dig(ctx.kod.json(check["path"]), check["key"])
+        value = dig(ctx.kod.json(check["path"], ref), check["key"])
         if value != check["equals"]:
             problems.append(
                 f"{check['path']} {check['key']}={value!r}, expected {check['equals']!r}"
@@ -1329,7 +1331,7 @@ def read_closed_record(ctx: Ctx, p: dict) -> dict:
         raise ValueError("; ".join(problems))
     return reading(
         state="CLOSED",
-        as_of=newest(ctx.kod.last_commit(x) for x in paths),
+        as_of=newest(ctx.kod.last_commit(x, ref) for x in paths),
         collected="registry",
         scored="registry",
     )
@@ -2133,11 +2135,13 @@ def freshness(state: str, as_of: str | None, stale_hours, now: datetime) -> tupl
 
 def check_sources(ctx: Ctx, entry: dict, gaps: list) -> None:
     """Every registry source must still exist (globs: at least one match). Optional ones may be
-    absent."""
+    absent. "KOD@<branch>:path" checks the file on origin/<branch> instead of the ledger ref."""
     for source in entry.get("sources", []):
         repo_name, _, rest = source.partition(":")
         rest = rest.split(" ")[0].split("#")[0]
-        if repo_name == "KOD":
+        if repo_name.startswith("KOD@"):
+            found = ctx.kod.exists(rest.rstrip("/"), "origin/" + repo_name[4:])
+        elif repo_name == "KOD":
             if "*" in rest:
                 folder, pattern = rest.rsplit("/", 1)
                 regex = re.compile(re.escape(pattern).replace(r"\*", ".*") + "$")

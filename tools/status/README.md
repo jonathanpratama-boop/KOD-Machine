@@ -208,3 +208,8 @@ python3 tools/status/dashboard/make_standalone.py --data /path/to/status-out \
 
 `tools/status/dashboard/index.html` is the page itself (edit this one; the hosted dashboard uses it
 too). The standalone file is generated, so change the page, not the output.
+
+### Records on research branches (2026-11-08)
+A closed study whose record lives on a research branch sets `params.ref` to the full remote ref
+(`origin/<branch>`) and lists its source as `KOD@<branch>:<path>` (no `origin/`; the checker adds it, and
+globs are not supported there). The dashboard refresh must `git fetch origin` so those refs are current.

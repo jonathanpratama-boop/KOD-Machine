@@ -1498,6 +1498,183 @@ class NextVerdict(OutputChecks, unittest.TestCase):
                          (build_day(self.data2), "Lead later", nv_short("CATALYST_FORM4"), "scheduled"))
 
 
+# --------------------------------------------------------------------------- research-branch refs
+# White-box unit tests for the "ref" option of the closed_record reader, "KOD@<branch>:<path>"
+# registry sources and Repo.last_commit(path, ref). They import build_status and run it against a
+# tiny throwaway git repo (no KOD objects): a ledger branch and a research branch, each published
+# as refs/remotes/origin/<name>, with fixed committer dates.
+LEDGER_TIME = "2026-11-01T03:00:00Z"
+RESEARCH_TIME = "2026-11-06T09:30:00Z"
+RESEARCH_DIR = "idx-signals/research/BRANCH_ONLY_v1"
+
+
+def import_builder():
+    sys.path.insert(0, os.path.dirname(BUILDER))
+    try:
+        import build_status
+    finally:
+        sys.path.pop(0)
+    return build_status
+
+
+def make_branch_repo(root):
+    """ledger: shared.md + LEDGER_ONLY.md. research (child of ledger): shared.md changed,
+    BRANCH_ONLY_v1/{results.json,RESULTS.md} added."""
+    repo = os.path.join(root, "branch-repo")
+    subprocess.run(["git", "init", "-q", repo], check=True)
+    base_env = dict(os.environ, GIT_AUTHOR_NAME="fixture", GIT_AUTHOR_EMAIL="fixture@example.invalid",
+                    GIT_COMMITTER_NAME="fixture", GIT_COMMITTER_EMAIL="fixture@example.invalid")
+
+    def g(*a, when=None):
+        env = dict(base_env, **({"GIT_COMMITTER_DATE": when, "GIT_AUTHOR_DATE": when} if when else {}))
+        return subprocess.run(["git", "-C", repo, *a], capture_output=True, text=True, check=True,
+                              env=env).stdout
+
+    def write(path, text):
+        full = os.path.join(repo, path)
+        os.makedirs(os.path.dirname(full) or repo, exist_ok=True)
+        with open(full, "w") as f:
+            f.write(text)
+        g("add", path)
+
+    g("checkout", "-q", "-b", "ledger")
+    write("shared.md", "ledger version: VERDICT ON LEDGER\n")
+    write("LEDGER_ONLY.md", "only on the ledger\n")
+    g("commit", "-q", "-m", "ledger", when=LEDGER_TIME)
+    g("checkout", "-q", "-b", "research")
+    write("shared.md", "research version: VERDICT ON BRANCH\n")
+    write(f"{RESEARCH_DIR}/results.json", json.dumps({"pass": False, "stats": {"n": 264}}))
+    write(f"{RESEARCH_DIR}/RESULTS.md", "# Results\n\nNOT PASSED: matched the base rate.\n")
+    g("commit", "-q", "-m", "research", when=RESEARCH_TIME)
+    for name in ("ledger", "research"):
+        g("update-ref", f"refs/remotes/origin/{name}", f"refs/heads/{name}")
+    g("checkout", "-q", "ledger")
+    return repo
+
+
+class ResearchBranchRefs(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        if not os.path.exists(BUILDER):
+            raise unittest.SkipTest(f"builder not present at {BUILDER}")
+        cls.bs = import_builder()
+        cls.tmp = tempfile.mkdtemp(prefix="kod-branch-refs-")
+        cls.repo = make_branch_repo(cls.tmp)
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, ignore_errors=True)
+
+    def ctx(self):
+        kod = self.bs.Repo(self.repo, "origin/ledger", "KOD")
+        backups = self.bs.Repo(self.repo, "origin/ledger", "BACKUPS")
+        return self.bs.Ctx(kod, backups, {}, datetime(2026, 11, 8, tzinfo=timezone.utc))
+
+    # ---- Repo.last_commit
+    def test_last_commit_default_ref_is_ledger(self):
+        kod = self.ctx().kod
+        self.assertEqual(kod.last_commit("shared.md"), LEDGER_TIME)
+        self.assertEqual(kod.last_commit("shared.md", None), LEDGER_TIME)
+
+    def test_last_commit_with_ref(self):
+        kod = self.ctx().kod
+        self.assertEqual(kod.last_commit("shared.md", "origin/research"), RESEARCH_TIME)
+        self.assertEqual(kod.last_commit(f"{RESEARCH_DIR}/results.json", "origin/research"), RESEARCH_TIME)
+        # a file the research commit did not touch keeps its ledger commit time on that ref
+        self.assertEqual(kod.last_commit("LEDGER_ONLY.md", "origin/research"), LEDGER_TIME)
+        self.assertIsNone(kod.last_commit(f"{RESEARCH_DIR}/results.json"))
+
+    # ---- read_closed_record with / without "ref"
+    def closed(self, **params):
+        return self.bs.read_closed_record(self.ctx(), params)
+
+    def test_closed_record_on_other_ref(self):
+        r = self.closed(ref="origin/research", record=f"{RESEARCH_DIR}/RESULTS.md",
+                        must_contain=["NOT PASSED"],
+                        json=[{"path": f"{RESEARCH_DIR}/results.json", "key": "pass", "equals": False},
+                              {"path": f"{RESEARCH_DIR}/results.json", "key": "stats.n", "equals": 264}])
+        self.assertEqual(r["state"], "CLOSED")
+        self.assertEqual(r["as_of"], RESEARCH_TIME)
+
+    def test_closed_record_ref_reads_that_refs_text(self):
+        r = self.closed(ref="origin/research", record="shared.md", must_contain=["VERDICT ON BRANCH"])
+        self.assertEqual(r["state"], "CLOSED")
+        self.assertEqual(r["as_of"], RESEARCH_TIME)
+        with self.assertRaises(ValueError):
+            self.closed(ref="origin/research", record="shared.md", must_contain=["VERDICT ON LEDGER"])
+
+    def test_closed_record_ref_as_of_uses_ref_history(self):
+        # record untouched on the research commit: as_of is its last commit as seen from that ref
+        r = self.closed(ref="origin/research", record="LEDGER_ONLY.md")
+        self.assertEqual(r["as_of"], LEDGER_TIME)
+        r = self.closed(ref="origin/research", record="LEDGER_ONLY.md",
+                        json=[{"path": f"{RESEARCH_DIR}/results.json", "key": "pass", "equals": False}])
+        self.assertEqual(r["as_of"], RESEARCH_TIME)
+
+    def test_closed_record_ref_json_mismatch_raises(self):
+        with self.assertRaises(ValueError) as cm:
+            self.closed(ref="origin/research", record=f"{RESEARCH_DIR}/RESULTS.md",
+                        json=[{"path": f"{RESEARCH_DIR}/results.json", "key": "pass", "equals": True}])
+        self.assertIn("pass", str(cm.exception))
+
+    def test_closed_record_ref_missing_record_raises(self):
+        with self.assertRaises(self.bs.SourceMissing):
+            self.closed(ref="origin/research", record=f"{RESEARCH_DIR}/NOPE.md")
+        with self.assertRaises(self.bs.SourceMissing):
+            self.closed(ref="origin/research", record=f"{RESEARCH_DIR}/RESULTS.md",
+                        json=[{"path": f"{RESEARCH_DIR}/nope.json", "key": "pass", "equals": False}])
+
+    def test_closed_record_without_ref_reads_ledger(self):
+        with self.assertRaises(self.bs.SourceMissing):
+            self.closed(record=f"{RESEARCH_DIR}/RESULTS.md")
+        with self.assertRaises(self.bs.SourceMissing):
+            self.closed(record="LEDGER_ONLY.md",
+                        json=[{"path": f"{RESEARCH_DIR}/results.json", "key": "pass", "equals": False}])
+        r = self.closed(record="shared.md", must_contain=["VERDICT ON LEDGER"])
+        self.assertEqual((r["state"], r["as_of"]), ("CLOSED", LEDGER_TIME))
+        with self.assertRaises(ValueError):
+            self.closed(record="shared.md", must_contain=["VERDICT ON BRANCH"])
+
+    # ---- check_sources with KOD@<branch>:<path>
+    def sources_gaps(self, *sources):
+        gaps = []
+        self.bs.check_sources(self.ctx(), {"id": "BRANCH_ONLY_v1", "sources": list(sources)}, gaps)
+        return gaps
+
+    def test_branch_source_present(self):
+        self.assertEqual(self.sources_gaps(f"KOD@research:{RESEARCH_DIR}/RESULTS.md",
+                                           f"KOD@research:{RESEARCH_DIR}/",
+                                           f"KOD@research:{RESEARCH_DIR}/results.json#pass",
+                                           "KOD@ledger:LEDGER_ONLY.md"), [])
+
+    def test_branch_source_absent(self):
+        source = f"KOD@research:{RESEARCH_DIR}/MISSING.md"
+        gaps = self.sources_gaps(source, f"KOD@research:{RESEARCH_DIR}/RESULTS.md")
+        self.assertEqual(len(gaps), 1)
+        self.assertEqual(gaps[0]["kind"], "SOURCE_MISSING")
+        self.assertEqual(gaps[0]["path"], source)
+        self.assertIn("BRANCH_ONLY_v1", gaps[0]["detail"])
+
+    def test_branch_source_checks_named_branch_not_ledger(self):
+        # a research-only file: plain KOD: (ledger ref) misses it, KOD@ledger misses it, and a
+        # branch that does not exist misses it
+        plain = self.sources_gaps(f"KOD:{RESEARCH_DIR}/RESULTS.md")
+        self.assertEqual([g["kind"] for g in plain], ["SOURCE_MISSING"])
+        missing_branch = self.sources_gaps(f"KOD@no-such-branch:{RESEARCH_DIR}/RESULTS.md")
+        self.assertEqual(len(missing_branch), 1)
+        self.assertIn("BRANCH_ONLY_v1", missing_branch[0]["detail"])
+        self.assertEqual(self.sources_gaps(f"KOD@ledger:{RESEARCH_DIR}/RESULTS.md")[0]["kind"],
+                         "SOURCE_MISSING")
+
+    def test_branch_source_gap_matches_plain_kod_gap(self):
+        a = self.sources_gaps("KOD:nope.md")
+        b = self.sources_gaps("KOD@research:nope.md")
+        self.assertEqual(len(a), 1)
+        self.assertEqual(len(b), 1)
+        self.assertEqual({k: v for k, v in a[0].items() if k != "path"},
+                         {k: v for k, v in b[0].items() if k != "path"})
+
+
 def expected_now():
     """Print the real-data values these tests expect right now."""
     llm, spec, lrn, pb, srv = expected_llm(), expected_spec(), expected_learners(), expected_paper_book(), expected_server()

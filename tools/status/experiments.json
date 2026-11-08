@@ -1820,7 +1820,7 @@
    "params": {
     "record": "docs/research_sources/hermes_20261104/01_CLUE_LEDGER.md",
     "must_contain": [
-     "IGNITION_SCAN_v0 (crypto, 1h, 2020–22, 5,267 events) · SMALL WIN (detection) + FAIL (buy-all)"
+     "IGNITION_SCAN_v0 (crypto, 1h, 2020\u201322, 5,267 events) \u00b7 SMALL WIN (detection) + FAIL (buy-all)"
     ]
    },
    "stale_after_hours": 8760,
@@ -1909,6 +1909,126 @@
    "sources": [
     "KOD:idx-signals/research/LEARNER_v1/ADDENDUM_1.md",
     "KOD:idx-signals/paper/learner.jsonl"
+   ]
+  },
+  {
+   "id": "LLM_ANON_BACKTEST_v1",
+   "name": "AI judge on anonymised spike numbers (closed)",
+   "plain": "Given only anonymised numbers about a spike, can an AI's odds beat plain averages and a simple formula?",
+   "short": "AI judging spikes from numbers only",
+   "outcome": "didnt_work",
+   "lesson": "264 spikes, 24 AI judges: no better than plain averages or a simple formula; it never said BACK.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/LLM_ANON_BACKTEST_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/LLM_ANON_BACKTEST_v1/results.json",
+      "key": "pass",
+      "equals": false
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-07",
+   "verdict": "NOT PASSED: the judge matched the base rate and the logistic model; 0 BACK calls.",
+   "record": "idx-signals/research/LLM_ANON_BACKTEST_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/LLM_ANON_BACKTEST_v1/RESULTS.md"
+   ]
+  },
+  {
+   "id": "BREADTH_v1",
+   "name": "Trade-count jump at crypto ignitions (closed)",
+   "plain": "Do crypto spikes with many more trades than usual, not just more dollars, do better afterwards?",
+   "short": "Many small trades behind a spike",
+   "outcome": "didnt_work",
+   "lesson": "12,383 past spikes: more trades than dollars predicted nothing; the two periods disagreed.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/BREADTH_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/BREADTH_v1/results.json",
+      "key": "pass",
+      "equals": false
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-07",
+   "verdict": "NOT PASSED in 2020-22 or 2023-26; dropped per the stamped protocol. ONE itself had B = 1.25.",
+   "record": "idx-signals/research/BREADTH_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/BREADTH_v1/RESULTS.md"
+   ]
+  },
+  {
+   "id": "SPEED_v1",
+   "name": "Minute-level entry speed on crypto ignitions (closed)",
+   "plain": "Does buying 1 minute after a crypto spike signal, instead of 5, 30 or 240, make it profitable?",
+   "short": "Buying crypto spikes within a minute",
+   "outcome": "didnt_work",
+   "lesson": "2,000 past spikes: buying within a minute lost 3.9% a trade; faster was worse, every speed lost.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/SPEED_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/SPEED_v1/results.json",
+      "key": "verdict",
+      "equals": "FIRM NO"
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-08",
+   "verdict": "FIRM NO: the 1-minute arm loses even at 0.6-point cost; 1-min minus 240-min = -1.9 points.",
+   "record": "idx-signals/research/SPEED_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/SPEED_v1/RESULTS.md"
+   ]
+  },
+  {
+   "id": "KRONOS_CHALLENGER_v1",
+   "name": "Kronos price model as a spike filter (closed)",
+   "plain": "Can the public Kronos price-forecasting model pick which crypto spikes to buy?",
+   "short": "Kronos AI picking crypto spikes",
+   "outcome": "didnt_work",
+   "lesson": "Picked 4 of 128 spikes and all 4 lost; worse than guessing 'no change'. Cash did better.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/codex/kronos-challenger-20261108",
+    "record": "idx-signals/research/KRONOS_CHALLENGER_v1/results/RESULT.json",
+    "json": [
+     {
+      "path": "idx-signals/research/KRONOS_CHALLENGER_v1/results/RESULT.json",
+      "key": "promotion_authorized",
+      "equals": false
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-08",
+   "verdict": "Not promoted: lost to cash; formal evaluator verdict INSUFFICIENT_EVIDENCE (4 accepted, below 10).",
+   "record": "idx-signals/research/KRONOS_CHALLENGER_v1/results/REPORT.md",
+   "sources": [
+    "KOD@codex/kronos-challenger-20261108:idx-signals/research/KRONOS_CHALLENGER_v1/results/REPORT.md"
    ]
   }
  ],
@@ -2192,4 +2312,3 @@
   }
  ]
 }
-
