@@ -2030,6 +2030,36 @@
    "sources": [
     "KOD@codex/kronos-challenger-20261108:idx-signals/research/KRONOS_CHALLENGER_v1/results/REPORT.md"
    ]
+  },
+  {
+   "id": "CRASH_BOUNCE_IDX_v1",
+   "name": "Buying Indonesian stocks after a crash (closed)",
+   "plain": "Do Indonesian stocks bounce back in the days after a big crash day, enough to profit after costs?",
+   "short": "Buying Indonesian stocks after a crash",
+   "outcome": "didnt_work",
+   "lesson": "5,574 crash days: no bounce; stocks did about what others did, and costs made it lose 2%.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/CRASH_BOUNCE_IDX_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/CRASH_BOUNCE_IDX_v1/results.json",
+      "key": "verdict",
+      "equals": "FIRM NO"
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-08",
+   "verdict": "FIRM NO: pooled 5-day net -2.2% at 1.5% cost; no bounce before costs.",
+   "record": "idx-signals/research/CRASH_BOUNCE_IDX_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/CRASH_BOUNCE_IDX_v1/RESULTS.md"
+   ]
   }
  ],
  "jobs": [
