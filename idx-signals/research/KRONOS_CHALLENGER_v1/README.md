@@ -8,6 +8,10 @@ The 128 identifiers are sampled from already-exposed history after the authors' 
 This is exploratory; the original cohort required future 72-hour data availability. See `FEASIBILITY.md` and
 `RUN_NOTES.md` for limitations and the specific owner authorization. It does not amend the live 30-day study.
 
+Completed pilot: unfiltered signals averaged **−4.94%**, the filter **−0.34%**, and cash **0%** per opportunity.
+Only four trades were accepted; all lost after costs. **Do not promote this configuration.**
+See [the full readout](results/REPORT.md) and [all metrics](results/RESULT.json).
+
 ## Files and boundaries
 
 | File | Purpose |
@@ -42,6 +46,10 @@ git -C /tmp/kod-kronos-upstream checkout 67b630e67f6a18c9e9be918d9b4337c960db1e9
 /tmp/kod-kronos-venv/bin/python idx-signals/research/KRONOS_CHALLENGER_v1/infer.py --upstream /tmp/kod-kronos-upstream --models /tmp/kod-kronos-models --data /tmp/kod-kronos-data --output /tmp/kod-kronos-reproduction
 /tmp/kod-kronos-venv/bin/python idx-signals/research/KRONOS_CHALLENGER_v1/score.py --data /tmp/kod-kronos-data --run /tmp/kod-kronos-reproduction
 ```
+
+The exact original inputs and separate outcomes are also preserved in `results/inputs.tar.gz`; extracting it into
+a fresh data directory avoids downloading the archives again. All 127 successful forecast paths are in
+`results/forecasts.tar.gz`.
 
 Use a fresh output directory: completed predictions and results refuse overwriting. A reproduction is an integrity
 check, not another strategy trial or an independent observation. CPU numerical results can differ across software
