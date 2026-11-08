@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-07T00:26:46Z from `paper/speculations.jsonl`: 146 sets sealed, 129 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-08T00:27:14Z from `paper/speculations.jsonl`: 146 sets sealed, 130 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -56,7 +56,7 @@ PATH20 windows resolved: 0; NEXT1: 60.
 | UP10_1 | 60 | 0.133 | 0.039 | 0.353 | 0.1636 | 0.2500 | 0.1721 |
 | BEATS_TWINS_1 | 60 | 0.400 | 0.520 | 0.500 | 0.2500 | 0.2500 | 0.2453 |
 
-## CRYPTO: 8 sets over 6 signal sessions (2026-10-27 .. 2026-11-06, 0.73 sets per scan)
+## CRYPTO: 8 sets over 6 signal sessions (2026-10-27 .. 2026-11-06, 0.67 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -66,9 +66,9 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.427 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 4102 | 657 | 165 | 76 |
+| 0.427 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 4102 | 657 | 165 | 83 |
 
-PATH20 windows resolved: 0; NEXT1: 5.
+PATH20 windows resolved: 0; NEXT1: 6.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -78,9 +78,9 @@ PATH20 windows resolved: 0; NEXT1: 5.
 | BEATS_TWINS_5 | 5 | 0.400 | 0.520 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | RUN30_20 | 0 | | | | | | |
 | DOUBLE_20 | 0 | | | | | | |
-| DOWN10_1 | 5 | 0.600 | 0.040 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| UP10_1 | 5 | 0.200 | 0.040 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| BEATS_TWINS_1 | 5 | 0.200 | 0.480 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| DOWN10_1 | 6 | 0.500 | 0.033 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| UP10_1 | 6 | 0.333 | 0.033 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| BEATS_TWINS_1 | 6 | 0.333 | 0.467 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 
 ## Latest sealed sets (postcards from the future)
 
@@ -688,7 +688,6 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 
 | Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |
 |---|---|---|---|---:|---:|---:|---|
-| US-2026-11-04-G2_RET30-CRCT | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.20, BEATS_TWINS_1=1/0.40 |
 | US-2026-11-04-G2_RET30-LYEL | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | US-2026-11-04-G2_RET30-TREE | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.60 |
 | US-2026-11-04-G2_RET30-ADV | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
@@ -728,4 +727,5 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | US-2026-11-05-G2_RET30-XXII | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.20, UP10_1=0/0.20, BEATS_TWINS_1=0/0.40 |
 | CRYPTO-2026-11-05-G2_RET30-UVXYB | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
 | CRYPTO-2026-11-05-G2_RET30-SOXSB | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
+| CRYPTO-2026-11-06-G2_RET30-ONE | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=1/0.00, BEATS_TWINS_1=1/0.40 |
 
