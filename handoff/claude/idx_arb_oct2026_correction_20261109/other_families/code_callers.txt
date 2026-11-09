@@ -1,0 +1,99 @@
+# Callers of the lower-limit machinery in the shipped (B) idxsig package; pattern in brackets.
+# Roles (from reading each module):
+#   backtest.py: research backtest (Market.from_panel, execute)
+#   breakout.py: research helper (Market)
+#   catalysts.py: resolve_set() calls speculation.simulate for the candidate and twins; writes catalysts.jsonl RESOLUTION rows
+#   cli.py: command wiring and corporate-action registry build; no lock use
+#   e1.py: research E1 backtest
+#   e5.py: research E5 backtest
+#   event_study.py: research event study (execute)
+#   execution.py: BUILDS lock_down (Market.build) and USES it in execute(): sellable = tradeable & ~lock_down
+#   idx_events.py: research event study (execute); results are not paper/ records
+#   learner2.py: no lock use; trains on the registers' graded statements (indirect)
+#   learner3.py: no lock use; US only
+#   market.py: DEFINES the limits (the only file B and C differ in)
+#   panel.py: limits() for the panel quality summary (below_arb counts); not a paper/ record
+#   paper.py: score(): legacy loop uses lock_down; _score_plan() calls execution.execute; writes ledger.jsonl OUTCOME rows
+#   rules/__init__.py: exposes lock_down to rule views; no rule reads it
+#   speculation.py: USES lock_down in simulate() (sellable(k)); resolve_set writes speculations.jsonl RESOLUTION rows
+
+[\bexecute\(] idxsig/backtest.py:261: out = execute(m, r_tick.ravel(), r_sig.ravel(), exec_cfg)
+[Market\.from_panel] idxsig/backtest.py:468: full_market = Market.from_panel(panel_df, price_limits=profile.price_limits)
+[\bfrom_panel\(] idxsig/backtest.py:468: full_market = Market.from_panel(panel_df, price_limits=profile.price_limits)
+[\bexecute\(] idxsig/backtest.py:544: trades = execute(m, tick_idx, sig_idx, exec_cfg)
+[rolled_sessions] idxsig/backtest.py:729: "rolled_sessions": trades["rolled_sessions"],
+[\bscore\(] idxsig/call_cert.py:97: def score(features: dict) -> float:
+[\bscore\(] idxsig/call_cert.py:141: "score": score(f.get("features", {})),
+[resolve_set] idxsig/catalysts.py:1177: def resolve_set(s: dict, window_id: str, m, events: pd.DataFrame, verify=None) -> dict | None:
+[\bsimulate\(] idxsig/catalysts.py:1208: cand = spec.simulate(m, n, d, w, market, unit_factor=uf)
+[\bsimulate\(] idxsig/catalysts.py:1222: res = spec.simulate(m, tn, td, w, market, unit_factor=tuf)
+[resolve_set] idxsig/catalysts.py:1269: rec = resolve_set(sets[set_id], wid, m, events, verify)
+[Market\.from_panel] idxsig/cli.py:830: reg, summary = corporate_actions.build(Market.from_panel(df), meta)
+[\bfrom_panel\(] idxsig/cli.py:830: reg, summary = corporate_actions.build(Market.from_panel(df), meta)
+[\bscore\(] idxsig/cli.py:1505: recs = shadow.score(manifest)
+[Market\.from_panel] idxsig/e1.py:183: full = Market.from_panel(panel_df, price_limits=self.profile.price_limits)
+[\bfrom_panel\(] idxsig/e1.py:183: full = Market.from_panel(panel_df, price_limits=self.profile.price_limits)
+[\bscore\(] idxsig/e5.py:575: s_u = moonshot_e5.score(f, model["coef_U"], model["intercept_U"])
+[\bscore\(] idxsig/e5.py:576: s_d = moonshot_e5.score(f, model["coef_D"], model["intercept_D"])
+[Market\.from_panel] idxsig/e5.py:1556: m = Market.from_panel(df, price_limits=PROFILES[cfg.market].price_limits).window(
+[\bfrom_panel\(] idxsig/e5.py:1556: m = Market.from_panel(df, price_limits=PROFILES[cfg.market].price_limits).window(
+[Market\.from_panel] idxsig/e5.py:2148: Market.from_panel(df, price_limits=PROFILES[mk].price_limits).window(
+[\bfrom_panel\(] idxsig/e5.py:2148: Market.from_panel(df, price_limits=PROFILES[mk].price_limits).window(
+[\bscore\(] idxsig/e8.py:374: def score(h: e6.Hourly, f: dict, P: pd.DataFrame) -> pd.DataFrame:
+[Market\.from_panel] idxsig/event_study.py:35: full = Market.from_panel(df, price_limits=US.price_limits)
+[\bfrom_panel\(] idxsig/event_study.py:35: full = Market.from_panel(df, price_limits=US.price_limits)
+[\bexecute\(] idxsig/event_study.py:85: trades = execute(m, tick_idx, sig_idx, cfg)
+[\bexecute\(] idxsig/event_study.py:115: out = execute(m, matched.ravel(), np.broadcast_to(d_sig, matched.shape).ravel(), cfg)
+[\bexecute\(] idxsig/exec_us.py:178: def execute(o, h, lo, c, v, present, uf, s: int, plan: dict, spec: ExecSpec = SPEC) -> dict:
+[\bexecute\(] idxsig/exec_us.py:297: return {"plan": plan, "result": execute(o, h, lo, c, v, present, uf, s, plan, spec)}
+[lock_down] idxsig/execution.py:302: "lock_down",
+[\bfrom_panel\(] idxsig/execution.py:353: def from_panel(cls, df: pd.DataFrame, price_limits: bool = True) -> "Market":
+[\blimits\(] idxsig/execution.py:414: ara, arb = market.limits(safe_ref, day_grid)
+[lock_down] idxsig/execution.py:421: lock_down = (
+[lock_down] idxsig/execution.py:426: lock_down = np.zeros(close.shape, dtype=bool)
+[lock_down] idxsig/execution.py:449: lock_down=lock_down,
+[\bexecute\(] idxsig/execution.py:701: def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfig) -> dict:
+[lock_down] idxsig/execution.py:724: if m.lock_up.any() or m.lock_down.any():
+[lock_down] idxsig/execution.py:819: sellable = m.tradeable & ~m.lock_down
+[sellable] idxsig/execution.py:819: sellable = m.tradeable & ~m.lock_down
+[sellable] idxsig/execution.py:820: idx = np.where(sellable, np.arange(n_sessions)[None, :], BIG)
+[sellable] idxsig/execution.py:821: next_sellable = np.minimum.accumulate(idx[:, ::-1], axis=1)[:, ::-1]
+[next_sellable] idxsig/execution.py:821: next_sellable = np.minimum.accumulate(idx[:, ::-1], axis=1)[:, ::-1]
+[sellable] idxsig/execution.py:834: found = np.where(within, next_sellable[tick_idx, np.minimum(target, n_sessions - 1)], BIG)
+[next_sellable] idxsig/execution.py:834: found = np.where(within, next_sellable[tick_idx, np.minimum(target, n_sessions - 1)], BIG)
+[rolled_sessions] idxsig/execution.py:954: "rolled_sessions": np.where(scored & (status == 0) & ~liquidated, x - target, 0),
+[Market\.from_panel] idxsig/idx_events.py:88: full = Market.from_panel(df, price_limits=price_limits)
+[\bfrom_panel\(] idxsig/idx_events.py:88: full = Market.from_panel(df, price_limits=price_limits)
+[\bexecute\(] idxsig/idx_events.py:121: trades = execute(m, tick_idx, sig_idx, cfg)
+[\bexecute\(] idxsig/idx_events.py:151: out = execute(m, matched.ravel(), np.broadcast_to(d_sig, matched.shape).ravel(), cfg)
+[\blimits\(] idxsig/market.py:97: def limits(ref: np.ndarray, days: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+[\blimits\(] idxsig/panel.py:265: ara, arb = market.limits(t["previous"].to_numpy(float), days)
+[Market\.from_panel] idxsig/paper.py:546: return Market.from_panel(df, price_limits=False)
+[\bfrom_panel\(] idxsig/paper.py:546: return Market.from_panel(df, price_limits=False)
+[Market\.from_panel] idxsig/paper.py:550: return Market.from_panel(df)
+[\bfrom_panel\(] idxsig/paper.py:550: return Market.from_panel(df)
+[\bexecute\(] idxsig/paper.py:1402: res = exec_us.execute(
+[\bexecute\(] idxsig/paper.py:1478: out = execute(m, np.array([n]), np.array([d]), cfg)
+[rolled_sessions] idxsig/paper.py:1489: out["rolled_sessions"][0]
+[\bscore\(] idxsig/paper.py:1561: def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict | None:
+[lock_down] idxsig/paper.py:1670: sellable = m.tradeable[n, k] and not m.lock_down[n, k]
+[sellable] idxsig/paper.py:1670: sellable = m.tradeable[n, k] and not m.lock_down[n, k]
+[sellable] idxsig/paper.py:1671: if sellable and close[k] <= stop:
+[sellable] idxsig/paper.py:1674: if k == e + p.horizon_sessions and sellable:
+[\bscore\(] idxsig/paper.py:2127: """(price_units for score(), reason it cannot be scored, evidence). `events`: the provider's
+[\bscore\(] idxsig/paper.py:2262: out = score(r, m, price_units=units)
+[\bexecute\(] idxsig/paper_account.py:304: """The plan execute() runs: BASE unchanged; FIXED5 with its stop set 5% below the opening fill."""
+[\bexecute\(] idxsig/paper_account.py:317: res = exec_us.execute(b.o, b.h, b.lo, b.c, b.v, b.present, b.uf, b.s, plan, spec)
+[\bscore\(] idxsig/premove_shadow.py:218: def score(manifest: Path, records: list[dict] | None = None) -> list[dict]:
+[lock_down] idxsig/rules/__init__.py:89: RULE_FIELDS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "lock_down",
+[\bscore\(] idxsig/rules/moonshot_e5.py:282: def score(ranked, coef, intercept):
+[\bscore\(] idxsig/rules/moonshot_e5.py:320: s = score(f, coef, icpt)
+[\bscore\(] idxsig/rules/moonshot_e5.py:325: s = s - score(f, coef_d, icpt_d)
+[\bsimulate\(] idxsig/speculation.py:436: def simulate(
+[sellable] idxsig/speculation.py:457: def sellable(k):
+[lock_down] idxsig/speculation.py:459: return bool(m.tradeable[n, k] and not m.lock_down[n, k])
+[sellable] idxsig/speculation.py:484: x = next((k for k in range(target, last + 1) if sellable(k)), None)
+[resolve_set] idxsig/speculation.py:717: def resolve_set(s: dict, window_id: str, m, events: pd.DataFrame, verify=None) -> dict | None:
+[\bsimulate\(] idxsig/speculation.py:752: cand = simulate(
+[\bsimulate\(] idxsig/speculation.py:790: res = simulate(
+[resolve_set] idxsig/speculation.py:861: rec = resolve_set(sets[set_id], wid, m, events, verify)
