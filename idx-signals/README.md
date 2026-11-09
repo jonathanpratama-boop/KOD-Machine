@@ -207,15 +207,27 @@ evaluable, including names that later stop trading. Execution, per signal:
   Rp11-14, but two bars (BTEK, TAXI) closed 25% lower that day, so that day's real limit is unknown
   (no recorded decision depends on it).
 
-  **After 2026-12-31 the rules are not confirmed.** The September decree announced ARB = ARA from
-  2027-01-01, but BEI called that conditional and replaced the decree twice in October; both
-  replacements run to 2026-12-31 and are to be re-evaluated. `idxsig.market.limits()` carries the
-  last confirmed rule forward (ARB 7%, Rp1 at Rp11-14), emits `RulesUnconfirmedWarning`, and the
-  carried-forward period is a separate regime labelled `UNCONFIRMED`. This is the cautious choice for
-  exits (a narrower lower limit locks more closes than a reversion would) and it is a modelling
-  convention, not a claim about the exchange. Any ledger outcome whose path touches a session after
-  2026-12-31 was scored under that assumption. When BEI confirms a rule for 2027, replace the last
-  entry of `REGIMES` and move `RULES_CONFIRMED_THROUGH`.
+  **After 2026-12-31 the rules are not confirmed (as of 2026-11-09).** The September decree announced
+  ARB = ARA from 2027-01-01, but BEI called that conditional and replaced the decree twice in
+  October; both replacements run to 2026-12-31 and are to be re-evaluated. `idxsig.market.limits()`
+  carries the last confirmed rule forward (ARB 7%, Rp1 at Rp11-14), emits `RulesUnconfirmedWarning`,
+  and the carried-forward period is a separate regime labelled `UNCONFIRMED`; `unconfirmed(dates)`
+  gives the mask. It never raises, because US and crypto runs share the same code path. Carrying 7%
+  forward locks at least as many closes as any wider limit would, which is the cautious choice for
+  whether a sale was possible; the sign of its effect on scored returns is not determined, because the
+  legacy scorer gives no outcome when a horizon close is locked. It is a modelling convention, not a
+  claim about the exchange.
+
+  Operating notes for the unconfirmed period. (1) The warning appears once per `Market.build` call
+  (pandas resets Python's record of warnings already shown), also on US and crypto runs, because
+  `Market.build` computes the IDX limits before it discards them for markets without limits. Silence it
+  in code with `warnings.filterwarnings("ignore", category=idxsig.market.RulesUnconfirmedWarning)` or on
+  the command line with `-W ignore::UserWarning`; escalating it (`-W error`) makes every `Market.build`
+  after 2026-12-31 raise. (2) OUTCOME rows carry no rules marker: a record whose path touches a session
+  after 2026-12-31 can be told apart only by its dates, with `unconfirmed(dates)`. (3) When BEI confirms
+  a rule, replace the `UNCONFIRMED` entry by the confirmed regime(s), append a new `UNCONFIRMED` entry
+  that starts the day after the new `RULES_CONFIRMED_THROUGH`, then move that constant. A test pins that
+  the two stay together.
 - **Corporate actions** (`idxsig/corporate_actions.py`, `--ca-mode registry`, the default):
   every reference reset in the panel is a row in a versioned registry
   (`data/corporate_actions/ca_registry-<stamp>.csv`, one new file per build, frozen by the
