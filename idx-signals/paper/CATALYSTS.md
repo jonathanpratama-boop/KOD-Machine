@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-09T10:31:21Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-09T10:31:39Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 10 over 4 signal sessions; events seen: SEALED 10; coverage gaps 0.
+Sets 12 over 4 signal sessions; events seen: SEALED 12; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 5, FIRE 5
+- Classes: ABSTAIN 5, FIRE 7
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 95 tags: 19 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP MTDR (Matador Resources Co) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0002020286-26-000011`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 49.87 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0002020286-26-000011` by Calvert Christopher P (EVP and CFO); purchases USD 105,140; top executive yes; holding up +4.5%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002020286-26-000011.
-Twins (band+liq+mom+dd): TJX 138.59, PTGX 135.26, BCS 22.82, UPST 22.14, TVTX 48.87, AU 88.56, KMX 52.6, RAL 62.83, STNG 80.74, CARR 53.21, NFLX 65.56, GPC 124.44, TECK 59.91, BAP 347.99, TNGX 20.87, NUE 245.68, ODFL 170.56, ALK 38.7, WWD 306.855, FTI 61.59.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP CBAN (COLONY BANKCORP INC) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0002051327-26-000020`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 19.95 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0002051327-26-000020` by Canup Edward G (CHIEF BANKING OFFICER); purchases USD 60,645; top executive no; holding up +7.2%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002051327-26-000020.
-Twins (band+liq+mom+dd): INNV 9.09, EGY 5.38, SXC 9.7, SOPH 6.62, FLGT 18.66, PAYP 14.54, AURA 6.34, NEXN 8.97, CION 6.6, LYTS 17.79, KREF 5.71, ZVRA 10.53, CTOS 9.3, CLB 8.93, EOLS 6.795, ASPN 5.16, ATS 17.32, ALLT 8.18, OOMA 17.56, NEWT 10.67.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### SEC13D NIPG (NIP Group Inc.) - accepted 2026-11-06T06:36:23-05:00, sealed 2026-11-06T23:02:42Z, cutoff 2026-11-09T14:15:00Z
 Set `CAT-SEC13D-0001493152-26-050350`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 3.72 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20.
@@ -207,4 +193,18 @@ Filing `0000921895-26-002956` by HELU CARLOS SLIM; Item 4 intent words: board, d
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 492.3M, dilution filings 0.
 Twins (band+liq+mom+dd): AUTL 1.28, STLN 3.62, ADTN 4.04, QTEX 1.03, ANGX 3.39.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 TGE (Generation Essentials Group) - accepted 2026-11-06T18:43:39-05:00, sealed 2026-11-09T10:31:36Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-117049`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 0.3635 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-117049` by AMTD Group Inc.; cover page max 95.7% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 89.8M from COVER_PAGE; parent CAT-SEC13D-0001213900-26-117049.
+Twins (band+liq+mom+dd): DXF 0.257, NYXH 0.8456, CIGL 0.1833, NHTC 0.7698, SLXN 0.1452, SCNI 0.441, GLXG 0.71, LOT 0.3248, VRAX 0.7919, RDHL 0.4279, BQ 0.4211, CLIK 0.6787, REFR 0.3658, AZI 0.628, TCRX 0.188, MCRP 0.3577, GIPR 0.2548, FLUX 0.316, GTEC 0.5101, HDRN 0.675.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 BAK (BRASKEM SA) - accepted 2026-11-06T19:58:00-05:00, sealed 2026-11-09T10:31:36Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-SEC13D_V2-0000921895-26-002956`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 1.09 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000921895-26-002956` by HELU CARLOS SLIM; cover page max 4.0% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 492.3M from XBRL; parent CAT-SEC13D-0000921895-26-002956.
+Twins (band+liq+mom+dd): FATE 1.835, GCTS 1.16, BTGO 4.86, TMQ 2.15, AIRJ 2.385, CRBP 3.07, ATOM 3.01, PSEC 1.41, ARTV 4.15, DKI 1.47, KOPN 3.035, RXT 2.53, ALT 2.08, HDSN 4.18, CCOI 3.98, CABA 1.3, WFF 1.17, MDXG 3.31, SION 3.28, XRX 1.08.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
