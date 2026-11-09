@@ -1,7 +1,7 @@
 """IDX market rules used by the execution model: lots, ticks, fees, auto-rejection limits.
 
-Auto-rejection (ARA = upper limit, ARB = lower limit) is set against the reference price
-(the previous close, reset by IDX on corporate-action dates). Regular-board schedule:
+Auto-rejection (ARA = upper limit, ARB = lower limit) is set against the reference price (the
+previous close, reset by IDX on corporate-action dates). Regular-board schedule:
 
   until 2020-03-09   ARA = ARB: 35% (<= Rp200), 25% (Rp200-5,000), 20% (> Rp5,000); floor Rp50
   2020-03-10         ARB 10% flat (COVID; ARA unchanged)
@@ -11,27 +11,31 @@ Auto-rejection (ARA = upper limit, ARB = lower limit) is set against the referen
   2025-04-08         ARB 15% flat (tariff shock)
   2026-09-28         ARB 15% flat above Rp10; Rp1-10 band moves +/- Rp1; floor Rp1 (Kep-00136/BEI/09-2026)
   2026-10-19         ARB 7% flat above Rp10 (Kep-00157/BEI/10-2026)
-  2026-10-20         as 2026-10-19, but the ARB is a nominal Rp1 for references Rp11-14 (Kep-00158/BEI/10-2026)
+  2026-10-20         as 2026-10-19; ARB a nominal Rp1 at references Rp11-14 (Kep-00158/BEI/10-2026)
   2027-01-01         UNCONFIRMED, see below
 
 The October 2026 decisions apply to the Main, Development and New Economy boards. The acceleration
-and special monitoring boards keep 10% (+/- Rp1 at Rp1-10; from 2023-06-12, full call auction from
-2024-03-25). The data has no daily board membership, so limits() models the regular boards for every
-name (a name on a 10% board is over-locked by 7% falls, as the old 15% rule under-locked it), and a
-one-price bar at or beyond the 10% limit is also treated as locked. See README for sources. The decree
-texts were not read; the schedule rests on the IDX trading-mechanism page, IDX press releases as
-reposted by brokers, and press reports. On 2026-10-19 the 7% formula gives ARB = reference for
-references Rp11-14, but two bars (BTEK, TAXI) closed 25% lower that day, so the real limit that day
-is unknown; nothing in the ledger depends on it.
+board keeps 10% (+/- Rp1 at Rp1-10), and so does the special monitoring board (from 2023-06-12; full
+call auction from 2024-03-25). The data has no daily board membership, so limits() models the
+regular boards for every name (a name on a 10% board is over-locked by 7% falls, as the old 15% rule
+under-locked it), and a one-price bar at or beyond the 10% limit is also treated as locked. See
+README for sources. The decree texts were not read; the schedule rests on the IDX trading-mechanism
+page, IDX press releases as reposted by brokers, an OJK release for the 2026-12-31 end date, and
+press reports. On 2026-10-19 the 7% formula gives ARB = reference for references Rp11-14, but BTEK
+and TAXI closed 25% below it that day (BTEK traded as low as Rp7 from Rp12) and PPRO traded from
+Rp14 down to Rp10, so the real limit that day is unknown; no scored ledger record depends on it.
 
-After 2026-12-31 no rule is confirmed. Kep-00136 announced ARB = ARA again from 2027-01-01, but BEI
-called that conditional, replaced the decree twice in October, and both replacements run to
-2026-12-31 and are to be re-evaluated. limits() therefore carries the last confirmed rule forward
-(ARB 7%, Rp1 at Rp11-14) and emits RulesUnconfirmedWarning; the carried-forward period has its own
-REGIMES entry labelled UNCONFIRMED so that reports keyed by regime separate it, and unconfirmed(days)
-gives the mask. Carrying 7% forward is the cautious choice for exits (a narrower lower limit locks more
-closes than an eventual reversion would). It is a modelling convention, not a claim about the exchange.
-When BEI confirms a rule, replace the last entry and move RULES_CONFIRMED_THROUGH.
+After 2026-12-31 no rule is confirmed (as of 2026-11-09). Kep-00136 announced ARB = ARA again from
+2027-01-01, but BEI called that conditional, replaced the decree twice in October, and both
+replacements run to 2026-12-31 and are to be re-evaluated. limits() therefore carries the last
+confirmed rule forward (ARB 7%, Rp1 at Rp11-14) and emits RulesUnconfirmedWarning; the
+carried-forward period has its own REGIMES entry labelled UNCONFIRMED so that reports keyed by
+regime separate it, and unconfirmed(days) gives the mask. Carrying 7% forward locks at least as many
+closes as any wider limit would, which is the cautious choice for whether a sale was possible. The
+sign of its effect on scored returns is not determined: the legacy scorer gives no outcome when a
+horizon close is locked. It is a modelling convention, not a claim about the exchange. When BEI
+confirms a rule, replace the UNCONFIRMED entry by the confirmed regime(s), append a new UNCONFIRMED
+entry that starts the day after the new RULES_CONFIRMED_THROUGH, then move that constant.
 """
 
 from __future__ import annotations
@@ -68,7 +72,8 @@ class Regime:
     floor: int  # minimum price on the regular market
     small_abs: bool  # Rp1-10 band moves +/- Rp1
     label: str
-    arb_abs_max: float = 10.0  # references up to this price have a nominal Rp1 ARB (Rp1-10; Rp1-14 from 2026-10-20)
+    # References up to this price have a nominal Rp1 ARB: Rp1-10, and Rp1-14 from 2026-10-20.
+    arb_abs_max: float = 10.0
 
 
 REGIMES = (
@@ -103,12 +108,13 @@ RULES_CONFIRMED_THROUGH = date(2026, 12, 31)
 
 
 class RulesUnconfirmedWarning(UserWarning):
-    """A limit was computed for a date after RULES_CONFIRMED_THROUGH: a carried-forward assumption."""
+    """A limit was computed for a date after RULES_CONFIRMED_THROUGH: a carried-forward rule."""
 
 
 def unconfirmed(days) -> np.ndarray:
     """True where `days` is after the last date for which the auto-rejection rules are confirmed."""
-    return np.asarray(days, dtype="datetime64[D]") > np.datetime64(RULES_CONFIRMED_THROUGH, "D")
+    late = np.asarray(days, dtype="datetime64[D]") > np.datetime64(RULES_CONFIRMED_THROUGH, "D")
+    return np.asarray(late)  # a 0-d array for a scalar, as the annotation says
 
 
 def regime_index(days: np.ndarray) -> np.ndarray:
@@ -150,8 +156,8 @@ def limits(ref: np.ndarray, days: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     if unconfirmed(days).any():
         warnings.warn(
             f"IDX auto-rejection rules after {RULES_CONFIRMED_THROUGH} are not confirmed: the "
-            "2026-10-20 rule (ARB 7%, Rp1 at Rp11-14) is carried forward. Only IDX lower-limit locks "
-            "(exits that roll) depend on it; see idxsig/market.py.",
+            "2026-10-20 rule (ARB 7%, Rp1 at Rp11-14) is carried forward. Only IDX lower-limit "
+            "locks (exits that roll) depend on it; see idxsig/market.py.",
             RulesUnconfirmedWarning,
             stacklevel=2,
         )
