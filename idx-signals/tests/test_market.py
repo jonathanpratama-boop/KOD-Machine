@@ -45,7 +45,8 @@ class AutoRejectionScheduleTests(unittest.TestCase):
         self.assertEqual(lim(1000, "2025-04-07"), (1250, 750))
         self.assertEqual(lim(1000, "2025-04-08"), (1250, 850))
         self.assertEqual(lim(8, "2026-09-28"), (9, 7))  # Rp1-10: +/- Rp1
-        self.assertEqual(lim(1000, "2027-01-04"), (1250, 750))
+        # No expectation for 2027: no rule is confirmed after 2026-12-31; the labelled convention for those
+        # dates is tested in tests/test_market_oct2026.py (UnconfirmedPeriodConvention*Tests).
 
     def test_floor_rp50_until_september_2026(self):
         self.assertEqual(lim(55, "2024-01-02")[1], 50)

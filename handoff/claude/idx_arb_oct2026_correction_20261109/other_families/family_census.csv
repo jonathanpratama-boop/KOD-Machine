@@ -1,0 +1,38 @@
+file,record_family,idx_rows,idx_rows_touching_on_or_after_cutoff,idx_rows_exposed_to_lock,depends_on_lock,dependence,code_path,replayable_from_final_pull,rows_replayed,rows_changed_by_correction,baseline_B_reproduced,change_note,note
+ledger.jsonl,SCAN (market absent = IDX),23,15,,no,none,"paper.scan_frame and the rules read lock_up, never lock_down (grep); ARA is identical in B and C",n/a (no lock dependence),,,,,
+ledger.jsonl,DECISION (market absent = IDX),126,88,,no,none,paper._decide_v3 sizes on the hard-coded Policy.max_stop_distance 0.15 and prints '15% below the entry'; it never calls market.limits,n/a,,,,,"the 15% sizing constant and text are stale after 2026-10-19 but are policy constants, not market.py"
+ledger.jsonl,OUTCOME (IDX),93,65,35,yes (direct),direct,"paper.score_pending -> paper.score -> the legacy v3 loop (sellable = tradeable & ~lock_down; used by all 93 recorded rows) or _score_plan -> execution.execute (roll to next_sellable; E3-plan decisions, none recorded)",yes (replayed here as a cross-check of the earlier work),93,14,90 of 93,"11 exit changes, 3 pending","'exposed' = a trade sold on or after 2026-10-19, the only place the lock can enter"
+speculations.jsonl,SPECULATION_SET (IDX),26,26,,no,none,speculation.build_set: twins and signal from the scan's features,n/a,,,,,
+speculations.jsonl,RESOLUTION BASE5 (IDX),2,2,2,yes (direct),direct,"speculation.resolve_set -> simulate(): sellable(k) = tradeable & ~lock_down; x = first sellable session >= target, None (pending) if none",yes (replayed here as a cross-check of the earlier work),2,1,2 of 2,pending under C: ALKA,
+speculations.jsonl,RESOLUTION NEXT1 (IDX),21,21,,no,none,path window: next_return() uses closes only,yes (replayed here with the 23),21,0,20 of 21,pending under C: none,
+catalysts.jsonl,BATCH (IDX_INDEX),1,1,,no,none,catalysts.idx_index_batch: event list statuses,n/a,,,,,
+catalysts.jsonl,CATALYST_SET (IDX_INDEX),14,14,,no,none,catalysts.idx_index_batch: twins by draw_twins from the scan's features,n/a,,,,,
+catalysts.jsonl,TAG (IDX_INDEX),14,14,,no,none,catalysts.dilution_tags: EmitenNews headlines,n/a,,,,,
+catalysts.jsonl,RESOLUTION (IDX_INDEX),14,14,14,yes (direct),direct,catalysts.resolve_set -> speculation.simulate for the candidate and each twin: sellable(k) = tradeable & ~lock_down; the sale rolls to the next sellable session,yes (the priority of this addendum),14,9,14 of 14,17 of 84 trades change exit; 1 statement flips; published line moves,
+catalysts.jsonl,US families (BATCH/CATALYST_SET/TAG),0,0,,no,none,US markets are built with price_limits=False: lock_down is all False,n/a (IDX rows: 0),,,,,the counted 'IDX rows' here are zero; the 212 US rows are listed for completeness only
+learner_v2.jsonl,LEARNER2_FORECAST (SPEC_IDX),26,26,24,yes (indirect: training labels),indirect (training labels),learner2.train -> live_rows -> outcomes() reads RESOLUTION cone outcomes: IDX_INDEX WITH_FLOW_RUNUP (shared RELATIVE slope) and SPEC_IDX BASE5 statements (anchors),"yes (the learner's own _record() on each record's ledger prefix, with replayed labels)",26,24,26 of 26,"raw forecasts shift in 24, published in 3, calls in 0",'exposed' = the record's training rows include the 14 IDX_INDEX WITH_FLOW_RUNUP labels
+learner_v2.jsonl,LEARNER2_FORECAST (US/CRYPTO rows: not IDX),0,0,,indirect only (shared slope),indirect (shared slope),the same labels reach US/CRYPTO forecasts through the shared RELATIVE slope,yes (same replay),212,178,212 of 212,raw forecasts shift (shared slope); published and calls unchanged,"212 non-IDX rows, 178 of them trained on the IDX_INDEX labels"
+learner_v3.jsonl,LEARNER3_FORECAST (SPEC_US),0,0,,no,none,US only; trains on SPEC_US rows and its own forecasts,n/a (IDX rows: 0),,,,,
+learner.jsonl,LEARNER_FORECAST (SEC13D),0,0,,no,none,US SEC13D only,n/a (IDX rows: 0),,,,,
+paper_book.jsonl,BOOK_PLAN,0,0,,no,none,US spikes only,n/a (IDX rows: 0),,,,,
+paper_account.jsonl,ACCT_*,0,0,,no,none,exec_us on US bars only,n/a (IDX rows: 0),,,,,
+crypto_account.jsonl,ACCT_* / CRYPTO_QUOTE,0,0,,no,none,crypto,n/a (IDX rows: 0),,,,,
+premove_shadow.jsonl,PREMOVE_SHADOW_*,0,0,,no,none,crypto (Binance) only,n/a (IDX rows: 0),,,,,
+microstructure/crypto.jsonl,TIMELINE/BOOK,0,0,,no,none,crypto order books,n/a (IDX rows: 0),,,,,
+sensors/sensors.jsonl,SENSOR_ALERT emitennews_dilution (IDX-related),4,4,,no,none,"news headlines, no prices",n/a,,,,,
+scans/,scan directories (IDX = no market infix),23,15,,no,none,features.csv built by rules that read lock_up only,n/a,,,,,
+catalysts_form4/,EDGAR Form 4 dumps (US),0,0,,no,none,no price or lock input,n/a,,,,,
+timestamps/,RFC 3161 tokens,0,0,,no,none,no price or lock input,n/a,,,,,
+sensors/raw/,raw feed pulls,0,0,,no,none,no price or lock input,n/a,,,,,
+microstructure/raw/,crypto raw books,0,0,,no,none,no price or lock input,n/a,,,,,
+README.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+CATALYSTS.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+SPECULATIONS.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+LEARNER_V2.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+LEARNER_V3.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+CALL_CERT.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+PAPER_ACCOUNT.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+PAPER_BOOK.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+CRYPTO_ACCOUNT.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+LEARNER.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
+PREMOVE_SHADOW.md,derived report (rendered from the ledgers),,,,only through the ledgers it renders,derived,catalysts.render / speculation render / learner render,the IDX_INDEX section of CATALYSTS.md is re-rendered here,,,,,
