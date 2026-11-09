@@ -190,11 +190,44 @@ evaluable, including names that later stop trading. Execution, per signal:
   | 2023-09-04 | same | = ARA | [Bisnis](https://market.bisnis.com/read/20230831/7/1690101/arb-ara-simetris-berlaku-pekan-depan-asosiasi-emiten-sambut-positif) |
   | 2025-04-08 | same | 15% | [Kontan](https://amp.kontan.co.id/news/bei-tetapkan-auto-rejection-bawah-arb-hanya-15-dan-mengubah-batas-trading-halt-8) |
   | 2026-09-28 | same; Rp1-10: +Rp1 | 15%; Rp1-10: -Rp1; floor Rp1 | [Detik](https://finance.detik.com/bursa-dan-valas/d-8682336/bei-ubah-aturan-ara-arb-mulai-hari-ini-cek-rinciannya) |
-  | 2027-01-01 | same | = ARA | same |
+  | 2026-10-19 | same | 7%; Rp1-10: -Rp1; floor Rp1 | [BEI release via BCA Sekuritas](https://bcasekuritas.co.id/latest-news/news/bei-sesuaikan-batas-bawah-auto-rejection-efek-bersifat-ekuitas), [Bareksa](https://www.bareksa.com/berita/saham/2026-10-19/bei-pangkas-batas-arb-saham-jadi-7-dari-15-berlaku-mulai-19-oktober-2026) |
+  | 2026-10-20 | same | 7%; Rp11-14: -Rp1; Rp1-10: -Rp1 | [BEI release via BCA Sekuritas](https://bcasekuritas.co.id/latest-news/news/bei-sesuaikan-kembali-batas-bawah-auto-rejection-efek-bersifat-ekuitas), [IDX trading mechanism](https://www.idx.id/en/products-services/trading-hours-and-mechanism/) |
+  | 2027-01-01 | same | **not confirmed**: the 2026-10-20 rule is carried forward, flagged (below) | the September plan was ARB = ARA, [Katadata](https://katadata.co.id/finansial/bursa/6ab0fe985f085/harga-minimum-saham-jadi-rp-1-mulai-pekan-depan-auto-rejection-disesuaikan) |
 
-  The data has no daily board membership, so the 10% limit of the acceleration and special
-  monitoring boards ([FCA](https://market.bisnis.com/read/20240315/7/1749731/bei-terapkan-papan-pemantauan-khusus-full-call-auction-25-maret))
-  is applied when the bar is one-price or priced under Rp50.
+  The data has no daily board membership, so the regular-board limit is applied to every name, and
+  the 10% limit of the acceleration and special monitoring boards ([FCA](https://market.bisnis.com/read/20240315/7/1749731/bei-terapkan-papan-pemantauan-khusus-full-call-auction-25-maret))
+  is also applied when the bar is one-price or, before 2026-09-28, priced under Rp50. The October
+  2026 decisions cover the Main, Development and New Economy boards only; the other two boards keep
+  10%, so a name on one of them is over-locked by 7% falls (the 15% rule under-locked it).
+
+  The decree texts were not read (idx.co.id refused the download). The rows from 2026-09-28 rest on
+  the IDX trading-mechanism page, IDX press releases as reposted by brokers, and press reports; the
+  rounding rule (ARA floored and ARB ceiled to the tick of the limit price's own band) is inferred
+  from 20 observed limit prices. On 2026-10-19 the 7% formula gives ARB = reference for references
+  Rp11-14, but two bars (BTEK, TAXI) closed 25% lower that day, so that day's real limit is unknown
+  (no recorded decision depends on it).
+
+  **After 2026-12-31 the rules are not confirmed (as of 2026-11-09).** The September decree announced
+  ARB = ARA from 2027-01-01, but BEI called that conditional and replaced the decree twice in
+  October; both replacements run to 2026-12-31 and are to be re-evaluated. `idxsig.market.limits()`
+  carries the last confirmed rule forward (ARB 7%, Rp1 at Rp11-14), emits `RulesUnconfirmedWarning`,
+  and the carried-forward period is a separate regime labelled `UNCONFIRMED`; `unconfirmed(dates)`
+  gives the mask. It never raises, because US and crypto runs share the same code path. Carrying 7%
+  forward locks at least as many closes as any wider limit would, which is the cautious choice for
+  whether a sale was possible; the sign of its effect on scored returns is not determined, because the
+  legacy scorer gives no outcome when a horizon close is locked. It is a modelling convention, not a
+  claim about the exchange.
+
+  Operating notes for the unconfirmed period. (1) The warning appears once per `Market.build` call
+  (pandas resets Python's record of warnings already shown), also on US and crypto runs, because
+  `Market.build` computes the IDX limits before it discards them for markets without limits. Silence it
+  in code with `warnings.filterwarnings("ignore", category=idxsig.market.RulesUnconfirmedWarning)` or on
+  the command line with `-W ignore::UserWarning`; escalating it (`-W error`) makes every `Market.build`
+  after 2026-12-31 raise. (2) OUTCOME rows carry no rules marker: a record whose path touches a session
+  after 2026-12-31 can be told apart only by its dates, with `unconfirmed(dates)`. (3) When BEI confirms
+  a rule, replace the `UNCONFIRMED` entry by the confirmed regime(s), append a new `UNCONFIRMED` entry
+  that starts the day after the new `RULES_CONFIRMED_THROUGH`, then move that constant. A test pins that
+  the two stay together.
 - **Corporate actions** (`idxsig/corporate_actions.py`, `--ca-mode registry`, the default):
   every reference reset in the panel is a row in a versioned registry
   (`data/corporate_actions/ca_registry-<stamp>.csv`, one new file per build, frozen by the

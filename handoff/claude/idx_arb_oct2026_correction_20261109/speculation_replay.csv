@@ -1,0 +1,48 @@
+kind,set_id,window,ticker,signal_session,resolved_on_pull,uses_lock_down,planned_horizon_session,simulated_trades_with_a_horizon_sale,baseline_B_replay_matches_recorded,baseline_n_differences,baseline_diagnosis,C_vs_B,names_with_horizon_close_locked_only_in_C,flip_board_hints,C10_identical_to_B,flips_resolution
+RESOLUTION,SPEC-SCAN-2026-10-30-F1_ARA-KONI,NEXT1,KONI,2026-10-30,yahoo_recent-20261102T102257Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-10-30-F1_ARA-POLI,NEXT1,POLI,2026-10-30,yahoo_recent-20261102T102257Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-10-30-F1_ARA-ALKA,NEXT1,ALKA,2026-10-30,yahoo_recent-20261102T102257Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-02-F1_ARA-DFAM,NEXT1,DFAM,2026-11-02,yahoo_recent-20261103T101959Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-02-F1_ARA-AKPI,NEXT1,AKPI,2026-11-02,yahoo_recent-20261103T101959Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-02-F1_ARA-ROCK,NEXT1,ROCK,2026-11-02,yahoo_recent-20261103T101959Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-03-F1_ARA-TMPO,NEXT1,TMPO,2026-11-03,yahoo_recent-20261104T102058Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-03-F1_ARA-FLMC,NEXT1,FLMC,2026-11-03,yahoo_recent-20261104T102058Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-03-F1_ARA-AIMS,NEXT1,AIMS,2026-11-03,yahoo_recent-20261104T102058Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-03-F1_ARA-BSWD,NEXT1,BSWD,2026-11-03,yahoo_recent-20261104T102058Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-04-F1_ARA-BOBA,NEXT1,BOBA,2026-11-04,yahoo_recent-20261105T102002Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-04-F1_ARA-TMPO,NEXT1,TMPO,2026-11-04,yahoo_recent-20261105T102002Z.jsonl,false,,0,false,9,"the pull that resolved it (yahoo_recent-20261105T102002Z.jsonl) gave next_return() no usable bar for TMPO at 2026-11-05 (the statements were 'not graded'); the final pull holds a bar for that session (close 292.0, volume 0.0). A data-timing difference in NEXT1, which never reads lock_down",identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-04-F1_ARA-YUPI,NEXT1,YUPI,2026-11-04,yahoo_recent-20261105T102002Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-04-F1_ARA-AIMS,NEXT1,AIMS,2026-11-04,yahoo_recent-20261105T102002Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-04-F1_ARA-FLMC,NEXT1,FLMC,2026-11-04,yahoo_recent-20261105T102002Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-10-29-F1_ARA-YPAS,BASE5,YPAS,2026-10-29,yahoo_recent-20261106T101853Z.jsonl,true,2026-11-06,6,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-10-29-F1_ARA-ALKA,BASE5,ALKA,2026-10-29,yahoo_recent-20261106T101853Z.jsonl,true,2026-11-06,5,true,0,,NOT RESOLVABLE on the final bars (a name's horizon close is locked in C and no later session exists),KDTN;WBSA,KDTN:AT_7PCT_LIMIT;WBSA:AT_7PCT_LIMIT,true,true
+RESOLUTION,SPEC-SCAN-2026-11-05-F1_ARA-YUPI,NEXT1,YUPI,2026-11-05,yahoo_recent-20261106T101853Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-05-F1_ARA-BELL,NEXT1,BELL,2026-11-05,yahoo_recent-20261106T101853Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-05-F1_ARA-AGAR,NEXT1,AGAR,2026-11-05,yahoo_recent-20261106T101853Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-05-F1_ARA-BAJA,NEXT1,BAJA,2026-11-05,yahoo_recent-20261106T101853Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-05-F1_ARA-FLMC,NEXT1,FLMC,2026-11-05,yahoo_recent-20261106T101853Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+RESOLUTION,SPEC-SCAN-2026-11-05-F1_ARA-AIMS,NEXT1,AIMS,2026-11-05,yahoo_recent-20261106T101853Z.jsonl,false,,0,true,0,,identical to B,,,true,false
+OPEN_WINDOW,SPEC-SCAN-2026-10-30-F1_ARA-KONI,BASE5,KONI,2026-10-30,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,KONI@2026-11-02:AT_7PCT_LIMIT;KONI@2026-11-03:AT_7PCT_LIMIT;KONI@2026-11-06:AT_7PCT_LIMIT;LFLO@2026-11-06:BELOW_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-10-30-F1_ARA-POLI,BASE5,POLI,2026-10-30,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,POLI@2026-11-03:AT_7PCT_LIMIT;CSAP@2026-11-04:AT_7PCT_LIMIT;DUTI@2026-11-02:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-10-30-F1_ARA-ALKA,BASE5,ALKA,2026-10-30,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,ALKA@2026-11-02:AT_7PCT_LIMIT;ALKA@2026-11-03:AT_7PCT_LIMIT;ALKA@2026-11-04:AT_7PCT_LIMIT;EMAS@2026-11-03:AT_7PCT_LIMIT;EMAS@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-02-F1_ARA-DFAM,BASE5,DFAM,2026-11-02,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,DFAM@2026-11-03:AT_7PCT_LIMIT;DFAM@2026-11-04:AT_7PCT_LIMIT;DFAM@2026-11-05:AT_7PCT_LIMIT;DFAM@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-02-F1_ARA-AKPI,BASE5,AKPI,2026-11-02,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,AKPI@2026-11-03:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-02-F1_ARA-ROCK,BASE5,ROCK,2026-11-02,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,ROCK@2026-11-03:AT_7PCT_LIMIT;ROCK@2026-11-04:AT_7PCT_LIMIT;KING@2026-11-03:BELOW_7PCT_LIMIT;VISI@2026-11-03:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-03-F1_ARA-TMPO,BASE5,TMPO,2026-11-03,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-03-F1_ARA-FLMC,BASE5,FLMC,2026-11-03,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-03-F1_ARA-AIMS,BASE5,AIMS,2026-11-03,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,RLCO@2026-11-04:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-03-F1_ARA-BSWD,BASE5,BSWD,2026-11-03,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,BSWD@2026-11-04:AT_7PCT_LIMIT;BSWD@2026-11-05:AT_7PCT_LIMIT;BSWD@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-04-F1_ARA-BOBA,BASE5,BOBA,2026-11-04,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,BOBA@2026-11-05:AT_7PCT_LIMIT;BOBA@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-04-F1_ARA-TMPO,BASE5,TMPO,2026-11-04,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-04-F1_ARA-YUPI,BASE5,YUPI,2026-11-04,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-04-F1_ARA-AIMS,BASE5,AIMS,2026-11-04,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-04-F1_ARA-FLMC,BASE5,FLMC,2026-11-04,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-05-F1_ARA-YUPI,BASE5,YUPI,2026-11-05,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,KONI@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-05-F1_ARA-BELL,BASE5,BELL,2026-11-05,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,BELL@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-05-F1_ARA-AGAR,BASE5,AGAR,2026-11-05,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,AGAR@2026-11-06:AT_7PCT_LIMIT;BLUE@2026-11-06:AT_7PCT_LIMIT;MORA@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-05-F1_ARA-BAJA,BASE5,BAJA,2026-11-05,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,PRDL@2026-11-06:AT_7PCT_LIMIT,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-05-F1_ARA-FLMC,BASE5,FLMC,2026-11-05,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-05-F1_ARA-AIMS,BASE5,AIMS,2026-11-05,,true,after 2026-11-06 (not yet observed),,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-06-F1_ARA-POLU,BASE5,POLU,2026-11-06,,true,entry session not yet observed,,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-06-F1_ARA-FLMC,BASE5,FLMC,2026-11-06,,true,entry session not yet observed,,,,,window still open on the final bars,,,,
+OPEN_WINDOW,SPEC-SCAN-2026-11-06-F1_ARA-AIMS,BASE5,AIMS,2026-11-06,,true,entry session not yet observed,,,,,window still open on the final bars,,,,

@@ -1,0 +1,44 @@
+{
+ "started_utc": "2026-11-09T07:59:51Z",
+ "elapsed_s": 79.1,
+ "worker_seconds": {
+  "B": 9.2,
+  "C": 9.4,
+  "learner": 16.9
+ },
+ "command": "/usr/bin/python3 harness.py",
+ "versions": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "pandas": "3.0.5"
+ },
+ "pycache_dirs_in_code_dirs_when_the_run_started": [
+  "/tmp/claude-0/-home-user/1c24db66-827c-592f-9e21-9f9bc0e9f7e9/scratchpad/arb2/code_B/idx-signals/idxsig/__pycache__ (mtime 2026-11-09T07:19:02Z)",
+  "/tmp/claude-0/-home-user/1c24db66-827c-592f-9e21-9f9bc0e9f7e9/scratchpad/arb2/code_C/idx-signals/idxsig/__pycache__ (mtime 2026-11-09T04:27:52Z)",
+  "/tmp/claude-0/-home-user/1c24db66-827c-592f-9e21-9f9bc0e9f7e9/scratchpad/arb2/code_C/idx-signals/idxsig/rules/__pycache__ (mtime 2026-11-09T04:27:52Z)",
+  "/tmp/claude-0/-home-user/1c24db66-827c-592f-9e21-9f9bc0e9f7e9/scratchpad/arb2/code_C/idx-signals/idxsig/sources/__pycache__ (mtime 2026-11-09T04:27:52Z)"
+ ],
+ "output_sha256": {
+  "results.csv": "b574322b47f5d3b0702115380e446d7229fa855ea7ae6746507a5373ac2f3294",
+  "trades.csv": "f28506a256648a00708cce6a5a6c432caae7278304802e3f85d8d8972811e9bc",
+  "baseline_gate.csv": "030097ebcfe54a3cbab16f74f062a79287cb30cf88255cad70e486d19ee14ef2",
+  "family_census.csv": "f48f2211df9f7f06018848206863e5ea1dfdea4b753c845dd59aad05396f5a4b",
+  "lock_cells_changed.csv": "eb8dd3f87295f7cc95ed040fa6de719b40d6d2c7d2897bbccc9fc5054b9cdfd2",
+  "learner_changes.csv": "073f91b3500bfc7fc7501546170258cf0d4ed57493e751484b51204bc2e45fca",
+  "code_callers.txt": "7db4bd6b9859ec8211fcab390f9a6b349a35a14514850408b79a112fd1b8a60c",
+  "summary.json": "652817ca19993352b4d605e55629b1eba6762a13dee640dd26e139f9d4fadd11"
+ },
+ "reproduction_vs_previous_run": {
+  "previous_run_present": true,
+  "files": {
+   "results.csv": true,
+   "trades.csv": true,
+   "baseline_gate.csv": true,
+   "family_census.csv": true,
+   "lock_cells_changed.csv": true,
+   "learner_changes.csv": true,
+   "code_callers.txt": true,
+   "summary.json": true
+  }
+ }
+}
