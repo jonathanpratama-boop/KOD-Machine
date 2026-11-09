@@ -1085,6 +1085,8 @@ def dilution_tags(
                         raws[y] = en_fetch(EN_SITEMAP_URL.format(year=y))
                 if universe is None:
                     universe = idx_universe()
+                if universe is None and s["ticker"].lower() in COMMON_WORD_CODES:
+                    raise ValueError("no IDX code list for a code that is also a word")
                 evidence = [
                     x
                     for y in years
