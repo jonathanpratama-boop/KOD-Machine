@@ -15,7 +15,7 @@ Smaller findings that were folded in: the ledger replay is possible after all (t
 
 ## Evidence that the tests do not depend on one implementation
 
-- A second implementation was written blind from the contract by a different agent. Both implementations pass all 167 tests. They agree on 9,210 random (reference, date) pairs including NaN, infinity, zero, negative and non-integer references, on 480 two-dimensional regime-edge cells, and on 5,747 pre-2026-10-19 pairs that must equal the unmodified module.
+- A second implementation was written blind from the contract by a different agent. Both implementations pass all 197 tests (167 from the first two authors, 9 added after mutation testing and 21 after review). They agree on 9,210 random (reference, date) pairs including NaN, infinity, zero, negative and non-integer references, on 480 two-dimensional regime-edge cells, and on 5,747 pre-2026-10-19 pairs that must equal the unmodified module.
 - Both test authors built independent exact-rational oracles from the spec. The oracle and the unmodified code agree for every valid reference from Rp1 to Rp600,000 under the 15% rule, which validates the oracle itself.
 - On the unmodified code 27 of the 72 and 32 of the 85 new tests fail, each for the intended reason (the 10 existing tests in `test_market.py` pass).
 
