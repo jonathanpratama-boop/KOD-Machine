@@ -1,21 +1,22 @@
-# Callers of the lower-limit machinery in the shipped (B) idxsig package; pattern in brackets.
-# Roles (from reading each module):
+# Callers of the lower-limit machinery in the shipped (B) idxsig package; the matching pattern is in brackets.
+# Role of each module, from reading it:
 #   backtest.py: research backtest (Market.from_panel, execute)
 #   breakout.py: research helper (Market)
 #   catalysts.py: resolve_set() calls speculation.simulate for the candidate and twins; writes catalysts.jsonl RESOLUTION rows
-#   cli.py: command wiring and corporate-action registry build; no lock use
+#   cli.py: command wiring; corporate-action registry build; no lock use
 #   e1.py: research E1 backtest
 #   e5.py: research E5 backtest
 #   event_study.py: research event study (execute)
-#   execution.py: BUILDS lock_down (Market.build) and USES it in execute(): sellable = tradeable & ~lock_down
+#   execution.py: BUILDS lock_down (Market.build) and USES it in execute(): sellable = tradeable & ~lock_down, roll to next_sellable
 #   idx_events.py: research event study (execute); results are not paper/ records
 #   learner2.py: no lock use; trains on the registers' graded statements (indirect)
 #   learner3.py: no lock use; US only
 #   market.py: DEFINES the limits (the only file B and C differ in)
 #   panel.py: limits() for the panel quality summary (below_arb counts); not a paper/ record
-#   paper.py: score(): legacy loop uses lock_down; _score_plan() calls execution.execute; writes ledger.jsonl OUTCOME rows
-#   rules/__init__.py: exposes lock_down to rule views; no rule reads it
+#   paper.py: score(): the legacy loop uses lock_down; _score_plan() calls execution.execute; writes ledger.jsonl OUTCOME rows
+#   rules/__init__.py: exposes lock_down to rule views; no rule file reads it
 #   speculation.py: USES lock_down in simulate() (sellable(k)); resolve_set writes speculations.jsonl RESOLUTION rows
+# No file under idxsig/rules/ other than rules/__init__.py (which only lists the field names a rule may see) mentions lock_down: True.
 
 [\bexecute\(] idxsig/backtest.py:261: out = execute(m, r_tick.ravel(), r_sig.ravel(), exec_cfg)
 [Market\.from_panel] idxsig/backtest.py:468: full_market = Market.from_panel(panel_df, price_limits=profile.price_limits)
