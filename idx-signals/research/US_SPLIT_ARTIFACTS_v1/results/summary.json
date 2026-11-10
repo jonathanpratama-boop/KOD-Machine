@@ -1,0 +1,427 @@
+{
+ "study": "US_SPLIT_ARTIFACTS_v1",
+ "rule_sha256": "ae2af4c954d112af93708ca0d789c8727d5d3cc83555037e6fd020fad2328efe",
+ "run_at": "2026-11-10T00:46:12+00:00",
+ "population": 134,
+ "counts": {
+  "UNKNOWN": 3,
+  "ARTIFACT_CONFIRMED": 0,
+  "ARTIFACT_PROVIDER_ONLY": 3,
+  "SPLIT_REAL_MOVE": 6,
+  "UNEXPLAINED_GAP": 1,
+  "CLEAN": 121
+ },
+ "stop_rule": "CLOSED_AS_ISOLATED",
+ "sec_checked": true,
+ "artifacts": {
+  "SPEC-SCAN-US-2026-10-30-G2_RET30-MASK": {
+   "ticker": "MASK",
+   "signal_session": "2026-10-30",
+   "class": "ARTIFACT_PROVIDER_ONLY",
+   "recorded_ret1": 2.5307,
+   "adj_ret1": -0.1173,
+   "window_splits": [
+    {
+     "effective_session": "2026-10-30",
+     "numerator": 1.0,
+     "denominator": 4.0,
+     "provider_ratio": "1:4",
+     "sec_evidence": [
+      {
+       "accession": "0001185185-26-004971",
+       "form": "6-K",
+       "file_date": "2026-10-23",
+       "url": "https://www.sec.gov/Archives/edgar/data/1993097/000118518526004971/maskex99-1.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001185185-26-004971",
+       "form": "6-K",
+       "file_date": "2026-10-23",
+       "url": "https://www.sec.gov/Archives/edgar/data/1993097/000118518526004971/mask6k101926.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001185185-26-004968",
+       "form": "6-K",
+       "file_date": "2026-10-23",
+       "url": "https://www.sec.gov/Archives/edgar/data/1993097/000118518526004968/maskex99-1.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001185185-26-004968",
+       "form": "6-K",
+       "file_date": "2026-10-23",
+       "url": "https://www.sec.gov/Archives/edgar/data/1993097/000118518526004968/mask6k102326.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001185185-26-005065",
+       "form": "6-K",
+       "file_date": "2026-10-29",
+       "url": "https://www.sec.gov/Archives/edgar/data/1993097/000118518526005065/maskex99-1.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001185185-26-005065",
+       "form": "6-K",
+       "file_date": "2026-10-29",
+       "url": "https://www.sec.gov/Archives/edgar/data/1993097/000118518526005065/mask6k102826.htm",
+       "finding": "MENTION_ONLY"
+      }
+     ],
+     "sec_status": "MENTION_ONLY"
+    }
+   ],
+   "downstream": {
+    "ledger": [
+     "DECISION",
+     "OUTCOME"
+    ],
+    "speculations": [
+     "RESOLUTION BASE5 RESOLVED",
+     "RESOLUTION NEXT1 RESOLVED",
+     "SPECULATION_SET"
+    ],
+    "paper_book": [
+     "BOOK_PLAN DONT_BUY",
+     "BOOK_RESULT"
+    ],
+    "learner_v3": [
+     "LEARNER3_FORECAST"
+    ],
+    "learner_v2": [
+     "LEARNER2_FORECAST"
+    ],
+    "catalysts": [
+     "TAG"
+    ]
+   }
+  },
+  "SPEC-SCAN-US-2026-10-30-G2_RET30-WHLR": {
+   "ticker": "WHLR",
+   "signal_session": "2026-10-30",
+   "class": "ARTIFACT_PROVIDER_ONLY",
+   "recorded_ret1": 5.5254,
+   "adj_ret1": 0.0876,
+   "window_splits": [
+    {
+     "effective_session": "2026-10-30",
+     "numerator": 1.0,
+     "denominator": 6.0,
+     "provider_ratio": "1:6",
+     "sec_evidence": [
+      {
+       "accession": "0001527541-26-000349",
+       "form": "8-K",
+       "file_date": "2026-09-17",
+       "url": "https://www.sec.gov/Archives/edgar/data/1527541/000152754126000349/whlr-20260917.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001527541-26-000360",
+       "form": "8-K",
+       "file_date": "2026-09-29",
+       "url": "https://www.sec.gov/Archives/edgar/data/1527541/000152754126000360/whlr-20260923.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001527541-26-000407",
+       "form": "8-K",
+       "file_date": "2026-10-26",
+       "url": "https://www.sec.gov/Archives/edgar/data/1527541/000152754126000407/whlr-20261021.htm",
+       "finding": "RATIO_CONFIRMED"
+      },
+      {
+       "accession": "0001527541-26-000349",
+       "form": "8-K",
+       "file_date": "2026-09-17",
+       "url": "https://www.sec.gov/Archives/edgar/data/1527541/000152754126000349/ex32parvaluereduction-sept.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001527541-26-000349",
+       "form": "8-K",
+       "file_date": "2026-09-17",
+       "url": "https://www.sec.gov/Archives/edgar/data/1527541/000152754126000349/ex31reversestocksplit-sept.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001213900-26-108884",
+       "form": "8-K",
+       "file_date": "2026-10-13",
+       "url": "https://www.sec.gov/Archives/edgar/data/1527541/000121390026108884/ea030831401ex10-2.htm",
+       "finding": "MENTION_ONLY"
+      }
+     ],
+     "sec_status": "RATIO_CONFIRMED"
+    }
+   ],
+   "downstream": {
+    "ledger": [
+     "DECISION",
+     "OUTCOME"
+    ],
+    "speculations": [
+     "RESOLUTION BASE5 RESOLVED",
+     "RESOLUTION NEXT1 RESOLVED",
+     "SPECULATION_SET"
+    ],
+    "paper_book": [
+     "BOOK_PLAN DONT_BUY",
+     "BOOK_RESULT"
+    ],
+    "learner_v3": [
+     "LEARNER3_FORECAST"
+    ],
+    "learner_v2": [
+     "LEARNER2_FORECAST"
+    ],
+    "catalysts": [
+     "TAG"
+    ]
+   }
+  },
+  "SPEC-SCAN-US-2026-11-05-G2_RET30-XXII": {
+   "ticker": "XXII",
+   "signal_session": "2026-11-05",
+   "class": "ARTIFACT_PROVIDER_ONLY",
+   "recorded_ret1": 44.9524,
+   "adj_ret1": -0.2077,
+   "window_splits": [
+    {
+     "effective_session": "2026-11-05",
+     "numerator": 1.0,
+     "denominator": 58.0,
+     "provider_ratio": "1:58",
+     "sec_evidence": [
+      {
+       "accession": "0001493152-26-049743",
+       "form": "8-K",
+       "file_date": "2026-11-03",
+       "url": "https://www.sec.gov/Archives/edgar/data/1347858/000149315226049743/form8-k.htm",
+       "finding": "MENTION_ONLY"
+      },
+      {
+       "accession": "0001493152-26-049743",
+       "form": "8-K",
+       "file_date": "2026-11-03",
+       "url": "https://www.sec.gov/Archives/edgar/data/1347858/000149315226049743/ex3-1.htm",
+       "finding": "MENTION_ONLY"
+      }
+     ],
+     "sec_status": "MENTION_ONLY"
+    }
+   ],
+   "downstream": {
+    "ledger": [
+     "DECISION"
+    ],
+    "speculations": [
+     "RESOLUTION NEXT1 RESOLVED",
+     "SPECULATION_SET"
+    ],
+    "paper_book": [
+     "BOOK_PLAN BUY_OK"
+    ],
+    "paper_account": [
+     "ACCT_DECLINE",
+     "ACCT_DECLINE"
+    ],
+    "learner_v3": [
+     "LEARNER3_FORECAST"
+    ],
+    "learner_v2": [
+     "LEARNER2_FORECAST"
+    ],
+    "catalysts": [
+     "TAG"
+    ],
+    "llm_arm/calls_US_20261105.jsonl": [
+     "CALL"
+    ]
+   }
+  }
+ },
+ "unexplained_gap": [
+  {
+   "set_id": "SPEC-SCAN-US-2026-10-30-G2_RET30-ATYR",
+   "recorded_ret1": 38.8387,
+   "adj_ret1": -0.0801,
+   "units_ratio": 43.306
+  }
+ ],
+ "unknown": [
+  {
+   "set_id": "SPEC-SCAN-US-2026-10-28-G2_RET30-ADIL",
+   "fetch_status": 200
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-02-G2_RET30-GNTA",
+   "fetch_status": 200
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-06-G2_RET30-SMX",
+   "fetch_status": 200
+  }
+ ],
+ "unresolvable_resolutions": [
+  {
+   "set_id": "SPEC-SCAN-US-2026-10-29-G2_RET30-SGLY",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-03-G2_RET30-MERC",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-03-G2_RET30-HUBC",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-10-28-G2_RET30-ADIL",
+   "window": "BASE5",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-10-29-G2_RET30-SGLY",
+   "window": "BASE5",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-05-G2_RET30-BDMD",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-05-G2_RET30-LABT",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-05-G2_RET30-PLCE",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-06-G2_RET30-SDA",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-06-G2_RET30-RCT",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": []
+  },
+  {
+   "set_id": "SPEC-SCAN-US-2026-11-06-G2_RET30-SMX",
+   "window": "NEXT1",
+   "status": "UNRESOLVABLE",
+   "fetch_status": 200,
+   "splits_after_signal": [
+    "2026-11-09 1:2.8"
+   ]
+  }
+ ],
+ "inputs": {
+  "speculations.jsonl": {
+   "sha256": "642891b48da665c563eb86574d2ea7b3d72dce51d2bd7c0b226a31fb816a3ac0",
+   "lines": 350
+  },
+  "ledger": {
+   "sha256": "ddb05cbc631961de06c906f5d2564a9c34ca646137b4f1bad62f3758056c9052",
+   "path": "ledger.jsonl"
+  },
+  "speculations": {
+   "sha256": "642891b48da665c563eb86574d2ea7b3d72dce51d2bd7c0b226a31fb816a3ac0",
+   "path": "speculations.jsonl"
+  },
+  "paper_book": {
+   "sha256": "7218870d4b81db0b2eadc963b6b3132d86d3fefe95abb527da6a8202b07267ef",
+   "path": "paper_book.jsonl"
+  },
+  "paper_account": {
+   "sha256": "7f62f379d7fbd6878713f71dbd3a8c7036cc88da72d0a8f0a52283ab9a6cfe68",
+   "path": "paper_account.jsonl"
+  },
+  "learner_v3": {
+   "sha256": "55878a95337b48f0fe05df2ec04a8e779b3a2e81ff60c90c3be2a3446bee775d",
+   "path": "learner_v3.jsonl"
+  },
+  "learner_v2": {
+   "sha256": "b3db81067dfb2881aa8a2ff4831d5d01044f6076dc397fa289b4f5043166fac8",
+   "path": "learner_v2.jsonl"
+  },
+  "catalysts": {
+   "sha256": "6d2fcf18939200cc7d20e19cb2433999a43cd505a9850c49b72803b7f7226932",
+   "path": "catalysts.jsonl"
+  },
+  "llm_arm/calls.jsonl": {
+   "sha256": "bb45e4a152c4ad1f57a30b93594768b37d2c9367b749d88fe63845547c856e32",
+   "path": "calls.jsonl"
+  },
+  "llm_arm/calls_IDX_20261104.jsonl": {
+   "sha256": "9b973b940f869f5e55d412274ab6e522b52b98000f33d168c57963ad68874238",
+   "path": "calls_IDX_20261104.jsonl"
+  },
+  "llm_arm/calls_IDX_20261105.jsonl": {
+   "sha256": "f2ab1f9829edf54365e8e8d23456701608513bb4e683f805223d2492f59a26fc",
+   "path": "calls_IDX_20261105.jsonl"
+  },
+  "llm_arm/calls_IDX_20261106.jsonl": {
+   "sha256": "afa08fc7f8a1eab37d6578492023063169c9a5a334d18b528fc20db1e6c81491",
+   "path": "calls_IDX_20261106.jsonl"
+  },
+  "llm_arm/calls_IDX_20261109.jsonl": {
+   "sha256": "13d95e2acad668f20a8ec344cd5b70742121705dbaceda621ec778def37d708f",
+   "path": "calls_IDX_20261109.jsonl"
+  },
+  "llm_arm/calls_US_20261102.jsonl": {
+   "sha256": "ca55ff5ed1c4ed24b562d55eefaa7dcadda5bf1b768af103b78be82941cacd3b",
+   "path": "calls_US_20261102.jsonl"
+  },
+  "llm_arm/calls_US_20261103.jsonl": {
+   "sha256": "50d1d7ca127629d8cd81a4eec225ac96cad3af909dee238953d1c55f1159b231",
+   "path": "calls_US_20261103.jsonl"
+  },
+  "llm_arm/calls_US_20261104.jsonl": {
+   "sha256": "281dd7823a68fd24b1547180872b56ee98884d265e35d76a01079b0785f4aad2",
+   "path": "calls_US_20261104.jsonl"
+  },
+  "llm_arm/calls_US_20261105.jsonl": {
+   "sha256": "24c133c8d5e078be60eed0a082936d406cbf34b75402bb8735cb3b8e2fd14941",
+   "path": "calls_US_20261105.jsonl"
+  },
+  "llm_arm/calls_US_20261106.jsonl": {
+   "sha256": "316877dde13e84b0e7d2c55d32dd994e8d41379034b9aebd1d539777f2d31d2f",
+   "path": "calls_US_20261106.jsonl"
+  },
+  "llm_arm/calls_US_20261109.jsonl": {
+   "sha256": "33d455828cb310cfa3f57bf7b38a37968875f535b9fe7f6732db37879365777b",
+   "path": "calls_US_20261109.jsonl"
+  }
+ }
+}
