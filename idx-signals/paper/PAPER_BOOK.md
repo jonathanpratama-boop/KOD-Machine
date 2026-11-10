@@ -4,33 +4,48 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-09T23:00:44.214968Z; latest US scan session: 2026-11-09.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-09T22:57:08Z (signal session 2026-11-09).
+- Assessed 2026-11-10T23:02:05.866010Z; latest US scan session: 2026-11-10.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-10T22:59:40Z (signal session 2026-11-10).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-09T23:00:44Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-10T23:02:05Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 72 spikes planned, 11 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 87 spikes planned, 11 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 61 | 59 | 2 | 1 | $-80 | -4.02% |
-| ALL | every spike | 72 | 61 | 11 | 4 | $-1,140 | -10.37% |
-| AVOIDED | every DONT_BUY (kept out) | 11 | 2 | 9 | 3 | $-1,060 | -11.78% |
+| KOD | every BUY_OK | 75 | 73 | 2 | 1 | $-80 | -4.02% |
+| ALL | every spike | 87 | 76 | 11 | 4 | $-1,140 | -10.37% |
+| AVOIDED | every DONT_BUY (kept out) | 12 | 3 | 9 | 3 | $-1,060 | -11.78% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
 ## Every spike
 
 | Signal | Ticker | Dump tomorrow | KOD | You | Status | Net |
 |---|---|---:|---|---|---|---:|
+| 2026-11-10 | ZIP | 0.11 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | TTEC | 0.15 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | TREO | 0.18 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | TANH | 0.30 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | SMX | 0.26 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | PXLW | 0.17 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | PEPG | 0.26 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | NNOX | 0.16 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | NCI | 0.33 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | MNDO | 0.16 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | MI | 0.31 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | LGVN | 0.19 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | INLF | 0.49 | DONT_BUY | - | OPEN | - |
+| 2026-11-10 | ESLA | 0.31 | BUY_OK | - | OPEN | - |
+| 2026-11-10 | AACG | 0.18 | BUY_OK | - | OPEN | - |
 | 2026-11-09 | XHLD | 0.34 | BUY_OK | - | OPEN | - |
 | 2026-11-09 | WOK | 0.29 | BUY_OK | - | OPEN | - |
 | 2026-11-09 | UG | 0.17 | BUY_OK | - | OPEN | - |
