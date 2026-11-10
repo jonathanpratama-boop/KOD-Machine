@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T23:03:20Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T23:03:31Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 17 over 5 signal sessions; events seen: SEALED 17; coverage gaps 0.
+Sets 18 over 6 signal sessions; events seen: SEALED 18; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 8, FIRE 9
+- Classes: ABSTAIN 9, FIRE 9
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 121 tags: 26 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP AN (AUTONATION, INC.) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
-Set `CAT-FORM4_SHARP-0001293167-26-000008`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 186.06 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001293167-26-000008` by Szlosek Thomas A (EVP & CFO), TRAVISANO JACQUELINE A (director); purchases USD 298,004; top executive yes; holding up +6.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001293167-26-000008.
-Twins (band+liq+mom+dd): BX 124.05, FDXF 129.05, SWKS 82.83, WY 21.13, OC 127.02, RH 136.61, RRC 48.85, HEI 342.71, HRB 50.98, AGCO 116.52, VSEC 189.61, WHR 31.89, PODD 149.81, MOS 22.77, FAF 68.68, LAD 310.8, NVO 41.38, LVS 40.18, NTR 72.29, DB 36.57.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP ECHO (EchoStar CORP) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
 Set `CAT-FORM4_SHARP-0001393025-26-000007`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 101.19 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001493152-26-051041` by Scipher Medicine Corp; Item 4 intent words: boa
 Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 773.9M, dilution filings 1.
 Twins (band+liq+mom+dd): YYAI 1.05, LEXX 4.68, SOWG 2.02, MB 3.797, CALC 1.37.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 CMMB (Chemomab Therapeutics Ltd.) - accepted 2026-11-10T17:30:05-05:00, sealed 2026-11-10T23:03:29Z, cutoff 2026-11-11T14:15:00Z
+Set `CAT-SEC13D_V2-0001493152-26-051041`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 1.345 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001493152-26-051041` by Scipher Medicine Corp; cover page max 10.4% of class; strong intent: none; Item 5(c): 1 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 773.9M from XBRL; parent CAT-SEC13D-0001493152-26-051041.
+Twins (band+liq+mom+dd): YYAI 1.05, LEXX 4.68, SOWG 2.02, MB 3.797, CALC 1.37, MGN 3.4, AZR 3.76, HTCO 1.6, BCG 1.07, WYHG 3.52, WLDS 1.59, INBS 2.25, XAIR 2.52, SILO 1.79, ONEG 1.07, ENLV 1.2, IBO 4.62, LCU 4.35, XHG 3.3, CIIT 2.3.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
