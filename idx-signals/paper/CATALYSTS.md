@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T10:31:56Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T10:32:06Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 16 over 5 signal sessions; events seen: SEALED 16; coverage gaps 0.
+Sets 17 over 5 signal sessions; events seen: SEALED 17; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 7, FIRE 9
+- Classes: ABSTAIN 8, FIRE 9
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 121 tags: 26 true, 0 unknown.
 
 ## Latest sets
-
-### SEC13D GMHS (Gamehaus Holdings Inc.) - accepted 2026-11-09T06:04:18-05:00, sealed 2026-11-09T23:02:43Z, cutoff 2026-11-10T14:15:00Z
-Set `CAT-SEC13D-0001493152-26-050586`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 0.6265 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20.
-Filing `0001493152-26-050586` by Xie Feng; Item 4 intent words: none.
-Coverage **ABSTAIN** (MV_UNKNOWN); pre-entry move -4.79%, market value n/a, dilution filings 0.
-Twins (band+liq+mom+dd): NSPR 0.7134, GDTC 0.859, KTTA 0.5423, SYNX 0.9023, ELUT 0.8359.
-Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
 ### SEC13D ENGS (Energys Group Ltd) - accepted 2026-11-09T06:20:13-05:00, sealed 2026-11-09T23:02:43Z, cutoff 2026-11-10T14:15:00Z
 Set `CAT-SEC13D-0001493152-26-050601`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 4.71 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20.
@@ -207,4 +200,11 @@ Filing `0001493152-26-050820` by Credenza, Inc.; Item 4 intent words: board, nom
 Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 267.8M, dilution filings 1.
 Twins (band+liq+mom+dd): XBIO 1.7975, CITR 2.58, CVM 1.35, HTLM 1.08, BJDX 2.49.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 GAME (GameSquare Holdings, Inc.) - accepted 2026-11-09T18:49:19-05:00, sealed 2026-11-10T10:32:05Z, cutoff 2026-11-10T14:15:00Z
+Set `CAT-SEC13D_V2-0001493152-26-050820`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 2.58 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001493152-26-050820` by Credenza, Inc.; cover page max 5.4% of class; strong intent: nominate; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 267.8M from XBRL; parent CAT-SEC13D-0001493152-26-050820.
+Twins (band+liq+mom+dd): GYRO 3.9, SHIM 2.33, BMHL 3.244, AMCI 1.05, KPRX 1.51, QRHC 1.15, BJDX 2.49, MYSE 1.27, FBGL 2.275, GNLN 1.16, OPAD 2.15, PAVS 3.02, TNMG 2.91, QH 2.83, SMXT 4.05, PPCB 1.76, BTOC 1.8501, ATTT 2.14, HIND 1.59, RML 3.965.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
