@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T10:31:48Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T10:31:56Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 18 (FIRE 7, ABSTAIN 11) over 6 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 11, SEALED 18, SKIP_NOT_OPERATING 3, SKIP_LATE 2, SKIP_NO_TICKER 3, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 19 (FIRE 7, ABSTAIN 12) over 6 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 12, SEALED 19, SKIP_NOT_OPERATING 3, SKIP_LATE 2, SKIP_NO_TICKER 3, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP KMT (KENNAMETAL INC) - filed 2026-11-06, sealed 2026-11-09T10:37:05Z, cutoff 2026-11-09T14:15:00Z
-Set `CAT-FORM4_SHARP-0001782435-26-000005`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 23 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001782435-26-000005` by Chowbey Sanjay (President and CEO); purchases USD 165,368; top executive yes; holding up +2.6%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001782435-26-000005.
-Twins (band+liq+mom+dd): ATRO 54.71, PRLB 65.69, GGAL 29.44, CVI 38.13, ACLS 99.24, SCSC 42.78, AMR 147.93, GIL 34.75, AAON 57.19, YPF 38.66, BAND 40.34, VPG 44.21, TDW 70.06, KALU 106.84, CMPR 56.38, CAMT 97.05, ICHR 30.965, DOX 42.09, PLXS 192.17, COHU 38.49.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### SEC13D GMHS (Gamehaus Holdings Inc.) - accepted 2026-11-09T06:04:18-05:00, sealed 2026-11-09T23:02:43Z, cutoff 2026-11-10T14:15:00Z
 Set `CAT-SEC13D-0001493152-26-050586`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 0.6265 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20.
 Filing `0001493152-26-050586` by Xie Feng; Item 4 intent words: none.
@@ -207,4 +200,11 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): VSTS 14.48, DV 13.56, TAC 13.65, BEKE 18.4, YMM 8.97.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D GAME (GameSquare Holdings, Inc.) - accepted 2026-11-09T18:49:19-05:00, sealed 2026-11-10T10:31:54Z, cutoff 2026-11-10T14:15:00Z
+Set `CAT-SEC13D-0001493152-26-050820`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 2.58 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20.
+Filing `0001493152-26-050820` by Credenza, Inc.; Item 4 intent words: board, nominate, director.
+Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 267.8M, dilution filings 1.
+Twins (band+liq+mom+dd): XBIO 1.7975, CITR 2.58, CVM 1.35, HTLM 1.08, BJDX 2.49.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
