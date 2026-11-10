@@ -1,6 +1,6 @@
 # LEARNER-v2.4: the one live challenger (KOD-LEARNER-v2.4, protocol sha256 8132768cb6c1)
 
-Generated 2026-11-09T22:58:19Z. Paper only; no orders.
+Generated 2026-11-10T23:00:33Z. Paper only; no orders.
 
 ## The three plain answers
 
@@ -8,43 +8,36 @@ Generated 2026-11-09T22:58:19Z. Paper only; no orders.
 
 **What counts as success?** Prospectively, on sealed sets: the forecasts rank the dumpers above the others (AUC above 0.5, z >= 3.75 at the first look of 250/500/1000 resolved pairs), with the Brier gain over the base rate and over the volatility-and-context benchmark reported beside it. The gate that unlocks published confidence needs 30 populated sessions of resolution.
 
-**What evidence so far?** 82 forecasts sealed; 30 headline outcomes resolved; AUC 0.569 (benchmark 0.522); gate closed, alpha 0.00, 3 of 30 sessions. Claim: no planned evaluation frozen; descriptive metrics only.
+**What evidence so far?** 97 forecasts sealed; 53 headline outcomes resolved; AUC 0.709 (benchmark 0.705); gate closed, alpha 0.00, 4 of 30 sessions. Claim: no planned evaluation frozen; descriptive metrics only.
 
-## Latest sets (2026-11-09)
+## Latest sets (2026-11-10)
 
-- CKX (2026-11-09): dump tomorrow 0.33 (base 0.30, benchmark 0.30, published 0.30); no call [the spike in units of that volatility +0.39; close within its 14-session high-low range (Stochastic %K) +0.26; the market's own move that day -0.18]
-- OMH (2026-11-09): dump tomorrow 0.49 (base 0.30, benchmark 0.35, published 0.30); no call [volatility before the spike +0.40; close within its 14-session high-low range (Stochastic %K) +0.39; close near the day's high, in the call's direction -0.19]
-- XHLD (2026-11-09): dump tomorrow 0.34 (base 0.30, benchmark 0.23, published 0.30); no call [the market's own move that day -0.18; the spike in units of that volatility -0.18; MACD histogram +0.16]
-- MF (2026-11-09): dump tomorrow 0.31 (base 0.30, benchmark 0.23, published 0.30); no call [close within its 14-session high-low range (Stochastic %K) +0.24; the spike in units of that volatility -0.21; close near the day's high, in the call's direction -0.20]
-- WOK (2026-11-09): dump tomorrow 0.29 (base 0.30, benchmark 0.20, published 0.30); no call [the market's own move that day -0.18; an 8-K (or 6-K) that day or the day before +0.14; the spike in units of that volatility -0.14]
-- INLF (2026-11-09): dump tomorrow 0.40 (base 0.30, benchmark 0.35, published 0.30); no call [volatility before the spike +0.52; the spike in units of that volatility -0.25; 20-session move in the call's direction -0.20]
-- TVRD (2026-11-09): dump tomorrow 0.32 (base 0.30, benchmark 0.22, published 0.30); no call [the market's own move that day -0.18; an 8-K (or 6-K) that day or the day before +0.14; 5-session move in the call's direction +0.10]
-- TANH (2026-11-09): dump tomorrow 0.36 (base 0.30, benchmark 0.27, published 0.30); no call [volatility before the spike +0.23; the spike in units of that volatility -0.20; the market's own move that day -0.18]
-- FISN (2026-11-09): dump tomorrow 0.28 (base 0.30, benchmark 0.23, published 0.30); no call [the market's own move that day -0.18; the spike in units of that volatility -0.17; an offering filing in the last 90 days +0.15]
-- DCTH (2026-11-09): dump tomorrow 0.17 (base 0.30, benchmark 0.24, published 0.30); shadow the stock holds: not: it closes at least 10% below the signal close at the next session, when most of its twins do not [close within its 14-session high-low range (Stochastic %K) -0.27; the market's own move that day -0.18; an 8-K (or 6-K) that day or the day before -0.14]
-- GFR (2026-11-09): dump tomorrow 0.15 (base 0.30, benchmark 0.22, published 0.30); no call [close within its 14-session high-low range (Stochastic %K) -0.24; the market's own move that day -0.18; close near the day's high, in the call's direction -0.17]
-- JZ (2026-11-09): dump tomorrow 0.32 (base 0.30, benchmark 0.21, published 0.30); no call [the market's own move that day -0.18; close within its 14-session high-low range (Stochastic %K) -0.17; an offering filing in the last 90 days +0.15]
-- UG (2026-11-09): dump tomorrow 0.17 (base 0.30, benchmark 0.23, published 0.30); shadow the stock holds: not: it closes at least 10% below the signal close at the next session, when most of its twins do not [close within its 14-session high-low range (Stochastic %K) -0.27; the market's own move that day -0.18; an 8-K (or 6-K) that day or the day before -0.14]
-- ESLA (2026-11-09): dump tomorrow 0.36 (base 0.30, benchmark 0.24, published 0.30); no call [close within its 14-session high-low range (Stochastic %K) +0.45; the spike in units of that volatility -0.22; the market's own move that day -0.18]
-- CVKD (2026-11-09): dump tomorrow 0.27 (base 0.30, benchmark 0.21, published 0.30); no call [close within its 14-session high-low range (Stochastic %K) -0.25; the market's own move that day -0.18; an 8-K (or 6-K) that day or the day before +0.14]
-- GPUS (2026-11-09): dump tomorrow 0.28 (base 0.30, benchmark 0.21, published 0.30); no call [the market's own move that day -0.18; the spike in units of that volatility -0.18; an offering filing in the last 90 days +0.15]
-- TLS (2026-11-09): dump tomorrow 0.16 (base 0.30, benchmark 0.22, published 0.30); shadow the stock holds: not: it closes at least 10% below the signal close at the next session, when most of its twins do not [close within its 14-session high-low range (Stochastic %K) -0.26; the market's own move that day -0.18; an 8-K (or 6-K) that day or the day before -0.14]
-- FJET (2026-11-09): dump tomorrow 0.23 (base 0.30, benchmark 0.21, published 0.30); no call [the market's own move that day -0.18; the spike in units of that volatility -0.16; an offering filing in the last 90 days +0.15]
-- MODD (2026-11-09): dump tomorrow 0.14 (base 0.30, benchmark 0.21, published 0.30); no call [volume against shares outstanding -0.23; the market's own move that day -0.18; the spike in units of that volatility -0.16]
-- AKBA (2026-11-09): dump tomorrow 0.22 (base 0.30, benchmark 0.21, published 0.30); no call [close within its 14-session high-low range (Stochastic %K) +0.28; the spike in units of that volatility -0.20; the market's own move that day -0.18]
-- NCPL (2026-11-09): dump tomorrow 0.21 (base 0.30, benchmark 0.25, published 0.30); no call [the spike in units of that volatility -0.22; close within its 14-session high-low range (Stochastic %K) +0.20; the market's own move that day -0.18]
-- TOPS (2026-11-09): dump tomorrow 0.48 (base 0.30, benchmark 0.48, published 0.30); no call [the spike in units of that volatility +1.01; volume against its 20-session median -0.32; close within its 14-session high-low range (Stochastic %K) -0.27]
+- AACG (2026-11-10): dump tomorrow 0.18 (base 0.19, benchmark 0.17, published 0.19); no call [close within its 14-session high-low range (Stochastic %K) -0.24; the spike in units of that volatility -0.15; an 8-K (or 6-K) that day or the day before +0.14]
+- MI (2026-11-10): dump tomorrow 0.31 (base 0.19, benchmark 0.18, published 0.19); no call [MACD histogram +0.42; close within its 14-session high-low range (Stochastic %K) +0.22; 20-session move in the call's direction -0.17]
+- PXLW (2026-11-10): dump tomorrow 0.17 (base 0.19, benchmark 0.18, published 0.19); no call [close within its 14-session high-low range (Stochastic %K) -0.26; volatility before the spike -0.16; an 8-K (or 6-K) that day or the day before +0.14]
+- SMX (2026-11-10): dump tomorrow 0.26 (base 0.19, benchmark 0.22, published 0.19); no call [volatility before the spike +0.21; close within its 14-session high-low range (Stochastic %K) -0.19; MACD histogram +0.19]
+- MNDO (2026-11-10): dump tomorrow 0.16 (base 0.19, benchmark 0.24, published 0.19); no call [the spike in units of that volatility +0.48; close within its 14-session high-low range (Stochastic %K) -0.29; volatility before the spike -0.18]
+- NNOX (2026-11-10): dump tomorrow 0.16 (base 0.19, benchmark 0.18, published 0.19); no call [an 8-K (or 6-K) that day or the day before -0.15; volatility before the spike -0.12; 20-session move in the call's direction -0.12]
+- PEPG (2026-11-10): dump tomorrow 0.26 (base 0.19, benchmark 0.21, published 0.19); no call [the spike in units of that volatility +0.26; 20-session move in the call's direction +0.20; close near the day's high, in the call's direction -0.19]
+- TTEC (2026-11-10): dump tomorrow 0.15 (base 0.19, benchmark 0.19, published 0.19); no call [close within its 14-session high-low range (Stochastic %K) -0.22; an 8-K (or 6-K) that day or the day before -0.15; the spike in units of that volatility +0.13]
+- NCI (2026-11-10): dump tomorrow 0.33 (base 0.19, benchmark 0.16, published 0.19); no call [MACD histogram +0.45; an 8-K (or 6-K) that day or the day before +0.14; RSI(14) +0.14]
+- INLF (2026-11-10): dump tomorrow 0.49 (base 0.19, benchmark 0.34, published 0.19); shadow AVOID the stock: it closes at least 10% below the signal close at the next session, when most of its twins do not [volatility before the spike +0.68; MACD histogram +0.45; 20-session move in the call's direction -0.27]
+- TANH (2026-11-10): dump tomorrow 0.30 (base 0.19, benchmark 0.24, published 0.19); no call [volatility before the spike +0.33; the spike in units of that volatility -0.21; 20-session move in the call's direction +0.21]
+- TREO (2026-11-10): dump tomorrow 0.18 (base 0.19, benchmark 0.16, published 0.19); no call [the spike in units of that volatility -0.16; close within its 14-session high-low range (Stochastic %K) -0.14; an 8-K (or 6-K) that day or the day before +0.14]
+- LGVN (2026-11-10): dump tomorrow 0.19 (base 0.19, benchmark 0.16, published 0.19); no call [close within its 14-session high-low range (Stochastic %K) -0.31; an 8-K (or 6-K) that day or the day before +0.14; the spike in units of that volatility -0.13]
+- ZIP (2026-11-10): dump tomorrow 0.11 (base 0.19, benchmark 0.17, published 0.19); shadow the stock holds: not: it closes at least 10% below the signal close at the next session, when most of its twins do not [close within its 14-session high-low range (Stochastic %K) -0.32; an 8-K (or 6-K) that day or the day before -0.15; close near the day's high, in the call's direction +0.10]
+- ESLA (2026-11-10): dump tomorrow 0.31 (base 0.19, benchmark 0.21, published 0.19); no call [close within its 14-session high-low range (Stochastic %K) +0.21; 20-session move in the call's direction +0.21; the spike in units of that volatility -0.20]
 
 ## Appendix
 
 | Statement | Resolved | Rate | AUC | AUC benchmark | Brier gain vs base (se) | benchmark vs base | learner vs benchmark | Calls shadow right/n | live right/n |
 |---|---:|---:|---:|---:|---|---|---|---|---|
-| NEXT_DUMP10_1 | 30 | 0.367 | 0.569 | 0.522 | +0.0151 (0.0274; 3 blocks) | -0.0021 (0.0348; 3 blocks) | +0.0173 (0.0183; 3 blocks) | 0/0 | 0/0 |
-| DUMP10_5 | 9 | 0.222 | 0.571 | 0.857 | -0.0208 (n/a; 1 blocks) | +0.0030 (n/a; 1 blocks) | -0.0238 (n/a; 1 blocks) | 0/0 | 0/0 |
+| NEXT_DUMP10_1 | 53 | 0.264 | 0.709 | 0.705 | +0.0176 (0.0195; 4 blocks) | +0.0018 (0.0249; 4 blocks) | +0.0158 (0.0182; 4 blocks) | 4/4 | 0/0 |
+| DUMP10_5 | 20 | 0.300 | 0.643 | 0.583 | -0.0208 (n/a; 1 blocks) | +0.0030 (n/a; 1 blocks) | -0.0238 (n/a; 1 blocks) | 0/0 | 0/0 |
 
-Gates (confidence): **PATH/1** alpha 0.00, 3 observations, closed; **PATH/5** alpha 0.00, 1 observations, closed.
+Gates (confidence): **PATH/1** alpha 0.00, 4 observations, closed; **PATH/5** alpha 0.00, 1 observations, closed.
 
-v2.2 against v2.3 on DUMP10_5, the same 9 sets: paired Brier gain of v2.3 -0.0208 (se 0.0374); AUC v2.2 0.5 vs v2.3 0.5714285714285714.
+v2.2 against v2.3 on DUMP10_5, the same 20 sets: paired Brier gain of v2.3 -0.0011 (se 0.0238); AUC v2.2 0.5 vs v2.3 0.6428571428571429.
 
 Due sets without a forecast: 32 (SPEC-SCAN-US-2026-11-02-G2_RET30-SEGG, SPEC-SCAN-US-2026-11-02-G2_RET30-INLF, SPEC-SCAN-US-2026-11-02-G2_RET30-CLRO, SPEC-SCAN-US-2026-11-02-G2_RET30-HXHX, SPEC-SCAN-US-2026-11-02-G2_RET30-INO, SPEC-SCAN-US-2026-11-02-G2_RET30-IFBD, SPEC-SCAN-US-2026-11-02-G2_RET30-GNTA, SPEC-SCAN-US-2026-11-02-G2_RET30-PERI, SPEC-SCAN-US-2026-11-02-G2_RET30-EVGO, SPEC-SCAN-US-2026-11-02-G2_RET30-NMRA).
 
