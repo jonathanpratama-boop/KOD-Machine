@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T10:40:52Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-10T23:03:20Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 19 (FIRE 7, ABSTAIN 12) over 6 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 12, SEALED 19, SKIP_NOT_OPERATING 3, SKIP_LATE 2, SKIP_NO_TICKER 3, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 20 (FIRE 7, ABSTAIN 13) over 7 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 12, SEALED 20, SKIP_NOT_OPERATING 3, SKIP_LATE 2, SKIP_NO_TICKER 3, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP ADM (Archer-Daniels-Midland Co) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
-Set `CAT-FORM4_SHARP-0001225208-26-008783`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 69.84 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001225208-26-008783` by McAtee David R II (director); purchases USD 196,756; top executive no; holding up n/a.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001225208-26-008783.
-Twins (band+liq+mom+dd): ENTG 140.06, PRIM 71.24, DINO 99.76, ARW 191.84, PWR 591.48, BKR 48.45, ZS 199.04, OKTA 177.57, CVE 27.59, EME 652.89, SEI 62.61, GEV 829.34, DVN 42.4, CGNX 50.34, FRO 44.29, IBKR 77.57, ENS 151.63, SNX 228.33, AVT 84.79, META 641.37.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP AN (AUTONATION, INC.) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
 Set `CAT-FORM4_SHARP-0001293167-26-000008`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 186.06 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001293167-26-000008` by Szlosek Thomas A (EVP & CFO), TRAVISANO JACQUELINE A (director); purchases USD 298,004; top executive yes; holding up +6.0%.
@@ -207,4 +200,11 @@ Form 4 `0002019299-26-000018` by Ellingson Alan Wayne (Chief Financial Officer);
 Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002019299-26-000018.
 Twins (band+liq+mom+dd): PATH 12.98, RGTI 12.98, HL 15.41, WULF 12.38, PCG 13.14, NVTS 9.58, AG 15.87.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D CMMB (Chemomab Therapeutics Ltd.) - accepted 2026-11-10T17:30:05-05:00, sealed 2026-11-10T23:03:19Z, cutoff 2026-11-11T14:15:00Z
+Set `CAT-SEC13D-0001493152-26-051041`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 1.345 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20.
+Filing `0001493152-26-051041` by Scipher Medicine Corp; Item 4 intent words: board, merger, director.
+Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 773.9M, dilution filings 1.
+Twins (band+liq+mom+dd): YYAI 1.05, LEXX 4.68, SOWG 2.02, MB 3.797, CALC 1.37.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
