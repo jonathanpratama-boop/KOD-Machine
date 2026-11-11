@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-11T10:47:07Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-11T10:47:24Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 18 over 6 signal sessions; events seen: SEALED 18; coverage gaps 0.
+Sets 20 over 6 signal sessions; events seen: SEALED 20; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 9, FIRE 9
+- Classes: ABSTAIN 10, FIRE 10
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 141 tags: 30 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP SOPH (SOPHiA GENETICS SA) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
-Set `CAT-FORM4_SHARP-0001840706-26-000351`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 7.49 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001840706-26-000351` by Muken Ross (Chief Executive Officer), CARDOZA GEORGE (Chief Financial Officer); purchases USD 278,388; top executive yes; holding up +6.5%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001840706-26-000351.
-Twins (band+liq+mom+dd): DRTS 14.11, GAIN 15.09, FVRR 8.48, ACIC 10.01, AVO 11.91, ASIX 15.63, FF 5.07, DEC 12.91, PHI 18.11, MTA 8.45, MASS 11.51, USNA 13.85, PFLT 6.86, EPRX 7.42, HTLD 10.52, AVNW 19.13, SCZM 8.09, SHEN 10.21, PRTA 8.775, XZO 16.5.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP GOOD (GLADSTONE COMMERCIAL CORP) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
-Set `CAT-FORM4_SHARP-0001873961-26-000002`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 10.225 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001873961-26-000002` by Cooper Arthur S. (CEO & President); purchases USD 99,999; top executive yes; holding up +27.7%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001873961-26-000002.
-Twins (band+liq+mom+dd): XGN 7.1, MNRO 11.14, SSYS 6.68, NAVI 7.84, AMSF 19.63, SHIP 14.33, EOLS 6.98, INVA 19, XXI 5.57, EGY 5.39, SB 7.22, TTAM 11.64, SD 12.24, HSHP 15.66, EBS 6.1, RMR 15.75, ELPC 10.91, FPI 8.85, OOMA 18.18, OPRA 15.49.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP AUDC (AUDIOCODES LTD) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
 Set `CAT-FORM4_SHARP-0001976408-26-000933`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 8.5 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +193,18 @@ Filing `0001213900-26-118179` by Fivespan Partners, LP; Item 4 intent words: boa
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 3,230.2M, dilution filings 0.
 Twins (band+liq+mom+dd): IT 188.92, APA 45.12, C 122.27, URI 1104.94, ADI 393.3.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 PMAX (Powell Max Ltd) - accepted 2026-11-10T18:10:12-05:00, sealed 2026-11-11T10:47:19Z, cutoff 2026-11-11T14:15:00Z
+Set `CAT-SEC13D_V2-0000921895-26-003015`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 0.8003 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000921895-26-003015` by Hyperscale Data, Inc.; cover page max 21.7% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (MICROCAP); market value USD 2.3M from COVER_PAGE; parent CAT-SEC13D-0000921895-26-003015.
+Twins (band+liq+mom+dd): FMST 0.695, XELB 0.431, FBDT 0.9156, MMA 0.357, DXLG 0.4198, ALLR 0.9102, SCAG 0.99, BFRG 0.599, EDVA 0.17.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 LRN (Stride, Inc.) - accepted 2026-11-10T18:20:24-05:00, sealed 2026-11-11T10:47:19Z, cutoff 2026-11-11T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-118179`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 76.82 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-118179` by Fivespan Partners, LP; cover page max 5.3% of class; strong intent: nominate; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 3,230.2M from XBRL; parent CAT-SEC13D-0001213900-26-118179.
+Twins (band+liq+mom+dd): ALGM 30.7, LII 347.93, NTSK 21.44, IRM 110.78, CBRE 134.79, EMN 65.45, GMED 75.23, BCS 23.1, GWRE 155.48, PAYC 237.96, ADI 393.3, CEG 267.76, ATI 182.72, ANET 185.02, RBRK 109.34, CF 122.36, APA 45.12, MDGL 432.6, NRG 97.11, CFG 64.82.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
