@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-11T10:46:55Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-11T10:47:07Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 20 (FIRE 7, ABSTAIN 13) over 7 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 12, SEALED 20, SKIP_NOT_OPERATING 3, SKIP_LATE 2, SKIP_NO_TICKER 3, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 22 (FIRE 8, ABSTAIN 14) over 7 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 12, SEALED 22, SKIP_NOT_OPERATING 3, SKIP_LATE 2, SKIP_NO_TICKER 4, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,20 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP AFCG (Advanced Flower Capital Inc.) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-072331`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 3.435 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-072331` by TANNENBAUM LEONARD M (director); purchases USD 56,980; top executive no; holding up +0.3%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-072331.
-Twins (band+liq+mom+dd): YDKG 1.04, GROV 1.1, EFOI 4.395, TOMZ 2.42, ISPR 1.67, LEDS 2.44, MRT 2.17, AWX 2.76, BRIA 1.47, AIRI 2.82, SERA 2.19, ORIO 1.08, CLPR 3.28, GCL 1.05, MLCI 3.59, YHGJ 3.61, REED 1.25, KMRK 1.51, CLGN 4.29, SNT 2.45.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP LUCK (Lucky Strike Entertainment Corp) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-072428`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 3.76 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-072428` by Young John Alan (director); purchases USD 56,990; top executive no; holding up +16.7%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-072428.
-Twins (band+liq+mom+dd): SPAI 3.28, UP 2.76, SKIL 3.35, ACET 2.99, SOTK 4.3, SND 3.95, AIFA 3.91, CURR 1.9, MGNX 2.34, CRVO 1.43, WORX 1.39, GTBP 4.32, PROK 1.15, DAIC 1.06, VIVO 1.89, BBOT 2.3, CDXS 1.11, MITT 4.56, BXBL 1.87, PMN 4.05.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP SOPH (SOPHiA GENETICS SA) - filed 2026-11-09, sealed 2026-11-10T10:40:18Z, cutoff 2026-11-10T14:15:00Z
 Set `CAT-FORM4_SHARP-0001840706-26-000351`, scan `SCAN-US-2026-11-09-G2_RET30`; signal close 7.49 on 2026-11-09; entry: the entry session's opening print (2026-11-10). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001840706-26-000351` by Muken Ross (Chief Executive Officer), CARDOZA GEORGE (Chief Financial Officer); purchases USD 278,388; top executive yes; holding up +6.5%.
@@ -207,4 +193,18 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): CUVL 5.19, GSIW 10.17, NRDY 5.8, PCLA 6.15, GRNQ 7.44.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D PMAX (Powell Max Ltd) - accepted 2026-11-10T18:10:12-05:00, sealed 2026-11-11T10:47:04Z, cutoff 2026-11-11T14:15:00Z
+Set `CAT-SEC13D-0000921895-26-003015`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 0.8003 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20.
+Filing `0000921895-26-003015` by Hyperscale Data, Inc.; Item 4 intent words: board, director.
+Coverage **ABSTAIN** (MV_UNKNOWN); pre-entry move +0.00%, market value n/a, dilution filings 0.
+Twins (band+liq+mom+dd): FMST 0.695, XELB 0.431, FBDT 0.9156, MMA 0.357, DXLG 0.4198.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D LRN (Stride, Inc.) - accepted 2026-11-10T18:20:24-05:00, sealed 2026-11-11T10:47:04Z, cutoff 2026-11-11T14:15:00Z
+Set `CAT-SEC13D-0001213900-26-118179`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 76.82 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20.
+Filing `0001213900-26-118179` by Fivespan Partners, LP; Item 4 intent words: board, merger, acquisition, nominate, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 3,230.2M, dilution filings 0.
+Twins (band+liq+mom+dd): IT 188.92, APA 45.12, C 122.27, URI 1104.94, ADI 393.3.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
