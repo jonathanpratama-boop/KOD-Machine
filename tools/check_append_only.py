@@ -22,6 +22,7 @@ Append-only logs: the new content must start with the old content, byte for byte
   idx-signals/data/corporate_actions/manual.csv   primary-source entries (correct by adding a row)
   idx-signals/paper/ledger.jsonl  prospective paper scans, decisions and outcomes
   idx-signals/paper/speculations.jsonl  sealed speculation sets and their resolutions
+  idx-signals/paper/split_flags.jsonl  descriptive SPLIT_ARTIFACT_V11 tags on US speculation sets
   idx-signals/paper/sensors/sensors.jsonl  free public sensor alerts
   idx-signals/paper/catalysts.jsonl  sealed catalyst sets, batches, tags and their resolutions
   idx-signals/paper/learner.jsonl  the learner's sealed forecasts (LEARNER_v1, withdrawn; kept and verified)
@@ -65,6 +66,7 @@ APPEND_ONLY = (
     "idx-signals/data/corporate_actions/manual.csv",
     "idx-signals/paper/ledger.jsonl",
     "idx-signals/paper/speculations.jsonl",
+    "idx-signals/paper/split_flags.jsonl",
     "idx-signals/paper/sensors/sensors.jsonl",
     "idx-signals/paper/catalysts.jsonl",
     "idx-signals/paper/learner.jsonl",
