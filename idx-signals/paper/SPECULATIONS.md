@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-10T23:01:37Z from `paper/speculations.jsonl`: 196 sets sealed, 217 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-11T00:26:32Z from `paper/speculations.jsonl`: 197 sets sealed, 217 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -56,7 +56,7 @@ PATH20 windows resolved: 0; NEXT1: 104.
 | UP10_1 | 104 | 0.192 | 0.044 | 0.266 | 0.1842 | 0.2500 | 0.1891 |
 | BEATS_TWINS_1 | 103 | 0.495 | 0.515 | 0.500 | 0.2500 | 0.2500 | 0.2545 |
 
-## CRYPTO: 11 sets over 8 signal sessions (2026-10-27 .. 2026-11-09, 0.79 sets per scan)
+## CRYPTO: 12 sets over 9 signal sessions (2026-10-27 .. 2026-11-10, 0.80 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -66,7 +66,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.420 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 3978 | 637 | 160 | 70 |
+| 0.427 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 4102 | 657 | 165 | 69 |
 
 PATH20 windows resolved: 0; NEXT1: 7.
 
@@ -384,31 +384,11 @@ Twins (band+liq+mom): CRIS 0.653, KTTA 0.5738, HUMA 0.59, SLQT 0.4572, XHLD 0.85
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### CRYPTO INIT (2026-11-09) - sealed 2026-11-10T00:33:49Z, cutoff 2026-11-10T02:00:00Z
-Decision `SCAN-CRYPTO-2026-11-09-G2_RET30-INIT` (PASS), bound to ledger record `19f3156883bc`; set `fa6a493d8045`.
-Signal close 0.19114 (reference 0.12041); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.19608 at 2026-11-10T00:33:51Z.
-Tag: 2 flags today vs trailing median 0.0 -> hot_day = True.
-Twins (band+liq+mom+dd): ERA 0.0704, POL 0.08919, MEGA 0.04987, ARB 0.1749, JST 0.14505.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.185 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.511 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.314 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.500 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.500 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### CRYPTO SOXLB (2026-11-09) - sealed 2026-11-10T00:33:49Z, cutoff 2026-11-10T02:00:00Z
-Decision `SCAN-CRYPTO-2026-11-09-G2_RET30-SOXLB` (PASS), bound to ledger record `1497eb21c96e`; set `4bdf5b1b2a8e`.
-Signal close 57.22 (reference 43.86); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 56.68 at 2026-11-10T00:33:57Z.
-Tag: 2 flags today vs trailing median 0.0 -> hot_day = True.
-Twins (band+liq+mom+dd): TRUMP 1.121, INTCB 59.75, SNXXB 3.75, PENDLE 1.583, KORUB 7.77.
+### CRYPTO INIT (2026-11-10) - sealed 2026-11-11T00:26:26Z, cutoff 2026-11-11T02:00:00Z
+Decision `SCAN-CRYPTO-2026-11-10-G2_RET30-INIT` (PASS), bound to ledger record `c1135477420b`; set `b43acfa2cd7d`.
+Signal close 0.27484 (reference 0.19114); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.26143 at 2026-11-11T00:26:29Z.
+Tag: 1 flags today vs trailing median 0.0 -> hot_day = True.
+Twins (band+liq+mom+dd): RWUSD 0.9998, ASTER 0.6389, ERA 0.0802, POL 0.08827, NIGHT 0.04186.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
