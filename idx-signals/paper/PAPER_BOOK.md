@@ -4,13 +4,13 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-10T23:02:09.228122Z; latest US scan session: 2026-11-10.
+- Assessed 2026-11-11T12:42:04.561037Z; latest US scan session: 2026-11-10.
 - Latest compatible LEARNER v2.4 forecast: 2026-11-10T22:59:40Z (signal session 2026-11-10).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-10T23:02:09Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-11T12:42:04Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
@@ -118,3 +118,17 @@ Generated 2026-11-10T23:02:09Z. Paper only: no orders, no money. Protocol: `rese
 | 2026-10-30 | CHOW | 0.68 | DONT_BUY | - | TRADED | -12.34% |
 | 2026-10-30 | ATYR | 0.65 | DONT_BUY | - | TRADED | +50.24% |
 | 2026-10-30 | ASUR | 0.43 | BUY_OK | - | TRADED | +3.69% |
+
+
+## Secondary view: sets tagged SPLIT_ARTIFACT_V11 excluded (display only, the frozen verdict above is unchanged)
+
+7 of 87 planned spikes were recorded as +30% days only because a reverse split left the last pre-split close in the provider's data (`paper/split_flags.jsonl`, rule `SPLIT_ARTIFACT_V11`, research/US_SPLIT_ARTIFACTS_v1). Tagged: ATYR (2026-10-30), MASK (2026-10-30), OMEX (2026-10-30), WHLR (2026-10-30), XXII (2026-11-05), TOPS (2026-11-09), SMX (2026-11-10).
+
+The same books without them. This is a disclosure, not a second verdict: the planned look and the bounds above are computed on every planned spike, as frozen.
+
+| Book | Positions | Closed | Wins | P&L | Average trade |
+|---|---:|---:|---:|---:|---:|
+| KOD | 73 | 2 | 1 | $-80 | -4.02% |
+| ALL | 80 | 7 | 2 | $-1,087 | -15.52% |
+| AVOIDED | 7 | 5 | 1 | $-1,006 | -20.13% |
+| OWNER | 0 | 0 | 0 | $+0 | - |
