@@ -316,6 +316,19 @@ def main(argv=None) -> int:
     p_sp.add_argument(
         "--commit", action="store_true", help="commit the records and push (GitHub receipt)"
     )
+    p_sf = sub.add_parser(
+        "split-flag",
+        help="tag US speculation sets whose recorded +30% day is a reverse split "
+        "(descriptive ledger paper/split_flags.jsonl; research/US_SPLIT_ARTIFACTS_v1)",
+    )
+    p_sf.add_argument("--manifest", help="the US recent-bars manifest (default: the latest one)")
+    p_sf.add_argument(
+        "--backfill-audit",
+        metavar="SETS_V11_CSV",
+        help="one-time: flag the sets already assessed by the audit from its results/sets_v11.csv",
+    )
+    p_sf.add_argument("--basis", default="", help="provenance text for --backfill-audit records")
+    p_sf.add_argument("--commit", action="store_true")
     p_ss = sub.add_parser("speculate-score", help="resolve speculation windows that have ended")
     p_ss.add_argument(
         "--manifest",
@@ -1261,7 +1274,7 @@ def main(argv=None) -> int:
 
         from . import learner, learner2, learner3
 
-        from . import crypto_account, paper_account, paper_book, premove_shadow
+        from . import crypto_account, paper_account, paper_book, premove_shadow, split_flags
 
         problems = (
             paper.verify_all()
@@ -1274,6 +1287,7 @@ def main(argv=None) -> int:
             + paper_book.verify()
             + paper_account.verify()
             + crypto_account.verify()
+            + split_flags.verify()
         )
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
@@ -1526,6 +1540,47 @@ def main(argv=None) -> int:
             paths = [shadow.LEDGER, report, *[t for t in tokens if t.exists()]]
             print(paper.commit_and_push(paths, message, trailer))
         return 0
+    elif args.cmd == "split-flag":
+        import os
+
+        from . import paper, split_flags
+        from .provenance import latest_manifest
+
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        stamper = RFC3161Timestamper()
+        if args.backfill_audit:
+            if not args.basis:
+                print("error: --backfill-audit needs --basis (where the audit lives)", file=sys.stderr)
+                return 2
+            stored = split_flags.backfill_from_audit(Path(args.backfill_audit), args.basis, stamper)
+        else:
+            manifest = Path(args.manifest) if args.manifest else latest_manifest("yahoo_us_recent")
+            stored = split_flags.flag_pending(manifest, stamper)
+        if not stored:
+            print("no unflagged US speculation set; nothing recorded")
+            return 0
+        tally = {}
+        for r in stored:
+            tally[r["flag"]] = tally.get(r["flag"], 0) + 1
+        print("split flags: " + ", ".join(f"{k} {v}" for k, v in sorted(tally.items())))
+        for r in stored:
+            if r["flag"] in ("ARTIFACT_V11", "INDETERMINATE"):
+                print(f"  {r['ticker']} {r['signal_session']}: {r['flag']} {r['split']}")
+        if args.commit:
+            tokens = [
+                paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
+                for r in stored
+                for a in ("freetsa", "sectigo")
+            ]
+            files = [split_flags.FLAGS_LEDGER, *[t for t in tokens if t.exists()]]
+            print(
+                paper.commit_and_push(
+                    files, f"split flags: {len(stored)} US set(s) tagged", trailer
+                )
+            )
     elif args.cmd in ("speculate", "speculate-score", "speculate-report"):
         import os
         from datetime import datetime, timezone
@@ -1572,6 +1627,8 @@ def main(argv=None) -> int:
             print(f"sealed {len(sets)} set(s) for {mk}")
             message = f"speculation register: {len(sets)} set(s) sealed for {mk} {sets[0]['signal_session']}"
             extra = []
+            if mk == "US":
+                extra = _split_flag_hook(stamper)
         else:
             todo = speculation.due(mk)
             if not todo:
@@ -2002,6 +2059,36 @@ def _manifest_for_score(mk: str, max_age_hours: float) -> tuple[Path, list]:
     if max_age_hours and max_age_hours > 0:
         return _recent_manifest(mk, max_age_hours)
     return _pull_recent(mk)
+
+
+def _split_flag_hook(stamper) -> list[Path]:
+    """After US sets are sealed: tag them from the provider split events in the pull the scan just made.
+    Descriptive only (research/US_SPLIT_ARTIFACTS_v1). Any failure is reported and never blocks sealing."""
+    from . import paper, split_flags
+    from .provenance import latest_manifest
+
+    try:
+        try:
+            stored = split_flags.flag_pending(latest_manifest("yahoo_us_recent"), stamper)
+        except paper.ReceiptPendingError as exc:
+            stored = exc.records
+            print(f"warning: split flags written, receipts pending: {exc}")
+    except Exception as exc:  # noqa: BLE001 - tagging must never block the register
+        print(f"split flags skipped ({type(exc).__name__}: {exc}); sealing is unaffected")
+        return []
+    if not stored:
+        return []
+    tally = {}
+    for r in stored:
+        tally[r["flag"]] = tally.get(r["flag"], 0) + 1
+    print("split flags: " + ", ".join(f"{k} {v}" for k, v in sorted(tally.items())))
+    for r in stored:
+        if r["flag"] in ("ARTIFACT_V11", "INDETERMINATE"):
+            print(f"  {r['ticker']}: {r['flag']} {r['split']} (recorded {r['recorded_ret1']:+.0%})")
+    tokens = [
+        paper.TOKENS / f"{r['record_hash']}.{a}.tsr" for r in stored for a in ("freetsa", "sectigo")
+    ]
+    return [split_flags.FLAGS_LEDGER, *[t for t in tokens if t.exists()]]
 
 
 def _recent_manifest(mk: str, max_age_hours: float) -> tuple[Path, list]:
