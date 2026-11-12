@@ -4,26 +4,26 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-11T23:03:52.028589Z; latest US scan session: 2026-11-11.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-11T23:01:14Z (signal session 2026-11-11).
+- Assessed 2026-11-12T23:01:41.521384Z; latest US scan session: 2026-11-12.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-12T22:59:41Z (signal session 2026-11-12).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-11T23:03:52Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-12T23:01:41Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 106 spikes planned, 11 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 121 spikes planned, 11 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 94 | 92 | 2 | 1 | $-80 | -4.02% |
-| ALL | every spike | 106 | 95 | 11 | 4 | $-1,140 | -10.37% |
+| KOD | every BUY_OK | 109 | 107 | 2 | 1 | $-80 | -4.02% |
+| ALL | every spike | 121 | 110 | 11 | 4 | $-1,140 | -10.37% |
 | AVOIDED | every DONT_BUY (kept out) | 12 | 3 | 9 | 3 | $-1,060 | -11.78% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
@@ -31,6 +31,21 @@ Generated 2026-11-11T23:03:52Z. Paper only: no orders, no money. Protocol: `rese
 
 | Signal | Ticker | Dump tomorrow | KOD | You | Status | Net |
 |---|---|---:|---|---|---|---:|
+| 2026-11-12 | XLAB | 0.28 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | TGHL | 0.17 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | TGEN | 0.14 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | RIME | 0.15 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | POAS | 0.32 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | PLCE | 0.28 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | PARA | 0.29 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | ICMB | 0.16 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | GP | 0.25 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | DBGI | 0.35 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | BGIN | 0.16 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | ARAI | 0.33 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | AIMD | 0.22 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | ADXN | 0.19 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | ADVB | 0.17 | BUY_OK | - | OPEN | - |
 | 2026-11-11 | WHLR | 0.41 | BUY_OK | - | OPEN | - |
 | 2026-11-11 | TANH | 0.16 | BUY_OK | - | OPEN | - |
 | 2026-11-11 | SLXN | 0.31 | BUY_OK | - | OPEN | - |
@@ -141,13 +156,13 @@ Generated 2026-11-11T23:03:52Z. Paper only: no orders, no money. Protocol: `rese
 
 ## Secondary view: sets tagged SPLIT_ARTIFACT_V11 excluded (display only, the frozen verdict above is unchanged)
 
-7 of 106 planned spikes were recorded as +30% days only because a reverse split left the last pre-split close in the provider's data (`paper/split_flags.jsonl`, rule `SPLIT_ARTIFACT_V11`, research/US_SPLIT_ARTIFACTS_v1). Tagged: ATYR (2026-10-30), MASK (2026-10-30), OMEX (2026-10-30), WHLR (2026-10-30), XXII (2026-11-05), TOPS (2026-11-09), SMX (2026-11-10).
+7 of 121 planned spikes were recorded as +30% days only because a reverse split left the last pre-split close in the provider's data (`paper/split_flags.jsonl`, rule `SPLIT_ARTIFACT_V11`, research/US_SPLIT_ARTIFACTS_v1). Tagged: ATYR (2026-10-30), MASK (2026-10-30), OMEX (2026-10-30), WHLR (2026-10-30), XXII (2026-11-05), TOPS (2026-11-09), SMX (2026-11-10).
 
 The same books without them. This is a disclosure, not a second verdict: the planned look and the bounds above are computed on every planned spike, as frozen.
 
 | Book | Positions | Closed | Wins | P&L | Average trade |
 |---|---:|---:|---:|---:|---:|
-| KOD | 92 | 2 | 1 | $-80 | -4.02% |
-| ALL | 99 | 7 | 2 | $-1,087 | -15.52% |
+| KOD | 107 | 2 | 1 | $-80 | -4.02% |
+| ALL | 114 | 7 | 2 | $-1,087 | -15.52% |
 | AVOIDED | 7 | 5 | 1 | $-1,006 | -20.13% |
 | OWNER | 0 | 0 | 0 | $+0 | - |
