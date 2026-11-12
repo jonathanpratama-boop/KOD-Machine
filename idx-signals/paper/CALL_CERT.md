@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-10T23:01:41Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-11T23:03:16Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 97 live forecasts, 10 calls, 3 wrong of 8 (37.5%); p that the true rate exceeds 50%: 0.855.
+- **Evidence so far:** 116 live forecasts, 15 calls, 4 wrong of 9 (44.4%); p that the true rate exceeds 50%: 0.746.
 
 ## The bar
 
@@ -18,21 +18,40 @@ Generated 2026-11-10T23:01:41Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-10 | ZIP | 0.296 | 0.557 | - | 0.111 | pending |
-| 2026-11-10 | TTEC | 0.387 | 0.557 | - | 0.154 | pending |
-| 2026-11-10 | TREO | 0.346 | 0.557 | - | 0.178 | pending |
-| 2026-11-10 | TANH | 0.490 | 0.557 | - | 0.304 | pending |
-| 2026-11-10 | SMX | 0.385 | 0.557 | - | 0.259 | pending |
-| 2026-11-10 | PXLW | 0.405 | 0.557 | - | 0.171 | pending |
-| 2026-11-10 | PEPG | 0.461 | 0.557 | - | 0.256 | pending |
-| 2026-11-10 | NNOX | 0.304 | 0.557 | - | 0.158 | pending |
-| 2026-11-10 | NCI | 0.430 | 0.557 | - | 0.327 | pending |
-| 2026-11-10 | MNDO | 0.378 | 0.557 | - | 0.160 | pending |
+| 2026-11-11 | WHLR | 0.701 | 0.557 | **DUMP** | 0.410 | pending |
+| 2026-11-11 | TANH | 0.382 | 0.557 | - | 0.161 | pending |
+| 2026-11-11 | SLXN | 0.665 | 0.557 | **DUMP** | 0.315 | pending |
+| 2026-11-11 | SHFS | 0.568 | 0.557 | **DUMP** | 0.405 | pending |
+| 2026-11-11 | SFWL | 0.339 | 0.557 | - | 0.140 | pending |
+| 2026-11-11 | SCKT | 0.440 | 0.557 | - | 0.175 | pending |
+| 2026-11-11 | RKDA | 0.431 | 0.557 | - | 0.167 | pending |
+| 2026-11-11 | RETO | 0.516 | 0.557 | - | 0.368 | pending |
+| 2026-11-11 | REED | 0.294 | 0.557 | - | 0.077 | pending |
+| 2026-11-11 | OPTT | 0.472 | 0.557 | - | 0.251 | pending |
+| 2026-11-11 | NWTG | 0.301 | 0.557 | - | 0.101 | pending |
+| 2026-11-11 | NCT | 0.412 | 0.557 | - | 0.246 | pending |
+| 2026-11-11 | GOVX | 0.711 | 0.557 | **DUMP** | 0.361 | pending |
+| 2026-11-11 | GEVO | 0.245 | 0.557 | - | 0.084 | pending |
+| 2026-11-11 | ELOG | 0.389 | 0.557 | - | 0.136 | pending |
+| 2026-11-11 | CANG | 0.375 | 0.557 | - | 0.144 | pending |
+| 2026-11-11 | BURU | 0.575 | 0.557 | **DUMP** | 0.332 | pending |
+| 2026-11-11 | BSEM | 0.371 | 0.557 | - | 0.160 | pending |
+| 2026-11-11 | BGS | 0.268 | 0.557 | - | 0.078 | pending |
+| 2026-11-10 | ZIP | 0.296 | 0.557 | - | 0.111 | dumped |
+| 2026-11-10 | TTEC | 0.387 | 0.557 | - | 0.154 | did not dump |
+| 2026-11-10 | TREO | 0.346 | 0.557 | - | 0.178 | did not dump |
+| 2026-11-10 | TANH | 0.490 | 0.557 | - | 0.304 | did not dump |
+| 2026-11-10 | SMX | 0.385 | 0.557 | - | 0.259 | dumped |
+| 2026-11-10 | PXLW | 0.405 | 0.557 | - | 0.171 | dumped |
+| 2026-11-10 | PEPG | 0.461 | 0.557 | - | 0.256 | did not dump |
+| 2026-11-10 | NNOX | 0.304 | 0.557 | - | 0.158 | did not dump |
+| 2026-11-10 | NCI | 0.430 | 0.557 | - | 0.327 | dumped |
+| 2026-11-10 | MNDO | 0.378 | 0.557 | - | 0.160 | did not dump |
 | 2026-11-10 | MI | 0.472 | 0.557 | - | 0.309 | pending |
-| 2026-11-10 | LGVN | 0.365 | 0.557 | - | 0.189 | pending |
-| 2026-11-10 | INLF | 0.642 | 0.557 | **DUMP** | 0.487 | pending |
-| 2026-11-10 | ESLA | 0.531 | 0.557 | - | 0.306 | pending |
-| 2026-11-10 | AACG | 0.398 | 0.557 | - | 0.180 | pending |
+| 2026-11-10 | LGVN | 0.365 | 0.557 | - | 0.189 | did not dump |
+| 2026-11-10 | INLF | 0.642 | 0.557 | **DUMP** | 0.487 | did not dump |
+| 2026-11-10 | ESLA | 0.531 | 0.557 | - | 0.306 | did not dump |
+| 2026-11-10 | AACG | 0.398 | 0.557 | - | 0.180 | did not dump |
 | 2026-11-09 | XHLD | 0.360 | 0.557 | - | 0.337 | did not dump |
 | 2026-11-09 | WOK | 0.348 | 0.557 | - | 0.295 | did not dump |
 | 2026-11-09 | UG | 0.233 | 0.557 | - | 0.165 | did not dump |
