@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-12T15:37:59Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-12T23:03:10Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 22 (FIRE 8, ABSTAIN 14) over 7 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 12, SEALED 22, SKIP_NOT_OPERATING 3, SKIP_LATE 2, SKIP_NO_TICKER 4, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 25 (FIRE 8, ABSTAIN 17) over 8 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 13, SEALED 25, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,27 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP WD (Walker & Dunlop, Inc.) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
-Set `CAT-FORM4_SHARP-0001104659-26-125243`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 39.97 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001104659-26-125243` by Pinkus Gary S (director); purchases USD 200,526; top executive no; holding up n/a.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001104659-26-125243.
-Twins (band+liq+mom+dd): FBNC 64.81, ABCB 82.94, GCT 61.77, BETA 28.09, MIDD 138.27, ACM 70.63, KAI 299.83, NIC 175.53, AUB 39.86, MAZE 35.45, DLB 64.67, FHI 65.53, CXT 58.52, REPL 23.28, MZTI 109.3, USLM 118.36, STEP 49.18, ABM 54.79, SSD 201.43, SNN 30.92.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP TROX (Tronox Holdings plc) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
-Set `CAT-FORM4_SHARP-0001140361-26-042891`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 2.85 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001140361-26-042891` by Johnston Peter (director); purchases USD 52,600; top executive no; holding up +9.8%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001140361-26-042891.
-Twins (band+liq+mom+dd): SERV 3.11, NRXP 2.36, TNXP 4.1, LODE 1.67, GCTS 1.45, SPRY 3.57, CABO 3.75, AIRJ 2.38, XRX 1.07, DKI 1.43, ACDC 3.53, USAS 3.02, KOPN 3.32, BTGO 4.27, IAUX 1.39, WFF 1.19, AQST 3.52, ADTN 4.41, GLAS 1.97, UROY 2.96.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP ARLO (Arlo Technologies, Inc.) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
-Set `CAT-FORM4_SHARP-0001189819-26-000002`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 12.32 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001189819-26-000002` by Faison Ralph E (director); purchases USD 100,402; top executive no; holding up +2.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001189819-26-000002.
-Twins (band+liq+mom+dd): BXDC 16.68, PZZA 19.98, DEI 10, BKD 9.38, FOXF 17.75, NEOG 11.67, OMER 17.3, KLAR 13.14, SAIL 19.96, NEO 16.96, MFG 9.93, AM 19.78, SHLS 8.13, CC 13.48, NXE 8.33, GNW 8.69, FLG 10.51, PSNL 15.88, DX 10.63, DNA 12.01.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP MX (MAGNACHIP SEMICONDUCTOR Corp) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-454344`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 2.53 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001193125-26-454344` by LEE CHAE (Chief Executive Officer), Amoruso Cristiano (director); purchases USD 1,526,506; top executive yes; holding up +21.1%.
@@ -207,4 +186,25 @@ Form 4 `0002160413-26-000005` by Zafirovski Matthew David (President & COO); pur
 Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002160413-26-000005.
 Twins (band+liq+mom+dd): NGVT 60.78, INVX 24.91, NICE 93.73, TEN 45.16, WIX 64.38, BH 349.22, WBI 26.26, EFXT 20.09, BMA 57.83, SKYW 83.76, SXI 246.22, DAC 147.24, TDW 73.98, TRMD 34.3, IOSP 77.72, CRC 47.12, NOVT 123.71, DGII 65.05, ERO 30.67, OTTR 79.77.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D INTZ (INTRUSION INC) - accepted 2026-11-12T12:39:58-05:00, sealed 2026-11-12T23:03:04Z, cutoff 2026-11-13T14:15:00Z
+Set `CAT-SEC13D-0001815632-26-000005`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 0.5434 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20.
+Filing `0001815632-26-000005` by Tego Cyber, Inc.; Item 4 intent words: board, nominate, director.
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); pre-entry move -7.90%, market value USD 13.3M, dilution filings 2.
+Twins (band+liq+mom+dd): SLGB 0.1811, APRE 0.44, SACH 0.7001, GTEC 0.4945, NCNA 0.93.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D AGLT (Agility Robotics, Inc.) - accepted 2026-11-12T16:30:11-05:00, sealed 2026-11-12T23:03:04Z, cutoff 2026-11-13T14:15:00Z
+Set `CAT-SEC13D-0001213900-26-118976`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 7.58 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20.
+Filing `0001213900-26-118976` by Hurst Jonathan; Item 4 intent words: board, merger, acquisition.
+Coverage **ABSTAIN** (DILUTION_RECENT, MV_UNKNOWN); pre-entry move +0.00%, market value n/a, dilution filings 3.
+Twins (band+liq+mom+dd): APPS 7.3, OCUL 6.28, ARIS 14.81, UUUU 6.68, RCUS 17.77.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D MTRI (InMed Pharmaceuticals Inc.) - accepted 2026-11-12T17:00:03-05:00, sealed 2026-11-12T23:03:04Z, cutoff 2026-11-13T14:15:00Z
+Set `CAT-SEC13D-0001193125-26-458677`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 18.35 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20.
+Filing `0001193125-26-458677` by Fairmount Funds Management LLC; Item 4 intent words: board, merger, director.
+Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 100.8M, dilution filings 2.
+Twins (band+liq+mom+dd): RMBI 15.97, RVSB 6.47, CLAR 5.17, FRBT 19.34, CARL 17.3.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
