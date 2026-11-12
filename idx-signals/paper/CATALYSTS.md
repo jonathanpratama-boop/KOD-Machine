@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-12T23:03:10Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-12T23:03:36Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 20 over 6 signal sessions; events seen: SEALED 20; coverage gaps 0.
+Sets 23 over 7 signal sessions; events seen: SEALED 23; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 10, FIRE 10
+- Classes: ABSTAIN 13, FIRE 10
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,27 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 165 tags: 40 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP MX (MAGNACHIP SEMICONDUCTOR Corp) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-454344`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 2.53 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-454344` by LEE CHAE (Chief Executive Officer), Amoruso Cristiano (director); purchases USD 1,526,506; top executive yes; holding up +21.1%.
-Coverage **ABSTAIN** (DILUTION_RECENT); dilution filings 1; routine owners 0 of 2; parent CAT-FORM4-0001193125-26-454344.
-Twins (band+liq+mom+dd): TSQ 1.56, AARD 1.37, MNTS 1.9, TWG 2.64, EXFY 1.72, MIND 3.04, VIVO 2, TRT 4.825, GLOO 3.02, LFMD 1.74, BIAF 2.39, FTCI 1.55, CANG 1.14, PMN 3.98, IFRX 1.21, SHMD 2.5, SNWV 1.88, HURA 1.51, ARAY 3.19, ZSQR 2.3.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP STVN (Stevanato Group S.p.A.) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-455579`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 13.53 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-455579` by MOREL DONALD E JR (director); purchases USD 326,750; top executive no; holding up +66.8%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-455579.
-Twins (band+liq+mom+dd): YARW 15.48, OFRM 10.02, LYTS 15.93, CD 5.19, SAFE 10.32, BBAR 10.74, CRMD 5.37, KC 8.4, LIME 17.51, PICS 6.96, KYTX 5.08, XGN 5.26, CLPT 8.77, CLB 8.95, TWI 5.13, NMAX 7.55, CIM 6.99, ITG 5.34, ANL 9.96, NRDS 7.42.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP DTI (Drilling Tools International Corp) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-455713`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 1.48 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-455713` by Prejean Robert Wayne (Chief Executive Officer); purchases USD 164,300; top executive yes; holding up +20.4%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-455713.
-Twins (band+liq+mom+dd): STKE 1.125, NXDT 3.3, QMLS 3.07, AVX 4.06, JELD 1.01, CEPL 3.06, ASTI 1.52, IFRX 1.21, IKT 1.55, TTGT 2.76, AISP 1.69, HYFT 1.03, GTBP 3.96, ACRV 1.57, JYD 1.22, LUCK 3.4, ZSQR 2.3, NGEN 1.33, ZH 2.65, RC 1.01.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP WW (WW INTERNATIONAL, INC.) - filed 2026-11-10, sealed 2026-11-11T10:55:57Z, cutoff 2026-11-11T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-455831`, scan `SCAN-US-2026-11-10-G2_RET30`; signal close 12.02 on 2026-11-10; entry: the entry session's opening print (2026-11-11). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +186,25 @@ Filing `0001193125-26-458677` by Fairmount Funds Management LLC; Item 4 intent w
 Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 100.8M, dilution filings 2.
 Twins (band+liq+mom+dd): RMBI 15.97, RVSB 6.47, CLAR 5.17, FRBT 19.34, CARL 17.3.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 INTZ (INTRUSION INC) - accepted 2026-11-12T12:39:58-05:00, sealed 2026-11-12T23:03:31Z, cutoff 2026-11-13T14:15:00Z
+Set `CAT-SEC13D_V2-0001815632-26-000005`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 0.5434 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001815632-26-000005` by Tego Cyber, Inc.; cover page max 8.9% of class; strong intent: nominate; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); market value USD 13.3M from XBRL; parent CAT-SEC13D-0001815632-26-000005.
+Twins (band+liq+mom+dd): SLGB 0.1811, APRE 0.44, SACH 0.7001, GTEC 0.4945, NCNA 0.93, AEON 0.1587, BRFH 0.5017, KALA 0.161, CPHI 0.5599, PBK 0.1415, CIRC 0.1961, LOOP 0.2105, TMDE 0.43, FUFU 0.9089, IMNN 0.6368, NTCL 0.2095, FCHL 0.722, USBC 0.3661, CABR 0.8043, TEAD 0.1708.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 AGLT (Agility Robotics, Inc.) - accepted 2026-11-12T16:30:11-05:00, sealed 2026-11-12T23:03:31Z, cutoff 2026-11-13T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-118976`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 7.58 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-118976` by Hurst Jonathan; cover page max 5.2% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 1,844.4M from COVER_PAGE; parent CAT-SEC13D-0001213900-26-118976.
+Twins (band+liq+mom+dd): APPS 7.3, OCUL 6.28, ARIS 14.81, UUUU 6.68, RCUS 17.77, BRUN 5.92, NVAX 8.76, SECZ 8.39, FCEL 10.25, MUX 11.95, WYFI 10.335, UGP 5.63, FSM 9.11, UEC 6.8, STWD 11.44, SBET 5.77, UMAC 11.83, AESI 5.5, NVCR 11.72, POET 5.21.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 MTRI (InMed Pharmaceuticals Inc.) - accepted 2026-11-12T17:00:03-05:00, sealed 2026-11-12T23:03:31Z, cutoff 2026-11-13T14:15:00Z
+Set `CAT-SEC13D_V2-0001193125-26-458677`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 18.35 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001193125-26-458677` by Fairmount Funds Management LLC; cover page max 19.99% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 100.8M from XBRL; parent CAT-SEC13D-0001193125-26-458677.
+Twins (band+liq+mom+dd): RMBI 15.97, RVSB 6.47, CLAR 5.17, FRBT 19.34, CARL 17.3, LAW 6.51, BBCP 10.27, HQI 18.53, AFRI 13.13, KMDA 8.13, JRSH 7.35, WHF 8.31, GRDX 5.42, RMNI 5.59, SKIN 15.96, DIBS 5.83, JXG 13.09, HYNE 18.84, INFU 14.79, RSVR 10.22.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
