@@ -51,8 +51,9 @@ const summary = data.summary[0];
 const programs = new Map(data.programs.map(program => [program.id, program]));
 const server = new Map(data.server.map(study => [study.study, study]));
 const cloudResults = data.cloud_results?.schema === 'KOD_R2_RESULTS_V1' ? data.cloud_results : null;
-const ongoing = data.experiments.filter(experiment => experiment.group !== 'closed').map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
-const historical = data.experiments.filter(experiment => experiment.group === 'closed');
+const isFinished = experiment => experiment.group === 'closed' || ['CLOSED','COMPLETED'].includes(experiment.state);
+const ongoing = data.experiments.filter(experiment => !isFinished(experiment)).map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
+const historical = data.experiments.filter(isFinished);
 const count = value => value == null ? '—' : new Intl.NumberFormat('en-US').format(value);
 const text = value => value == null ? '' : String(value);
 // Display copy only. Original research records remain available in the details and download.
@@ -380,6 +381,7 @@ function review(experiment) {
   return box;
 }
 function rowStatus(experiment) {
+  if (isFinished(experiment)) return 'ok';
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
   const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
   const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
@@ -408,13 +410,14 @@ function changeLine(experiment) {
 }
 function health(experiment) {
   const box=element('div','health');
+  const finished=isFinished(experiment);
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
-  const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
-  const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
-  const unknown=/STALE|UNKNOWN/.test(experiment.state);
-  const label=stale ? 'Update overdue' : problem ? 'Needs attention' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
+  const stale=!finished && (!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours);
+  const problem=!finished && /STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
+  const unknown=!finished && /STALE|UNKNOWN/.test(experiment.state);
+  const label=finished ? 'Closed' : stale ? 'Update overdue' : problem ? 'Needs attention' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
   box.append(element('span','tag' + (stale || unknown ? ' warn' : problem ? ' bad' : ''),label),element('p','checked',date(experiment.as_of,true)));
-  box.append(element('p','check-state',stale ? experiment.state.charAt(0) + experiment.state.slice(1).toLowerCase() + ' at last update' : age(experiment.as_of)));
+  box.append(element('p','check-state',finished ? 'Final recorded update' : stale ? experiment.state.charAt(0) + experiment.state.slice(1).toLowerCase() + ' at last update' : age(experiment.as_of)));
   return box;
 }
 function paperBookViews() {
@@ -472,7 +475,8 @@ function renderArchive() {
   box.append(element('h3','','Past results'));
   const labels={worked:'Passed its historical test',didnt_work:'Didn’t pass its test',no_answer:'Inconclusive',not_an_idea:'Audit or system check'};
   for (const experiment of historical) {
-    const entry=element('article','record');entry.append(element('small','',labels[experiment.outcome] || text(experiment.outcome || experiment.state)),element('br'),element('b','',experiment.short || experiment.name),element('p','',experiment.lesson || experiment.plain));
+    const entry=element('article','record');entry.append(element('small','',experiment.plumbing && isFinished(experiment) ? 'Collection closed' : labels[experiment.outcome] || text(experiment.outcome || experiment.state)),element('br'),element('b','',experiment.short || experiment.name),element('p','',experiment.lesson || experiment.plain));
+    if (experiment.plumbing && experiment.collected != null && experiment.needed != null) entry.append(element('p','',count(experiment.collected) + ' / ' + count(experiment.needed) + ' snapshots recorded'));
     const details=element('details','detail');details.append(element('summary','','Notes and sources'));const detail=element('div','detail-content');detail.append(detailBlock('Source notes',text(experiment.note)),detailBlock('Sources',sourceLinks(experiment.source)));details.append(detail);entry.append(details);box.append(entry);
   }
   box.append(element('h3','','Scheduled jobs'));
@@ -481,7 +485,7 @@ function renderArchive() {
     entry.append(element('span','',run.job),element('span','',(old ? 'Update overdue · ' : '') + date(run.last_success_at,true)));entry.title=run.last_record;box.append(entry);
   }
   box.append(element('h3','','Earlier cloud trials'));
-  for (const study of data.server.filter(study=>!ongoing.some(experiment=>experiment.id===study.study))) {
+  for (const study of data.server.filter(study=>!data.experiments.some(experiment=>experiment.id===study.study))) {
     const entry=element('div','record');entry.append(element('b','',study.name),element('p','',study.status + ' · ' + text(study.issues)),sourceLinks(study.source));box.append(entry);
   }
   box.append(element('h3','','Missing or untracked sources'));
@@ -503,7 +507,7 @@ if (!['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(paperInput?.status)) issues.p
 document.getElementById('attention').textContent=issues.join(' · ') || 'No collection failures reported';
 document.querySelector('.brief>div:last-child').classList.toggle('alert',issues.length>0);
 document.getElementById('attention-note').textContent='Collection status does not certify forecast input coverage. Check each report’s input warning and update time.';
-document.getElementById('scope').textContent=count(data.experiments.filter(experiment=>experiment.group!=='closed' && !experiment.plumbing).length) + ' ongoing tests · ' + count(ongoing.filter(experiment=>experiment.plumbing).length) + ' supporting collectors · all times WIB';
+document.getElementById('scope').textContent=count(ongoing.filter(experiment=>!experiment.plumbing).length) + ' ongoing tests · ' + count(ongoing.filter(experiment=>experiment.plumbing).length) + ' supporting collectors · all times WIB';
 document.getElementById('archive-counts').textContent=count(historical.length) + ' closed tests and checks · ' + count(data.gaps.length) + ' items missing or untracked';
 document.getElementById('snapshot-note').textContent='Study records built ' + date(build.built_at,true) + ' · KOD ' + String(build.kod_commit || 'unknown').slice(0,12) + (build.cloud_refreshed_at ? ' · Cloud refreshed ' + date(build.cloud_refreshed_at,true) : '') + (sourceStale ? ' · Source refresh is overdue. Previous study records are retained.' : '') + '. This saved copy won’t update itself.';
 const latestReport=element('a','source-path','Latest automatically refreshed report');

@@ -55,3 +55,7 @@ Evidence: No live allocation is proposed. Corrected spike outcomes remain negati
 
 Answer: no
 Evidence: Build failures retain the previous snapshot and show STALE with the error; incomplete inputs remain visible. External R2 stopped-alert delivery is still unverified, and no notification receipt is claimed.
+
+## Final display check
+
+Explicit CLOSED and COMPLETED collectors now appear once in the archive, with capture counts and source links retained. They no longer generate overdue warnings. Running stale collectors still show overdue; HALTED and FAILED remain visible. An independent browser fixture passed all 12 checks, including those boundaries, with no JavaScript errors. This follow-up changes display logic only.
