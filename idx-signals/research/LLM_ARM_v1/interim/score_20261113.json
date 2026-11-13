@@ -1,0 +1,574 @@
+{
+ "schema": "LLM_ARM_V1_SCORE_V1",
+ "rule": "PROTOCOL.md + ADDENDUM_1_SCORING.md",
+ "inputs": {
+  "root": "idx-signals at data-branch commit c48e9fa1959a024ce5ad4c572286407b869e9940",
+  "calls": {
+   "calls.jsonl": "bb45e4a152c4ad1f57a30b93594768b37d2c9367b749d88fe63845547c856e32",
+   "calls_IDX_20261104.jsonl": "9b973b940f869f5e55d412274ab6e522b52b98000f33d168c57963ad68874238",
+   "calls_IDX_20261105.jsonl": "f2ab1f9829edf54365e8e8d23456701608513bb4e683f805223d2492f59a26fc",
+   "calls_IDX_20261106.jsonl": "afa08fc7f8a1eab37d6578492023063169c9a5a334d18b528fc20db1e6c81491",
+   "calls_IDX_20261109.jsonl": "13d95e2acad668f20a8ec344cd5b70742121705dbaceda621ec778def37d708f",
+   "calls_IDX_20261110.jsonl": "f943a28f0dfed164438b5c873cf4db174e3b02fc6dbd4352b0958850dc86254a",
+   "calls_IDX_20261111.jsonl": "26f8a38a6dd10c535b12a5a1d4d4cc0016a2b172feb63fc5ec852fe130fcd841",
+   "calls_IDX_20261112.jsonl": "6ed800d051baf4c8865303c47e99bb6b0f7c2b648dce3993cb48aa4cbf4cf3e0",
+   "calls_US_20261102.jsonl": "ca55ff5ed1c4ed24b562d55eefaa7dcadda5bf1b768af103b78be82941cacd3b",
+   "calls_US_20261103.jsonl": "50d1d7ca127629d8cd81a4eec225ac96cad3af909dee238953d1c55f1159b231",
+   "calls_US_20261104.jsonl": "281dd7823a68fd24b1547180872b56ee98884d265e35d76a01079b0785f4aad2",
+   "calls_US_20261105.jsonl": "24c133c8d5e078be60eed0a082936d406cbf34b75402bb8735cb3b8e2fd14941",
+   "calls_US_20261106.jsonl": "316877dde13e84b0e7d2c55d32dd994e8d41379034b9aebd1d539777f2d31d2f",
+   "calls_US_20261109.jsonl": "33d455828cb310cfa3f57bf7b38a37968875f535b9fe7f6732db37879365777b",
+   "calls_US_20261110.jsonl": "a2e27a2a0c38add06bd7045a3b345dd486362277e3865eb96dab090db5b5d8e1",
+   "calls_US_20261111.jsonl": "2d705d36c35fe8a50080d9592dfb9e933d2248b14bacc2061bf2eece900f8108",
+   "calls_US_20261112.jsonl": "e7872ed70601aa3d176a694f7b1f79358a04c0c10aa7bed352e1c916a5fc9b44"
+  },
+  "speculations.jsonl": "aea28f38583f8fb8e5c8ba5db8b7377a0aab32ce4b18d12e3c8bdf4169d46dd1",
+  "learner_v2.jsonl": "ee0ecdd0a108a8c370cf3082ac0de84bc5e225cd7ea51ef55f6c2b871d310c93",
+  "paper_book.jsonl": "11b2e91ea5da975cce8ac80add156cf3891718b90548a15ce8df90d0daaecc29"
+ },
+ "counts": {
+  "resolved_without_outcomes": 3,
+  "pending": 141,
+  "unresolvable": 3,
+  "scored": 32
+ },
+ "all_calls": 179,
+ "calls_by_label": {
+  "AVOID": 126,
+  "ABSTAIN": 52,
+  "BACK": 1
+ },
+ "disagreements_all": [
+  {
+   "call_id": "LLM1-US-2026-11-06-FROG",
+   "call": "BACK",
+   "kod_numeric": "PASS (no buy); v2.4 dump-tomorrow 0.08 -> paper book BUY_OK"
+  }
+ ],
+ "first_look": {
+  "required": 60,
+  "scored": 32,
+  "reached": false,
+  "kind": "INTERIM_NOT_DECISIONAL"
+ },
+ "all_scored": {
+  "n": 32,
+  "vs_prior": {
+   "n": 32,
+   "mean_brier_llm": 0.18431,
+   "mean_brier_comparator": 0.19026,
+   "mean_difference": -0.00595,
+   "t": -0.715,
+   "p_one_sided": 0.2399,
+   "beats_paired_one_sided_95": false,
+   "session_bootstrap_upper95": 0.00122,
+   "sessions": 3,
+   "robust_to_session_clustering": null
+  },
+  "vs_learner": {
+   "n": 32,
+   "mean_brier_llm": 0.18431,
+   "mean_brier_comparator": 0.18613,
+   "mean_difference": -0.00182,
+   "t": -0.17,
+   "p_one_sided": 0.433,
+   "beats_paired_one_sided_95": false,
+   "session_bootstrap_upper95": 0.00122,
+   "sessions": 3,
+   "robust_to_session_clustering": null
+  },
+  "per_statement": {
+   "RUN30_5": {
+    "brier_llm": 0.0645,
+    "brier_prior": 0.06784,
+    "brier_learner": 0.07479,
+    "outcome_rate": 0.0625,
+    "mean_p_llm": 0.12375,
+    "mean_prior": 0.15646,
+    "mean_learner": 0.18829
+   },
+   "FADE10_5": {
+    "brier_llm": 0.23648,
+    "brier_prior": 0.25295,
+    "brier_learner": 0.24615,
+    "outcome_rate": 0.46875,
+    "mean_p_llm": 0.42969,
+    "mean_prior": 0.39888,
+    "mean_learner": 0.45557
+   },
+   "BEATS_TWINS_5": {
+    "brier_llm": 0.25195,
+    "brier_prior": 0.25,
+    "brier_learner": 0.23746,
+    "outcome_rate": 0.4375,
+    "mean_p_llm": 0.43906,
+    "mean_prior": 0.5,
+    "mean_learner": 0.46422
+   }
+  },
+  "by_call": {
+   "BACK": {
+    "calls": 0,
+    "traded": 0,
+    "mean_net": null
+   },
+   "AVOID": {
+    "calls": 17,
+    "traded": 17,
+    "mean_net": -0.08322
+   },
+   "ABSTAIN": {
+    "calls": 15,
+    "traded": 15,
+    "mean_net": -0.1151
+   }
+  },
+  "back_beats_avoid_net": null,
+  "back_vs_avoid_informative": false,
+  "by_book_and_call": {}
+ },
+ "disagreements_scored": {
+  "n": 0,
+  "vs_prior": {
+   "n": 0
+  },
+  "vs_learner": {
+   "n": 0
+  },
+  "per_statement": {
+   "RUN30_5": {
+    "brier_llm": null,
+    "brier_prior": null,
+    "brier_learner": null,
+    "outcome_rate": null,
+    "mean_p_llm": null,
+    "mean_prior": null,
+    "mean_learner": null
+   },
+   "FADE10_5": {
+    "brier_llm": null,
+    "brier_prior": null,
+    "brier_learner": null,
+    "outcome_rate": null,
+    "mean_p_llm": null,
+    "mean_prior": null,
+    "mean_learner": null
+   },
+   "BEATS_TWINS_5": {
+    "brier_llm": null,
+    "brier_prior": null,
+    "brier_learner": null,
+    "outcome_rate": null,
+    "mean_p_llm": null,
+    "mean_prior": null,
+    "mean_learner": null
+   }
+  },
+  "by_call": {
+   "BACK": {
+    "calls": 0,
+    "traded": 0,
+    "mean_net": null
+   },
+   "AVOID": {
+    "calls": 0,
+    "traded": 0,
+    "mean_net": null
+   },
+   "ABSTAIN": {
+    "calls": 0,
+    "traded": 0,
+    "mean_net": null
+   }
+  },
+  "back_beats_avoid_net": null,
+  "back_vs_avoid_informative": false,
+  "by_book_and_call": {}
+ },
+ "scored_calls": [
+  {
+   "call_id": "LLM1-IDX-2026-11-02-DFAM",
+   "market": "IDX",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.18896655017473796,
+   "brier_llm": 0.14647,
+   "brier_prior": 0.23147,
+   "brier_learner": 0.23147
+  },
+  {
+   "call_id": "LLM1-IDX-2026-11-02-AKPI",
+   "market": "IDX",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.07133417520777674,
+   "brier_llm": 0.1975,
+   "brier_prior": 0.13747,
+   "brier_learner": 0.13747
+  },
+  {
+   "call_id": "LLM1-IDX-2026-11-02-ROCK",
+   "market": "IDX",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.05097542365696728,
+   "brier_llm": 0.0975,
+   "brier_prior": 0.13747,
+   "brier_learner": 0.13747
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-SEGG",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.48237425933773825,
+   "brier_llm": 0.15897,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-INLF",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.4691019269501653,
+   "brier_llm": 0.20667,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-CLRO",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.1577726270099351,
+   "brier_llm": 0.21083,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-HXHX",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.12148816287292508,
+   "brier_llm": 0.1575,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-INO",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.23233578962664703,
+   "brier_llm": 0.21413,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-IFBD",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.40547781136765315,
+   "brier_llm": 0.44563,
+   "brier_prior": 0.37621,
+   "brier_learner": 0.37621
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-PERI",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.0038977427410590293,
+   "brier_llm": 0.10897,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-EVGO",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.01807072618192329,
+   "brier_llm": 0.13167,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-NMRA",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.0852604370042035,
+   "brier_llm": 0.1923,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-VCIG",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.29884777380861305,
+   "brier_llm": 0.205,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-02-MF",
+   "market": "US",
+   "signal_session": "2026-11-02",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.49768057239590235,
+   "brier_llm": 0.14147,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-03-CHSN",
+   "market": "US",
+   "signal_session": "2026-11-03",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.828800746766681,
+   "brier_llm": 0.14417,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-03-PARA",
+   "market": "US",
+   "signal_session": "2026-11-03",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.7822629110473456,
+   "brier_llm": 0.19167,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-03-EHGO",
+   "market": "US",
+   "signal_session": "2026-11-03",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.3803194968725433,
+   "brier_llm": 0.15897,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-03-KTTA",
+   "market": "US",
+   "signal_session": "2026-11-03",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.01664510558185761,
+   "brier_llm": 0.1923,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-03-IFBD",
+   "market": "US",
+   "signal_session": "2026-11-03",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.07310087264644682,
+   "brier_llm": 0.21083,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-03-CRMT",
+   "market": "US",
+   "signal_session": "2026-11-03",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.2038161921183127,
+   "brier_llm": 0.18897,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.21001
+  },
+  {
+   "call_id": "LLM1-US-2026-11-03-REED",
+   "market": "US",
+   "signal_session": "2026-11-03",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.6944609189584425,
+   "brier_llm": 0.1923,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.14534
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-OMH",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.686274735978234,
+   "brier_llm": 0.405,
+   "brier_prior": 0.44088,
+   "brier_learner": 0.30383
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-HPAI",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.045976185061301744,
+   "brier_llm": 0.1923,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.24938
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-CRIS",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.43951127815389934,
+   "brier_llm": 0.14417,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.1347
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-PMAX",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.21849607532606563,
+   "brier_llm": 0.14417,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.1347
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-CMTG",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.17671844020619043,
+   "brier_llm": 0.22897,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.1347
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-DKI",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "AVOID",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.2693954677125655,
+   "brier_llm": 0.14,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.1347
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-CRCT",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.045686696236760804,
+   "brier_llm": 0.12897,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.17999
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-LYEL",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.03606088229044291,
+   "brier_llm": 0.15833,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.24938
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-TREE",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.08260787540425907,
+   "brier_llm": 0.11813,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.17999
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-ADV",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": -0.17007607106935685,
+   "brier_llm": 0.2275,
+   "brier_prior": 0.21001,
+   "brier_learner": 0.1347
+  },
+  {
+   "call_id": "LLM1-US-2026-11-04-KD",
+   "market": "US",
+   "signal_session": "2026-11-04",
+   "call": "ABSTAIN",
+   "agrees_with_kod": true,
+   "book": null,
+   "net_return": 0.000495444994761618,
+   "brier_llm": 0.11667,
+   "brier_prior": 0.14534,
+   "brier_learner": 0.24938
+  }
+ ]
+}
