@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-13T23:06:07Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-13T23:06:18Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 23 over 7 signal sessions; events seen: SEALED 23; coverage gaps 0.
+Sets 24 over 8 signal sessions; events seen: SEALED 24; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 13, FIRE 10
+- Classes: ABSTAIN 13, FIRE 11
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 186 tags: 44 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP HOS (HORNBECK OFFSHORE SERVICES, INC.) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001284591-26-000002`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 5.83 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001284591-26-000002` by HORNBECK TODD M (PRESIDENT & CEO); purchases USD 1,500,009; top executive yes; holding up +5.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001284591-26-000002.
-Twins (band+liq+mom+dd): IE 6.95, KURA 7.43, EROC 8.34, NAVI 6.14, ALM 7.63, LPTH 7.21, UUUU 6.68, NMRK 10.86, ATEC 7.06, UEC 6.8, APPS 7.3, WYFI 10.335, NVAX 8.76, ORIC 8.5, BRUN 5.92, NRIX 15.6, AESI 5.5, BCAX 10.11, BTU 17.41, RCUS 17.77.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP FLG (FLAGSTAR BANK, NATIONAL ASSOCIATION) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
 Set `CAT-FORM4_SHARP-0001323101-26-000007`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 10.34 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001072613-26-000890` by NEW ENTERPRISE ASSOCIATES 13 LP; Item 4 intent 
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 889.1M, dilution filings 0.
 Twins (band+liq+mom+dd): PGEN 4.54, RCAT 3.8, SOUN 3.49, NUVB 3.99, UNIT 4.88.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 COUR (Coursera, Inc.) - accepted 2026-11-13T16:20:15-05:00, sealed 2026-11-13T23:06:16Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-SEC13D_V2-0001072613-26-000890`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 3.51 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001072613-26-000890` by NEW ENTERPRISE ASSOCIATES 13 LP; cover page max 5.1% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 889.1M from XBRL; parent CAT-SEC13D-0001072613-26-000890.
+Twins (band+liq+mom+dd): PGEN 4.54, RCAT 3.8, SOUN 3.49, NUVB 3.99, UNIT 4.88, OI 4.96, CRML 4.88, ENVX 1.6, FLNC 4.68, HIVE 1.57, PONY 4.46, INTR 4.15, DJT 4.64, KEEL 1.86, ASM 4.29, BBAI 1.91, OPEN 1.19, LAC 1.49, VISN 4.24, QS 3.68.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
