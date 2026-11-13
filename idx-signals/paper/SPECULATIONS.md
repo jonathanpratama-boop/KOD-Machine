@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-12T23:01:16Z from `paper/speculations.jsonl`: 241 sets sealed, 291 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-13T00:29:17Z from `paper/speculations.jsonl`: 242 sets sealed, 291 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -56,7 +56,7 @@ PATH20 windows resolved: 0; NEXT1: 134.
 | UP10_1 | 134 | 0.216 | 0.051 | 0.249 | 0.1925 | 0.2500 | 0.1962 |
 | BEATS_TWINS_1 | 132 | 0.508 | 0.507 | 0.500 | 0.2500 | 0.2500 | 0.2539 |
 
-## CRYPTO: 12 sets over 9 signal sessions (2026-10-27 .. 2026-11-10, 0.75 sets per scan)
+## CRYPTO: 13 sets over 10 signal sessions (2026-10-27 .. 2026-11-12, 0.76 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -66,7 +66,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.427 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 4102 | 657 | 165 | 71 |
+| 0.432 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 4207 | 674 | 169 | 70 |
 
 PATH20 windows resolved: 0; NEXT1: 10.
 
@@ -384,11 +384,11 @@ Twins (band+liq+mom+dd): TTEC 2.96, SNDL 1.39, ENTX 3.22, CURI 2.86, SMRT 1.67.
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### CRYPTO INIT (2026-11-10) - sealed 2026-11-11T00:26:26Z, cutoff 2026-11-11T02:00:00Z
-Decision `SCAN-CRYPTO-2026-11-10-G2_RET30-INIT` (PASS), bound to ledger record `c1135477420b`; set `b43acfa2cd7d`.
-Signal close 0.27484 (reference 0.19114); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.26143 at 2026-11-11T00:26:29Z.
-Tag: 1 flags today vs trailing median 0.0 -> hot_day = True.
-Twins (band+liq+mom+dd): RWUSD 0.9998, ASTER 0.6389, ERA 0.0802, POL 0.08827, NIGHT 0.04186.
+### CRYPTO BARD (2026-11-12) - sealed 2026-11-13T00:29:12Z, cutoff 2026-11-13T02:00:00Z
+Decision `SCAN-CRYPTO-2026-11-12-G2_RET30-BARD` (PASS), bound to ledger record `67805a6ebea4`; set `dd86c64faa9c`.
+Signal close 0.1259 (reference 0.0829); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.1312 at 2026-11-13T00:29:13Z.
+Tag: 1 flags today vs trailing median 0.5 -> hot_day = True.
+Twins (band+liq+mom+dd): AWE 0.06076, POWR 0.049, GENIUS 0.2815, SHELL 0.01943, SOMI 0.1557.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
