@@ -1415,8 +1415,8 @@ def summarize_supplement(ctx: Ctx, p: dict, ref: str) -> dict:
     issues += [f"slot {s['slot']} {s['status']}" for s in bad]
     return {
         "as_of": exact_iso(health["as_of"]),
-        "status": "RUNNING" if not issues else "STALLED",
-        "phase": "COLLECTING",
+        "status": "CLOSED" if health.get("collection_closed") is True else ("RUNNING" if not issues else "STALLED"),
+        "phase": "COMPLETED" if health.get("collection_closed") is True else "COLLECTING",
         "coverage": round((len(due) - len(bad)) / len(due), 4) if due else None,
         "captured": sum(1 for s in own if s["status"] == "CAPTURED"),
         "planned": len(own),
@@ -2913,3 +2913,4 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+

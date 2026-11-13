@@ -44,12 +44,16 @@ body{font:14px/1.55 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}.page
 'use strict';
 const data = JSON.parse(document.getElementById('kod-data').textContent);
 const build = data.build[0];
+const sourceRefresh = data.source_refresh || {};
+const sourceOverdue = (Date.now() - Date.parse(build.built_at)) > 2*3600000;
+const sourceStale = sourceRefresh.status === 'STALE' || sourceOverdue;
 const summary = data.summary[0];
 const programs = new Map(data.programs.map(program => [program.id, program]));
 const server = new Map(data.server.map(study => [study.study, study]));
 const cloudResults = data.cloud_results?.schema === 'KOD_R2_RESULTS_V1' ? data.cloud_results : null;
-const ongoing = data.experiments.filter(experiment => experiment.group !== 'closed').map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
-const historical = data.experiments.filter(experiment => experiment.group === 'closed');
+const isFinished = experiment => experiment.group === 'closed' || ['CLOSED','COMPLETED'].includes(experiment.state);
+const ongoing = data.experiments.filter(experiment => !isFinished(experiment)).map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
+const historical = data.experiments.filter(isFinished);
 const count = value => value == null ? '—' : new Intl.NumberFormat('en-US').format(value);
 const text = value => value == null ? '' : String(value);
 // Display copy only. Original research records remain available in the details and download.
@@ -207,6 +211,9 @@ function sourceLinks(raw) {
     let url;
     if (item.startsWith('KOD:') && !item.slice(4).startsWith('origin/')) {
       url = 'https://github.com/jonathanpratama-boop/KOD-Machine/blob/' + encodeURIComponent(build.kod_commit) + '/' + item.slice(4).split('/').map(encodeURIComponent).join('/');
+    } else if (item.startsWith('KOD@') && item.includes(':')) {
+      const split=item.indexOf(':');
+      url='https://github.com/jonathanpratama-boop/KOD-Machine/blob/' + encodeURIComponent(item.slice(4,split)) + '/' + item.slice(split+1).split('/').map(encodeURIComponent).join('/');
     } else if (item.startsWith('BACKUPS:')) {
       const parts = item.split(':');
       url = 'https://github.com/jonathanpratama-boop/KOD-Timing-Backups/blob/' + encodeURIComponent(parts[1]) + '/' + parts.slice(2).join(':').split('/').map(encodeURIComponent).join('/');
@@ -374,6 +381,7 @@ function review(experiment) {
   return box;
 }
 function rowStatus(experiment) {
+  if (isFinished(experiment)) return 'ok';
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
   const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
   const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
@@ -402,14 +410,36 @@ function changeLine(experiment) {
 }
 function health(experiment) {
   const box=element('div','health');
+  const finished=isFinished(experiment);
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
-  const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
-  const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
-  const unknown=/STALE|UNKNOWN/.test(experiment.state);
-  const label=stale ? 'Update overdue' : problem ? 'Needs attention' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
+  const stale=!finished && (!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours);
+  const problem=!finished && /STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
+  const unknown=!finished && /STALE|UNKNOWN/.test(experiment.state);
+  const label=finished ? 'Closed' : stale ? 'Update overdue' : problem ? 'Needs attention' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
   box.append(element('span','tag' + (stale || unknown ? ' warn' : problem ? ' bad' : ''),label),element('p','checked',date(experiment.as_of,true)));
-  box.append(element('p','check-state',stale ? experiment.state.charAt(0) + experiment.state.slice(1).toLowerCase() + ' at last update' : age(experiment.as_of)));
+  box.append(element('p','check-state',finished ? 'Final recorded update' : stale ? experiment.state.charAt(0) + experiment.state.slice(1).toLowerCase() + ' at last update' : age(experiment.as_of)));
   return box;
+}
+function paperBookViews() {
+  const block=element('div','cloud-results');
+  const views=data.paper_book_views;
+  block.append(element('h4','','Original and corrected figures'));
+  const input=views?.input_health;
+  const inputCurrent=['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(input?.status);
+  const inputLabel=input?.status ? input.status.toLowerCase().replaceAll('_',' ') : 'not reported';
+  block.append(element('p','result-note' + (inputCurrent ? '' : ' result-warning'),'Forecast inputs: ' + inputLabel + '. ' + (input?.message || 'The source report does not establish current input coverage.') + (input?.assessed_at ? ' Assessed ' + date(input.assessed_at,true) + '.' : '')));
+  if (!views || views.status !== 'PUBLISHED') {
+    block.append(element('p','','The corrected comparison has not been published in the current source report yet. Original book totals remain above.'));
+    return block;
+  }
+  block.append(element('p','',views.note + ' Unresolved: ' + (views.unresolved_count === null || views.unresolved_count === undefined ? 'not reported' : views.unresolved_count) + '. Report: ' + date(views.report_generated_at,true)));
+  const table=element('table'), head=element('tr');
+  for (const label of views.columns) head.append(element('th','',label));
+  table.append(head);
+  for (const values of views.rows) {
+    const row=element('tr');for (const value of values) row.append(element('td','',value));table.append(row);
+  }
+  block.append(table,sourceLinks(views.source));return block;
 }
 function experimentRow(experiment) {
   const row=element('article','experiment');row.dataset.experimentId=experiment.id;
@@ -418,6 +448,7 @@ function experimentRow(experiment) {
   const heading=element('div');heading.append(element('p','category',programs.get(experiment.program)?.name || 'Research'),element('h3','',wording(experiment,'name',experiment.short || experiment.name)),element('p','question',wording(experiment,'question',experiment.plain)));
   row.append(heading,evidence(experiment),review(experiment),health(experiment));
   if (experiment.id === 'srv:research_r2' && cloudResults) row.append(cloudResultBlock());
+  if (experiment.id === 'PAPER_BOOK_v1') row.append(paperBookViews());
   const details=element('details','detail');details.append(element('summary','','Rules, notes & sources'));
   const content=element('div','detail-content');
   content.append(detailBlock('Source notes',text(experiment.note) || 'No additional notes.'),detailBlock('What happens next · source note',text(experiment.next_milestone)));
@@ -444,7 +475,8 @@ function renderArchive() {
   box.append(element('h3','','Past results'));
   const labels={worked:'Passed its historical test',didnt_work:'Didn’t pass its test',no_answer:'Inconclusive',not_an_idea:'Audit or system check'};
   for (const experiment of historical) {
-    const entry=element('article','record');entry.append(element('small','',labels[experiment.outcome] || text(experiment.outcome || experiment.state)),element('br'),element('b','',experiment.short || experiment.name),element('p','',experiment.lesson || experiment.plain));
+    const entry=element('article','record');entry.append(element('small','',experiment.plumbing && isFinished(experiment) ? 'Collection closed' : labels[experiment.outcome] || text(experiment.outcome || experiment.state)),element('br'),element('b','',experiment.short || experiment.name),element('p','',experiment.lesson || experiment.plain));
+    if (experiment.plumbing && experiment.collected != null && experiment.needed != null) entry.append(element('p','',count(experiment.collected) + ' / ' + count(experiment.needed) + ' snapshots recorded'));
     const details=element('details','detail');details.append(element('summary','','Notes and sources'));const detail=element('div','detail-content');detail.append(detailBlock('Source notes',text(experiment.note)),detailBlock('Sources',sourceLinks(experiment.source)));details.append(detail);entry.append(details);box.append(entry);
   }
   box.append(element('h3','','Scheduled jobs'));
@@ -453,7 +485,7 @@ function renderArchive() {
     entry.append(element('span','',run.job),element('span','',(old ? 'Update overdue · ' : '') + date(run.last_success_at,true)));entry.title=run.last_record;box.append(entry);
   }
   box.append(element('h3','','Earlier cloud trials'));
-  for (const study of data.server.filter(study=>!ongoing.some(experiment=>experiment.id===study.study))) {
+  for (const study of data.server.filter(study=>!data.experiments.some(experiment=>experiment.id===study.study))) {
     const entry=element('div','record');entry.append(element('b','',study.name),element('p','',study.status + ' · ' + text(study.issues)),sourceLinks(study.source));box.append(entry);
   }
   box.append(element('h3','','Missing or untracked sources'));
@@ -461,20 +493,23 @@ function renderArchive() {
   box.append(element('h3','','Activity'));
   for (const event of data.events.slice().sort((a,b)=>text(b.at).localeCompare(text(a.at)))) {const entry=element('div','record');entry.append(element('small','',date(event.at,true)),element('br'),element('b','',event.title),element('p','',event.detail));box.append(entry);}
 }
-document.getElementById('snapshot-date').textContent='Saved ' + date(build.built_at,true);
-document.getElementById('snapshot-age').textContent=age(build.built_at);
+document.getElementById('snapshot-date').textContent='Studies ' + date(build.built_at,true);
+document.getElementById('snapshot-age').textContent=age(build.built_at) + (sourceStale ? ' · source refresh overdue' : '');
 document.getElementById('live-count').textContent=count(ongoing.length);
 document.getElementById('theme-count').textContent=count(data.programs.length);
 document.getElementById('passed-count').textContent=count(summary.proven_live);
 if (summary.proven_live > 0) document.getElementById('headline').textContent=count(summary.proven_live) + ' live tests passed.';
 document.getElementById('next-look').textContent=summary.next_verdict_what + ' · ' + date(summary.next_verdict_date);
 const issues=ongoing.filter(experiment=>['STALLED','HALTED','FAILED','UNKNOWN'].includes(experiment.state)).map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
-document.getElementById('attention').textContent=issues.join(' · ') || 'No issues reported';
+if (sourceStale) issues.unshift('Study records need a refresh; cloud results have their own update time');
+const paperInput=data.paper_book_views?.input_health;
+if (!['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(paperInput?.status)) issues.push('Paper-book inputs · ' + (paperInput?.status ? paperInput.status.toLowerCase().replaceAll('_',' ') : 'coverage not reported'));
+document.getElementById('attention').textContent=issues.join(' · ') || 'No collection failures reported';
 document.querySelector('.brief>div:last-child').classList.toggle('alert',issues.length>0);
-document.getElementById('attention-note').textContent='Cloud status expires after an hour. Check the time of the last update before relying on it.';
-document.getElementById('scope').textContent=count(data.experiments.filter(experiment=>experiment.group!=='closed' && !experiment.plumbing).length) + ' ongoing tests · ' + count(ongoing.filter(experiment=>experiment.plumbing).length) + ' supporting collectors · all times WIB';
+document.getElementById('attention-note').textContent='Collection status does not certify forecast input coverage. Check each report’s input warning and update time.';
+document.getElementById('scope').textContent=count(ongoing.filter(experiment=>!experiment.plumbing).length) + ' ongoing tests · ' + count(ongoing.filter(experiment=>experiment.plumbing).length) + ' supporting collectors · all times WIB';
 document.getElementById('archive-counts').textContent=count(historical.length) + ' closed tests and checks · ' + count(data.gaps.length) + ' items missing or untracked';
-document.getElementById('snapshot-note').textContent='Saved ' + date(build.built_at,true) + '. This copy won’t update itself. Open a newer report for the latest results.';
+document.getElementById('snapshot-note').textContent='Study records built ' + date(build.built_at,true) + ' · KOD ' + String(build.kod_commit || 'unknown').slice(0,12) + (build.cloud_refreshed_at ? ' · Cloud refreshed ' + date(build.cloud_refreshed_at,true) : '') + (sourceStale ? ' · Source refresh is overdue. Previous study records are retained.' : '') + '. This saved copy won’t update itself.';
 const latestReport=element('a','source-path','Latest automatically refreshed report');
 latestReport.href='https://github.com/jonathanpratama-boop/KOD-Timing-Backups/blob/research-r2-20261105T181200Z/DASHBOARD.html';
 latestReport.target='_blank';latestReport.rel='noopener noreferrer';document.getElementById('snapshot-note').append(' · ',latestReport);
@@ -483,4 +518,5 @@ render();renderArchive();
 </script>
 </body>
 </html>
+
 

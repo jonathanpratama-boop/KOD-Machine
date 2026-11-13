@@ -40,6 +40,8 @@ jobs:
         run: python3 -m unittest discover -s tools/ci_tests -v
       - name: KOD watch tests (ops/kod-watch, standard library only, no network)
         run: python3 -m unittest discover -s ops/kod-watch -v
+      - name: Dashboard refresh and publication tests (standard library only, no network)
+        run: python3 -m unittest discover -s ops/dashboard -p "test_*.py"
       - name: Select expensive tests (uncertainty runs tests)
         id: scope
         env:
