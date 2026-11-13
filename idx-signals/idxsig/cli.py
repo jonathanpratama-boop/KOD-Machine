@@ -329,6 +329,27 @@ def main(argv=None) -> int:
     )
     p_sf.add_argument("--basis", default="", help="provenance text for --backfill-audit records")
     p_sf.add_argument("--commit", action="store_true")
+    p_sa = sub.add_parser(
+        "split-assess",
+        help="assess US speculation sets with SPLIT_UNITS_V1 and append reassessments "
+        "(descriptive ledger paper/split_assessments.jsonl; research/SPLIT_REVISIONS_v1)",
+    )
+    p_sa.add_argument("--manifest", help="the US recent-bars manifest (default: the latest one)")
+    p_sa.add_argument(
+        "--window-days",
+        type=int,
+        default=None,
+        help="reassess only sets whose signal session is at most this many days old (default: all)",
+    )
+    p_sa.add_argument(
+        "--source",
+        action="append",
+        default=[],
+        metavar="SET_ID=TEXT",
+        help="a source to record on that set's new record, for example an issuer filing (repeatable)",
+    )
+    p_sa.add_argument("--dry-run", action="store_true", help="print what would be appended; write nothing")
+    p_sa.add_argument("--commit", action="store_true")
     p_ss = sub.add_parser("speculate-score", help="resolve speculation windows that have ended")
     p_ss.add_argument(
         "--manifest",
@@ -1274,7 +1295,7 @@ def main(argv=None) -> int:
 
         from . import learner, learner2, learner3
 
-        from . import crypto_account, paper_account, paper_book, premove_shadow, split_flags
+        from . import crypto_account, paper_account, paper_book, premove_shadow, split_assessments, split_flags
 
         problems = (
             paper.verify_all()
@@ -1288,6 +1309,7 @@ def main(argv=None) -> int:
             + paper_account.verify()
             + crypto_account.verify()
             + split_flags.verify()
+            + split_assessments.verify()
         )
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
@@ -1581,6 +1603,73 @@ def main(argv=None) -> int:
                     files, f"split flags: {len(stored)} US set(s) tagged", trailer
                 )
             )
+    elif args.cmd == "split-assess":
+        import os
+
+        from . import paper, speculation, split_assessments
+        from .provenance import latest_manifest, utc_stamp
+
+        manifest = Path(args.manifest) if args.manifest else latest_manifest("yahoo_us_recent")
+        sources = {}
+        for item in args.source:
+            sid, _, text = item.partition("=")
+            sources.setdefault(sid, []).append(text)
+        readable = sum(1 for p in split_assessments._payload_map(manifest).values() if p is not None)
+        print(f"pull {manifest.name}: {readable} provider response(s) can be read")
+        if not readable:
+            # The raw responses are kept out of the repository. Without them every set would be recorded
+            # NOT_ASSESSABLE, which says nothing about the sets and only about this machine.
+            print("no provider response of this pull can be read on this machine; nothing written")
+            return 1
+        if args.dry_run:
+            specs, records = speculation.spec_lines(), paper.ledger_lines(split_assessments.LEDGER)
+            payloads, stamp = split_assessments._payload_map(manifest), utc_stamp()
+            basis = f"provider pull {manifest.name}"
+            proposed = split_assessments.propose_assessments(
+                specs, records, payloads, basis, stamp, retrieved_on=stamp[:10]
+            ) + split_assessments.propose_reassessments(
+                specs,
+                records,
+                payloads,
+                basis,
+                stamp,
+                window_days=args.window_days,
+                today=stamp[:10],
+                retrieved_on=stamp[:10],
+                sources=sources,
+            )
+            print(f"dry run: {len(proposed)} record(s) would be appended; nothing written")
+            stored = proposed
+        else:
+            trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+            sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+            from kod.timestamp import RFC3161Timestamper
+
+            stamper = RFC3161Timestamper()
+            stored = split_assessments.assess_pending(
+                manifest, stamper, sources=sources
+            ) + split_assessments.reassess(manifest, stamper, window_days=args.window_days, sources=sources)
+        if not stored:
+            print("no US speculation set to assess and no assessment changed; nothing recorded")
+            return 0
+        tally = {}
+        for r in stored:
+            tally[r["assessment"]] = tally.get(r["assessment"], 0) + 1
+        print("split assessments: " + ", ".join(f"{k} {v}" for k, v in sorted(tally.items())))
+        for r in stored:
+            if r["group"] != "REAL" or r["supersedes"] or r["units"] != "UNCHANGED":
+                move = "" if r["recorded_ret1"] is None else f" (recorded {r['recorded_ret1']:+.0%})"
+                print(
+                    f"  {r['ticker']} {r['signal_session']}: {r['assessment']} {r['split']}{move}"
+                    + (" [reassessment]" if r["supersedes"] else "")
+                    + (_UNITS_NOT_FOUND if r["group"] == "REAL" and r["units"] != "UNCHANGED" else "")
+                )
+        if args.commit and not args.dry_run:
+            tokens = [
+                paper.TOKENS / f"{r['record_hash']}.{a}.tsr" for r in stored for a in ("freetsa", "sectigo")
+            ]
+            files = [split_assessments.LEDGER, *[t for t in tokens if t.exists()]]
+            print(paper.commit_and_push(files, f"split assessments: {len(stored)} record(s)", trailer))
     elif args.cmd in ("speculate", "speculate-score", "speculate-report"):
         import os
         from datetime import datetime, timezone
@@ -2062,6 +2151,60 @@ def _manifest_for_score(mk: str, max_age_hours: float) -> tuple[Path, list]:
 
 
 def _split_flag_hook(stamper) -> list[Path]:
+    """After US sets are sealed: the V11 tags as before, then the SPLIT_UNITS_V1 assessments.
+    Descriptive only. Any failure is reported and never blocks sealing."""
+    return _split_v11_hook(stamper) + _split_assess_hook(stamper)
+
+
+# A set classed as a real move although its previous close was not found in the pull (research/SPLIT_REVISIONS_v1,
+# HANDOFF.md, "Known limits"). The class is left as the rule gives it; the line makes the case visible in the log.
+_UNITS_NOT_FOUND = " [classed real, previous close not found in the pull]"
+
+
+def _split_assess_hook(stamper, window_days: int = 14) -> list[Path]:
+    """Assess the sets just sealed from the scan's own pull, and reassess the sets of the last `window_days` days
+    from the same pull, so that a split the provider lists late is caught (research/SPLIT_REVISIONS_v1)."""
+    from . import paper, speculation, split_assessments
+    from .provenance import latest_manifest
+
+    try:
+        manifest = latest_manifest("yahoo_us_recent")
+        sessions = [s["signal_session"] for s in speculation.spec_lines() if split_assessments._is_set(s)]
+        stored = []
+        for step in (
+            lambda: split_assessments.assess_pending(
+                manifest, stamper, seal_session=max(sessions) if sessions else None
+            ),
+            lambda: split_assessments.reassess(manifest, stamper, window_days=window_days),
+        ):
+            try:
+                stored += step()
+            except paper.ReceiptPendingError as exc:
+                stored += exc.records
+                print(f"warning: split assessments written, receipts pending: {exc}")
+    except Exception as exc:  # noqa: BLE001 - assessing must never block the register
+        print(f"split assessments skipped ({type(exc).__name__}: {exc}); sealing is unaffected")
+        return []
+    if not stored:
+        return []
+    tally = {}
+    for r in stored:
+        tally[r["assessment"]] = tally.get(r["assessment"], 0) + 1
+    print("split assessments: " + ", ".join(f"{k} {v}" for k, v in sorted(tally.items())))
+    for r in stored:
+        if r["group"] != "REAL" or r["supersedes"] or r["units"] != "UNCHANGED":
+            print(
+                f"  {r['ticker']} {r['signal_session']}: {r['assessment']} {r['split']}"
+                + (" [reassessment]" if r["supersedes"] else "")
+                + (_UNITS_NOT_FOUND if r["group"] == "REAL" and r["units"] != "UNCHANGED" else "")
+            )
+    tokens = [
+        paper.TOKENS / f"{r['record_hash']}.{a}.tsr" for r in stored for a in ("freetsa", "sectigo")
+    ]
+    return [split_assessments.LEDGER, *[t for t in tokens if t.exists()]]
+
+
+def _split_v11_hook(stamper) -> list[Path]:
     """After US sets are sealed: tag them from the provider split events in the pull the scan just made.
     Descriptive only (research/US_SPLIT_ARTIFACTS_v1). Any failure is reported and never blocks sealing."""
     from . import paper, split_flags
