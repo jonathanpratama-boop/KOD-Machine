@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-12T23:01:21Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-13T23:03:56Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 131 live forecasts, 18 calls, 5 wrong of 13 (38.5%); p that the true rate exceeds 50%: 0.867.
+- **Evidence so far:** 150 live forecasts, 21 calls, 8 wrong of 16 (50.0%); p that the true rate exceeds 50%: 0.598.
 
 ## The bar
 
@@ -18,21 +18,40 @@ Generated 2026-11-12T23:01:21Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-12 | XLAB | 0.536 | 0.557 | - | 0.279 | pending |
-| 2026-11-12 | TGHL | 0.396 | 0.557 | - | 0.169 | pending |
-| 2026-11-12 | TGEN | 0.369 | 0.557 | - | 0.136 | pending |
+| 2026-11-13 | ZBAO | 0.527 | 0.559 | - | 0.434 | pending |
+| 2026-11-13 | VTSI | 0.405 | 0.559 | - | 0.128 | pending |
+| 2026-11-13 | TGHL | 0.440 | 0.559 | - | 0.156 | pending |
+| 2026-11-13 | SLSN | 0.452 | 0.559 | - | 0.154 | pending |
+| 2026-11-13 | SLND | 0.325 | 0.559 | - | 0.095 | pending |
+| 2026-11-13 | SHIM | 0.300 | 0.559 | - | 0.100 | pending |
+| 2026-11-13 | SHFS | 0.620 | 0.559 | **DUMP** | 0.432 | pending |
+| 2026-11-13 | SBC | 0.278 | 0.559 | - | 0.086 | pending |
+| 2026-11-13 | RAIN | 0.368 | 0.559 | - | 0.126 | pending |
+| 2026-11-13 | ONFO | 0.643 | 0.559 | **DUMP** | 0.381 | pending |
+| 2026-11-13 | NMAX | 0.228 | 0.559 | - | 0.089 | pending |
+| 2026-11-13 | LFTO | 0.248 | 0.559 | - | 0.083 | pending |
+| 2026-11-13 | LFMD | 0.205 | 0.559 | - | 0.086 | pending |
+| 2026-11-13 | FCUV | 0.570 | 0.559 | **DUMP** | 0.343 | pending |
+| 2026-11-13 | FCDH | 0.356 | 0.559 | - | 0.140 | pending |
+| 2026-11-13 | BKHA | 0.414 | 0.559 | - | 0.222 | pending |
+| 2026-11-13 | BGIN | 0.420 | 0.559 | - | 0.143 | pending |
+| 2026-11-13 | AKAN | 0.538 | 0.559 | - | 0.282 | pending |
+| 2026-11-13 | AEI | 0.326 | 0.559 | - | 0.139 | pending |
+| 2026-11-12 | XLAB | 0.536 | 0.557 | - | 0.279 | did not dump |
+| 2026-11-12 | TGHL | 0.396 | 0.557 | - | 0.169 | did not dump |
+| 2026-11-12 | TGEN | 0.369 | 0.557 | - | 0.136 | dumped |
 | 2026-11-12 | RIME | 0.394 | 0.557 | - | 0.150 | pending |
-| 2026-11-12 | POAS | 0.645 | 0.557 | **DUMP** | 0.317 | pending |
+| 2026-11-12 | POAS | 0.645 | 0.557 | **DUMP** | 0.317 | did not dump |
 | 2026-11-12 | PLCE | 0.445 | 0.557 | - | 0.278 | pending |
 | 2026-11-12 | PARA | 0.433 | 0.557 | - | 0.287 | pending |
-| 2026-11-12 | ICMB | 0.440 | 0.557 | - | 0.160 | pending |
-| 2026-11-12 | GP | 0.505 | 0.557 | - | 0.246 | pending |
-| 2026-11-12 | DBGI | 0.524 | 0.557 | - | 0.349 | pending |
-| 2026-11-12 | BGIN | 0.477 | 0.557 | - | 0.161 | pending |
-| 2026-11-12 | ARAI | 0.695 | 0.557 | **DUMP** | 0.329 | pending |
-| 2026-11-12 | AIMD | 0.576 | 0.557 | **DUMP** | 0.223 | pending |
-| 2026-11-12 | ADXN | 0.470 | 0.557 | - | 0.185 | pending |
-| 2026-11-12 | ADVB | 0.407 | 0.557 | - | 0.168 | pending |
+| 2026-11-12 | ICMB | 0.440 | 0.557 | - | 0.160 | did not dump |
+| 2026-11-12 | GP | 0.505 | 0.557 | - | 0.246 | did not dump |
+| 2026-11-12 | DBGI | 0.524 | 0.557 | - | 0.349 | dumped |
+| 2026-11-12 | BGIN | 0.477 | 0.557 | - | 0.161 | did not dump |
+| 2026-11-12 | ARAI | 0.695 | 0.557 | **DUMP** | 0.329 | did not dump |
+| 2026-11-12 | AIMD | 0.576 | 0.557 | **DUMP** | 0.223 | did not dump |
+| 2026-11-12 | ADXN | 0.470 | 0.557 | - | 0.185 | dumped |
+| 2026-11-12 | ADVB | 0.407 | 0.557 | - | 0.168 | dumped |
 | 2026-11-11 | WHLR | 0.701 | 0.557 | **DUMP** | 0.410 | dumped |
 | 2026-11-11 | TANH | 0.382 | 0.557 | - | 0.161 | did not dump |
 | 2026-11-11 | SLXN | 0.665 | 0.557 | **DUMP** | 0.315 | dumped |
