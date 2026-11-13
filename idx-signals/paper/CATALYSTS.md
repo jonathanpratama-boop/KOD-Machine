@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-13T10:56:36Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-13T23:06:07Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 25 (FIRE 8, ABSTAIN 17) over 8 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 13, SEALED 25, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 26 (FIRE 9, ABSTAIN 17) over 9 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 14, SEALED 26, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP AQST (Aquestive Therapeutics, Inc.) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001214659-26-014004`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 3.57 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001214659-26-014004` by Daly Richard J (director); purchases USD 99,331; top executive no; holding up n/a.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001214659-26-014004.
-Twins (band+liq+mom+dd): FATE 1.34, SION 3.43, PSFE 3.87, DFDV 2.95, QTEX 1.19, EDIT 2.14, UPB 2.86, TMQ 2.02, WFF 1.13, BNC 4.3, STIM 1.43, BLDP 1.4, CDZI 3.32, XGN 4.41, HYLN 2.69, MNTN 4.99, PSEC 1.405, CCOI 3.925, LTBR 4.25, ZNTL 1.68.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP HOS (HORNBECK OFFSHORE SERVICES, INC.) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
 Set `CAT-FORM4_SHARP-0001284591-26-000002`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 5.83 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001284591-26-000002` by HORNBECK TODD M (PRESIDENT & CEO); purchases USD 1,500,009; top executive yes; holding up +5.0%.
@@ -207,4 +200,11 @@ Form 4 `0002111999-26-000011` by BALDEW RUBEN (Chief Financial Officer); purchas
 Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002111999-26-000011.
 Twins (band+liq+mom+dd): IHS 8.41, LXFR 17.34, PAYO 7.18, DGICA 18.96, MATV 12.01, RELL 19.74, VREX 18.27, RNW 6.96, FDUS 19.32, KRNT 17.13, CFFN 8.46, VNCE 12.91, FMNB 15.46, MQ 18.03, TSLX 17.56, LFCR 6.4, GLAD 19.39, PRTH 7.91, FNKO 6.9.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D COUR (Coursera, Inc.) - accepted 2026-11-13T16:20:15-05:00, sealed 2026-11-13T23:06:05Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-SEC13D-0001072613-26-000890`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 3.51 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Filing `0001072613-26-000890` by NEW ENTERPRISE ASSOCIATES 13 LP; Item 4 intent words: board, merger, acquisition, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 889.1M, dilution filings 0.
+Twins (band+liq+mom+dd): PGEN 4.54, RCAT 3.8, SOUN 3.49, NUVB 3.99, UNIT 4.88.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
