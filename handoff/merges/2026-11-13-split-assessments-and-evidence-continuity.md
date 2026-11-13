@@ -37,3 +37,38 @@ timestamp tokens, avoiding the three intermediate handoff modifications that fai
 
 Follow-through requires the current assessment ledger, the resulting report, and the dashboard's source revision to
 be published and checked. Test counts alone do not establish that a scheduled publishing cycle completed.
+
+## Structured acceptance answers
+
+The answers below provide the repository-required fields for the evidence described above.
+
+## Q1.
+
+Answer: yes
+Evidence: Independent reviewer authored six evidence-continuity cases before the repair; 215 targeted split tests passed. Dashboard parser and publication regressions were separately authored and all 30 pass.
+
+## Q2.
+
+Answer: yes
+Evidence: Saved real split fixtures plus 164 current responses verified against their manifest. The actual published paper-book fragment, live source build, and all supplement captures were checked; details are in handoff/evidence/2026-11-13-split-closeout/.
+
+## Q3.
+
+Answer: n.a.
+Evidence: This merge repairs measurement and publication, with no new trading study. The corrected view explicitly uses later evidence; historical cutoff views retain their original clocks and frozen outcomes are unchanged.
+
+## Q4.
+
+Answer: yes
+Architect: Codex (Astra), owner-directed integration on 13 November 2026
+Evidence: Owner explicitly requested Codex to perform the repair and integration. Independent acceptance verified all 366 timestamp receipts and all 12 report rows; all required PR checks passed on 435100c7a05a22e84f26d1c2f9581a1d834396c6.
+
+## Q5.
+
+Answer: no
+Evidence: No live allocation is proposed. Corrected spike outcomes remain negative in a small sample. Accurate split labels, visible source dates and actual results improve the owner's research decision; they do not establish profitable execution.
+
+## Q6.
+
+Answer: no
+Evidence: Build failures retain the previous snapshot and show STALE with the error; incomplete inputs remain visible. External R2 stopped-alert delivery is still unverified, and no notification receipt is claimed.
