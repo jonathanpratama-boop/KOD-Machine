@@ -4,13 +4,13 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-12T23:02:45.279589Z; latest US scan session: 2026-11-12.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-12T22:59:41Z (signal session 2026-11-12).
+- Assessed 2026-11-13T23:05:43.352971Z; latest US scan session: 2026-11-13.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-13T23:02:00Z (signal session 2026-11-13).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-As of the latest record (2026-11-12T23:02:05Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
+As of the latest record (2026-11-13T23:04:56Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
 
 ## The three plain answers
 
@@ -22,18 +22,17 @@ As of the latest record (2026-11-12T23:02:05Z). Paper only: no orders, no money.
 
 | Arm | Cash | Reserved | Available | Open value | Equity | Realized | Unrealized | Pending | Filled | Rejected | Cancelled | Declined | Closed |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| BASE | $9,287.74 | $0.00 | $9,287.74 | $787.36 | $10,075.10 | $0.00 | $74.69 | 0 | 1 | 6 | 0 | 102 | 0 |
-| FIXED5 | $9,153.09 | $0.00 | $9,153.09 | $787.36 | $9,940.45 | -$134.65 | $74.69 | 0 | 4 | 0 | 0 | 105 | 3 |
+| BASE | $10,105.51 | $2,858.10 | $7,247.41 | $0.00 | $10,105.51 | $105.51 | $0.00 | 3 | 1 | 6 | 0 | 118 | 1 |
+| FIXED5 | $9,970.86 | $2,747.96 | $7,222.90 | $0.00 | $9,970.86 | -$29.14 | $0.00 | 3 | 4 | 0 | 0 | 121 | 4 |
 
 ## Open positions and valuation
 
-- BASE APP: $787.36, valued at the close of 2026-11-12 (+10.60% since entry)
-- FIXED5 APP: $787.36, valued at the close of 2026-11-12 (+10.60% since entry)
+- No open positions.
 
 ## Drawdown (from recorded nightly marks only)
 
-- BASE: -0.32% across 10 mark(s), trough at the close of 2026-11-12
-- FIXED5: -0.69% across 10 mark(s), trough at the close of 2026-11-06
+- BASE: -0.32% across 11 mark(s), trough at the close of 2026-11-12
+- FIXED5: -0.69% across 11 mark(s), trough at the close of 2026-11-06
 
 ## Every decision
 
@@ -41,7 +40,7 @@ As of the latest record (2026-11-12T23:02:05Z). Paper only: no orders, no money.
 |---|---|---|---|---|---|---|---:|
 | 2026-10-30 | FMC | BASE | KOD | order 174 @ <= 5.42, reserved $944.49 | REJECTED_STOP_TOO_WIDE: open 6.11 is above the permitted entry 5.42: the stop at 5.15 would be 15.71% away, more than 5% | - | - |
 | 2026-10-30 | ASUR | BASE | KOD | order 107 @ <= 8.89, reserved $952.66 | REJECTED_STOP_TOO_WIDE: open 9.98 is above the permitted entry 8.89: the stop at 8.45 would be 15.33% away, more than 5% | - | - |
-| 2026-11-05 | APP | BASE | KOD | order 2 @ <= 356.71, reserved $713.78 | filled 2 @ 356 on 2026-11-06, stop 338.9 | - | - |
+| 2026-11-05 | APP | BASE | KOD | order 2 @ <= 356.71, reserved $713.78 | filled 2 @ 356 on 2026-11-06, stop 338.9 | TIME_EXIT_AT_CLOSE 2026-11-13 @ 409.1 | $105.51 |
 | 2026-11-05 | VXX | BASE | KOD | order 51 @ <= 18.2, reserved $929.59 | REJECTED_STOP_TOO_WIDE: open 21.73 is above the permitted entry 18.2: the stop at 17.29 would be 20.43% away, more than 5% | - | - |
 | 2026-11-05 | HTCR | BASE | KOD | order 694 @ <= 1.2, reserved $836.96 | REJECTED_STOP_TOO_WIDE: open 1.63 is above the permitted entry 1.2: the stop at 1.14 would be 30.06% away, more than 5% | - | - |
 | 2026-11-05 | DNUT | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
@@ -148,9 +147,28 @@ As of the latest record (2026-11-12T23:02:05Z). Paper only: no orders, no money.
 | 2026-11-12 | POAS | BASE | KOD | declined: LIMIT_PLANNED_RISK: 109.96 + 50.32 would exceed 1.5% of equity 10075.10 | - | - | - |
 | 2026-11-12 | ARAI | BASE | KOD | declined: LIMIT_PLANNED_RISK: 109.96 + 50.35 would exceed 1.5% of equity 10075.10 | - | - | - |
 | 2026-11-12 | DBGI | BASE | KOD | declined: LIMIT_PLANNED_RISK: 109.96 + 50.37 would exceed 1.5% of equity 10075.10 | - | - | - |
+| 2026-11-13 | LFTO | BASE | KOD | order 44 @ <= 22.3, reserved $981.69 | pending: next open (before 2026-11-16T14:30:00Z) | - | - |
+| 2026-11-13 | SBC | BASE | KOD | order 153 @ <= 6.38, reserved $977.60 | pending: next open (before 2026-11-16T14:30:00Z) | - | - |
+| 2026-11-13 | LFMD | BASE | KOD | order 461 @ <= 1.94, reserved $898.81 | pending: next open (before 2026-11-16T14:30:00Z) | - | - |
+| 2026-11-13 | NMAX | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SLND | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SHIM | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | RAIN | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | VTSI | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | AEI | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | FCDH | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | BGIN | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SLSN | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | TGHL | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | BKHA | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | AKAN | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | FCUV | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | ONFO | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SHFS | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | ZBAO | BASE | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
 | 2026-10-30 | FMC | FIXED5 | KOD | order 138 @ <= 6.8, reserved $939.81 | filled 138 @ 6.11 on 2026-11-02, stop 5.81 | STOP 2026-11-06 @ 5.81 | -$43.89 |
 | 2026-10-30 | ASUR | FIXED5 | KOD | order 92 @ <= 10.34, reserved $952.71 | filled 92 @ 9.98 on 2026-11-02, stop 9.49 | STOP 2026-11-02 @ 9.49 | -$47.79 |
-| 2026-11-05 | APP | FIXED5 | KOD | order 2 @ <= 391.7, reserved $783.79 | filled 2 @ 356 on 2026-11-06, stop 338.2 | - | - |
+| 2026-11-05 | APP | FIXED5 | KOD | order 2 @ <= 391.7, reserved $783.79 | filled 2 @ 356 on 2026-11-06, stop 338.2 | TIME_EXIT_AT_CLOSE 2026-11-13 @ 409.1 | $105.51 |
 | 2026-11-05 | VXX | FIXED5 | KOD | order 39 @ <= 24.41, reserved $952.47 | filled 39 @ 21.73 on 2026-11-06, stop 20.65 | STOP 2026-11-06 @ 20.65 | -$42.97 |
 | 2026-11-05 | HTCR | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 125.63 + 49.65 would exceed 1.5% of equity 9945.43 | - | - | - |
 | 2026-11-05 | DNUT | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 125.63 + 49.60 would exceed 1.5% of equity 9945.43 | - | - | - |
@@ -257,3 +275,22 @@ As of the latest record (2026-11-12T23:02:05Z). Paper only: no orders, no money.
 | 2026-11-12 | POAS | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 111.40 + 49.62 would exceed 1.5% of equity 9940.45 | - | - | - |
 | 2026-11-12 | ARAI | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 111.40 + 49.58 would exceed 1.5% of equity 9940.45 | - | - | - |
 | 2026-11-12 | DBGI | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 111.40 + 49.69 would exceed 1.5% of equity 9940.45 | - | - | - |
+| 2026-11-13 | LFTO | FIXED5 | KOD | order 36 @ <= 26.87, reserved $967.80 | pending: next open (before 2026-11-16T14:30:00Z) | - | - |
+| 2026-11-13 | SBC | FIXED5 | KOD | order 117 @ <= 8.07, reserved $945.61 | pending: next open (before 2026-11-16T14:30:00Z) | - | - |
+| 2026-11-13 | LFMD | FIXED5 | KOD | order 346 @ <= 2.4, reserved $834.55 | pending: next open (before 2026-11-16T14:30:00Z) | - | - |
+| 2026-11-13 | NMAX | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SLND | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SHIM | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | RAIN | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | VTSI | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | AEI | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | FCDH | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | BGIN | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SLSN | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | TGHL | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | BKHA | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | AKAN | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | FCUV | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | ONFO | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | SHFS | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
+| 2026-11-13 | ZBAO | FIXED5 | KOD | declined: LIMIT_NEW_PER_SESSION: 3 orders already placed for this session | - | - | - |
