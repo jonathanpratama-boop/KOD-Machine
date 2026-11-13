@@ -26,7 +26,20 @@ LEDGER = paper.PAPER / "split_assessments.jsonl"
 RECORD_TYPE = "SPLIT_ASSESSMENT"
 RULE_ID = split_units.RULE_ID
 PULL_ROLES = ("seal", "later")
-CHANGE_FIELDS = ("assessment", "split", "previous_session", "units")
+CHANGE_FIELDS = ("assessment", "split", "previous_session", "units", "evidence_gap")
+# Classes whose finding rests on a split the response listed (contract addendum 2, point 1). A later response that
+# lists no readable split cannot confirm or contradict such a finding (contract addendum 3).
+EVENT_BASED = frozenset(
+    {
+        "ARTIFACT_CONFIRMED",
+        "ARTIFACT_PROBABLE",
+        "REAL_MOVE_UNITS_CONTAMINATED",
+        "SPLIT_IN_WINDOW_UNRESOLVED",
+        "REAL_MOVE_UNITS_UNVERIFIED",
+        "REAL_MOVE_AFTER_SPLIT",
+    }
+)
+EVIDENCE_GAPS = ("SPLIT_EVENTS_ABSENT", "SPLIT_EVENTS_MALFORMED")
 
 
 def _is_set(r: dict) -> bool:
@@ -65,6 +78,29 @@ def _reaches_back(priced, signal_session) -> bool:
     return False
 
 
+def split_event_coverage(payload) -> str:
+    """What a provider chart payload says about splits (contract addendum 3): "LISTED" when it holds a split-event
+    block whose every entry `split_flags.provider_splits` can read and that lists at least one split; "ABSENT" when
+    there is no such block or it lists nothing; "MALFORMED" when a block is there but cannot be read in full."""
+    try:
+        result = payload["chart"]["result"][0]
+    except (TypeError, KeyError, IndexError):
+        return "ABSENT"
+    if not isinstance(result, dict) or result.get("events") is None:
+        return "ABSENT"
+    events = result["events"]
+    if not isinstance(events, dict):
+        return "MALFORMED"
+    splits = events.get("splits")
+    if splits is None:
+        return "ABSENT"
+    if not isinstance(splits, dict):
+        return "MALFORMED"
+    if not splits:
+        return "ABSENT"
+    return "LISTED" if len(split_flags.provider_splits(payload)) == len(splits) else "MALFORMED"
+
+
 def _when(text):
     """An ISO timestamp as an aware datetime, or None."""
     if not isinstance(text, str):
@@ -87,8 +123,11 @@ def assessment_record(
     pull_role: str = "later",
     retrieved_on: str | None = None,
     sources=(),
+    finding: dict | None = None,
 ) -> dict:
-    """The unsealed SPLIT_ASSESSMENT record of one set. payload None means no provider data was available."""
+    """The unsealed SPLIT_ASSESSMENT record of one set. payload None means no provider data was available.
+    `finding` is the set's standing assessment, if any: when it rests on a listed split and this response lists no
+    readable split, the response is an incomplete refresh, recorded NOT_ASSESSABLE with its evidence gap."""
     sig = set_rec.get("signal") or {}
     ratio = split_flags._ratio(set_rec)
     recorded_previous = None
@@ -96,9 +135,16 @@ def assessment_record(
         recorded_previous = seal["previous_session"]
     bars = split_units.payload_bars(payload) if payload is not None else []
     priced = [(day, px) for day, px in bars if isinstance(px, (int, float)) and not isinstance(px, bool) and px > 0]
+    gap = None
+    coverage = split_event_coverage(payload) if priced else None
     if not priced:
         # Contract addendum 1: a response that holds no bar with a price is not evidence. Nothing was checked.
         ans, events = _nothing_checked(), []
+    elif finding and finding.get("assessment") in EVENT_BASED and coverage != "LISTED":
+        # Contract addendum 3: the standing finding rests on a listed split and this response lists none it can read.
+        # Missing evidence is not contrary evidence: record the incomplete refresh; standing() keeps the finding.
+        ans, events = _nothing_checked(), []
+        gap = "SPLIT_EVENTS_MALFORMED" if coverage == "MALFORMED" else "SPLIT_EVENTS_ABSENT"
     else:
         events = split_flags.provider_splits(payload)
         ans = split_units.classify(
@@ -145,6 +191,7 @@ def assessment_record(
         "previous_session_source": ans["previous_session_source"],
         "units": ans["units"],
         "later_factor": ans["later_factor"],
+        "evidence_gap": gap,
         "pull_role": pull_role,
         "supersedes": prior["record_hash"] if prior else None,
         "basis": basis,
@@ -211,7 +258,7 @@ def propose_reassessments(
 ) -> list[dict]:
     """Unsealed records for the already-assessed sets whose assessment differs on this pull. A set with no payload
     is skipped: no evidence is not new evidence."""
-    current, seals, out = latest(records), seal_assessments(records), []
+    current, seals, findings, out = latest(records), seal_assessments(records), standing(records), []
     for s in specs:
         if not _is_set(s) or s["set_id"] not in current:
             continue
@@ -236,6 +283,7 @@ def propose_reassessments(
             pull_role="later",
             retrieved_on=retrieved_on,
             sources=(sources or {}).get(s["set_id"], ()),
+            finding=findings.get(s["set_id"]),
         )
         if changed(new, old):
             out.append(new)
@@ -308,6 +356,9 @@ def verify(records: list[dict] | None = None, specs: list[dict] | None = None) -
             problems.append(f"{where}: invalid assessment {r.get('assessment')!r}")
         elif r.get("group") != split_units.GROUP[r["assessment"]]:
             problems.append(f"{where}: group {r.get('group')!r} is not the group of {r['assessment']}")
+        gap = r.get("evidence_gap")
+        if gap is not None and (gap not in EVIDENCE_GAPS or r.get("assessment") != "NOT_ASSESSABLE"):
+            problems.append(f"{where}: evidence_gap {gap!r} on a {r.get('assessment')!r} record")
         if r.get("pull_role") not in PULL_ROLES:
             problems.append(f"{where}: invalid pull_role {r.get('pull_role')!r}")
         if sid not in sealed:

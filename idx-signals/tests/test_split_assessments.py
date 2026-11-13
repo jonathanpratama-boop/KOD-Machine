@@ -30,7 +30,8 @@ CLASSIFY_KEYS = {"class", "group", "previous_session", "previous_session_source"
                  "later_factor"}
 RECORD_KEYS = {"type", "rule", "set_id", "ticker", "market", "signal_session", "recorded_ret1", "assessment", "group",
                "split", "split_adjusted_ret1", "previous_session", "previous_session_source", "units", "later_factor",
-               "pull_role", "supersedes", "basis", "sources", "assessed_at"}
+               "pull_role", "supersedes", "basis", "sources", "assessed_at",
+               "evidence_gap"}  # contract addendum 3
 GROUP_OF = {  # contract, part B1
     "ARTIFACT_CONFIRMED": "ARTIFACT",
     "ARTIFACT_PROBABLE": "ARTIFACT",
