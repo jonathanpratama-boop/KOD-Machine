@@ -44,6 +44,12 @@ Untouched: the V11 rule, its ledger, its 23 tests, every detector, cone, plan, d
 - GOVX and SLXN 2026-11-11 are `ARTIFACT_CONFIRMED`. The pull lists a 1-for-24 split on the signal session and shows
   the previous session's close multiplied by 24. Recorded moves +1,829% and +2,863%; adjusted -19.64% and +23.47%.
   Their V11 tags are `INDETERMINATE`, assigned at 2026-11-11 23:00 from a pull that did not list the split yet.
+  Second sources, read on 2026-11-13: GeoVax's Form 8-K reports a certificate of amendment filed on 2026-11-10 for
+  a 1-for-24 reverse split (https://www.sec.gov/Archives/edgar/data/0000832489/000143774926036297/govx20261110_8k.htm);
+  Silexion's announcement gives a 1-for-24 reverse split effective after the close on 2026-11-10, with adjusted
+  trading from the open on 2026-11-11
+  (https://www.biospace.com/press-releases/silexion-therapeutics-announces-1-for-24-reverse-share-split). The scan's
+  previous close for both is the last pre-split close.
 - The corrected view leaves out 11 sets: ATYR, MASK, WHLR (2026-10-30), XXII (2026-11-05), GOVX, SLXN (2026-11-11)
   confirmed; PARA, SCAG, ENLV (2026-10-28), OMEX (2026-10-30), TOPS (2026-11-09) probable. SMX is back in it.
 
@@ -122,12 +128,14 @@ cd idx-signals
 python3 -m idxsig split-assess --dry-run
 python3 -m idxsig split-assess \
   --source SPEC-SCAN-US-2026-11-10-G2_RET30-SMX=https://www.sec.gov/Archives/edgar/data/0001940674/000149315226049929/ex99-1.htm \
+  --source SPEC-SCAN-US-2026-11-11-G2_RET30-GOVX=https://www.sec.gov/Archives/edgar/data/0000832489/000143774926036297/govx20261110_8k.htm \
+  --source SPEC-SCAN-US-2026-11-11-G2_RET30-SLXN=https://www.biospace.com/press-releases/silexion-therapeutics-announces-1-for-24-reverse-share-split \
   --commit
 ```
 
 The dry run should list the 11 artifact sets of section 3.1 and no line for SMX 2026-11-10 other than
 `REAL_MOVE_AFTER_SPLIT`; the sets sealed since `134f58f` will appear as well. If the command is not run, the first
-nightly run after the merge assesses every pending set by itself, without the source text on SMX's record.
+nightly run after the merge assesses every pending set by itself, without the source texts on the three records.
 
 On the next scheduled run, check:
 
