@@ -192,5 +192,58 @@ class PublishedPaperViews(unittest.TestCase):
         self.assertIsNone(got["unresolved_count"])
 
 
+class PublishedInputHealth(unittest.TestCase):
+    message = "The latest US scan has unscanned names; full input coverage cannot be claimed."
+    assessed = "2026-11-12T23:01:44.792234Z"
+
+    def banner(self):
+        return (
+            "## US forecast input health\n\n"
+            f"**PARTIAL_INPUT — {self.message}**\n\n"
+            f"- Assessed {self.assessed}; latest US scan session: 2026-11-12.\n"
+        )
+
+    def test_authoritative_warning_survives_before_corrected_views_exist(self):
+        report = "# Paper book\n\n" + self.banner() + "\nGenerated 2026-11-12T23:01:44Z.\n"
+        got = paper_book_views(report, "published-report-at-fixed-commit")
+        self.assertEqual(got["status"], "NOT_PUBLISHED")
+        self.assertEqual(got["rows"], [])
+        self.assertEqual(got["input_health"], {
+            "status": "PARTIAL_INPUT", "message": self.message, "assessed_at": self.assessed,
+        })
+
+    def test_warning_is_independent_of_complete_corrected_table(self):
+        report = self.banner() + "\n" + PublishedPaperViews().report()
+        got = paper_book_views(report, "source")
+        self.assertEqual(got["status"], "PUBLISHED")
+        self.assertEqual(got["input_health"]["status"], "PARTIAL_INPUT")
+        self.assertEqual(got["input_health"]["message"], self.message)
+
+    def test_missing_health_banner_never_means_healthy(self):
+        for report in ("", PublishedPaperViews().report(), "## US forecast input health\nNo assessment yet.\n"):
+            with self.subTest(report=report):
+                self.assertEqual(paper_book_views(report, "source")["input_health"], {
+                    "status": None, "message": None, "assessed_at": None,
+                })
+
+    def test_status_and_assessment_outside_health_section_are_ignored(self):
+        fake = "**PARTIAL_INPUT — unrelated note**\n- Assessed 2001-01-01T00:00:00Z; irrelevant.\n"
+        for report in (
+            "# Paper book\n" + fake,
+            "## US forecast input health\nNothing published.\n## Results\n" + fake,
+            "## US forecast input health\nNothing published.\nGenerated 2026-11-12T23:01:44Z.\n" + fake,
+        ):
+            with self.subTest(report=report):
+                self.assertEqual(paper_book_views(report, "source")["input_health"], {
+                    "status": None, "message": None, "assessed_at": None,
+                })
+
+    def test_missing_assessment_time_stays_unknown(self):
+        got = paper_book_views("## US forecast input health\n**BLOCKED — Forecast data unavailable.**\n", "source")
+        self.assertEqual(got["input_health"], {
+            "status": "BLOCKED", "message": "Forecast data unavailable.", "assessed_at": None,
+        })
+
+
 if __name__ == "__main__":
     unittest.main()

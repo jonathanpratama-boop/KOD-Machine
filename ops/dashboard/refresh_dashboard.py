@@ -145,6 +145,22 @@ def source_manifest(kod, backups, default_ref, registry):
             'backup_history_scope': 'current branch heads; historical records remain in GitHub'}
 
 
+def paper_input_health(report):
+    """Retain the published input warning independently of corrected results."""
+    result = {'status': None, 'message': None, 'assessed_at': None}
+    section = re.search(r'^## US forecast input health\s*\n(.*?)(?=^## |^Generated |\Z)',
+                        report, re.MULTILINE | re.DOTALL)
+    if not section:
+        return result
+    banner = re.search(r'^\*\*([A-Z][A-Z0-9_]*) — (.+)\*\*$', section[1], re.MULTILINE)
+    if banner:
+        result['status'], result['message'] = banner.groups()
+    assessed = re.search(r'^- Assessed ([^;\s]+);', section[1], re.MULTILINE)
+    if assessed:
+        result['assessed_at'] = assessed[1]
+    return result
+
+
 def paper_book_views(report, source):
     """Copy only the three published disclosure views; never recalculate returns."""
     rows = []
@@ -159,7 +175,7 @@ def paper_book_views(report, source):
                       if line.startswith('Generated ')), None)
     unresolved_match = re.search(r'(\d+) are unresolved and stay in every view', report)
     return {'status': 'PUBLISHED' if complete else 'NOT_PUBLISHED', 'source': source,
-            'report_generated_at': generated,
+            'report_generated_at': generated, 'input_health': paper_input_health(report),
             'unresolved_count': int(unresolved_match.group(1)) if unresolved_match else None,
             'columns': ['Book', 'View', 'Positions', 'Closed', 'Wins', 'P&L', 'Average trade'],
             'rows': rows if complete else [],

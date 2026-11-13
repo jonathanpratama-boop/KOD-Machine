@@ -1,0 +1,2747 @@
+{
+  "verified_at": "2026-11-13T08:06:32.552079+00:00",
+  "base_commit": "b836c8d516275d37b6dee3f6990d206b15868278",
+  "ledger_sha256": "0fb5552d4f9903f9c1d4b69011a19d439b4604e336093b7f3780ba1a07122ad9",
+  "record_count": 183,
+  "pull_roles": {
+    "later": 183
+  },
+  "assessment_times": [
+    "2026-11-13T07:53:35Z"
+  ],
+  "assessment_counts": {
+    "UNITS_INCONSISTENT": 1,
+    "NO_ACTION_FOUND": 162,
+    "REAL_MOVE_AFTER_SPLIT": 4,
+    "NOT_ASSESSABLE": 2,
+    "ARTIFACT_PROBABLE": 5,
+    "ARTIFACT_CONFIRMED": 7,
+    "UNEXPLAINED_EXTREME_MOVE": 2
+  },
+  "original_ledgers": {
+    "speculations.jsonl": {
+      "unchanged": true,
+      "sha256": "aea28f38583f8fb8e5c8ba5db8b7377a0aab32ce4b18d12e3c8bdf4169d46dd1"
+    },
+    "split_flags.jsonl": {
+      "unchanged": true,
+      "sha256": "559669988bb673a709f6d2951bf4b26d7cf87577ed231026aee1c0b5cd4cec17"
+    },
+    "paper_book.jsonl": {
+      "unchanged": true,
+      "sha256": "11b2e91ea5da975cce8ac80add156cf3891718b90548a15ce8df90d0daaecc29"
+    },
+    "ledger.jsonl": {
+      "unchanged": true,
+      "sha256": "ede5f911b5c5dbfe91501b770d9bdd7ef1423891021a3248769b39c94ced0fcf"
+    }
+  },
+  "manifest_sha256": "a1376f95224bbb2e442fd68545eb2a6dc5b33912d92d62c608ae802c97d8009e",
+  "raw_files_verified": 164,
+  "named_cases": {
+    "SMX": {
+      "session": "2026-11-10",
+      "assessment": "REAL_MOVE_AFTER_SPLIT",
+      "group": "REAL",
+      "record_hash": "b8876f321f2582f359fdca0cb8b51be2493529a0e6bb8cc31c68f2ece3c33988"
+    },
+    "GOVX": {
+      "session": "2026-11-11",
+      "assessment": "ARTIFACT_CONFIRMED",
+      "group": "ARTIFACT",
+      "record_hash": "370cc21c5cd2b1a662eaa977bdb0ce1811ab27ced0d723a595ae6c4ad4f37df6"
+    },
+    "SLXN": {
+      "session": "2026-11-11",
+      "assessment": "ARTIFACT_CONFIRMED",
+      "group": "ARTIFACT",
+      "record_hash": "e8057436fa0dc28e5dd8541e19854a774399513d1e19897b0a898a5153d7ed64"
+    }
+  },
+  "paper_report_sha256": "e67c96679f7412d1e4c039018e6871ada7b599a62e877c64d4a4214d2939672c",
+  "published_table_matches_independent_reconstruction": true,
+  "paper_views": [
+    [
+      "KOD",
+      "As frozen",
+      "109",
+      "2",
+      "1",
+      "$-80",
+      "-4.02%"
+    ],
+    [
+      "KOD",
+      "Known at the time",
+      "107",
+      "2",
+      "1",
+      "$-80",
+      "-4.02%"
+    ],
+    [
+      "KOD",
+      "Corrected",
+      "105",
+      "2",
+      "1",
+      "$-80",
+      "-4.02%"
+    ],
+    [
+      "ALL",
+      "As frozen",
+      "121",
+      "11",
+      "4",
+      "$-1,140",
+      "-10.37%"
+    ],
+    [
+      "ALL",
+      "Known at the time",
+      "119",
+      "11",
+      "4",
+      "$-1,140",
+      "-10.37%"
+    ],
+    [
+      "ALL",
+      "Corrected",
+      "112",
+      "7",
+      "2",
+      "$-1,087",
+      "-15.52%"
+    ],
+    [
+      "AVOIDED",
+      "As frozen",
+      "12",
+      "9",
+      "3",
+      "$-1,060",
+      "-11.78%"
+    ],
+    [
+      "AVOIDED",
+      "Known at the time",
+      "12",
+      "9",
+      "3",
+      "$-1,060",
+      "-11.78%"
+    ],
+    [
+      "AVOIDED",
+      "Corrected",
+      "7",
+      "5",
+      "1",
+      "$-1,006",
+      "-20.13%"
+    ],
+    [
+      "OWNER",
+      "As frozen",
+      "0",
+      "0",
+      "0",
+      "$+0",
+      "-"
+    ],
+    [
+      "OWNER",
+      "Known at the time",
+      "0",
+      "0",
+      "0",
+      "$+0",
+      "-"
+    ],
+    [
+      "OWNER",
+      "Corrected",
+      "0",
+      "0",
+      "0",
+      "$+0",
+      "-"
+    ]
+  ],
+  "certificates": {
+    "freetsa-cacert.pem": "2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438",
+    "freetsa-tsa.crt": "8bfb0305bb64e2571ca507552ef3245cb1c2fee8728e0ff8689225081ea13467",
+    "sectigo-usertrust-rsa-root.pem": "8a3dbcb92ab1c6277647fe2ab8536b5c982abbfdb1f1df5728e01b906aba953a"
+  },
+  "expected_receipts": 366,
+  "missing_receipts": [],
+  "verified_receipts": 366,
+  "tokens": [
+    {
+      "filename": "0a9d03dce3518ca8db22fc83fea4a9e988eb7a44ed334259b61bfbd03238e738.freetsa.tsr",
+      "sha256": "cb34c3a484d78543e87d425e6438fef262e6d0e34a9f3c18fb86555105e3b3ef",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "0a9d03dce3518ca8db22fc83fea4a9e988eb7a44ed334259b61bfbd03238e738.sectigo.tsr",
+      "sha256": "aac35f72517f36df74134a5f5f5e4736c54e56ef9202b1fce8a1af376b231b61",
+      "verified": true,
+      "authority_time": "Nov 13 07:53:41 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b649279d25b98fcc41078f471ca5d02eac98031365cd39afa436503fa2be7e5a.freetsa.tsr",
+      "sha256": "0c076b842741cbc536590b8fccd5a3a4ca70934e7fa819e3bc0e55dbfdaf9f98",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b649279d25b98fcc41078f471ca5d02eac98031365cd39afa436503fa2be7e5a.sectigo.tsr",
+      "sha256": "417523709332d4139396612b2f3dd2e641b4398b11a00d9abd5296ba3bdeb464",
+      "verified": true,
+      "authority_time": "Nov 13 07:53:46 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c36b598e38b0636db67493daf16a665db299596faf825f26b09655664341967c.freetsa.tsr",
+      "sha256": "ff5ac7f84ceca82cdc98d04e2bfab23abd57794023a73bc588ee4ca215f99d10",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c36b598e38b0636db67493daf16a665db299596faf825f26b09655664341967c.sectigo.tsr",
+      "sha256": "4626d73e2a9fda3fc73ef02796a9693a37e0296635b6986ae67b5308e81de0fa",
+      "verified": true,
+      "authority_time": "Nov 13 07:53:49 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "29fb26dd330e576e15ed8129093401bd96daae30de4e3e49e4a4b91f4d1d4d0f.freetsa.tsr",
+      "sha256": "962a89768fb679f3ba7f365d831ff432880a8230823ca531f57c27f64147385b",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "29fb26dd330e576e15ed8129093401bd96daae30de4e3e49e4a4b91f4d1d4d0f.sectigo.tsr",
+      "sha256": "67bd2c30cddb6a852116583999aa1ede1fecd5d2b8e89e4304b8046cd62335cb",
+      "verified": true,
+      "authority_time": "Nov 13 07:53:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9fcb302069fbd6d98c1a49bf67af64d28331a690aa4464187230b51fbd89475c.freetsa.tsr",
+      "sha256": "85b64911026bfc93a874672d65fcbcb2677d41eb4d72abb9fe8561232ff4f9bc",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9fcb302069fbd6d98c1a49bf67af64d28331a690aa4464187230b51fbd89475c.sectigo.tsr",
+      "sha256": "4cb9317daac108eb84f050d14a8180049601bf8087ef1bab8d7c6b6e4728fcc5",
+      "verified": true,
+      "authority_time": "Nov 13 07:53:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b341381afcb5242ecd1fd89c293e811370969b014052b79ac61e2a6c0159de26.freetsa.tsr",
+      "sha256": "fd139e0b954b8518849069c7def483a94b320c0c878c08e0a5cc4cfb359f805b",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b341381afcb5242ecd1fd89c293e811370969b014052b79ac61e2a6c0159de26.sectigo.tsr",
+      "sha256": "664442f232d1ce3c6b9e1ec196c5d34f6001c60a781cfb23ee3e571d0f6b7ea6",
+      "verified": true,
+      "authority_time": "Nov 13 07:53:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f3aa4dfd6a2cef04f8ff8dddbf3b9de47cfca91c9bfc799d84f1c8c0acdc89fc.freetsa.tsr",
+      "sha256": "6f179ed66b82c7b07ba8ff6dbc3f6a8b0aabbce2c7c779158f8012e1648e3696",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f3aa4dfd6a2cef04f8ff8dddbf3b9de47cfca91c9bfc799d84f1c8c0acdc89fc.sectigo.tsr",
+      "sha256": "70460a451307b74d21adf77370f8b451607ce8ad7013284aac161e8e965f6472",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f827cdc4b57a6fd856123f99c8da6128f36b7cda69dbf7cc992d0aa50d856a79.freetsa.tsr",
+      "sha256": "0c0babd58d8789d93219cfb90f89c21c26fbc6d95c3b8e5e62116035e1e54368",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f827cdc4b57a6fd856123f99c8da6128f36b7cda69dbf7cc992d0aa50d856a79.sectigo.tsr",
+      "sha256": "ef90d6870283c144873056637f2cfb011f8257cb3b18cdd9e888dccdafe5b44f",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "249ac5a65c443b2452545205500f099a702bc38fb5556855e0737267737c78c7.freetsa.tsr",
+      "sha256": "88adb23b869d9042426038caed0f5ba573a51079d7472f0cfe37863b0f461c80",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "249ac5a65c443b2452545205500f099a702bc38fb5556855e0737267737c78c7.sectigo.tsr",
+      "sha256": "f829716dca3456bf0f7c14ae5dfc5a22708791fb15ad3e8ae9d7325ac15389d1",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "456d3c819df2182ec81334f9257bc7fbddc05d649b5f740dbc7af84ced0721fe.freetsa.tsr",
+      "sha256": "27ab49bf2d52aece349768926d538225062aee1eb8527ef49de68f8f8086df21",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "456d3c819df2182ec81334f9257bc7fbddc05d649b5f740dbc7af84ced0721fe.sectigo.tsr",
+      "sha256": "03441f6c519c8d3dc0c77973d63a9cbff101c38f687fe9efd3ba4d9d4e47d095",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:11 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d4670fd98a7314dbab101237b4a105833c052238ff0caead3cafb00d91ca5746.freetsa.tsr",
+      "sha256": "0752a789b665d0f88ac12cd3db3da5c9a65bfe01390f7bbe3bb5ee15eaa3ed47",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d4670fd98a7314dbab101237b4a105833c052238ff0caead3cafb00d91ca5746.sectigo.tsr",
+      "sha256": "343fffbd5e4ce77b3b262675d4655fac6fc9195448ad43dc6067303fbca185a1",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:14 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a5e558d9c19208b5e34021eac26f9c42c444e24f3fa8e6b71939a962d376e72b.freetsa.tsr",
+      "sha256": "6acf87d4294eae54ac45c50cae445adee2e10eaf4af64b5872272f6f2f2ed6d4",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:38 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a5e558d9c19208b5e34021eac26f9c42c444e24f3fa8e6b71939a962d376e72b.sectigo.tsr",
+      "sha256": "f7ec679240e4c7aced59ffe3bfb45152b6f6d15aab201d4c9827079d29c63beb",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:17 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "1763157c8eeb8b7548df4b5a2a8045a00c4971d0f694a200c91510c2b4827e06.freetsa.tsr",
+      "sha256": "51216e715a29f229ed1d5090294a547c788289c6f5292734b424b0a842af1ae8",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:38 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "1763157c8eeb8b7548df4b5a2a8045a00c4971d0f694a200c91510c2b4827e06.sectigo.tsr",
+      "sha256": "8792b4f355ec7146048bf3cfd8134f3684edfef77cc5776f91673179c35e7cdd",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:21 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6cfe75550ad3b173c8f0b677191c4f29d7ace43cb30c3a9a53e7fcb3caf29c55.freetsa.tsr",
+      "sha256": "27754efafe3c202bd2d555be776b95a0b99286842d193e249784e33354fba204",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:38 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6cfe75550ad3b173c8f0b677191c4f29d7ace43cb30c3a9a53e7fcb3caf29c55.sectigo.tsr",
+      "sha256": "af9c22eb62230696e213fc4b63d9241a0d95e0e61e2c99156e4e6ca97de1c1e5",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "08b9a5e79c8216395d572a0f477f3ca4f81a13211ea2e62052b5673665cb0ace.freetsa.tsr",
+      "sha256": "73bd953876ca60da4906ab38c772ce00761d6247aefb68aa963ff0b840aa0a47",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "08b9a5e79c8216395d572a0f477f3ca4f81a13211ea2e62052b5673665cb0ace.sectigo.tsr",
+      "sha256": "1ed0025edb360c881f6337c0ea47178af4889fc1c7c987a9f360c5fe3fa232e1",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "dd6aeeac78677e6a5603ceed60ee399c209b7b9196f237e25a49de45ef81ef41.freetsa.tsr",
+      "sha256": "23ff1501a77dac73a51e099258008493065c7e8cc2beb3f09780dcc2c4b9ec67",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "dd6aeeac78677e6a5603ceed60ee399c209b7b9196f237e25a49de45ef81ef41.sectigo.tsr",
+      "sha256": "e6f2937cb741e54f8bef4c116673682aa6664793902c9f5b225465eaeb59235c",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b90e2cf707882473e8de8bef1a59a3d5c24e15c21265435c2b5e4411a5e347f3.freetsa.tsr",
+      "sha256": "362ac0123d9b50b1059707e053955d93bda0b347509ada89a8cd3984e61c02e3",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b90e2cf707882473e8de8bef1a59a3d5c24e15c21265435c2b5e4411a5e347f3.sectigo.tsr",
+      "sha256": "3150d10ad843c7d6547275d030f13a1c0e5a16f89019c786d9fd03839f36ab85",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e9870d9d1094b77501950b25fb0fc7f0f5ba7eac4d14616f19bcdc6e864a8ab0.freetsa.tsr",
+      "sha256": "bbd90ceb67baff5229bf0243bfd528183449b2c5ebe7df7c1053d9713a1e2c12",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e9870d9d1094b77501950b25fb0fc7f0f5ba7eac4d14616f19bcdc6e864a8ab0.sectigo.tsr",
+      "sha256": "184bccfdaa4dbefe4876917f6f8e28fa5d2ca30ef590a948a29aaa7b805e8fb8",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:35 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a44a81efbc68bdba500a72d43278c6dceb355122f286c2c45fdbcef6f1025bc7.freetsa.tsr",
+      "sha256": "c80ee3629c16f5c195bbe6027526d4119dc8f66943ee2d15bfefb8f157570a94",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a44a81efbc68bdba500a72d43278c6dceb355122f286c2c45fdbcef6f1025bc7.sectigo.tsr",
+      "sha256": "45beb9f4729562d923ee2fcf9a75534ee515218919d9f3b1c89573e19bc32e7b",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "cd9e8f46b93b6b3d95f024a589c1b4bbaf4c9beda36a642fb32babac1419fc93.freetsa.tsr",
+      "sha256": "6d2ad0b1c77b202f1a3306e2a517d85deac78e5df67613f54b7b5c38421c420e",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "cd9e8f46b93b6b3d95f024a589c1b4bbaf4c9beda36a642fb32babac1419fc93.sectigo.tsr",
+      "sha256": "aa92c3017165315c962ebd6f83d0176125985208512ae435e42ae7bb86a9709e",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "da26db745bd4bd69ce020a5ec7ead7ed765d3b3003c0199991af8c9f25a86056.freetsa.tsr",
+      "sha256": "320958a50262c1db4b3f86f0c583a66cb036bc37fffcef1bb981888dedff2924",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "da26db745bd4bd69ce020a5ec7ead7ed765d3b3003c0199991af8c9f25a86056.sectigo.tsr",
+      "sha256": "ec9036262cfde1fbad7ada8a12035ae050a3fa85683b50f8492b7bdf93305db3",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:46 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a4ac0e7c638ee03e484090f13ce16ba9a22b93798f3833b239c13b5e98452ec1.freetsa.tsr",
+      "sha256": "9f747bdf437af1f42bc22cff8b636b14d8beef8b15fdae6f3003eccb8a0fd86e",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:41 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a4ac0e7c638ee03e484090f13ce16ba9a22b93798f3833b239c13b5e98452ec1.sectigo.tsr",
+      "sha256": "40f4cf99f4a2e865f3a7762854e244d6b0175d89e18346200122f0dcf36553d2",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:49 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5bbbdb89d1e733b683e43247a6c39bfa9996945e18397347d11ac97dd4f649d4.freetsa.tsr",
+      "sha256": "6a999e0a06ad09d4983f45ae4c9a5927d97c3641f5dc6a13625262ee23ce53d7",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:41 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5bbbdb89d1e733b683e43247a6c39bfa9996945e18397347d11ac97dd4f649d4.sectigo.tsr",
+      "sha256": "46fb8b30918485461ddd476967d3dadbf437a1f9fbfbc508ec36c301bd56a066",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "25c1c791e291a41cf6e3d5e4752c8f58f80d52c2bc9e241dd3fdded4abfe696d.freetsa.tsr",
+      "sha256": "a0f1979ae443030d0c0ecd0f7079f783262000076899d5dcf548ba45c359cc5a",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:41 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "25c1c791e291a41cf6e3d5e4752c8f58f80d52c2bc9e241dd3fdded4abfe696d.sectigo.tsr",
+      "sha256": "75d7990e8cce6ab34d6ee1b4f9b6169647caf05c03d780d4a15706dbf00742dc",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4bd8e64124b8ef152fbb777b3f8baa57c9aa3b0d67198d0e93a1b5ffc89b8652.freetsa.tsr",
+      "sha256": "33854f5713271deab36f7adaddcd55c307db6e4af82040a496b6c35e82a93d51",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:41 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4bd8e64124b8ef152fbb777b3f8baa57c9aa3b0d67198d0e93a1b5ffc89b8652.sectigo.tsr",
+      "sha256": "844fc3077fd91ef3a06792949f1e8714099690b016d2aca3ada32aa86bf43091",
+      "verified": true,
+      "authority_time": "Nov 13 07:54:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9d951d9e39d916cd2258f6305f50146149d8b809f6f70269a27de6ef99c696f6.freetsa.tsr",
+      "sha256": "0850bf7a1dd4f010c6cb39f39135019de0ea61f356c52cc1f2640e7f3087a0f1",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9d951d9e39d916cd2258f6305f50146149d8b809f6f70269a27de6ef99c696f6.sectigo.tsr",
+      "sha256": "af777ed8c7f1ae41457201e8604cf38ec72a971f363a3b9f6cd94f875e509c06",
+      "verified": true,
+      "authority_time": "Nov 13 07:55:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "aa921a4ce2a406e54ba59cebf8449959971b9ec2a6a3d580edb69710bd89f283.freetsa.tsr",
+      "sha256": "4ff7df88652e4bd09a316e491830f7786af6b721cdeb46b8bd680b01631aff26",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "aa921a4ce2a406e54ba59cebf8449959971b9ec2a6a3d580edb69710bd89f283.sectigo.tsr",
+      "sha256": "4ff9f56008fe8e9c1947f31acb89b2486feb3b019ac53f08d9713f36322480fb",
+      "verified": true,
+      "authority_time": "Nov 13 07:55:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e9f6c663987c8b4e32e432cbde93b9ead86974ce6442272c078b7e31225af8cd.freetsa.tsr",
+      "sha256": "864b88fa1185f997b1b9d209be3c79273e046ec017bb85aea35a23b3886a44a0",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e9f6c663987c8b4e32e432cbde93b9ead86974ce6442272c078b7e31225af8cd.sectigo.tsr",
+      "sha256": "13399b8cdc0729273e350e049e6b8d16ad238edf8d2e7e85b90432864ae8a628",
+      "verified": true,
+      "authority_time": "Nov 13 07:55:08 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5c9ffe34287c890eb84cc2ed40ab6aad78a02fde98eacc0abb431ed2c138d6cd.freetsa.tsr",
+      "sha256": "21bb01373fdd9419706e43aaf624893ec62b078e55d839882cae5b556f952a96",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5c9ffe34287c890eb84cc2ed40ab6aad78a02fde98eacc0abb431ed2c138d6cd.sectigo.tsr",
+      "sha256": "e9427e0fa9a3a6ac0c0082a27125195648392d6747871f70e56a306072c3ec64",
+      "verified": true,
+      "authority_time": "Nov 13 07:55:11 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "90d5d374a877cd72e8481f8c01f41133dc005108a0c6ae8b5c60dce145f82ee5.freetsa.tsr",
+      "sha256": "8cedbcee1b589d8c367925fcceab9a3e5b87facbc5d1d150a9308c53fb8ac0d1",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "90d5d374a877cd72e8481f8c01f41133dc005108a0c6ae8b5c60dce145f82ee5.sectigo.tsr",
+      "sha256": "3610d8c61eb912ef0167cd663f2c283f15e6091d767033c6dd0c6c920f1a594c",
+      "verified": true,
+      "authority_time": "Nov 13 07:55:14 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8233f6614b8d5176cfb918f734c5006a41ad31aad83ebd74316bb1fad281f22c.freetsa.tsr",
+      "sha256": "cfd66c49b21f1421689d377df71a3e473ae529a914365bd2bbaece9c4ceb37d3",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8233f6614b8d5176cfb918f734c5006a41ad31aad83ebd74316bb1fad281f22c.sectigo.tsr",
+      "sha256": "68503a92a308a7c703f53066a5a6b58e58d27865197662d1af4d7cc1116e15e4",
+      "verified": true,
+      "authority_time": "Nov 13 07:55:17 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bb133f80129c1b96b7f5077d0dde6df1cd631ef32611a9d2c6bcb18b6fc63831.freetsa.tsr",
+      "sha256": "ca51bbf06354ec0d4289c50794aa35bc25456410601d183915f578e044ccca40",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bb133f80129c1b96b7f5077d0dde6df1cd631ef32611a9d2c6bcb18b6fc63831.sectigo.tsr",
+      "sha256": "17f974a9d35844e2848c56af14b89042bef19bf40bf670a8d1eac9c20178f314",
+      "verified": true,
+      "authority_time": "Nov 13 07:55:20 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f0c39c2b22c99abb638229e233658bdff39f6df50c5c721dc6ef7e240fd0cd69.freetsa.tsr",
+      "sha256": "9c8481f1f39c543b98df53f26cf0f6d33e9fb6bc32654aaaeeb76955a92489f3",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f0c39c2b22c99abb638229e233658bdff39f6df50c5c721dc6ef7e240fd0cd69.sectigo.tsr",
+      "sha256": "1cfe7d7cc6c96787d80241635d5150126f71e62044de516bb3164e9a8b8541fe",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:44 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "66d1e24396716a419d04618f7505fb88c10cae49196470fc4cf2cc5a418e9507.freetsa.tsr",
+      "sha256": "a9a5a12e0d6f9adf95a34e53cd9c134498be4d23bdad6b0b47367b3980535532",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:44 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "66d1e24396716a419d04618f7505fb88c10cae49196470fc4cf2cc5a418e9507.sectigo.tsr",
+      "sha256": "2e5b0c25d9d7e3f01aa00a587ccbf36d7a05211db6a3607d7e8a055dea805bd0",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:47 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "067424d8860b7897f1a3b642a6c26cf8910a3109dd8ecc66060a890d91436f9a.freetsa.tsr",
+      "sha256": "687b8fb4179c97f0f1e96a35f5bf91c5ee4b0f15c1af4651743de28b18a67be9",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "067424d8860b7897f1a3b642a6c26cf8910a3109dd8ecc66060a890d91436f9a.sectigo.tsr",
+      "sha256": "ccc73d49d9ca5e6d0d8de3742a4e5dbfa52a34cb5d929545d9af2beae115c2fe",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:48 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f0dc6a58667072e7f1b007af6017d522dcc261d370a1b84d791e79760ded2125.freetsa.tsr",
+      "sha256": "4d9c4a449b6e04ce18a8574600b30558e522d37a239aa0d686c358f8e193a007",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:44 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f0dc6a58667072e7f1b007af6017d522dcc261d370a1b84d791e79760ded2125.sectigo.tsr",
+      "sha256": "742750aff26f15f2dc2a294aaf404700339c57ac4a95992691c5c99a9073a7e9",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f91df9e2cdf9480efd480a6231d78faccd00f22c1368c601f9ab377a87e3b246.freetsa.tsr",
+      "sha256": "3f199f8eb11e0215379651a0bd2f56f9897ef0df7a851f695be6f964ed71308a",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f91df9e2cdf9480efd480a6231d78faccd00f22c1368c601f9ab377a87e3b246.sectigo.tsr",
+      "sha256": "5bbdc5a29e049d9e084e117a0025c7f406aae73aa9773f1c5783e6bda2eb52e8",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "922acfffbbce74771131ad7b7b032cc0d5233591abe12276ffce6cf3fe0fc815.freetsa.tsr",
+      "sha256": "55c683dd4aec1649beba4495023ddcd0ba9b3f4d77b6b760cf624ab196112f0e",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:48 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "922acfffbbce74771131ad7b7b032cc0d5233591abe12276ffce6cf3fe0fc815.sectigo.tsr",
+      "sha256": "2bd826908b432fe323a5fa984179e5ec90df2fb08614f54a0bf8270897cfb159",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6b3d10a101e537c0ff4312091a474362d848f5f6dca84311785f04f1aace5fe4.freetsa.tsr",
+      "sha256": "fd8e373c3249f4d9cbe44dcabe7efda2678327476a6315f796588c920a53683e",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:49 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6b3d10a101e537c0ff4312091a474362d848f5f6dca84311785f04f1aace5fe4.sectigo.tsr",
+      "sha256": "b8737e8bf1b7c1832d93ba5aca708dc60a7beda9fb129a606aabd39861a70a29",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:03 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f713bb5c0ce31e290eb26bad66747682785c0005cebcaccfec92ba1b03240cc3.freetsa.tsr",
+      "sha256": "d795a1f6fff66b4337a20fc285358ebef5c37c4cc9491bdb8ef702357562da92",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f713bb5c0ce31e290eb26bad66747682785c0005cebcaccfec92ba1b03240cc3.sectigo.tsr",
+      "sha256": "b8133530eb49833a7a71d141d0b98702092e2c7f7a0c9801ec8e6dd389a3c59e",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:06 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c4444cc6ff453270ee7a07c39d47dea2d189daea6770e7eeecf1040e94269526.freetsa.tsr",
+      "sha256": "a275583e915514193cd49f0a680707ad68a7ed5f76e165da6b69e73b043f1b5e",
+      "verified": true,
+      "authority_time": "Nov 13 07:58:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c4444cc6ff453270ee7a07c39d47dea2d189daea6770e7eeecf1040e94269526.sectigo.tsr",
+      "sha256": "c618ec413e95f204f2b594e87b8b10119af4c75287b2e21543e6d4d1285d02fc",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "83778aabfc361f95c5604884fff26c598b07448ae948d02765e90f4b507a8431.freetsa.tsr",
+      "sha256": "68e6978dc6f1c808b67f8b5df0279c3de4d27380290f6878dfc4b8e27da04a40",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "83778aabfc361f95c5604884fff26c598b07448ae948d02765e90f4b507a8431.sectigo.tsr",
+      "sha256": "8e61c3572ad6d3ac660b274926cd2d426e82f98343751ece90c19e677bad19a5",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:12 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "52910f46f3a43c084c397b593937d8cde832efd14faf7311e96e5f74b0a474c0.freetsa.tsr",
+      "sha256": "139e3d8e193509016ff03ff9074343d56ac515a88356956c2b52cc8206f16115",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "52910f46f3a43c084c397b593937d8cde832efd14faf7311e96e5f74b0a474c0.sectigo.tsr",
+      "sha256": "1c90e78b84adadef738c5f06caa66f9beda33f616398b26cd94581743619570d",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f2a242c777e4bb64700fc68b9e7c4a49d4fe318a6d697a87a991d2ed65b1aad8.freetsa.tsr",
+      "sha256": "e7568e9f5379cb051a62e101ccec77804bfb9fafefe3d0de9cf4fa278614d8a2",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f2a242c777e4bb64700fc68b9e7c4a49d4fe318a6d697a87a991d2ed65b1aad8.sectigo.tsr",
+      "sha256": "e64a1519bb4238447230e15f7e83c0165dd29eab1dad6f556880a19768fc056b",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:18 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "84d0350d2e3c045d191f5a53c86cf3781afeebc4ab4bfcc800dc2010dcbff028.freetsa.tsr",
+      "sha256": "64c5395748512387787711703bfbc52cecd4efce2109380eff35349fc8970c1a",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:11 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "84d0350d2e3c045d191f5a53c86cf3781afeebc4ab4bfcc800dc2010dcbff028.sectigo.tsr",
+      "sha256": "d64c60a632bea02cbe6803a1a42c282592652e863c76b4617bc0d6095c7e0b7b",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:21 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ce14d9d3969c0ef798000f799c62254c4f81c1f78e98e6c193d0e6f8c417f5fa.freetsa.tsr",
+      "sha256": "b339612acf21a9941bca18f7f28c11cf846a01dd8c44b5a89488f048619ae178",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:13 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ce14d9d3969c0ef798000f799c62254c4f81c1f78e98e6c193d0e6f8c417f5fa.sectigo.tsr",
+      "sha256": "e4b888b840f76562f3e6bf0b21ab4d58abc02da4f3d0c8b4ceef51c13a39c781",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "94191d2f88424e0473cb4f3755f6f8ce15e74b1a3794416fd43090cdc98f1b14.freetsa.tsr",
+      "sha256": "3fc0c167f6aa463da20b88ff28e74d11c0e9c5f5ce4bd6af046401f281a57a91",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "94191d2f88424e0473cb4f3755f6f8ce15e74b1a3794416fd43090cdc98f1b14.sectigo.tsr",
+      "sha256": "9d292780d39d71df19a983767ce50131a1f2e3284f1ef6fecd21a46496d3bf34",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "2fe984c7ff587fe1cabed7ecf2a9a7f290ff56f68a580ef319eecb2e7cd28a2f.freetsa.tsr",
+      "sha256": "184a58b1e73713f93ace506e5fe3238a10aeb27650264da446f10cb1ba192b0c",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:19 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "2fe984c7ff587fe1cabed7ecf2a9a7f290ff56f68a580ef319eecb2e7cd28a2f.sectigo.tsr",
+      "sha256": "12c707bf5e0309785789e8f7eb2592f232bb6aac1610c93fa0c9ba24c22abeca",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "af2f64317f37cb78e3c96a44362236b41ac65cd401d4145529186629f6f298e7.freetsa.tsr",
+      "sha256": "be26d5d09cfdb78dfef4dc50e34f86e6b1617a08f3ca643fadc44e9ebb085912",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:22 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "af2f64317f37cb78e3c96a44362236b41ac65cd401d4145529186629f6f298e7.sectigo.tsr",
+      "sha256": "7e4d6532eb78d4fd76271de26200ceea515e7efaa64a613bac7144379534914f",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a07a51ec2cfb524ec46fb7c3bebb54b2a9c9fc804861aeb0b847fea4238a2456.freetsa.tsr",
+      "sha256": "6755786eb71fc3ffbea78bb1d047ff2589f197eb4581246d0c858030be283dc0",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:25 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a07a51ec2cfb524ec46fb7c3bebb54b2a9c9fc804861aeb0b847fea4238a2456.sectigo.tsr",
+      "sha256": "a4c50a7c76757c54ff39ea0daae5902161c2c5d5b6eccc044abdd398b464c8d7",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:35 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9e4601e61917013bea46f59ecd6a81cc4ffeaccc0dc23b65a4d3689f08df2e39.freetsa.tsr",
+      "sha256": "8b4f251435d04e7c832ac4d2dbdf8c9b35cbf1ed2877fbae75a8aa8a49007176",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:28 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9e4601e61917013bea46f59ecd6a81cc4ffeaccc0dc23b65a4d3689f08df2e39.sectigo.tsr",
+      "sha256": "21d55f2402f79bf95edcfaa20fd49834d958a8ea4ae32d764b047b6677da3847",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:38 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6525df4c634c4ed5689879b0078d5796a24c06a59d995b8715d22131342aaea5.freetsa.tsr",
+      "sha256": "a13ed9f3f4341628ba24cc0ec8688be7007b649e77bb1bdf9c685001435d49b6",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:31 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6525df4c634c4ed5689879b0078d5796a24c06a59d995b8715d22131342aaea5.sectigo.tsr",
+      "sha256": "5804d0b3641ba2b6235a473dc7aff8a256e3c6503bbfa5df075abaa324613f4a",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4d8e71d43ca2401e7ac49deac0048e3171c19706d1958d169dcbdb71d9111cd6.freetsa.tsr",
+      "sha256": "15c44c5c59ba9068f617ddbec75d64d7d7f7fa92b353541811ec24b44dec4dda",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:34 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4d8e71d43ca2401e7ac49deac0048e3171c19706d1958d169dcbdb71d9111cd6.sectigo.tsr",
+      "sha256": "b71ace85d3a296d5141d35b448c0469dbd3aef6fdd197313027845fa2a545367",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3d2e3eaab804f9f15481f5c777c76a50ecfce1c8d75b6b5546e82b82dd667835.freetsa.tsr",
+      "sha256": "e9187a5c4d76932878d2ac5076fcc769b7c3667263d908f880c53327e99b905d",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3d2e3eaab804f9f15481f5c777c76a50ecfce1c8d75b6b5546e82b82dd667835.sectigo.tsr",
+      "sha256": "d8278daa1ea6401887c993d606ff9b7e883617f636884a6af7baa94014c28dfe",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:47 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7dff49a4c53a50a99b49201cca0d7b2c118017eeb27a3d7418613a19cf79bebb.freetsa.tsr",
+      "sha256": "8eb31f81604791928a4ce7dc597d7a554065e7071bb079ad1400e7c47473f925",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7dff49a4c53a50a99b49201cca0d7b2c118017eeb27a3d7418613a19cf79bebb.sectigo.tsr",
+      "sha256": "72d0d997bc49096e85727bd1463932702af40b0a301262df3c16bb60d9d64123",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4ba17aae140e70b73d6b584d5d160b9aa8dc478ba463f7a0cce05621f8c9f358.freetsa.tsr",
+      "sha256": "157312312e0596cafc9e536f1823422198779e61808657af143af7aad28a149f",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4ba17aae140e70b73d6b584d5d160b9aa8dc478ba463f7a0cce05621f8c9f358.sectigo.tsr",
+      "sha256": "069d55448b06d184a72bc66a32f3bac7d57a8b435b0956da07c93e865eaf81e6",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:54 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e37b4f2a8c13c5357abcb62207faa1ac143f24bba2c59df95f5bcb1ccb314561.freetsa.tsr",
+      "sha256": "bebae3ff65618d6361142dc1fb4277d798b2315cd03df766886285739bd0a157",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:46 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e37b4f2a8c13c5357abcb62207faa1ac143f24bba2c59df95f5bcb1ccb314561.sectigo.tsr",
+      "sha256": "22348e34ff3fb10580b55ecd4c5de54c6234d5deefb3447370491814546b9d26",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "0d69ad6aacaf66239a7eb39e206ef52f170eac895845ad998c7a5157becff01b.freetsa.tsr",
+      "sha256": "c0aac1bdbcf81e0b1b432dd82c2653419030c49d5b84ac42f3e34b1df4886132",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:48 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "0d69ad6aacaf66239a7eb39e206ef52f170eac895845ad998c7a5157becff01b.sectigo.tsr",
+      "sha256": "c14ab8df635642f8c2eaa3d6702145aa2e1556ab1b2c307f05810c79d1085ac3",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b76bbf5a09634eae7d3e1656a3ee37e4303e38ef5568f15125c4776924195bb4.freetsa.tsr",
+      "sha256": "9d5d68d65c22c2ef9eadeb6fbf1aff611af51b3c65fe54a1d84052c5fb4d4dc9",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b76bbf5a09634eae7d3e1656a3ee37e4303e38ef5568f15125c4776924195bb4.sectigo.tsr",
+      "sha256": "8ee48730b478897d26cad81f2ba348c73850802baa4cf2bcc0f90edb554e4926",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:02 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "862c878c5032d92961148fbe35edfb05d71c6fb04639fdf5d5a42ffe833b0603.freetsa.tsr",
+      "sha256": "4f073362dff13cdd708c45472e587efc120e31fad54e7215bb595fb3ace88d97",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "862c878c5032d92961148fbe35edfb05d71c6fb04639fdf5d5a42ffe833b0603.sectigo.tsr",
+      "sha256": "a1c7355202be692df772edf6bbe6b9631a69ebd186b62c2752e224e463fb0310",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:06 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "cfdd73928d2478f9c3ac3b63bf7ab35df6aafac1fe09392afa352b7a9277770f.freetsa.tsr",
+      "sha256": "8b64a96edd06911c350ed3dedea957372c17e46f9636e5ee4921339b2014154a",
+      "verified": true,
+      "authority_time": "Nov 13 07:59:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "cfdd73928d2478f9c3ac3b63bf7ab35df6aafac1fe09392afa352b7a9277770f.sectigo.tsr",
+      "sha256": "1a43ed09064dfb1d67840a269f145e1233f0ae313932446a0bf8d8834f2a77bb",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "74fa869de3679c8a702a69e2aa3a2a213909391f3bb8234a3780c1fd11f0afea.freetsa.tsr",
+      "sha256": "027025b910ad35d70bd331a817719ccbc19094e713b8fa68c0a057ddcc80ee89",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "74fa869de3679c8a702a69e2aa3a2a213909391f3bb8234a3780c1fd11f0afea.sectigo.tsr",
+      "sha256": "07ad81db6ca19017bd0915b67548baee53e7d3e2b3176ec3afd11e3668b5cc5d",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:12 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3f76af6fffd5ea8ef6d0d0e142cea008db48f11d09ea02bcbe17f935669c8f85.freetsa.tsr",
+      "sha256": "476ae0d41c987eabbbd8797b7aa9da1766bbdedf1f65fa0c8d283c9c2a0ceba0",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3f76af6fffd5ea8ef6d0d0e142cea008db48f11d09ea02bcbe17f935669c8f85.sectigo.tsr",
+      "sha256": "700a86190e7c9d79a69b30482fa4198784aac074a58d933d4cfaa405de247de4",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "aadc301f683c93d099727e27757f2fa83c7205fe4bbeb110615326bdc8aaa550.freetsa.tsr",
+      "sha256": "3c10e3f190a5aef9e267096063acbb86620dd0dd8434f1a7ddc0abeeab07756c",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "aadc301f683c93d099727e27757f2fa83c7205fe4bbeb110615326bdc8aaa550.sectigo.tsr",
+      "sha256": "2b26fad37f40cd054e699a2eb59df47c4b82a182b934db5e91f43d55c1a5562c",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:18 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "77d4a18cff024d6299b7e37001d3ddef90878464d65ef0b6c4b2d10f7f1ef982.freetsa.tsr",
+      "sha256": "3bc39e432ea9be5b275087f80d4d382320f97752595895530249501f6594b597",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:10 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "77d4a18cff024d6299b7e37001d3ddef90878464d65ef0b6c4b2d10f7f1ef982.sectigo.tsr",
+      "sha256": "af90c7573f8c57b15b76a5d64c0bd882a4ef3d240e62d1f8abf77fde5d022ebd",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:21 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "524be904d497706b5b4754c528e7b0250bea9c7a9d73aa5b21151b48e2f81f09.freetsa.tsr",
+      "sha256": "37aff9ffe4fbefc3fb430fa1a3fecc13f45b5538d570db95fc85cb7f17f9b104",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:14 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "524be904d497706b5b4754c528e7b0250bea9c7a9d73aa5b21151b48e2f81f09.sectigo.tsr",
+      "sha256": "26023e8a18ce395929fd94c338f14c165ea9030814dd0adfc097dd3bd7fa23aa",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:23 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d509ed94d86d2cdfb8005fac45abc558916dcbe8c49656004b6418bab57a7119.freetsa.tsr",
+      "sha256": "6917c872a15557ece85b40cc34057d821caa5b00e21a95392828bf4629b661a5",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:16 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d509ed94d86d2cdfb8005fac45abc558916dcbe8c49656004b6418bab57a7119.sectigo.tsr",
+      "sha256": "b089a3c5299a60bb6a937f7d446e9461a79c21e978f56623f933e4d50a388345",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c1fb5f42973d2785391403f740ad4587b442673aca33d77b2bc6401e99fea2cb.freetsa.tsr",
+      "sha256": "72ac36e1b8e85f266c7dae00fb9f9cd9249e78b2c4dfd48d6d4331909f31a27b",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:19 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c1fb5f42973d2785391403f740ad4587b442673aca33d77b2bc6401e99fea2cb.sectigo.tsr",
+      "sha256": "cd2834318c5fbfb9fd67a011f3506df05a0cc1a8ae049baaa99803ec1b652900",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ee67d4bd5ab5baf6e43dd15077cf880e5cff016332fea43d8bc31332ab9d2093.freetsa.tsr",
+      "sha256": "d71361facf09b05bb5907039bd54f36fccaf4c36aa86178d0d64d08659034f94",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:22 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ee67d4bd5ab5baf6e43dd15077cf880e5cff016332fea43d8bc31332ab9d2093.sectigo.tsr",
+      "sha256": "1b2304d5b302c09c8086b11c271eb95680dd62ff4ba25ea2f6bcb16cd46bbdb3",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "83f5403d38593ce3edb74dc5d61414fe61b77c4ef597f1cafc9fa57575ed3c78.freetsa.tsr",
+      "sha256": "684722cb8787e78d62264db51844fecc39b74d9120ffc4b32423266c0c88d62f",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "83f5403d38593ce3edb74dc5d61414fe61b77c4ef597f1cafc9fa57575ed3c78.sectigo.tsr",
+      "sha256": "f0655d9faad61f0b1402705d19b373c0037459a236995f72480ec9a2d0385cdd",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ad0f302cba459c1cd8ef047d7e2127a0e2778f288306a8d9bd54377bac77cb89.freetsa.tsr",
+      "sha256": "c6b49ef64a6b8fb1d78baa504e347b97792c7efdaddf92f3c7bfbe0e1fbefe31",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:28 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ad0f302cba459c1cd8ef047d7e2127a0e2778f288306a8d9bd54377bac77cb89.sectigo.tsr",
+      "sha256": "ace838914fdb64a217442436d8a35d8c77f2ef3235ac0ece858f36982b2f06b5",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:38 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7528226f002737f41e2c26c0197db31dbdb53cc825ca437a834d5146fe0384a5.freetsa.tsr",
+      "sha256": "e1dd5dc5e1bc8df182b1885f797895a02cc7fb143a3850ed92842489a9fb6ce6",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:31 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7528226f002737f41e2c26c0197db31dbdb53cc825ca437a834d5146fe0384a5.sectigo.tsr",
+      "sha256": "c91ba1259d3834836ca39ec6373b890fff5bc7dbf7ba7d48b66a2b116e78d65d",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "41fa1267c025f897a12dce1a349bfd951bfd3472db16d8faf7cd7be6aea33869.freetsa.tsr",
+      "sha256": "8a62448bdb6b58cceba425da2908e2bbe6e52225ba2d7f60df7c71eca48ba3e8",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "41fa1267c025f897a12dce1a349bfd951bfd3472db16d8faf7cd7be6aea33869.sectigo.tsr",
+      "sha256": "e3fea04babb1ba1d4228f36a10ac37ca140647344d93b6d33b07fdea890fa1fa",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7594b4a9384130f3e52b02377b9c07032bc3dd75d6cd8d8cd2581536b5d36b55.freetsa.tsr",
+      "sha256": "5c08b8e9c7881991bba43f870d8f810ae15e23172c76accc64e798ae8f1870a9",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7594b4a9384130f3e52b02377b9c07032bc3dd75d6cd8d8cd2581536b5d36b55.sectigo.tsr",
+      "sha256": "1c4f9391b8b172ca21b9cff6cf9a4c1480fb41831a51df7962e05d7f3241ffb9",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:48 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5e8bfa4a9f1c1a2685e5c1c869a4a8034506e5f9c7efe2638493fc336dac4e8b.freetsa.tsr",
+      "sha256": "2c5234802ecba62162fd5ce91a091ea3fdd2f9c526b4e54d40c0cb89cd8ac162",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5e8bfa4a9f1c1a2685e5c1c869a4a8034506e5f9c7efe2638493fc336dac4e8b.sectigo.tsr",
+      "sha256": "3570299fb92cb285d05934ac9dfd16a3fb876ee920254dee6d5a603484a47ec5",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "39df71ea789aa2ca1b7fed4fc9241faa0f626bd6bafddb43a7c58b660d54951d.freetsa.tsr",
+      "sha256": "1768fb56f2cdc2c7fe1d3501d25b929aa7367fa31a30a5125688abb61a13c87d",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "39df71ea789aa2ca1b7fed4fc9241faa0f626bd6bafddb43a7c58b660d54951d.sectigo.tsr",
+      "sha256": "5723868a95460c8d208c8937cba800d6b2e57363ea422d0e4d6204840d51d7bc",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:54 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "41535b797ef51335cc556821c1ccff7c146cf11095407e69f2f403d376863e16.freetsa.tsr",
+      "sha256": "23664ebcde349804ea9fae5f4fe8062fcc0a4b7ad6e04fbe349b2f192c6f1f1c",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:46 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "41535b797ef51335cc556821c1ccff7c146cf11095407e69f2f403d376863e16.sectigo.tsr",
+      "sha256": "3b7351d7249eb3503a471a92208dea23cfa84251a977adb4f8dd15a18c8c3bc4",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bedc5e1eb88abf1b2c19058d1f61f08c42582688075eec586d302573f9871437.freetsa.tsr",
+      "sha256": "9ff6ec210bcb0544b5aa2990af29139f24b01b21a304a1a1c48a840799427d36",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:49 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bedc5e1eb88abf1b2c19058d1f61f08c42582688075eec586d302573f9871437.sectigo.tsr",
+      "sha256": "d91ae16eb2cbf55230ade43cfdf4b0036e546a971282c4b1f2ef6732ba0fc10c",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b4fbe44fe210eab7b6d298e435f73869ffd9b6a0af6616c5c3b2794a51624d6e.freetsa.tsr",
+      "sha256": "6ad0f6e664fb54d07fb6c1d90e0c9fbaf711460df1576266720af172fdbe367c",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b4fbe44fe210eab7b6d298e435f73869ffd9b6a0af6616c5c3b2794a51624d6e.sectigo.tsr",
+      "sha256": "42a9072a894ead808b56a8c66d5b1576b2ed0c1ed5d4b3a60bc3101ae4d335f9",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:03 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "13c01c121fc286634fca710955bc74d181442390aba2e26633cf0862b64c7850.freetsa.tsr",
+      "sha256": "1fce1219d6baa79456d7ed8009cf027e7b52914cba5c700ac33354e992e610eb",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "13c01c121fc286634fca710955bc74d181442390aba2e26633cf0862b64c7850.sectigo.tsr",
+      "sha256": "90f4a0a1bf732badda304a6b8547cfbe4e34aba14cf078550619a6347e8e253e",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:06 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8db114379a545aa2d3c78a0954cb290310cd339db249ac841b1792dbe773487b.freetsa.tsr",
+      "sha256": "2b5c5decce3655a4a0e6208057e887cd4f9fa4bd2aedbc6814199da55d1837d6",
+      "verified": true,
+      "authority_time": "Nov 13 08:00:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8db114379a545aa2d3c78a0954cb290310cd339db249ac841b1792dbe773487b.sectigo.tsr",
+      "sha256": "828b365b2ef1ed185100dd500250f1f3c0d941eb5423715cf140832bb0c1a1c5",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f17ee7146d8c4f783b8edf930e11bb0db638ed3d87ee1d1ca48214c0fba07b25.freetsa.tsr",
+      "sha256": "b0615e29c5d078c70be074107c0bb8881dc0809101a74c3da5005b8cdf3ac2ae",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f17ee7146d8c4f783b8edf930e11bb0db638ed3d87ee1d1ca48214c0fba07b25.sectigo.tsr",
+      "sha256": "43ddd79fe9a98c0f4749947e88c1f7e0c21db224cc3afe88eb953eabce036fde",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:12 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5bae088441b48307405fef7ee0fc98721124ac6ea52b27dabfe45994858f74e1.freetsa.tsr",
+      "sha256": "827a9fb07a015a7abccb42d7bf123b14e1f7c2d0c707762f7db96db13b70b36b",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:05 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5bae088441b48307405fef7ee0fc98721124ac6ea52b27dabfe45994858f74e1.sectigo.tsr",
+      "sha256": "27547d40d52fa74c1374f9afc501e0774ba66470d797c7f1621ce39b46ec4480",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a13507379d1ac4004c6519fbb33e2853e6da0643bd4bd0de45d73938c4ff87f1.freetsa.tsr",
+      "sha256": "710dbf9195042a80c052c33b9c74e7385ac88cc5599472793ab25a6f42cec358",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a13507379d1ac4004c6519fbb33e2853e6da0643bd4bd0de45d73938c4ff87f1.sectigo.tsr",
+      "sha256": "6e0a394ca0d84a946f6f78fe3691ba0b46d4faf15af124d8375887220aff426d",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:18 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a9fad850b808db71be793b0d64cdd17ae9010d0046c1c9f2d1ecd426685931fa.freetsa.tsr",
+      "sha256": "a4654d83eb02e39a8a60f3117cd407aa1efc63150f9687afbe0955536feb68bf",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:10 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a9fad850b808db71be793b0d64cdd17ae9010d0046c1c9f2d1ecd426685931fa.sectigo.tsr",
+      "sha256": "ee6d4bee1fb106ec39d26a13079f86181f8360b5e2fab1713daedee1643f88b1",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:21 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "34fa9ea948b96e7686eb6fbdf86a3c3dfeedf2b3a70d7b6666fb533f7f2085a3.freetsa.tsr",
+      "sha256": "f53a79089b3e236ca673c9bfc9b60fdce271ac03e16918d59d6841634415cbdb",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:13 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "34fa9ea948b96e7686eb6fbdf86a3c3dfeedf2b3a70d7b6666fb533f7f2085a3.sectigo.tsr",
+      "sha256": "3fd1545f89a7de13d6d570832bc6703935c4cca46e22b032c93e6e0caa43e841",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "084f87f49eefb70e0c1bd6da089ab4f37e8f35c8ed3907bf4e0e522393e8bac1.freetsa.tsr",
+      "sha256": "e7bb09c48f3a7ea46d0a3196cfa1047232c40def90eed815b34f00618eb27850",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:16 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "084f87f49eefb70e0c1bd6da089ab4f37e8f35c8ed3907bf4e0e522393e8bac1.sectigo.tsr",
+      "sha256": "b75185f10d8bd240fbf393e9e4bcaf02f85c6a696750095885fce39402db864c",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "11dfa9393078191dec27a50605982903005a058cd8316098fc19520f4a2af193.freetsa.tsr",
+      "sha256": "eb295d9252dfedc2334860ebf0fada9331fc9ca1d46b6990e3fcd0993fbbd902",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:20 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "11dfa9393078191dec27a50605982903005a058cd8316098fc19520f4a2af193.sectigo.tsr",
+      "sha256": "912778224b24e51844bc3554982509cdfb4f9bea257da65207f26c41f45ace87",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:29 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d68f1ef74cbd81492234cdfc3d70092f7011ce63baca4384c2e1db13838d57b6.freetsa.tsr",
+      "sha256": "8504717ef7cf46ec02476f1307498b717f28b9e58086ac5962ec0121190cebbb",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:22 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d68f1ef74cbd81492234cdfc3d70092f7011ce63baca4384c2e1db13838d57b6.sectigo.tsr",
+      "sha256": "9e5bfa2aa88807fd3012b7a6583d579a3e8ad2302760d4962de23323223f8647",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f5e67ca733fe2c812dc298e595c6f13a83095f903ffb462cf1a9ea1dbf74eba7.freetsa.tsr",
+      "sha256": "9c787cac9cd27fe49f211543dfcb58f3e5de7eaedcec0a87b4a1ae05db8954f0",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:25 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f5e67ca733fe2c812dc298e595c6f13a83095f903ffb462cf1a9ea1dbf74eba7.sectigo.tsr",
+      "sha256": "ab82e2b1339bad8a92cdd14d593e437f4eb66ef786909c0e6623e898b38dd412",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:35 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bf4ae6eda95a75e96899b4989acfdeef0b659f949c59d68a704b6bb3efbbfda4.freetsa.tsr",
+      "sha256": "61690da946fda84ca38a576d86ad82261cbf3e3f0b2de4d23d60d3de95545193",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:28 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bf4ae6eda95a75e96899b4989acfdeef0b659f949c59d68a704b6bb3efbbfda4.sectigo.tsr",
+      "sha256": "f6c3a1dcdc73c2ae025985599b1f08a43b8041f0db9607768a0a5317525c668d",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "735fd5dcaaadaad981c3d438483850c3921113c89f6c39163f898f4cda356ee2.freetsa.tsr",
+      "sha256": "5520f20442b95570edea0044bdd81df2f6146fc1736dc1956f98ffeaa207b8a7",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "735fd5dcaaadaad981c3d438483850c3921113c89f6c39163f898f4cda356ee2.sectigo.tsr",
+      "sha256": "e2f488c7ab75925aec7f157a526534c117849107cf21dfae7f0cc2eef465e597",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "fc19b4badbc6058c33811ac76dd09fc57528f34209a30be946547035f51522ff.freetsa.tsr",
+      "sha256": "3ed3b34264965a53f108445c0820dc2d84ad2e127e4ab88436490d17bb463b12",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:34 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "fc19b4badbc6058c33811ac76dd09fc57528f34209a30be946547035f51522ff.sectigo.tsr",
+      "sha256": "7a48acedd56831561ea08b8824df1409bff398b588f91ccb839c3da4a52174bf",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "65455927677ff9f9a6ad1bd599fc0d5090139f3dd074dad91faf6e2103b21d59.freetsa.tsr",
+      "sha256": "d325e152a48eab181773c6eef829c96b6db18a3f117f72a7b29c19494a23e5f4",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "65455927677ff9f9a6ad1bd599fc0d5090139f3dd074dad91faf6e2103b21d59.sectigo.tsr",
+      "sha256": "00e6f719cc47b70b76f559c071abe6de827269061cf51ed90c208a84621e77d9",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:50 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "147d847e3e0471b9caba840615a9a03df96515ec9dbe39818a3894241f034cab.freetsa.tsr",
+      "sha256": "a9a83ea9b62e400abe6d696aabf164a87da14197bc7b237d11a1c98cf6cd136c",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "147d847e3e0471b9caba840615a9a03df96515ec9dbe39818a3894241f034cab.sectigo.tsr",
+      "sha256": "6727379eb2c79aa5bc6ef27eac31a93c28022460cf1dfe5f72f415a8eb0a3a61",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b36baf5ec54da40927904e9feea44f8c47d810ffe5bf50466eda8236eaba8408.freetsa.tsr",
+      "sha256": "54b03789ff119ca124858335967cca5bf1bd322f7642bd6acde7a6b8aea030ed",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b36baf5ec54da40927904e9feea44f8c47d810ffe5bf50466eda8236eaba8408.sectigo.tsr",
+      "sha256": "003e3e488746a24f694f809827c2de0fea0aed5bd421944682bf70241bb1067b",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c2fb89d6371be7c1c9f884f06aa3e05147f4eb59e7a6e76c191981968adabb41.freetsa.tsr",
+      "sha256": "cc6b0e85866a4bfcb90348c172c52400a3e28f79ddcae483f67a6d4ab49dacb2",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:46 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c2fb89d6371be7c1c9f884f06aa3e05147f4eb59e7a6e76c191981968adabb41.sectigo.tsr",
+      "sha256": "ed886a159ccbe5a8e6acbfd142d534a8b0b5912671fff166cdbb800c263b4316",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f8a29be697c4c387c655365405441a1c626ea2cd9e11f965f826a97d36fd37ff.freetsa.tsr",
+      "sha256": "915b89603dcfbbe46298e37d33dc44140fd2523c530a1ed96befa6a2b3a57485",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f8a29be697c4c387c655365405441a1c626ea2cd9e11f965f826a97d36fd37ff.sectigo.tsr",
+      "sha256": "ebcf6fc9ed7fd2161087fcdb3c7b388760f49f7a31ecd1879b38c33d623a4cbf",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4c499317a9347ded8d3b26259d6c1f6ed1fcc70a3a4fc35b308bc92b328f3adb.freetsa.tsr",
+      "sha256": "0ae0b22820be407d458107397678a20721a6ecebf70be9f9543e8aaeb2015eac",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4c499317a9347ded8d3b26259d6c1f6ed1fcc70a3a4fc35b308bc92b328f3adb.sectigo.tsr",
+      "sha256": "19b8ee774c3221a65f0b2ce1a723d2f943effa4d9848649ac356e82ad134509d",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:03 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8bc16857ad61a18f89df572c0b1207c02d8bc81ca90f21ae0ef67ed86ba9a58c.freetsa.tsr",
+      "sha256": "52ea1e6706488f77f0ff4ed65a2e03cf31e05ff7fbf54e42f021a48d43759a37",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8bc16857ad61a18f89df572c0b1207c02d8bc81ca90f21ae0ef67ed86ba9a58c.sectigo.tsr",
+      "sha256": "bb4717fce3a34a6a15e55c8836b1b5918e0cf6c52510e28b95cce8a552aa3560",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:06 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ea69d4b668eb9605939acc6efb66f4cb218b0437f9d8b7d7011654932ca93bf7.freetsa.tsr",
+      "sha256": "3a51e0e5591d40adf03f1db95ac1abdddd921c15523461b17570b1ebf385362f",
+      "verified": true,
+      "authority_time": "Nov 13 08:01:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ea69d4b668eb9605939acc6efb66f4cb218b0437f9d8b7d7011654932ca93bf7.sectigo.tsr",
+      "sha256": "a76755a43ebc61da3c4701f50dc954a111dfcd6117f563539ba2eab127106367",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "50576fcdbb248346b0560dac83dfb8bd2a9279b65dc1fb316ddf3cfc9d0681bb.freetsa.tsr",
+      "sha256": "8fbadf8544d6d0b6cefe63dfc6ba8eed2fba3231bc65084f33937b5f10be2c09",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "50576fcdbb248346b0560dac83dfb8bd2a9279b65dc1fb316ddf3cfc9d0681bb.sectigo.tsr",
+      "sha256": "5ac71dcfe9d9570bb2a23dbcfbe8118d85f16ac4011b5218d28d5eed6aa6b323",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:12 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8472ac39dee90968f03f6d7aa2f12c0586fae489ce08ce8c8ddb2aa7966aa639.freetsa.tsr",
+      "sha256": "393b9bc8f059302eac3343edfcad7179286bf1acea20640e2ba2522eeb04728a",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8472ac39dee90968f03f6d7aa2f12c0586fae489ce08ce8c8ddb2aa7966aa639.sectigo.tsr",
+      "sha256": "e085d03de845eafd39c55d6d7ec01179acc1ec7d3f222400cb3f96eda1871e42",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4623f1869a8ae88b4800fb14f0a2d1da61cb354e518675349e58cd518c160277.freetsa.tsr",
+      "sha256": "8308756b23495d3486fb72e253bf177e900fcea8fcce80c0f7716d48e82d8d97",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4623f1869a8ae88b4800fb14f0a2d1da61cb354e518675349e58cd518c160277.sectigo.tsr",
+      "sha256": "d9b17cca75174f750b6a7bbe6aa9dd2467dc77b000ac8935616c7fb45fc5f049",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:18 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5be415ff24db139293c0876608e44ff175e4173fa2b2ee057d8c364c56430bf2.freetsa.tsr",
+      "sha256": "1ce0c92507564a32deeaed6133e26cb7a5237aaf1ac09a019f31a56da6417b5d",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:10 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5be415ff24db139293c0876608e44ff175e4173fa2b2ee057d8c364c56430bf2.sectigo.tsr",
+      "sha256": "30ac8ae934e8288cabde309b0955927074c4b26bafe2b1a0b6258aa8950a10f5",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:21 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9a2a79e42922d7a97ae36281de1fd72c51b8aa0cc59f133a88cc8c234514e8b5.freetsa.tsr",
+      "sha256": "f77a3bbc6b713865d4844b2189c64e578b34ba1d925c1de16be08084f80cbabd",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:12 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9a2a79e42922d7a97ae36281de1fd72c51b8aa0cc59f133a88cc8c234514e8b5.sectigo.tsr",
+      "sha256": "a49a46cbf15ff1d0fc3fca35c255ba2239580020e899070a99e8214432089413",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e62664e1c2ad70bc2b85c9e1916c02a16a5f06c0ac6f81ac82d190eb39f7c50c.freetsa.tsr",
+      "sha256": "1709ae4105974f9f4c06ffe1b0c1cd489ef01e704ef893add90e453ceaca7b02",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e62664e1c2ad70bc2b85c9e1916c02a16a5f06c0ac6f81ac82d190eb39f7c50c.sectigo.tsr",
+      "sha256": "9104ed1600ed5f73e317dd2d649c2441a78e797367b3d33ea3f02d939a63c5b9",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "603be6a861eeb02e3b478b325771b6e7df5ec410bf3b0354247b45ecdd179c6c.freetsa.tsr",
+      "sha256": "b268d424274b33865bbdcd90f36a2fff04fed5d3423ba6b053957ccb6226d3d2",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:19 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "603be6a861eeb02e3b478b325771b6e7df5ec410bf3b0354247b45ecdd179c6c.sectigo.tsr",
+      "sha256": "f0769051f5042416f4daccf2bee503ac3dc2bcd5ffc3618e0f641898c5c46aec",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "94f4ef3b25c16a59a74787cce5505810e2d2e467b29b7a838874ba3ac8d4581d.freetsa.tsr",
+      "sha256": "0bb25e052621ab558754a03473f526a75c9cb2ebdbb74749f5b13e3d327b077b",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:22 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "94f4ef3b25c16a59a74787cce5505810e2d2e467b29b7a838874ba3ac8d4581d.sectigo.tsr",
+      "sha256": "af460bbfe1adac219dd8cfd4bb07c60b7536a7eef9c27ca9a5e2e238aa08c625",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "72d098c1fb2bc1e05c6a3e13aa9fb7e027ac76518151f1ece7fe2f0a2fc34309.freetsa.tsr",
+      "sha256": "016b1304016a4c78d85cf9bc5802dd3b3d7f5c2521290972e9982259ec573e44",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:25 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "72d098c1fb2bc1e05c6a3e13aa9fb7e027ac76518151f1ece7fe2f0a2fc34309.sectigo.tsr",
+      "sha256": "5b0b258c5162889941dbb24c58f7b572ea6f54cf9837bed093f012b7372e7722",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "eaa7c49455ebe65177afba376b94197a92211a224f962e4666d7460af84b1f10.freetsa.tsr",
+      "sha256": "971d2ee01be2edc7a5631b4de0c9da959419871c77f40274e938cf56ba942053",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:28 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "eaa7c49455ebe65177afba376b94197a92211a224f962e4666d7460af84b1f10.sectigo.tsr",
+      "sha256": "084d941d9f0fe02e7b98d717e4f71cdf7ff7ab282244463a0b35f3251547c508",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8d3531c0d3759aea4d5cff3bb9e9ba9bc67d2332021c976c61d8f704ca6a163e.freetsa.tsr",
+      "sha256": "3cbb91ceb244d5c9ecf88e76f790e18fd344812328661cd3e1f02f87f34811e7",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:31 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8d3531c0d3759aea4d5cff3bb9e9ba9bc67d2332021c976c61d8f704ca6a163e.sectigo.tsr",
+      "sha256": "fa0f1750ec3d30e1d47c238902326658cd33a6b67cb9a89bd4ff610d2af7b0e4",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "03d25131997bc3faa683ecf87ee3557456d5e06f5271eec895f91b8006b63802.freetsa.tsr",
+      "sha256": "979e14a2d0cd4f93d43577298ce8a843b33ded473771f7f3fa4b7109c97de1ae",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:34 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "03d25131997bc3faa683ecf87ee3557456d5e06f5271eec895f91b8006b63802.sectigo.tsr",
+      "sha256": "8706a78773730f306502176e52d6e06a5adc0e584f4d634c8ffc6f648ecc62a2",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8b1c88548dda368904332fc39a12d94b1089eb14ce29f3f4e2a4dd332eba3d27.freetsa.tsr",
+      "sha256": "2880d155b37629e680c6c8513ad93a87c50fbb51aab6b535fb8557ab373aa663",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8b1c88548dda368904332fc39a12d94b1089eb14ce29f3f4e2a4dd332eba3d27.sectigo.tsr",
+      "sha256": "c400735836084a60fb84ede60db2fa7dd80fb6d18a284f16ed9405925b627114",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:48 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a65516954ab35f7377455d31ea1545320751951f9cc628981bfdc4a4afe22252.freetsa.tsr",
+      "sha256": "5be8d3d319d301fba95b5f6d1aa119553eecaf8dac18621c55222e81ad0bc378",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a65516954ab35f7377455d31ea1545320751951f9cc628981bfdc4a4afe22252.sectigo.tsr",
+      "sha256": "1435cc412fbeb1ae95f68c4c51f0c324cc523c8617f3001754e413d32090ada7",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ddfc0858a86e7ec3d25cbf55685743028ca58b8e532b4d6fe5e12d8dfb3cb0c9.freetsa.tsr",
+      "sha256": "5b5ed0352f7499af0241e31c4db86ac3cfc3d66c18414503dd144aedf38fcaeb",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ddfc0858a86e7ec3d25cbf55685743028ca58b8e532b4d6fe5e12d8dfb3cb0c9.sectigo.tsr",
+      "sha256": "44007088ab9ce8cd3395f750eaa3a1a8dca2dcdf7e987acf3d065fe629404d00",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:54 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "98239061a9ff7a4a3133fa1899a5a5f88bdc7a39a09d2796f0dfa8bcf0bf4bb4.freetsa.tsr",
+      "sha256": "411ee9bb37307b5d2259292ec8ed6a39e5de8244c0aa479283823cf311fa9278",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:46 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "98239061a9ff7a4a3133fa1899a5a5f88bdc7a39a09d2796f0dfa8bcf0bf4bb4.sectigo.tsr",
+      "sha256": "7399d23d7c3b9a185598440248f96ba9866f35434da0dc11d727d19b8fd91666",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9295d9ceebfcf2d3376e52c6231ff5358639202d87b2c6cbd4923d24f6e15a9b.freetsa.tsr",
+      "sha256": "1bce7c48a2b97b8d4b5dc23e0e9894a6ac18a76b7fff9148539444242c676893",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:49 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "9295d9ceebfcf2d3376e52c6231ff5358639202d87b2c6cbd4923d24f6e15a9b.sectigo.tsr",
+      "sha256": "c427be90bdfe36ff4ba9004258304532309e650812b1b2a6b73c3eff242dd1e0",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "879eee5c40e176c2c25a5d1b45fd9e52878e7aff8c8055f20340b2f758c6e126.freetsa.tsr",
+      "sha256": "fa96b51fb38bf7434c657034aefbbcfb6c937f758cbdd66a3843057534080ab2",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "879eee5c40e176c2c25a5d1b45fd9e52878e7aff8c8055f20340b2f758c6e126.sectigo.tsr",
+      "sha256": "85e61375a9d5b0515058ac2e4c305a6e0da153c47ad1d116447b580c97f6b1ba",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:03 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "88364f3528fcb05fc72a555dd6a3666de63a56019b658400b49b3ff03a7fe158.freetsa.tsr",
+      "sha256": "b603368022480d96287f994f6d139f09b59672be8fbe2e28997e50b6ea5ba1e0",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "88364f3528fcb05fc72a555dd6a3666de63a56019b658400b49b3ff03a7fe158.sectigo.tsr",
+      "sha256": "dd84e7558612dc7758140a6bd23843ec5ea7c0ca092ba06a4ba5ca455c534ad3",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:06 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "96edf855266cd821025af0567b7ab322db286f30cc3857c495a3e841cd14251f.freetsa.tsr",
+      "sha256": "80775175f8815fb74cdfd30d05c9496b18bdcefeba0221f21b067847dbdc50fa",
+      "verified": true,
+      "authority_time": "Nov 13 08:02:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "96edf855266cd821025af0567b7ab322db286f30cc3857c495a3e841cd14251f.sectigo.tsr",
+      "sha256": "8fdc9418bf9c952b70151420bda0375bd0878ef0800560840c6e8a5dcc0abd93",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6d9ee1a222894514d00422490c59608a2c7f052d9fdbf4edef9ba2dc31d1c396.freetsa.tsr",
+      "sha256": "99d8f958752786d2cbde47d8deac449a9791e3c60f3e4c089102c36c265c220c",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6d9ee1a222894514d00422490c59608a2c7f052d9fdbf4edef9ba2dc31d1c396.sectigo.tsr",
+      "sha256": "4a470e9432b2fe0c5818e995712737d0e7e5dd1703cbe78ebc1476799910e056",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:12 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "51dc44e168cc34196b8877ad3b85c72726156aa50bfa9d19e6bc6460c3946e6a.freetsa.tsr",
+      "sha256": "4b683e60c1c7c4a784b4a301ea162a9b4ed51ad21649509c2c1de7fd35d544a4",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "51dc44e168cc34196b8877ad3b85c72726156aa50bfa9d19e6bc6460c3946e6a.sectigo.tsr",
+      "sha256": "42c5b0b48942141f0833b9754fc03e18d9f3fa853404a84c539dd19075241c19",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a52309066ec74b533157b33ea196a12e234662164b530e86c921e6ce3b7a6e5d.freetsa.tsr",
+      "sha256": "39a0a7b3c9a63779f03f7fffcbfdef2cb60cc6f54cab8c7f1d3da920feb7a90d",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a52309066ec74b533157b33ea196a12e234662164b530e86c921e6ce3b7a6e5d.sectigo.tsr",
+      "sha256": "257081a4b449b74c7ad00640215b13f39b5500fccecfa1814a608ca12e01555c",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:18 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "2916d1b9ee9e916e6ba94e5624fa0133558c1429020b52221526eb70a1b185ab.freetsa.tsr",
+      "sha256": "6f0d236b1a8a009aa4bd34d119463207524c87a9f572ed2f9f726b1ef1b6f655",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:10 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "2916d1b9ee9e916e6ba94e5624fa0133558c1429020b52221526eb70a1b185ab.sectigo.tsr",
+      "sha256": "05420becbe3bef87b2d2615371a10168e9aca2abedd953af531e3a97ff91ad11",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:21 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ab50baab8eb7d35f26fe7798e15ab5d728b4fddd5c77e83952730f550606f320.freetsa.tsr",
+      "sha256": "008aa46a262ab8b0e6b0de30adac3fc85161170d05e00e8e738bce5141573269",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:14 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ab50baab8eb7d35f26fe7798e15ab5d728b4fddd5c77e83952730f550606f320.sectigo.tsr",
+      "sha256": "a623644c743e77a8cdf16fcae2b962360cdd813bb4be730e2edfaae90305e259",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7d0321f5fc03a2b948a3e46bc7191cd718700bb996cf8ab2ebb2acff3cb0457e.freetsa.tsr",
+      "sha256": "f34a8123e114f7e9529563480ee24c6b97e56d73a5c2ec98de500b262b7f3ce3",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:17 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7d0321f5fc03a2b948a3e46bc7191cd718700bb996cf8ab2ebb2acff3cb0457e.sectigo.tsr",
+      "sha256": "aee9ef34cdf6017c024b07017f6950d75ce06826b46e92da1e8559baac6358b9",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a6a78fe560cd4266a65aba229032cfada4be41f7fda60e35dafb0b3b9f902170.freetsa.tsr",
+      "sha256": "0908ed303be0e84726bc207edc89a65b9799604a66f17f91ce29ef596fd1f102",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:20 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "a6a78fe560cd4266a65aba229032cfada4be41f7fda60e35dafb0b3b9f902170.sectigo.tsr",
+      "sha256": "4048bb470d230e379285de263e11b97fb598eaf397ba33b7bbd49d268ab77c10",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6bab009d44be5a18713593acf1f78a6253677528ba61216e8d93c888ff24d774.freetsa.tsr",
+      "sha256": "e921976d3d8f5cd770e33ffbd667d54fbab253d0556402b5ca1855c72b4d2dfd",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:23 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6bab009d44be5a18713593acf1f78a6253677528ba61216e8d93c888ff24d774.sectigo.tsr",
+      "sha256": "44ecb0cbc370bb24a2085570ecf078b6e39b8ecf2651e4be6d3764ce7f7bb9b4",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ac1a0c1bb4c3b620e6344c2d76ee1ddad0e8e9384f428761f27689f99fe9524b.freetsa.tsr",
+      "sha256": "09f980cfffc8396bb69b0ba15b15027cf550fac7d68ce2286d4d41e7762e736e",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ac1a0c1bb4c3b620e6344c2d76ee1ddad0e8e9384f428761f27689f99fe9524b.sectigo.tsr",
+      "sha256": "5f512377a0532bede6310e35c0e96dea237c16454a460103c71c479849878ac3",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "964f3f3982c159a497587027091f874fc230e80362ec3913eeabd660cb59413f.freetsa.tsr",
+      "sha256": "f25cb90af8a02f2c5ca9c7b2a3ed8a8878f8b89af39cb22d5f8f1ff109477345",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:28 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "964f3f3982c159a497587027091f874fc230e80362ec3913eeabd660cb59413f.sectigo.tsr",
+      "sha256": "416fb845b334d1800b446d166a2e3ae8b60dfe57f9fe0bedb8293dccc697715d",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "2c62d21135d9a43d981d78183a60cbd065429fd2723f8bfa58ca0b7d422ee11a.freetsa.tsr",
+      "sha256": "b1124aa1a72b7a22fdad84421da9fe884e2b8b8b30964cf53984f11c53ee5409",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "2c62d21135d9a43d981d78183a60cbd065429fd2723f8bfa58ca0b7d422ee11a.sectigo.tsr",
+      "sha256": "06e4d598eaf828abcf85667821afd08af5ae66dfe44aecb2b204b943ce1ce85b",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "99b4a31923f59c2a6591c22140a63dbaabe393d60e72c4c174cb45e2ad928adf.freetsa.tsr",
+      "sha256": "0ab93dc394f77571732dd57b486eef0620ae70112fbc5bcbf18011efd84b26ff",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:34 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "99b4a31923f59c2a6591c22140a63dbaabe393d60e72c4c174cb45e2ad928adf.sectigo.tsr",
+      "sha256": "a4f2fc4b2c707959833b731b4027e0a99c98b1a8f104bb1c8f3b9e2e98325555",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4ff8b8a8603dc9461a7684a3c332952d91fe773086a6af2722a914d8e9dd43f8.freetsa.tsr",
+      "sha256": "e0f0bac6407b02a092ba1e002db500d845b9360e56ae598c063038324fa53882",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:38 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4ff8b8a8603dc9461a7684a3c332952d91fe773086a6af2722a914d8e9dd43f8.sectigo.tsr",
+      "sha256": "3610cc06e19066a9b719b645c47a5055cefb43ac25b5235888b7cc3271a7d91b",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:48 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e3e55efc5cc01b66875f82cc6801f4e0a40121a4780984209b2fc96145341697.freetsa.tsr",
+      "sha256": "383d63548f33059ef202cc13c8460bbc823bda948587e6a78d53b6dd69b09ec4",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:41 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e3e55efc5cc01b66875f82cc6801f4e0a40121a4780984209b2fc96145341697.sectigo.tsr",
+      "sha256": "16ea30616d24d6024d842b0ff95dafdc0aaffd17b7938c17b27d2ea1260268fe",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c55064effe5c535f23dffbd30be70c3eeb94f9aa5ae587801b455a954ed3ddca.freetsa.tsr",
+      "sha256": "7dfcda894db067b24b17205e0b7a180cecb12431f740af3976bdfb10b2e9932a",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c55064effe5c535f23dffbd30be70c3eeb94f9aa5ae587801b455a954ed3ddca.sectigo.tsr",
+      "sha256": "c22016d34a19c665c3b78c7b3bf030809f169bed21b9378bc21d115ba30e1de2",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:54 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ca486db8b28ba9718313f786f23d745a5417ad09e2f1d57488b5ce1fdfaf93d4.freetsa.tsr",
+      "sha256": "2984779ee610e065b1518a7cd10239adf20211d23454ef1a7fda83d987f1758e",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ca486db8b28ba9718313f786f23d745a5417ad09e2f1d57488b5ce1fdfaf93d4.sectigo.tsr",
+      "sha256": "1e1acbc31007a38085b8edcf5e4532cebe3245e1f46b4a1ff71147bac61f9a37",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b8876f321f2582f359fdca0cb8b51be2493529a0e6bb8cc31c68f2ece3c33988.freetsa.tsr",
+      "sha256": "4b9f8e11d63c17e4efe02cb62bb576978f1801267ba91842807f1db446158b5f",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:49 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b8876f321f2582f359fdca0cb8b51be2493529a0e6bb8cc31c68f2ece3c33988.sectigo.tsr",
+      "sha256": "0788877aa791ce9d01c6a9443b872216290ff61ec8da71abcf487ee41b448e48",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "92c3f7321d79406fa5f7e3c8fd64af9f7a15f4809a23de82205921d08cea8aa3.freetsa.tsr",
+      "sha256": "4d07b3cd60478af73e6bd0a9f7fde9260bc8a04280ba348bdd544bb074487920",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "92c3f7321d79406fa5f7e3c8fd64af9f7a15f4809a23de82205921d08cea8aa3.sectigo.tsr",
+      "sha256": "3ff29b2dc5415a669d1628d0efa4a0f7c587e337a043589488d9f3340f683568",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:03 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e3ff8baa3e8cfe0216d8048a1931f7f6bdda34c64432d2f18e373b80d8fe2d34.freetsa.tsr",
+      "sha256": "88308abb2def2ecf3e335becd1c2c6dfad14148e3e393a32c3ebb30c559a809e",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:55 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e3ff8baa3e8cfe0216d8048a1931f7f6bdda34c64432d2f18e373b80d8fe2d34.sectigo.tsr",
+      "sha256": "04349b57a1b5fa1160e652c9a4c4e281e1ca88a24d257e6c645447f13c696f5f",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:06 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "baf55aee1935028168cc95b4de22eac02dcc4d642585942f2422691d4a17b42b.freetsa.tsr",
+      "sha256": "58ed8c0fa13e6ace1f1d76cb5c7c0530ac84bd8622998f6beff98d1868f425a1",
+      "verified": true,
+      "authority_time": "Nov 13 08:03:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "baf55aee1935028168cc95b4de22eac02dcc4d642585942f2422691d4a17b42b.sectigo.tsr",
+      "sha256": "3d81a8c6a0cdd9edc2d8b02a184ff9ffc13ca061cdbdb9297ea78f83931b32a0",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4ea5edcfcba3a51e5a21e42948726ad00677844784eb440c29b768cdc831e3e9.freetsa.tsr",
+      "sha256": "d71384abbd88ebad84c39cfc3fbd0d09f4a91f01efd3b4ba5ec359589dd70e8d",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4ea5edcfcba3a51e5a21e42948726ad00677844784eb440c29b768cdc831e3e9.sectigo.tsr",
+      "sha256": "e715d3fd0190d63228adc14624dc874487a7638a963913f75a0e28ea5dfbbdc0",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:12 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "62c7b0d063d45723f077f458aa817fd5c9c94905cfe9a7b747ada3d2d4b1ea08.freetsa.tsr",
+      "sha256": "cd4497e55d45201150f4d0f783c9f1efb868617776b24bff23491e039a117319",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "62c7b0d063d45723f077f458aa817fd5c9c94905cfe9a7b747ada3d2d4b1ea08.sectigo.tsr",
+      "sha256": "aa30b5fc71a1fca41f2b897338e708486739c8ea4e45d660f21fbde63821f761",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:15 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "0585e7387add58cc53a1800fa8fd97f5b85cc6eb9cd0d3c38850187e21f9a0a2.freetsa.tsr",
+      "sha256": "5f018e68778d291f2548a082a40566de8e1c9cd23c517334c614792e7297bf2a",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "0585e7387add58cc53a1800fa8fd97f5b85cc6eb9cd0d3c38850187e21f9a0a2.sectigo.tsr",
+      "sha256": "6b4bd91a1df4152629930260bc3fd977f4d2b5da4f9dd8610176a1c9d5dbd309",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:18 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7754011aec708f65050fa871a9882658f07f33f50afe41c587cb48a862045e29.freetsa.tsr",
+      "sha256": "9dd32871c2d346b4ed0ab8632bbbd6ca79f959b6633c55752860da7708ab3e91",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:10 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7754011aec708f65050fa871a9882658f07f33f50afe41c587cb48a862045e29.sectigo.tsr",
+      "sha256": "0d1ac46f01b2eda12eaf7de536f94af0473876dc16e57557cabeead2d2dfb735",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:21 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "adcd1674426a77075b94ac5b0d4a3f7d983831f2c172ce7802016fe43b9db4b3.freetsa.tsr",
+      "sha256": "da9cf3ecf552aee5dd1bbb30f6f93e65e63a0255a6bfb438eb073b305697590a",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:13 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "adcd1674426a77075b94ac5b0d4a3f7d983831f2c172ce7802016fe43b9db4b3.sectigo.tsr",
+      "sha256": "1bd71f7c714bbfa15aad7d5b53557277e172f82ebc34fca7b7ffb503036bd884",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "89cc99af8adc41264b2ce56c4d3e03beb11b0d260d452be48d45d858850e8a4a.freetsa.tsr",
+      "sha256": "03c9ef13f1c1cd6479c13a571ddebc0612a89b34fb99f5f643173b40b0dc113e",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:16 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "89cc99af8adc41264b2ce56c4d3e03beb11b0d260d452be48d45d858850e8a4a.sectigo.tsr",
+      "sha256": "da563088c3e957cb5a994cbfdbd081776c3df5cb77f9060465fc66b0f887750f",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "443d1a1f5e463c94960efe46e7edb93cdb801add6271f701fe350f14a1230938.freetsa.tsr",
+      "sha256": "bcbf0bc7728d07798cd0ab6d8cc8350cc11f27eab5403b5c686769ca4517ae5b",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:19 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "443d1a1f5e463c94960efe46e7edb93cdb801add6271f701fe350f14a1230938.sectigo.tsr",
+      "sha256": "a54519b3f04c1c9d8292cb9a76fe78002ee2aa59f9e8ee0861e7ebb7f1d45015",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:30 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7961f4ec9a10137970bee9e86b238c8a179689c9e7fb93d8c7b3d3437943835a.freetsa.tsr",
+      "sha256": "63b7aef90ae83e66cdf87850a09c90052b233085a60a6fc9db313ecdc5e93ed6",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:22 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "7961f4ec9a10137970bee9e86b238c8a179689c9e7fb93d8c7b3d3437943835a.sectigo.tsr",
+      "sha256": "86e76530e238ec623489929ab8870c1b5c26ef1872f628b0930c64e3d338305c",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "1a3310dea8b2e81be8ad444e00cd232a490873b9a1c27eff406bf443b1ba2aa3.freetsa.tsr",
+      "sha256": "2592c4250c1947ff335ac487132ab6d94e650daf8bdcdccadf4057b248a5974d",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:26 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "1a3310dea8b2e81be8ad444e00cd232a490873b9a1c27eff406bf443b1ba2aa3.sectigo.tsr",
+      "sha256": "288c1b7266adeba3070d050c88218268762a42328cafcaf858f22e85361566ae",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "dbd93f1a405df67ae259e5e2b411b0ad70af6d34b0fef1ac43ccb0d108d1e445.freetsa.tsr",
+      "sha256": "6a4dd6fc9c31d019b9722986f797a153804cd21d41db594c7a4909639cc445d7",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:28 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "dbd93f1a405df67ae259e5e2b411b0ad70af6d34b0fef1ac43ccb0d108d1e445.sectigo.tsr",
+      "sha256": "fb45cd2e991c69ef381801e8d54af1096419043b8e8b1c871e8faed22c26ed61",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bf1dcb488136642f097df39d7a5fbba1da05dfd55767f8b036480a24fe2c876a.freetsa.tsr",
+      "sha256": "82ce78698c99826246bec535d69611e5b292e1498fbb9e9d8fcb4e0a0bce8d31",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:32 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "bf1dcb488136642f097df39d7a5fbba1da05dfd55767f8b036480a24fe2c876a.sectigo.tsr",
+      "sha256": "7a2d12f783b9396b15fbfca45ddab5e14aad1a497c1babb6c3f36eb4be83e65c",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:42 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "0bf475a3786c9b8bab542585d3f181d16abeede0460180c77cf028847474e600.freetsa.tsr",
+      "sha256": "29cedc9a446119ae48b153db796c93ded6127187091c3a934a2f0909b79c93ea",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:34 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "0bf475a3786c9b8bab542585d3f181d16abeede0460180c77cf028847474e600.sectigo.tsr",
+      "sha256": "52a64ef89b0dc296698f4e5dfb4da93f7d4231a47cc3a444e102fe801c77aa25",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:47 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "611d53344357521d1faced6cce864c5db62ae8c929bbff9bed21ca60a3c40327.freetsa.tsr",
+      "sha256": "a0c66b3c418e7c31ff139520c7cb8deedf71d6bbab5b1319198842219819d544",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "611d53344357521d1faced6cce864c5db62ae8c929bbff9bed21ca60a3c40327.sectigo.tsr",
+      "sha256": "c95047a5c92cdc219844d78088b789dcbe85d80e27f802907f3bc4d330d0f688",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:50 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "618e24073e72c2ac1661298c288320418d03c497b6aff21104ae4620fc4d4551.freetsa.tsr",
+      "sha256": "14c1ac52bf76da154319c3bd8ba3dcc4b523e100d6bdf7617b3844ce69bee4b1",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:41 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "618e24073e72c2ac1661298c288320418d03c497b6aff21104ae4620fc4d4551.sectigo.tsr",
+      "sha256": "566f8e96027ca1dda8aad805b74af3ecc4ae985cf710048219464e0e6bde6151",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5242e66082d677badbac2fd21a23c5314518035c7edb5f108a45aa6554d50e2d.freetsa.tsr",
+      "sha256": "b2e74a271c489f664cc4b1a5f0e54d82a2f841ca59a93d5f32f7e19edd9a66cf",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "5242e66082d677badbac2fd21a23c5314518035c7edb5f108a45aa6554d50e2d.sectigo.tsr",
+      "sha256": "35c4e343907a7a4961c03548323611e3407ca4f4e16c7d2e2fd40f6956d6f19a",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:54 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d17e9429d55f5f1cc9a7cc3b9df550228f64a422bdbb3db4b9afc66b46a6e198.freetsa.tsr",
+      "sha256": "6a42afa21ecfa665765405add69bc267afe142c2bdc257558967591faa8e175f",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:48 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d17e9429d55f5f1cc9a7cc3b9df550228f64a422bdbb3db4b9afc66b46a6e198.sectigo.tsr",
+      "sha256": "abbb3ad72da15d06d7f75335258e567925450bb29247fbdddfea3357350cfa2f",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "06300c874862e7f49f1deabcdfd49adb40d39b6091ddbb70f8af2b475c9bd966.freetsa.tsr",
+      "sha256": "a8e5f5cea818184f05641b1aec2c625f1f335acef35c9075b200e01cc6e58ecb",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:51 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "06300c874862e7f49f1deabcdfd49adb40d39b6091ddbb70f8af2b475c9bd966.sectigo.tsr",
+      "sha256": "206f1ac6e986aeab92407689e7b8c792ad04b0445f4ea550453461488e2aa48a",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8080b78792380a0e246be99cd9d93eb0d0927106051300b41c93bc6866a82128.freetsa.tsr",
+      "sha256": "46f1072b26a4e9e4278c75c8693db33b4a507c1fa44dd089ae4a4c84e6947193",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:53 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "8080b78792380a0e246be99cd9d93eb0d0927106051300b41c93bc6866a82128.sectigo.tsr",
+      "sha256": "2d0c260d5b66f032055a20edb1e3ea9b1be34f9416a5c58e7d3115098e5dd398",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:03 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c6d7dd5b1911ab776c862f495643cc8ba436ccfd902f1e4396ee270ce14b6225.freetsa.tsr",
+      "sha256": "baebda2170e17d35de0d727cb9a0dab9ad0ac71d53cb2fcb0a461d49d6301f6d",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:56 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "c6d7dd5b1911ab776c862f495643cc8ba436ccfd902f1e4396ee270ce14b6225.sectigo.tsr",
+      "sha256": "a2e1a453ecdbe8ef9e32ad99c2fbca4406e7a657e041a3a9d677a349502df6f5",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:06 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ccd91b7dd0b9cff3fac9e686ccb0aa73a3d2b29a7a98258b91a4744270c55af6.freetsa.tsr",
+      "sha256": "a8981dc483483e857176ab0fa686d9c268fe05ca40b9e59164417629f36c7a55",
+      "verified": true,
+      "authority_time": "Nov 13 08:04:59 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ccd91b7dd0b9cff3fac9e686ccb0aa73a3d2b29a7a98258b91a4744270c55af6.sectigo.tsr",
+      "sha256": "136424688601b0b1f99dab096dfe7409478e9a0ccf17930498f505cc268928fe",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b365cdf30ced3444cbb9a11b556cbccd00b8d5a4bee23096492aeafe3aabc980.freetsa.tsr",
+      "sha256": "134769ba2354bca1c36b38329e9efba70348a0713f9dea98ff4ed2bcba26f95d",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "b365cdf30ced3444cbb9a11b556cbccd00b8d5a4bee23096492aeafe3aabc980.sectigo.tsr",
+      "sha256": "a10c431155970ad97e7b8302741fe52542e5be210667d00440b31b43e691c745",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:13 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "dd58900dbaeb782bb83f7be5e748bd356c270f7da33fbb6a17c255fa196a322e.freetsa.tsr",
+      "sha256": "e50f3e45e04d8fd004919fcaa55cdb1d8262681ea415e7620b07c596f6c4efff",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "dd58900dbaeb782bb83f7be5e748bd356c270f7da33fbb6a17c255fa196a322e.sectigo.tsr",
+      "sha256": "32a46bed997f04fd3a32dc839a27315d28dc0c965d2d2cdda083f2ebdbfd7ca1",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:16 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4c1bc21644b4bbbc1a0011ef26d141c2357e5c65c729b41af6cc7db307b72d79.freetsa.tsr",
+      "sha256": "b6205d0216d819a38e81ffb898177f0bb1e2b934fa14e16319358c0401816995",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:08 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "4c1bc21644b4bbbc1a0011ef26d141c2357e5c65c729b41af6cc7db307b72d79.sectigo.tsr",
+      "sha256": "079837530b0243fe4aed03616f0e41b98dda0a697b27897f2790301ac738387c",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:19 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3ce3cf331a2be18d9a8dd6bbc40f6fed5b3aef6100e01dd7a41023e8449cbee8.freetsa.tsr",
+      "sha256": "4545bc40dcbc5f9c05d74c6e70bb5926a7df41009b9a912b4002a3ad59044cfd",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:10 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3ce3cf331a2be18d9a8dd6bbc40f6fed5b3aef6100e01dd7a41023e8449cbee8.sectigo.tsr",
+      "sha256": "3e111bf8d7396421214bce68f137e474cf4d2f0f5ad671f13af5d569ad0b6969",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:22 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "370cc21c5cd2b1a662eaa977bdb0ce1811ab27ced0d723a595ae6c4ad4f37df6.freetsa.tsr",
+      "sha256": "b24f4b8a5ab6092b768f1b59a9dd9068de316e27cb115004715c0d3a271b8916",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:13 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "370cc21c5cd2b1a662eaa977bdb0ce1811ab27ced0d723a595ae6c4ad4f37df6.sectigo.tsr",
+      "sha256": "9119a5d810e7513957813d365ecc67b458d48a2c7eccd1c66febdcba0e1d3b87",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:24 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6b33cf9188b4429f33e5e46904775ece2b3003600daacaea19914e85e32eccf0.freetsa.tsr",
+      "sha256": "d747ce1abf3075b031e8751cfeb329dc36e1c62499bdbf109b69311454156f43",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:16 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6b33cf9188b4429f33e5e46904775ece2b3003600daacaea19914e85e32eccf0.sectigo.tsr",
+      "sha256": "daf202ed1647e9b9cbe86668c001a3b9f3bff3b9f0ac0b3f98c6edba3439f5e6",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:27 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e8057436fa0dc28e5dd8541e19854a774399513d1e19897b0a898a5153d7ed64.freetsa.tsr",
+      "sha256": "862714dd59e41968a66d511003d8c1d217e19821ff42fcbcdf05312f23cfb7f6",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:20 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e8057436fa0dc28e5dd8541e19854a774399513d1e19897b0a898a5153d7ed64.sectigo.tsr",
+      "sha256": "acecdb334476a0257ea907e7a0258efbec6411f6a0bf13ae88b7ef92cad5e47e",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:31 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "182b638508bd9eb1bd518f349b843698564192a3e038230fe9ff2141618116c3.freetsa.tsr",
+      "sha256": "ab753b9ca4d64293d662c8d59145a2c7eb30e9552056f32b618687f2a5209a00",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:23 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "182b638508bd9eb1bd518f349b843698564192a3e038230fe9ff2141618116c3.sectigo.tsr",
+      "sha256": "d0cf3b256618bd47a766a33e440cdaa6730173cc7ed1b12a068b31eaf4e7905f",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:33 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ed9e8ab55271bf5b9b4ab0273119a78ffed6775b9b65c8523701ef65ec404604.freetsa.tsr",
+      "sha256": "92b97b68bd08837f9a858330683b5b6e9db310b6c84f30e7073d938fc66311b0",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:26 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ed9e8ab55271bf5b9b4ab0273119a78ffed6775b9b65c8523701ef65ec404604.sectigo.tsr",
+      "sha256": "5b802d0f8d304fe55bdfdf0356301f7fd01370836f915b04cc0beb9940eb5d45",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:36 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d0333c8822c039eacc03bd81a7b672800c667988e9ac3f7cd4223ce17e903134.freetsa.tsr",
+      "sha256": "9bc695ebe4b03ad1240913e568d84bd6fd996fa7275fc597ad31d421701d4356",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:28 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "d0333c8822c039eacc03bd81a7b672800c667988e9ac3f7cd4223ce17e903134.sectigo.tsr",
+      "sha256": "42c8382e6f3a73b4663a806be54b6aebf1697fc821cd689d08bc0ad841a609a3",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:39 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "90e6c335dfc012c7cf821bccd1527816d87fcdeb2e2390ca5d0beff43f321c74.freetsa.tsr",
+      "sha256": "c42741d2bb6704d268b0c0e38c7a277b6cbb6ad39ad47d94f4cb374b3792cd4c",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:31 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "90e6c335dfc012c7cf821bccd1527816d87fcdeb2e2390ca5d0beff43f321c74.sectigo.tsr",
+      "sha256": "afbe502e205bc9d8cfc6fe14b7b38664d91545bcb5b31024b753452d7f52e7f4",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:43 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f52f1fa160b58af3e8d212e82624160ff51ce881556842c10c350638e4916d65.freetsa.tsr",
+      "sha256": "8fe377b366790e06a192a1dc2707ecdc79fb3dcfa5b6436412854f1c9a99f19d",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:34 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "f52f1fa160b58af3e8d212e82624160ff51ce881556842c10c350638e4916d65.sectigo.tsr",
+      "sha256": "79209824d6269b6d4596be624bed52b1fbd76d51a5eb84757504ecdbd063a607",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:46 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ff42df774b7df951f3e90bad5825c7a7d630bf0567b3d5f80f31b4f7662e9d3d.freetsa.tsr",
+      "sha256": "ba4023a1d3d3d3ca013d34bc56eb9b70856b5311ec29d97173c1508e36107ca6",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:37 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "ff42df774b7df951f3e90bad5825c7a7d630bf0567b3d5f80f31b4f7662e9d3d.sectigo.tsr",
+      "sha256": "fb7ff4f1dd80b4affba9c30557b0a2f5950ae4fa770001f0bd25f98dc3761311",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:49 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "07b05ca3347d008731e6142f430e7c00ccc93a52a479dc8f64d10da9b4662fd0.freetsa.tsr",
+      "sha256": "d2e424fbb77b688e97708467edcb200fb350d7d429b93d2baf83b2f335d2742e",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:40 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "07b05ca3347d008731e6142f430e7c00ccc93a52a479dc8f64d10da9b4662fd0.sectigo.tsr",
+      "sha256": "0fadb7868c4d168603c20eaa9479579bcb242284092a536add2863275d7c75c9",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:52 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "27ff8af0df3820626d63aed3a10277245b20aa7c9e48498e5fe4506f8d8cb468.freetsa.tsr",
+      "sha256": "ba13d09ccc860c955445994cf07ef8c2d4bd11fa39d77698f6049aac009a7f68",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:45 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "27ff8af0df3820626d63aed3a10277245b20aa7c9e48498e5fe4506f8d8cb468.sectigo.tsr",
+      "sha256": "55a146c16181ad9ba850eeccbb537fb86533f725ebcd63e8836ab915d5c38689",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:54 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "fe9efa3da149baf70e9565718a50ad2619309ee805aef95b2075d14e792c1933.freetsa.tsr",
+      "sha256": "2f9efb645445403524555299425c16d8917bfc76e4fa7109d4dccfe9839b38d0",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:47 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "fe9efa3da149baf70e9565718a50ad2619309ee805aef95b2075d14e792c1933.sectigo.tsr",
+      "sha256": "7719b59e67e5afbf3a040673cc2547e49a68fe17eb884d1574d122d08af306fc",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:57 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3896f89445f4e9858e59ebd840450299df77341a53803ed74de60a35df3a4478.freetsa.tsr",
+      "sha256": "3aa20fba3dcddb8e2f9a5500b7746f7e2a5b342b1b58343180ca31ac0a1f42d4",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:50 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "3896f89445f4e9858e59ebd840450299df77341a53803ed74de60a35df3a4478.sectigo.tsr",
+      "sha256": "d1bbeeccd0ce91ee9fad2fbdce91a4cc05f0db7317babf53a15b085beae79aa0",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:00 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "76a8f8a507797cd85a2e69266ee91429aefa7d8518dcc4b0fb5041661f738823.freetsa.tsr",
+      "sha256": "de0685204a72651e1bd9fd9bd80f70425a14bf50130af40423f4bb42c2b760d4",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:53 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "76a8f8a507797cd85a2e69266ee91429aefa7d8518dcc4b0fb5041661f738823.sectigo.tsr",
+      "sha256": "abead27d5219d9161dae36640a81855cd7e193252b33dd7defd0b137b2e32929",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:04 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e27eb0ba43314c0a12734e4440a7f494d475a6b33f5152ad66abad00b7225233.freetsa.tsr",
+      "sha256": "8c19eabd7bdaaccd5b9d7e1ee34ae3495e6273f0b803c9d77efee60981e4d696",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:56 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "e27eb0ba43314c0a12734e4440a7f494d475a6b33f5152ad66abad00b7225233.sectigo.tsr",
+      "sha256": "f0931b1c3cb67004a48bbbabbb5a2cb78c0bf90634b5aff6ac1b0ce564bee188",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:07 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6b541d1ed402f474390d5990e30f6c9ae3249f68fdb46ffaf93f279d173f28dd.freetsa.tsr",
+      "sha256": "61d7781ad5891eff63f4e3d8d61646f6c17d701357516f3b64594430397e7fdc",
+      "verified": true,
+      "authority_time": "Nov 13 08:05:58 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "6b541d1ed402f474390d5990e30f6c9ae3249f68fdb46ffaf93f279d173f28dd.sectigo.tsr",
+      "sha256": "25213e4b6b9c7db2b6c90046e7f23bc884c6f06f28260692b0096312bea507ae",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:09 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "73ec02c0e716ba708e21f29b706ffaeec439dd2432bcaf73f4cc40192c453934.freetsa.tsr",
+      "sha256": "70db5e3e489e26dd70e659faa759acd65b721459747709f1be71695a344bea2c",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:01 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "73ec02c0e716ba708e21f29b706ffaeec439dd2432bcaf73f4cc40192c453934.sectigo.tsr",
+      "sha256": "5b2114f38fdc17f530773547df0c3066619d063fbb61582dbfa7181a5e994440",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:13 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "cbfc0b8894d87da94e35540a2be2fe4a45f7e049febe093bb0db0e2ee008f640.freetsa.tsr",
+      "sha256": "027fc851b8734dc2e442f504843653881e88fb1b32f60a20336d78e32bb42168",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:05 2026 GMT",
+      "error": null
+    },
+    {
+      "filename": "cbfc0b8894d87da94e35540a2be2fe4a45f7e049febe093bb0db0e2ee008f640.sectigo.tsr",
+      "sha256": "4ca9832f54fd713643aa30c50f4a57623239a0951e4b786bc4c89d44b87b6e20",
+      "verified": true,
+      "authority_time": "Nov 13 08:06:15 2026 GMT",
+      "error": null
+    }
+  ],
+  "problems": [],
+  "accepted": true
+}

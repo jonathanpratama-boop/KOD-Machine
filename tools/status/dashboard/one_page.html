@@ -421,6 +421,10 @@ function paperBookViews() {
   const block=element('div','cloud-results');
   const views=data.paper_book_views;
   block.append(element('h4','','Original and corrected figures'));
+  const input=views?.input_health;
+  const inputCurrent=['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(input?.status);
+  const inputLabel=input?.status ? input.status.toLowerCase().replaceAll('_',' ') : 'not reported';
+  block.append(element('p','result-note' + (inputCurrent ? '' : ' result-warning'),'Forecast inputs: ' + inputLabel + '. ' + (input?.message || 'The source report does not establish current input coverage.') + (input?.assessed_at ? ' Assessed ' + date(input.assessed_at,true) + '.' : '')));
   if (!views || views.status !== 'PUBLISHED') {
     block.append(element('p','','The corrected comparison has not been published in the current source report yet. Original book totals remain above.'));
     return block;
@@ -494,9 +498,11 @@ if (summary.proven_live > 0) document.getElementById('headline').textContent=cou
 document.getElementById('next-look').textContent=summary.next_verdict_what + ' · ' + date(summary.next_verdict_date);
 const issues=ongoing.filter(experiment=>['STALLED','HALTED','FAILED','UNKNOWN'].includes(experiment.state)).map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
 if (sourceStale) issues.unshift('Study records need a refresh; cloud results have their own update time');
-document.getElementById('attention').textContent=issues.join(' · ') || 'No issues reported';
+const paperInput=data.paper_book_views?.input_health;
+if (!['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(paperInput?.status)) issues.push('Paper-book inputs · ' + (paperInput?.status ? paperInput.status.toLowerCase().replaceAll('_',' ') : 'coverage not reported'));
+document.getElementById('attention').textContent=issues.join(' · ') || 'No collection failures reported';
 document.querySelector('.brief>div:last-child').classList.toggle('alert',issues.length>0);
-document.getElementById('attention-note').textContent='Cloud status expires after an hour. Check the time of the last update before relying on it.';
+document.getElementById('attention-note').textContent='Collection status does not certify forecast input coverage. Check each report’s input warning and update time.';
 document.getElementById('scope').textContent=count(data.experiments.filter(experiment=>experiment.group!=='closed' && !experiment.plumbing).length) + ' ongoing tests · ' + count(ongoing.filter(experiment=>experiment.plumbing).length) + ' supporting collectors · all times WIB';
 document.getElementById('archive-counts').textContent=count(historical.length) + ' closed tests and checks · ' + count(data.gaps.length) + ' items missing or untracked';
 document.getElementById('snapshot-note').textContent='Study records built ' + date(build.built_at,true) + ' · KOD ' + String(build.kod_commit || 'unknown').slice(0,12) + (build.cloud_refreshed_at ? ' · Cloud refreshed ' + date(build.cloud_refreshed_at,true) : '') + (sourceStale ? ' · Source refresh is overdue. Previous study records are retained.' : '') + '. This saved copy won’t update itself.';
