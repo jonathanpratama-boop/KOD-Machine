@@ -1,0 +1,2345 @@
+{
+ "schema": 1,
+ "about": "Registry of everything on the KOD status dashboard. One entry per experiment; tools/status/build_status.py runs entry.reader with entry.params. See tools/status/README.md.",
+ "calendars": {
+  "NYSE": {
+   "holidays": [
+    "2026-01-01",
+    "2026-01-19",
+    "2026-02-16",
+    "2026-04-03",
+    "2026-05-25",
+    "2026-06-19",
+    "2026-07-03",
+    "2026-09-07",
+    "2026-11-26",
+    "2026-12-25",
+    "2027-01-01",
+    "2027-01-18",
+    "2027-02-15",
+    "2027-03-26",
+    "2027-05-31",
+    "2027-06-18",
+    "2027-07-05",
+    "2027-09-06",
+    "2027-11-25",
+    "2027-12-24"
+   ],
+   "note": "copied from idx-signals/idxsig/catalysts.py NYSE_HOLIDAYS"
+  },
+  "IDX": {
+   "holidays": [],
+   "note": "KOD does not model IDX holidays yet; add them here or an IDX holiday shows as missed"
+  },
+  "DAILY": {
+   "every_day": true
+  }
+ },
+ "reference_only": {
+  "IDEAS": "idea list, no protocol",
+  "QUANT_GRADE": "roadmap, trial registrations and analysis snapshots",
+  "UMA_IDX_v1": "label collection, no protocol",
+  "US_PIPELINE_v1": "engineering checks",
+  "EXEC_US_v2": "execution contract (engineering)",
+  "EXEC_US_v2_1": "execution contract (engineering)",
+  "DECISION_NOTES_v1": "per-case decision notes",
+  "LEARNER_v2_3": "superseded by v2.4 with 0 forecasts sealed (research/LEARNER_v2/protocol_v2_3.json)",
+  "codex/capacity-quality-watch-20261105": "code branch merged as PR #2 into main; its HEALTH.json files are stale copies of main",
+  "registry/ids/ID_MAP.jsonl": "id map (empty), not an experiment",
+  "kod-machine/registry/opens.jsonl": "holdout-open register (reference)",
+  "idx-signals/results/RUNS.jsonl": "research run index (reference)"
+ },
+ "ledger_scan_skip": [
+  "idx-signals/data/",
+  "handoff/ace-integration-",
+  "idx-signals/research/LLM_ARM_v1/"
+ ],
+ "programs": [
+  {
+   "id": "paper_trading",
+   "name": "Paper trading",
+   "order": 1,
+   "lead": "PAPER_BOOK_v1",
+   "question": "Would following KOD's rules make money?"
+  },
+  {
+   "id": "forecaster",
+   "name": "Forecasting engine",
+   "order": 2,
+   "lead": "LEARNER_v2_4",
+   "question": "Are KOD's odds on each spike better than simple guesses?"
+  },
+  {
+   "id": "ai_judge",
+   "name": "AI second opinion",
+   "order": 3,
+   "question": "Can an AI call spikes better than KOD's math?"
+  },
+  {
+   "id": "insider_signals",
+   "name": "Insider & filing signals",
+   "order": 4,
+   "lead": "CATALYST_DOCUMENT_CLASS",
+   "question": "Do insider buys and company filings predict moves?"
+  },
+  {
+   "id": "timing_lab",
+   "name": "Entry-timing lab",
+   "order": 5,
+   "lead": "srv:research_r2",
+   "question": "Does acting within minutes of a spike, not hours later, change results?"
+  },
+  {
+   "id": "early_warning",
+   "name": "Early-warning radar",
+   "order": 6,
+   "question": "Does KOD's newer crypto model spot coming jumps better than its current one?"
+  }
+ ],
+ "experiments": [
+  {
+   "id": "LLM_ARM_v1",
+   "name": "LLM reasoning arm v1",
+   "plain": "Does a Claude call on each flagged spike, made before the market opens, predict whether it runs or fades better than KOD's own numbers?",
+   "program": "ai_judge",
+   "short": "AI vs KOD's math",
+   "ceo_line": "Whether an AI's buy-or-skip calls on spikes beat KOD's own odds, after costs.",
+   "unit": "graded AI calls",
+   "group": "live",
+   "reader": "llm_arm",
+   "params": {
+    "calls_dir": "idx-signals/research/LLM_ARM_v1",
+    "register": "idx-signals/paper/speculations.jsonl"
+   },
+   "collected_label": "calls made",
+   "scored_label": "calls with a complete 5-day (BASE5) outcome",
+   "needed": 60,
+   "needed_label": "scored calls for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "The first 15 calls (the 2026-11-02 sets) get their 5-day outcomes: 3 IDX after the 2026-11-10 IDX close (about 17:30 WIB 2026-11-10) and 12 US in the run after the 2026-11-10 US close (about 06:00 WIB 2026-11-11).",
+   "next_date": "2026-11-10",
+   "sources": [
+    "KOD:idx-signals/research/LLM_ARM_v1/calls*.jsonl",
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/research/LLM_ARM_v1/PROTOCOL.md"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/LLM_ARM_v1/PROTOCOL.md",
+    "sha256": "310f5c4799edb1a33934fb1d4da78c49c26131b01df4042ad8c13d0863e5aaaf"
+   },
+   "note": "the keep rule compares BACK and AVOID calls once their outcomes have been scored; no counted-trial registration under research/QUANT_GRADE/trials/"
+  },
+  {
+   "id": "SPEC_REGISTER_US",
+   "name": "Speculation Register: US",
+   "plain": "Does KOD's frozen 5-day plan on US +30% spikes beat five look-alike 'twin' stocks picked the same day, measured only on the future?",
+   "program": "paper_trading",
+   "short": "US spikes vs look-alikes",
+   "ceo_line": "Whether buying US stocks after a 30%+ day beats look-alikes. Past data says no.",
+   "unit": "graded spikes",
+   "group": "live",
+   "reader": "spec_register",
+   "params": {
+    "register": "idx-signals/paper/speculations.jsonl",
+    "market": "US",
+    "min_sessions": 15
+   },
+   "collected_label": "sets sealed",
+   "scored_label": "5-day plan results paired with twins",
+   "needed": 60,
+   "needed_label": "paired sets (from at least 15 signal sessions) for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "5-day results for the 10 sets of 2026-10-29 land in the run after the 2026-11-06 US close (about 06:00 WIB 2026-11-07). The 60 sets the look needs are already sealed, so the 15-session rule binds: the 15th US signal session is 2026-11-16, so the look is due about 2026-11-25 WIB if candidates keep coming (estimate; also used as projected_date).",
+   "next_date": "2026-11-07",
+   "projection": {
+    "basis": "collected",
+    "lag_days": 8,
+    "earliest_look": "2026-11-25",
+    "earliest_look_reason": "the 15-session rule (15th US signal session 2026-11-16, if candidates keep coming; its 5-day results land about 2026-11-25 WIB)"
+   },
+   "sources": [
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json",
+    "sha256": "b0e9b6d9b533ac963049367827e3ff640f2315622d8635811e54fad2a5e519ec"
+   },
+   "covers": [
+    "SPECULATION_REGISTER_v1"
+   ]
+  },
+  {
+   "id": "SPEC_REGISTER_IDX",
+   "name": "Speculation Register: IDX",
+   "plain": "Does KOD's frozen 5-day plan on Indonesian limit-up (ARA) spikes beat five look-alike twin stocks picked the same day, measured only on the future?",
+   "program": "paper_trading",
+   "short": "Indonesia spikes vs look-alikes",
+   "ceo_line": "Whether buying Indonesian stocks at their daily limit beats look-alikes. Past data says no.",
+   "unit": "graded spikes",
+   "group": "live",
+   "reader": "spec_register",
+   "params": {
+    "register": "idx-signals/paper/speculations.jsonl",
+    "market": "IDX",
+    "min_sessions": 15
+   },
+   "collected_label": "sets sealed",
+   "scored_label": "5-day plan results paired with twins",
+   "needed": 60,
+   "needed_label": "paired sets (from at least 15 signal sessions) for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "The first IDX 5-day results (the 2 sets of 2026-10-29) are due in the IDX run after the 2026-11-06 close (about 17:30 WIB 2026-11-06). First look around late November to early December 2026 (estimate; projected_date gives the sealing pace plus the 8-day wait for 5-day results).",
+   "next_date": "2026-11-06",
+   "projection": {
+    "basis": "collected",
+    "lag_days": 8
+   },
+   "sources": [
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json",
+    "sha256": "b0e9b6d9b533ac963049367827e3ff640f2315622d8635811e54fad2a5e519ec"
+   },
+   "covers": [
+    "SPECULATION_REGISTER_v1"
+   ]
+  },
+  {
+   "id": "SPEC_REGISTER_CRYPTO",
+   "name": "Speculation Register: crypto",
+   "plain": "Does KOD's frozen 5-day plan on crypto +30% spikes beat five look-alike twin coins picked the same day, measured only on the future?",
+   "program": "paper_trading",
+   "short": "Crypto spikes vs look-alikes",
+   "ceo_line": "Whether buying coins after a 30%+ day beats look-alike coins. Past data says no.",
+   "unit": "graded spikes",
+   "group": "live",
+   "reader": "spec_register",
+   "params": {
+    "register": "idx-signals/paper/speculations.jsonl",
+    "market": "CRYPTO",
+    "min_sessions": 15
+   },
+   "collected_label": "sets sealed",
+   "scored_label": "5-day plan results paired with twins",
+   "needed": 60,
+   "needed_label": "paired sets (from at least 15 signal days) for the first look",
+   "stale_after_hours": 120,
+   "next_milestone": "The 2 sets of 2026-11-05 (SOXSB, UVXYB) resolve NEXT1 about 2026-11-07 WIB and BASE5 about 2026-11-12 WIB. The first-look estimate is projected_date: the sealing pace (sets per day so far) plus the 6-day wait for 5-day results.",
+   "next_date": "2026-11-12",
+   "projection": {
+    "basis": "collected",
+    "lag_days": 6
+   },
+   "sources": [
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json",
+    "sha256": "b0e9b6d9b533ac963049367827e3ff640f2315622d8635811e54fad2a5e519ec"
+   },
+   "covers": [
+    "SPECULATION_REGISTER_v1"
+   ]
+  },
+  {
+   "id": "LEARNER_v2_2",
+   "name": "LEARNER v2.2",
+   "plain": "Can the self-learning model tell which spikes and filings will beat their twins, or make their own pump or dump, better than plain base rates?",
+   "program": "forecaster",
+   "short": "KOD's learning model",
+   "ceo_line": "Whether KOD's self-learning odds beat plain averages, week after week. Earliest answer December 2027.",
+   "unit": "finished 4-week blocks",
+   "group": "live",
+   "reader": "learner_v22",
+   "params": {
+    "forecasts": "idx-signals/paper/learner_v2.jsonl",
+    "catalysts": "idx-signals/paper/catalysts.jsonl",
+    "register": "idx-signals/paper/speculations.jsonl",
+    "min_pairs": 60,
+    "min_blocks": 15
+   },
+   "collected_label": "forecasts sealed",
+   "scored_label": "finished 4-week blocks with scored outcomes",
+   "needed": 15,
+   "needed_label": "finished 4-week blocks for the first look (plus at least 60 scored pairs)",
+   "stale_after_hours": 78,
+   "next_milestone": "The first 4-week block of resolutions closes 2026-11-30 (1 of 15 blocks). The first look cannot come before 2027-12-27 by the 15-block rule.",
+   "next_date": "2026-11-30",
+   "sources": [
+    "KOD:idx-signals/paper/learner_v2.jsonl",
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/paper/catalysts.jsonl",
+    "KOD:idx-signals/research/LEARNER_v2/protocol_v2_2.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/LEARNER_v2/protocol_v2_2.json",
+    "sha256": "b26c16cf1cdb79d99f0d9cf7dfb805018d0a4baf87100f71f7dd7afe247ad649"
+   },
+   "covers": [
+    "LEARNER_v2"
+   ]
+  },
+  {
+   "id": "LEARNER_v2_4",
+   "name": "LEARNER v2.4 (next-day dump challenger)",
+   "plain": "For a US stock that just jumped 30% or more, can the model tell which ones will drop at least 10% the very next day while their twins do not?",
+   "program": "forecaster",
+   "short": "Next-day crash spotter",
+   "ceo_line": "Whether KOD can tell which US spikes will drop 10%+ the next day.",
+   "unit": "graded forecasts",
+   "group": "live",
+   "reader": "learner_v24",
+   "params": {
+    "forecasts": "idx-signals/paper/learner_v3.jsonl",
+    "evaluations": "idx-signals/paper/learner_v3_evaluations.jsonl",
+    "catalysts": "idx-signals/paper/catalysts.jsonl",
+    "register": "idx-signals/paper/speculations.jsonl",
+    "set_protocol": "KOD-SPEC-REGISTER-v1.1",
+    "first_set_sealed_at": "2026-10-29T23:00:00Z",
+    "min_sessions": 30
+   },
+   "collected_label": "forecasts sealed",
+   "scored_label": "next-day dump outcomes resolved",
+   "needed": 250,
+   "needed_label": "resolved outcomes from at least 30 signal sessions for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "The 13 forecasts of 2026-11-05 resolve after the 2026-11-06 US close (about 06:00 WIB 2026-11-07). The 30-session rule alone allows a look about 2026-12-17 WIB (30th session 2026-12-15), but only if forecasts are sealed every US session from now at about 8 or more a session; so far 3 of the 6 due sessions got forecasts (32 sets never forecast), so projected_date uses the observed pace instead (estimate).",
+   "next_date": "2026-11-07",
+   "projection": {
+    "earliest_look": "2026-12-17",
+    "earliest_look_reason": "the 30-session rule if forecasts are sealed every US session from now"
+   },
+   "sources": [
+    "KOD:idx-signals/paper/learner_v3.jsonl",
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/research/LEARNER_v2/protocol_v2_4.json"
+   ],
+   "optional_sources": [
+    "KOD:idx-signals/paper/learner_v3_evaluations.jsonl"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/LEARNER_v2/protocol_v2_4.json",
+    "sha256": "8132768cb6c16c8a06df94075fba4f37cf4911f260ec5e5379adadfabc456cea"
+   },
+   "note": "learner_v3_evaluations.jsonl is written only when a look is reached; its absence means 0 frozen evaluations"
+  },
+  {
+   "id": "CALL_CERT",
+   "name": "Certified dump calls (shadow)",
+   "plain": "When the model is confident enough to say 'this spike dumps tomorrow', is it right at least half the time?",
+   "program": "forecaster",
+   "short": "Confident crash calls",
+   "ceo_line": "Whether KOD's surest 'drops 10% tomorrow' calls are right at least half the time.",
+   "unit": "graded calls",
+   "group": "live",
+   "reader": "call_cert_report",
+   "params": {
+    "report": "idx-signals/paper/CALL_CERT.md",
+    "forecasts": "idx-signals/paper/learner_v3.jsonl",
+    "register": "idx-signals/paper/speculations.jsonl",
+    "set_id_pattern": "SPEC-SCAN-US-{session}-G2_RET30-{ticker}"
+   },
+   "collected_label": "dump calls made",
+   "scored_label": "calls with a known outcome",
+   "needed": null,
+   "needed_label": "no frozen live look (shadow report: success means the realised losing rate stays at or under 50%)",
+   "stale_after_hours": 78,
+   "next_milestone": "3 open calls (LABT, AEHL, XXII from 2026-11-05) resolve after the 2026-11-06 US close (about 06:00 WIB 2026-11-07).",
+   "next_date": "2026-11-07",
+   "sources": [
+    "KOD:idx-signals/paper/CALL_CERT.md",
+    "KOD:idx-signals/paper/learner_v3.jsonl",
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/research/CALL_CERT_v1/protocol.json"
+   ]
+  },
+  {
+   "id": "PAPER_BOOK_v1",
+   "name": "KOD paper book (US +30% spikes)",
+   "plain": "If KOD buys every US stock that just jumped 30%+ unless it predicts a dump tomorrow, do the skipped spikes do worse, and does the bought list make money?",
+   "program": "paper_trading",
+   "short": "KOD's paper spike book",
+   "ceo_line": "Whether KOD's spike buys make money and its skips do worse. Profit isn't expected.",
+   "unit": "graded spikes",
+   "group": "live",
+   "reader": "paper_book",
+   "params": {
+    "ledger": "idx-signals/paper/paper_book.jsonl",
+    "upstream_sets": "idx-signals/paper/speculations.jsonl",
+    "first_signal": "2026-10-30"
+   },
+   "collected_label": "spikes planned",
+   "scored_label": "trades closed (bought next open, sold 5 sessions later)",
+   "needed": 300,
+   "needed_label": "closed trades for the one planned look (each side needs at least 50)",
+   "stale_after_hours": 78,
+   "next_milestone": "First closed trades: the 11 spikes from 2026-10-30 exit at the 2026-11-09 close and get results that night (Jakarta morning 2026-11-10). The 13 spikes from 2026-11-05 exit at the 2026-11-13 close.",
+   "next_date": "2026-11-09",
+   "sources": [
+    "KOD:idx-signals/paper/paper_book.jsonl",
+    "KOD:idx-signals/paper/speculations.jsonl",
+    "KOD:idx-signals/paper/learner_v3.jsonl",
+    "KOD:idx-signals/research/PAPER_BOOK_v1/protocol.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/PAPER_BOOK_v1/protocol.json",
+    "sha256": "b5705c6efcf51f2683af8b88587356706623ec6290fe98363ce4c1d8acad4c64"
+   }
+  },
+  {
+   "id": "PAPER_ACCOUNT_v1_BASE",
+   "name": "Paper account, BASE arm (stop at spike-day low)",
+   "plain": "If KOD's BUY_OK spikes are traded in a $10,000 paper account with real risk limits and the stop at the spike day's low, what actually gets filled, rejected and earned?",
+   "program": "paper_trading",
+   "short": "$10k account, spike-low exit",
+   "ceo_line": "$10k practice account, safety exit at the spike day's low, so it seldom trades.",
+   "unit": "closed trades",
+   "group": "live",
+   "reader": "paper_account",
+   "params": {
+    "ledger": "idx-signals/paper/paper_account.jsonl",
+    "arm": "BASE"
+   },
+   "collected_label": "candidate decisions (orders + declines)",
+   "scored_label": "closed trades",
+   "needed": null,
+   "needed_label": "none registered: the protocol is not a profit test; profit is judged later under a separately registered evaluation",
+   "stale_after_hours": 78,
+   "next_milestone": "3 pending orders (APP, VXX, HTCR) fill or are rejected at the 2026-11-06 open; the result is recorded in that night's US run.",
+   "next_date": "2026-11-06",
+   "sources": [
+    "KOD:idx-signals/paper/paper_account.jsonl",
+    "KOD:idx-signals/paper/paper_book.jsonl",
+    "KOD:idx-signals/research/PAPER_ACCOUNT_v1/protocol.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/PAPER_ACCOUNT_v1/protocol.json",
+    "sha256": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a"
+   },
+   "covers": [
+    "PAPER_ACCOUNT_v1"
+   ]
+  },
+  {
+   "id": "PAPER_ACCOUNT_v1_FIXED5",
+   "name": "Paper account, FIXED5 arm (stop 5% below fill)",
+   "plain": "Same $10,000 paper account and same spikes as BASE, but with the stop 5% below the fill: what gets filled, stopped and earned?",
+   "program": "paper_trading",
+   "short": "$10k account, 5% exit",
+   "ceo_line": "Separate $10k practice account, safety exit 5% below cost, so it trades more.",
+   "unit": "closed trades",
+   "group": "live",
+   "reader": "paper_account",
+   "params": {
+    "ledger": "idx-signals/paper/paper_account.jsonl",
+    "arm": "FIXED5"
+   },
+   "collected_label": "candidate decisions (orders + declines)",
+   "scored_label": "closed trades",
+   "needed": null,
+   "needed_label": "none registered: the protocol is not a profit test; profit is judged later under a separately registered evaluation",
+   "stale_after_hours": 78,
+   "next_milestone": "2 pending orders (APP, VXX) at the 2026-11-06 open. The open FMC position takes its 5-session time exit at the 2026-11-09 close.",
+   "next_date": "2026-11-06",
+   "sources": [
+    "KOD:idx-signals/paper/paper_account.jsonl",
+    "KOD:idx-signals/paper/paper_book.jsonl",
+    "KOD:idx-signals/research/PAPER_ACCOUNT_v1/protocol.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/PAPER_ACCOUNT_v1/protocol.json",
+    "sha256": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a"
+   },
+   "covers": [
+    "PAPER_ACCOUNT_v1"
+   ]
+  },
+  {
+   "id": "CRYPTO_ACCOUNT_v1",
+   "name": "Crypto spot paper account",
+   "plain": "Does a separate 10,000 USDT crypto paper account honestly record what the frozen crypto policy decides (buys filled only at recorded quotes, passes recorded as declines)?",
+   "program": "paper_trading",
+   "short": "Crypto paper account",
+   "ceo_line": "Records every crypto decision in a $10k practice account; currently all are 'don't buy'.",
+   "unit": "closed trades",
+   "group": "live",
+   "reader": "crypto_account",
+   "params": {
+    "ledger": "idx-signals/paper/crypto_account.jsonl",
+    "policy_ledger": "idx-signals/paper/ledger.jsonl",
+    "first_signal": "2026-10-30",
+    "backlog_grace_hours": 6,
+    "account_stale_hours": 30
+   },
+   "collected_label": "policy decisions recorded",
+   "scored_label": "closed trades",
+   "needed": null,
+   "needed_label": "none registered: an accounting check, not a profit test",
+   "stale_after_hours": 30,
+   "next_milestone": "Unblock: run crypto-account-sync so the pending PASS decisions are recorded. The job has run once (2026-10-31) and is not in the nightly crypto routine.",
+   "next_date": null,
+   "sources": [
+    "KOD:idx-signals/paper/crypto_account.jsonl",
+    "KOD:idx-signals/paper/ledger.jsonl",
+    "KOD:idx-signals/research/CRYPTO_ACCOUNT_v1/protocol.json",
+    "KOD:idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
+    "KOD:idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
+    "sha256": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d"
+   },
+   "note": "plumbing only: the crypto G2_RET30 entry is retired, so this account only records PASS declines until a policy buys; protocols: the 2 recorded decisions (made 2026-10-31T12:26:34Z) were made under protocol.json (frozen 2026-10-31T12:22:25Z); protocol_v1_1.json (frozen 2026-10-31T12:39:11Z, supersedes it) is the latest frozen version and is the one locked here; protocol_v1_2 to v1_4 are local candidates marked 'not published or activated', although the account code (idxsig/crypto_account.py) carries RULES CRYPTO_ACCOUNT_v1.4"
+  },
+  {
+   "id": "PREMOVE_SHADOW_v1",
+   "name": "Pre-move shadow trial (12 months)",
+   "plain": "Over 12 months, does the 'sequence' model pick crypto coins that are about to jump better than the simpler 'summary' model, and better than a shuffled control?",
+   "program": "early_warning",
+   "short": "Crypto jump radar",
+   "ceo_line": "Whether KOD's newer model spots coin jumps better. Year-long test; may end unclear.",
+   "unit": "graded days",
+   "group": "live",
+   "reader": "premove_shadow",
+   "params": {
+    "ledger": "idx-signals/paper/premove_shadow.jsonl",
+    "first": "2026-10-30",
+    "last": "2027-10-29",
+    "final_due": "2027-11-05"
+   },
+   "collected_label": "decision days sealed (3 arms x 5 picks each)",
+   "scored_label": "decision days resolved (5-day outcomes known)",
+   "needed": 365,
+   "needed_label": "decision days 2026-10-30 to 2027-10-29 (fixed; verdict only after final outcomes; no early stop)",
+   "stale_after_hours": 30,
+   "next_milestone": "Decision day 2026-11-01 resolves in the 2026-11-07 crypto run (about 00:30Z). Final outcomes due 2027-11-05.",
+   "next_date": "2026-11-07",
+   "sources": [
+    "KOD:idx-signals/paper/premove_shadow.jsonl",
+    "KOD:idx-signals/research/PREMOVE_SHADOW_v1/protocol.json",
+    "KOD:handoff/decisions/2026-10-30_premove_sequence_shadow_trial.md"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/PREMOVE_SHADOW_v1/protocol.json",
+    "sha256": "3dcc3a4987e6b047da72bc84632d59e52f9456b8f1a0b34f8f0b424a8bbc643c"
+   }
+  },
+  {
+   "id": "CATALYST_SEC13D",
+   "name": "Catalyst register: SEC 13D filings",
+   "plain": "After an investor files a Schedule 13D (a 5%+ stake) on a US stock, does buying it at the next open beat its look-alike twins over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Big new investor stakes",
+   "ceo_line": "Whether stocks with a new 5%+ investor stake beat look-alikes over the next month.",
+   "unit": "graded filings",
+   "group": "live",
+   "reader": "catalyst",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "SEC13D",
+    "window": "H20",
+    "fire_only": true,
+    "look_sessions": 15,
+    "stall_after_missed": 2
+   },
+   "collected_label": "sets sealed (FIRE count toward the look; ABSTAIN are descriptive)",
+   "scored_label": "resolved FIRE pairs (H20, paired with twins)",
+   "needed": 60,
+   "needed_label": "resolved pairs over at least 15 signal sessions for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "First H20 FIRE pair (signal 2026-10-28) resolves at the 2026-11-27 close.",
+   "next_date": "2026-11-27",
+   "sources": [
+    "KOD:idx-signals/paper/catalysts.jsonl",
+    "KOD:idx-signals/research/CATALYST_REGISTER_v1/prereg_2.json",
+    "KOD:idx-signals/paper/CATALYSTS.md"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/CATALYST_REGISTER_v1/prereg_2.json",
+    "sha256": "32f30c2ce0dc7c2808e66f888742eb47c1fb65f5a6cd48dc1d4bc0e39af98f3d"
+   },
+   "covers": [
+    "CATALYST_REGISTER_v1",
+    "CATALYST_FAMILIES"
+   ]
+  },
+  {
+   "id": "CATALYST_SEC13D_V2",
+   "name": "Catalyst register: SEC 13D, strict version",
+   "plain": "Same filings as the 13D test, read more fully: it also keeps cases the 13D test drops only because the company's size was unknown (taken from the filing's cover page), and compares each stock with 20 look-alikes instead of 5. Does it beat them over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Investor stakes, 20 look-alikes",
+   "ceo_line": "Same stake question, keeping more cases and judging each against 20 look-alikes, not 5.",
+   "unit": "graded filings",
+   "group": "live",
+   "reader": "catalyst",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "SEC13D_V2",
+    "window": "H20",
+    "fire_only": true,
+    "look_sessions": 15,
+    "stall_after_missed": 2,
+    "gap_from": "SEC13D"
+   },
+   "collected_label": "sets sealed (FIRE count; ABSTAIN descriptive)",
+   "scored_label": "resolved FIRE pairs (H20)",
+   "needed": 60,
+   "needed_label": "resolved pairs over at least 15 signal sessions for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "First H20 FIRE pair (signal 2026-10-30) resolves at the 2026-12-01 close.",
+   "next_date": "2026-12-01",
+   "sources": [
+    "KOD:idx-signals/paper/catalysts.jsonl",
+    "KOD:idx-signals/research/CATALYST_FAMILIES/SEC13D_V2/protocol.json",
+    "KOD:idx-signals/paper/CATALYSTS.md"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/CATALYST_FAMILIES/SEC13D_V2/protocol.json",
+    "sha256": "dc0d292da460f75f1764aa16325c37282f9b0fedb7d86b46ce6acba32ab887df"
+   },
+   "covers": [
+    "CATALYST_REGISTER_v1",
+    "CATALYST_FAMILIES"
+   ]
+  },
+  {
+   "id": "CATALYST_DILUTION_8K",
+   "name": "Catalyst register: share-sale 8-Ks (dilution)",
+   "plain": "After a US company files an 8-K saying it sold new shares (Item 3.02), does its stock do worse than its twins over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Companies selling new stock",
+   "ceo_line": "Whether companies selling new shares lag look-alikes over a month; if so, avoid them.",
+   "unit": "graded filings",
+   "group": "live",
+   "reader": "catalyst",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "DILUTION_8K",
+    "window": "H20",
+    "fire_only": false,
+    "look_sessions": 15,
+    "stall_after_missed": 2
+   },
+   "collected_label": "sets sealed (all FIRE by rule)",
+   "scored_label": "resolved pairs (H20, paired with twins)",
+   "needed": 60,
+   "needed_label": "resolved pairs over at least 15 signal sessions for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "First H20 pair (signal 2026-10-28) resolves at the 2026-11-27 close.",
+   "next_date": "2026-11-27",
+   "sources": [
+    "KOD:idx-signals/paper/catalysts.jsonl",
+    "KOD:idx-signals/research/CATALYST_FAMILIES/DILUTION_8K/protocol.json",
+    "KOD:idx-signals/paper/CATALYSTS.md"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/CATALYST_FAMILIES/DILUTION_8K/protocol.json",
+    "sha256": "33d1496f6a406b761069afa4b7156351df46d66d344d19d5bd99e272badd5c92"
+   },
+   "covers": [
+    "CATALYST_REGISTER_v1",
+    "CATALYST_FAMILIES"
+   ]
+  },
+  {
+   "id": "CATALYST_FORM4",
+   "name": "Catalyst register: insider buys (Form 4)",
+   "plain": "After company insiders buy their own shares on the open market (a Form 4 filing), does the stock beat its twins over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Insiders buying own stock",
+   "ceo_line": "Whether stocks whose insiders buy $50k+ of shares beat look-alikes over the next month.",
+   "unit": "graded filings",
+   "group": "live",
+   "reader": "catalyst",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "FORM4",
+    "window": "H20",
+    "fire_only": false,
+    "look_sessions": 15,
+    "stall_after_missed": 2
+   },
+   "collected_label": "sets sealed (all FIRE by rule)",
+   "scored_label": "resolved pairs (H20)",
+   "needed": 60,
+   "needed_label": "resolved pairs over at least 15 signal sessions for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "Unblock: no FORM4 batch since 2026-10-30 (signal 2026-10-29). The 9 existing sets still resolve at the 2026-11-30 close.",
+   "next_date": "2026-11-30",
+   "sources": [
+    "KOD:idx-signals/paper/catalysts.jsonl",
+    "KOD:idx-signals/research/CATALYST_FAMILIES/FORM4/protocol.json",
+    "KOD:idx-signals/paper/CATALYSTS.md"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/CATALYST_FAMILIES/FORM4/protocol.json",
+    "sha256": "24870fa8617a485d660161109f2cd8e333a68ea2da4a0c3ea8ba7a114a3fb0e2"
+   },
+   "covers": [
+    "CATALYST_REGISTER_v1",
+    "CATALYST_FAMILIES"
+   ]
+  },
+  {
+   "id": "CATALYST_FORM4_SHARP",
+   "name": "Catalyst register: sharp insider buys",
+   "plain": "For the sharpest insider buys (a top executive, or a $100k-$500k purchase, not routine, no recent dilution), does the stock beat its twins over 60 trading days?",
+   "program": "insider_signals",
+   "short": "Insider buys, tight filter",
+   "ceo_line": "Whether insider buys that looked best on past data beat look-alikes over three months.",
+   "unit": "graded filings",
+   "group": "live",
+   "reader": "catalyst",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "FORM4_SHARP",
+    "window": "H60",
+    "fire_only": true,
+    "look_sessions": 15,
+    "stall_after_missed": 2
+   },
+   "collected_label": "sets sealed (FIRE count; ABSTAIN descriptive)",
+   "scored_label": "resolved FIRE pairs (H60)",
+   "needed": 60,
+   "needed_label": "resolved pairs over at least 15 signal sessions for the first look",
+   "stale_after_hours": 78,
+   "next_milestone": "Unblock: no batch since 2026-10-30 (it follows FORM4). The 4 existing FIRE sets resolve H60 at the 2027-01-28 close.",
+   "next_date": "2027-01-28",
+   "sources": [
+    "KOD:idx-signals/paper/catalysts.jsonl",
+    "KOD:idx-signals/research/CATALYST_FAMILIES/FORM4_SHARP/protocol.json",
+    "KOD:idx-signals/paper/CATALYSTS.md"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/CATALYST_FAMILIES/FORM4_SHARP/protocol.json",
+    "sha256": "eb05a3b8001578b9f4633679901d362dadf378648daad41cc6d3ae9a067141b1"
+   },
+   "covers": [
+    "CATALYST_REGISTER_v1",
+    "CATALYST_FAMILIES"
+   ]
+  },
+  {
+   "id": "CATALYST_DOCUMENT_CLASS",
+   "name": "Catalyst register: pooled filing-type test",
+   "plain": "Pooling 13D, dilution 8-K and Form 4 filings, does the filing type predict which way a stock moves against its twins over 20 days?",
+   "program": "insider_signals",
+   "short": "All filing signals combined",
+   "ceo_line": "Whether the filing signals together predict which way stocks go. Likely 5-11 months.",
+   "unit": "graded filings",
+   "group": "live",
+   "reader": "catalyst_pooled",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "families": [
+     "SEC13D",
+     "DILUTION_8K",
+     "FORM4"
+    ],
+    "window": "H20",
+    "stall_after_missed": 2
+   },
+   "collected_label": "FIRE parent sets sealed",
+   "scored_label": "resolved FIRE pairs (H20, signed by family direction)",
+   "needed": 60,
+   "needed_label": "resolved FIRE pairs over at least 15 signal sessions for the first look (prereg_3)",
+   "stale_after_hours": 78,
+   "next_milestone": "First pooled pairs resolve at the 2026-11-27 close. The FORM4 feed must restart for the pooled test to keep its design.",
+   "next_date": "2026-11-27",
+   "sources": [
+    "KOD:idx-signals/paper/catalysts.jsonl",
+    "KOD:idx-signals/research/CATALYST_REGISTER_v1/prereg_3_document_class.json"
+   ],
+   "protocol": {
+    "path": "idx-signals/research/CATALYST_REGISTER_v1/prereg_3_document_class.json",
+    "sha256": "18bd9d036309cb52b114ea2acd646a6bad759e4587a2b59179cb465a61cd1706"
+   }
+  },
+  {
+   "id": "trend_core_paper",
+   "name": "TREND_CORE paper log (BTC/ETH)",
+   "plain": "Does the frozen BTC/ETH trend rule (SMA10 vs SMA40, volatility-targeted) run cleanly every day as a 90-day paper log?",
+   "program": "paper_trading",
+   "short": "Bitcoin/Ether trend rule",
+   "ceo_line": "Holds Bitcoin/Ether in uptrends. Passing day 90 lets KOD propose a small real-money trial.",
+   "unit": "days logged",
+   "group": "live",
+   "reader": "trend_core",
+   "params": {
+    "ledger": "handoff/fresh-eyes-2026-11-01/paper/ledger.jsonl",
+    "symbols": [
+     "BTCUSDT",
+     "ETHUSDT"
+    ]
+   },
+   "collected_label": "days logged (both coins)",
+   "scored_label": "pass-bar evaluations",
+   "needed": 90,
+   "needed_label": "consecutive logged days for the pass-bar check (scored stays 0 until then)",
+   "stale_after_hours": 34,
+   "next_milestone": "Each signal day is logged the next UTC day (about 09:50Z); day 90 = signal date 2027-01-28.",
+   "next_date": "2027-01-28",
+   "sources": [
+    "KOD:handoff/fresh-eyes-2026-11-01/paper/ledger.jsonl",
+    "KOD:handoff/fresh-eyes-2026-11-01/paper/PAPER_PROTOCOL.md",
+    "KOD:.github/workflows/trend_core_paper.yml"
+   ],
+   "protocol": {
+    "path": "handoff/fresh-eyes-2026-11-01/paper/PAPER_PROTOCOL.md",
+    "sha256": "e48ddf92c37ec51ea3ba53aecfa0562f1e99d5939dbb365e6e1e9da1816b8812"
+   },
+   "covers": [
+    "TREND_CORE_PAPER_v1"
+   ],
+   "note": "the progress bar uses collected days here only because scored stays 0 until day 90 by protocol"
+  },
+  {
+   "id": "srv:timing_capture_30",
+   "name": "30-slot timing capture cohort",
+   "plain": "Does the cloud server capture 30 scheduled 4-hourly Binance snapshots (4-9 Nov) on time, with clean clocks and intact evidence?",
+   "program": "timing_lab",
+   "short": "4-hourly price snapshots",
+   "ceo_line": "Whether the cloud server grabs crypto prices reliably and on time. Plumbing, not profit.",
+   "unit": "4-hour slots done",
+   "group": "server",
+   "reader": "server_study",
+   "params": {
+    "kind": "cohort",
+    "branch": "main",
+    "stale_after_hours": 2.5,
+    "study": "srv:timing_capture_30",
+    "name": "30-slot timing capture cohort"
+   },
+   "collected_label": "slots captured",
+   "scored_label": "slots finished (terminal)",
+   "needed": 30,
+   "needed_label": "scheduled slots before the closeout review",
+   "stale_after_hours": 2.5,
+   "next_milestone": "A slot every 4 h; last slot 30 at 2026-11-09T09:00Z; closeout review eligible 2026-11-09T09:15Z.",
+   "next_date": "2026-11-09",
+   "sources": [
+    "BACKUPS:main:HEALTH.json",
+    "BACKUPS:main:COHORT-REPORT.json"
+   ],
+   "fixed_end": "2026-11-09",
+   "covers": [
+    "TIMING_CAPTURE_v1"
+   ],
+   "plumbing": true
+  },
+  {
+   "id": "srv:supplement_30m",
+   "name": "30-minute supplement collector",
+   "plain": "Does a separate 30-minute collector fill in the gaps between the 4-hourly slots (4-9 Nov) without touching the original cohort?",
+   "program": "timing_lab",
+   "short": "Half-hour price snapshots",
+   "ceo_line": "Whether half-hourly price snapshots arrive on time. Plumbing; no alarm if it stops.",
+   "unit": "half-hour slots due",
+   "group": "server",
+   "reader": "server_study",
+   "params": {
+    "kind": "supplement",
+    "branch": "supplement-30m-v1",
+    "stale_after_hours": 2.5,
+    "study": "srv:supplement_30m",
+    "name": "30-minute supplement collector"
+   },
+   "collected_label": "30-min slots captured",
+   "scored_label": "slots due so far",
+   "needed": 196,
+   "needed_label": "planned supplement slots",
+   "stale_after_hours": 2.5,
+   "next_milestone": "Collection ends 2026-11-09T09:00Z (42 supplement slots a day: 48 half-hours minus the 6 original 4-hourly slots). Its monitor has no external alert: a stale as-of (UNKNOWN) is the only alarm.",
+   "next_date": "2026-11-09",
+   "sources": [
+    "BACKUPS:supplement-30m-v1:HEALTH.json",
+    "BACKUPS:supplement-30m-v1:INDEX.json"
+   ],
+   "fixed_end": "2026-11-09",
+   "plumbing": true
+  },
+  {
+   "id": "srv:research_r2",
+   "name": "30-day research study (R2)",
+   "plain": "Over 30 days of live Binance data, how reliable is the feed, how late does KOD actually see big hourly moves, and how much of each move is left by then?",
+   "program": "timing_lab",
+   "short": "30-day live timing study",
+   "ceo_line": "How much reacting in minutes, not hours, matters on crypto jumps after costs.",
+   "unit": "graded big moves",
+   "group": "server",
+   "reader": "server_study",
+   "params": {
+    "kind": "collector",
+    "branch": "research-r2-20261105T181200Z",
+    "planned_key": "full_capture_expected_closed_total",
+    "stale_after_hours": 1,
+    "study": "srv:research_r2",
+    "name": "30-day research study (R2)",
+    "coverage_reported": "a reported quality figure, not a pass/fail gate for R2: 99% was the capacity trial's target, which the start-now addendum replaced; low coverage limits the usable comparisons",
+    "outcome_hours": 24
+   },
+   "collected_label": "on-time 1-minute bars captured (130 assets)",
+   "scored_label": "admitted events with a matured 24 h primary outcome",
+   "needed": null,
+   "needed_label": "no fixed count: time-boxed 30-day admission (on-time coverage is reported, not a gate)",
+   "stale_after_hours": 1,
+   "next_milestone": "24 h collector checkpoint 2026-11-06T18:13Z; Day-7 report 2026-11-12T18:12Z; admission ends 2026-12-05T18:12Z.",
+   "next_date": "2026-11-06",
+   "sources": [
+    "BACKUPS:research-r2-20261105T181200Z:HEALTH.json"
+   ],
+   "note": "the collector stopped about 2026-11-05T22:49:50Z (memory.peak 4096 bytes over memory.max) and was resumed about 00:02-00:06Z on 2026-11-06 with the gap kept (R2 operations addendum of 2026-11-06); pre-halt on-time coverage was reported as 93.9%"
+  },
+  {
+   "id": "srv:capacity_r2_a",
+   "name": "Capacity trial A (closed)",
+   "plain": "First 48-hour test of whether the new collector fits on the server.",
+   "short": "Server fit test, first try",
+   "outcome": "not_an_idea",
+   "lesson": "Failed its disk-space check at launch and never ran; a second try replaced it 21 minutes later.",
+   "group": "closed",
+   "reader": "server_study",
+   "params": {
+    "kind": "collector",
+    "branch": "capacity-r2-20261105T080600Z",
+    "closed_by": "registry",
+    "expect": {
+     "status": "FAILED",
+     "phase": "HALTED"
+    },
+    "planned_key": "full_48h_expected_closed_total",
+    "scored_key": "settled_minutes",
+    "stale_after_hours": 8760,
+    "study": "srv:capacity_r2_a",
+    "name": "Capacity trial A (closed)"
+   },
+   "collected_label": "on-time minute bars",
+   "scored_label": "minutes settled (as backed up)",
+   "needed": 2880,
+   "needed_label": "minutes in the 48 h run (a pass also needed at least 99% of bars on time overall and per primary asset; 374,400 bars were due in 48 h)",
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-05",
+   "verdict": "Never ran: halted at launch (status FAILED, phase HALTED; resource check failed on the storage cap and free-disk reserve). Superseded 21 minutes later by trial B. No closure receipt exists, so this registry entry carries the closure.",
+   "record": "kod-timing-backups:capacity-r2-20261105T080600Z@bc0fb3f:HEALTH.json",
+   "sources": [
+    "BACKUPS:capacity-r2-20261105T080600Z:HEALTH.json"
+   ]
+  },
+  {
+   "id": "srv:capacity_r2_b",
+   "name": "Capacity trial B (closed)",
+   "plain": "Second 48-hour test: can the new collector capture at least 99% of minute bars on time within 192 MiB and 10% CPU?",
+   "short": "Server fit test, second try",
+   "outcome": "not_an_idea",
+   "lesson": "Stopped early to start the main study; 94% of data arrived on time versus 99% needed.",
+   "group": "closed",
+   "reader": "server_study",
+   "params": {
+    "kind": "collector",
+    "branch": "capacity-r2-20261105T082700Z",
+    "closed_by": "r2_closure",
+    "closure_branch": "research-r2-20261105T181200Z",
+    "planned_key": "full_48h_expected_closed_total",
+    "scored_key": "settled_minutes",
+    "stale_after_hours": 8760,
+    "study": "srv:capacity_r2_b",
+    "name": "Capacity trial B (closed)"
+   },
+   "collected_label": "on-time minute bars",
+   "scored_label": "minutes settled by the last backup (17:51Z)",
+   "needed": 2880,
+   "needed_label": "minutes in the 48 h run (a pass also needed at least 99% of bars on time overall and per primary asset; 374,400 bars were due in 48 h)",
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-05",
+   "verdict": "Closed early, not passed (CLOSED_EARLY_NOT_PASSED under the owner's start-now amendment): ran about 9.7 of 48 hours (08:27Z to the 18:07Z closure; the last backup, at 17:51Z, covers 9.4 h) with on-time coverage 0.940 up to that backup, including a 16:01-16:32Z halt.",
+   "record": "kod-timing-backups:research-r2-20261105T181200Z:HEALTH.json#predecessor_capacity",
+   "sources": [
+    "BACKUPS:capacity-r2-20261105T082700Z:HEALTH.json",
+    "BACKUPS:research-r2-20261105T181200Z:HEALTH.json"
+   ],
+   "note": "the branch head still reads status OK / phase RUNNING; only the closure record says CLOSED; on-time bars 68,770 of 73,190 due by the last backup (17:51Z)"
+  },
+  {
+   "id": "EARLY_ENTRY_RESEARCH",
+   "name": "Early-entry research (the whole lane)",
+   "plain": "Can KOD buy a mover before, or fast enough after, it moves and still make money after costs?",
+   "short": "All 'buy movers early' research",
+   "outcome": "not_an_idea",
+   "lesson": "Trading by hand, the jump is over before you can buy; only split-second computer buying ever passed.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "handoff/decisions/2026-11-04_early_entry_closed.md",
+    "must_contain": [
+     "Early-entry research is CLOSED as of 2026-11-04"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "Idea parking lot first monthly review (handoff/timing/IDEA_PARKING_LOT.md).",
+   "next_date": null,
+   "closed_on": "2026-11-04",
+   "verdict": "CLOSED: the pre-set close rule failed on 2 of 3 conditions (INFO_MAGNET). Reopening needs a new kind of dated, non-price information with its own locked test.",
+   "record": "handoff/decisions/2026-11-04_early_entry_closed.md",
+   "sources": [
+    "KOD:handoff/decisions/2026-11-04_early_entry_closed.md",
+    "KOD:handoff/timing/EARLY_ENTRY_CLOSE_RULE_2026-11-03.md"
+   ]
+  },
+  {
+   "id": "INFO_MAGNET_v0",
+   "name": "INFO_MAGNET (Upbit listing notices)",
+   "plain": "Does buying a coin at the first full hour after an Upbit listing notice beat random coins after a 2% round trip?",
+   "short": "Buying coins after listing news",
+   "outcome": "didnt_work",
+   "lesson": "Coins jump within an hour of the notice; buying the next hour lost about 10% a trade.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "handoff/claude/INFO_MAGNET_VERIFICATION.md",
+    "must_contain": [
+     "Verdict: PRIMARY_GATE_FAIL stands",
+     "| Events recomputed | 75 | 75 | all |",
+     "-8.546 pp"
+    ]
+   },
+   "collected": 105,
+   "collected_label": "listing notices (75 measurable + 30 unmeasurable)",
+   "scored": 75,
+   "scored_label": "measurable listing events",
+   "needed": 30,
+   "needed_label": "events required by the close rule",
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-04",
+   "verdict": "PRIMARY_GATE_FAIL: 75 events, -8.55 pp versus random coins after a 2% round trip (95% -13.95 to -2.01), independently recomputed.",
+   "record": "handoff/claude/INFO_MAGNET_VERIFICATION.md",
+   "sources": [
+    "KOD:handoff/claude/INFO_MAGNET_VERIFICATION.md"
+   ]
+  },
+  {
+   "id": "ATTENTION_LEAD_v1",
+   "name": "Wikipedia attention lead",
+   "plain": "Do Wikipedia attention surges on US stocks that have not moved yet come before big up moves that a buyer could use?",
+   "short": "Wikipedia page-view spikes",
+   "outcome": "didnt_work",
+   "lesson": "Page-view spikes hinted a big move was coming, but crashes as often as jumps; no extra return.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/ATTENTION_LEAD_v1/REPORT.md",
+    "must_contain": [
+     "Locked reading: NO USABLE LEAD"
+    ],
+    "json": {
+     "path": "idx-signals/research/ATTENTION_LEAD_v1/RESULT.json",
+     "key": "reading",
+     "equals": "NO USABLE LEAD"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-03",
+   "verdict": "NO USABLE LEAD: 1,473 events, excess 20-session return +0.10% (t 0.24); surges precede big moves both ways.",
+   "record": "idx-signals/research/ATTENTION_LEAD_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/ATTENTION_LEAD_v1/REPORT.md",
+    "KOD:idx-signals/research/ATTENTION_LEAD_v1/RESULT.json"
+   ]
+  },
+  {
+   "id": "HERMES_NOV3_REPRO_v1",
+   "name": "Reproduction of Hermes's 3 November studies",
+   "plain": "Do Hermes's 3 November entry, exit and bear-market conclusions hold when rebuilt from scratch on fresh Binance data?",
+   "short": "Recheck of another AI's studies",
+   "outcome": "not_an_idea",
+   "lesson": "Rebuilt another AI's studies from scratch: nearly all held, but 'winners show by day 3' was wrong.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/HERMES_NOV3_REPRO_v1/REPORT.md",
+    "must_contain": [
+     "Verdict: Hermes's 3 November conclusions hold",
+     "36 reproduced, 7 partly, 2 not reproduced"
+    ],
+    "json": {
+     "path": "idx-signals/research/HERMES_NOV3_REPRO_v1/VALIDATION.json",
+     "key": "gate",
+     "equals": "PASS"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-03",
+   "verdict": "Conclusions hold: 45 claims, 36 reproduced, 7 partly, 2 not ('winners show by day 3' is wrong).",
+   "record": "idx-signals/research/HERMES_NOV3_REPRO_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/HERMES_NOV3_REPRO_v1/REPORT.md",
+    "KOD:idx-signals/research/HERMES_NOV3_REPRO_v1/VALIDATION.json"
+   ]
+  },
+  {
+   "id": "RESEARCH_CORRECTIONS_20261104",
+   "name": "Look-ahead corrections to NEIGHBOURS and PRESSURE",
+   "plain": "After removing a look-ahead bug, do the NEIGHBOURS and PRESSURE null results still stand?",
+   "short": "Bug-fix recheck of two studies",
+   "outcome": "not_an_idea",
+   "lesson": "Fixed a bug that quietly used future information; both earlier 'no' answers still stood.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/REPORT.md",
+    "must_contain": [
+     "Both original verdicts are CONFIRMED"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-04",
+   "verdict": "Both original verdicts CONFIRMED; the correction moved results only in the fourth decimal.",
+   "record": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/RESEARCH_CORRECTIONS_20261104/REPORT.md"
+   ]
+  },
+  {
+   "id": "NEIGHBOURS_v1",
+   "name": "Peer coins and 'next stop'",
+   "plain": "Does knowing what a coin's peers did improve KOD's ranking of which coins rise next?",
+   "short": "Following what similar coins do",
+   "outcome": "didnt_work",
+   "lesson": "Knowing what similar coins did made picks slightly worse; nothing made money at your eToro costs.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/NEIGHBOURS_v1/REPORT.md",
+    "must_contain": [
+     "Neighbours add no information. Next stop adds no information."
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-04",
+   "verdict": "No information: peers made the 3-day ranking slightly worse (-0.005); confirmed by the corrected run.",
+   "record": "idx-signals/research/NEIGHBOURS_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/NEIGHBOURS_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "PRESSURE_v1",
+   "name": "Taker-buy pressure",
+   "plain": "Does aggressive buying (taker-buy share) on Binance tell KOD which coins rise next?",
+   "short": "Following aggressive crypto buying",
+   "outcome": "didnt_work",
+   "lesson": "A day of heavy buying pointed slightly the wrong way; crowds arriving usually fade.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/PRESSURE_v1/REPORT.md",
+    "must_contain": [
+     "No incremental value."
+    ],
+    "json": {
+     "path": "idx-signals/research/PRESSURE_v1/RESULT.json",
+     "key": "reading",
+     "equals": "NO INCREMENTAL VALUE"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-04",
+   "verdict": "No incremental value; urgent buying points slightly the wrong way. Confirmed by the corrected run.",
+   "record": "idx-signals/research/PRESSURE_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/PRESSURE_v1/REPORT.md",
+    "KOD:idx-signals/research/PRESSURE_v1/RESULT.json"
+   ]
+  },
+  {
+   "id": "SEESAW_v1",
+   "name": "Stablecoin tide / alt seesaw",
+   "plain": "Does stablecoin supply or the alts-versus-BTC seesaw at the start of a month predict next month's moonshots?",
+   "short": "Crypto money-flow timing",
+   "outcome": "didnt_work",
+   "lesson": "Money flow describes the crypto market but doesn't predict it; months it flagged as good were worse.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/SEESAW_v1/REPORT.md",
+    "must_contain": [
+     "Reading: FLOW DESCRIBES, DOES NOT LEAD."
+    ],
+    "json": {
+     "path": "idx-signals/research/SEESAW_v1/RESULT.json",
+     "key": "reading",
+     "equals": "FLOW DESCRIBES, DOES NOT LEAD"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-03",
+   "verdict": "FLOW DESCRIBES, DOES NOT LEAD: the locked 'tide on' rule was worse in the check period.",
+   "record": "idx-signals/research/SEESAW_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/SEESAW_v1/REPORT.md",
+    "KOD:idx-signals/research/SEESAW_v1/RESULT.json"
+   ]
+  },
+  {
+   "id": "GROUP_FLOW_v1",
+   "name": "Group-backed US jumps",
+   "plain": "Do US +30% jumps that happen together with their sector peers hold up better than lone jumps?",
+   "short": "Jumps backed by similar stocks",
+   "outcome": "worked",
+   "lesson": "Passed on past data: backed jumps crashed half as often as lone ones, but still lost money.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/GROUP_FLOW_v1/REPORT.md",
+    "must_contain": [
+     "Locked reading: FLOW-BACKED JUMPS LAST"
+    ],
+    "json": {
+     "path": "idx-signals/research/GROUP_FLOW_v1/RESULT.json",
+     "key": "reading",
+     "equals": "FLOW-BACKED JUMPS LAST"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-03",
+   "verdict": "FLOW-BACKED JUMPS LAST, but only as 'less bad', not a buy signal (lone jumps crash about twice as often).",
+   "record": "idx-signals/research/GROUP_FLOW_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/GROUP_FLOW_v1/REPORT.md",
+    "KOD:idx-signals/research/GROUP_FLOW_v1/RESULT.json"
+   ]
+  },
+  {
+   "id": "ENTRY_TIMING_v1",
+   "name": "When to buy a US +30% spike",
+   "plain": "Is there any day after a US +30% spike when buying makes money after costs?",
+   "short": "When to buy US spikes",
+   "outcome": "didnt_work",
+   "lesson": "None of 120 buy-timing rules was reliable; the best one lost money on a second period.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/ENTRY_TIMING_v1/REPORT.md",
+    "must_contain": [
+     "NOT CONFIRMED",
+     "0 of 120"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-30",
+   "verdict": "NOT CONFIRMED: 0 of 120 rules had a lower bound above zero; the frozen pick lost out of sample (mean -0.83%).",
+   "record": "idx-signals/research/ENTRY_TIMING_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/ENTRY_TIMING_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "HERMES_COMBO_HOLDOUT_v1",
+   "name": "Hermes ignition combo holdout",
+   "plain": "Do Hermes's two frozen crypto 'ignition' combo rules make money on 2023-2026 data?",
+   "short": "Another AI's crypto breakout combo",
+   "outcome": "didnt_work",
+   "lesson": "2020-21 gains were the bull market. Since 2023 most trades lost; big winners kept the average near flat.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "configs/experiments.json",
+    "must_contain": [
+     "Both frozen Hermes combo variants failed"
+    ],
+    "json": {
+     "path": "docs/research_sources/hermes_20261104/04_RESULT_COMBO_HOLDOUT_v1.json",
+     "key": "version_A.n",
+     "equals": 968
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-04",
+   "verdict": "Both frozen variants failed: typical trade lost 7-8%; mean return interval crosses zero (catalog record; source reports read, not rerun).",
+   "record": "configs/experiments.json",
+   "sources": [
+    "KOD:configs/experiments.json",
+    "KOD:docs/research_sources/hermes_20261104/04_RESULT_COMBO_HOLDOUT_v1.json"
+   ]
+  },
+  {
+   "id": "BINANCE_ANN_1M",
+   "name": "Binance futures-launch announcements (1-minute)",
+   "plain": "Can a buyer enter after a Binance futures-launch announcement and still catch the move?",
+   "short": "Buying on exchange announcements",
+   "outcome": "didnt_work",
+   "lesson": "The price moves inside the announcement minute; by the time you can buy, it's gone.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/BINANCE_ANN_1M/results/RESULT.json",
+    "must_contain": [
+     "priced inside the announcement minute"
+    ],
+    "json": {
+     "path": "idx-signals/research/BINANCE_ANN_1M/results/RESULT.json",
+     "key": "verdict",
+     "equals": "FAIL"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-21",
+   "verdict": "FAIL: priced inside the announcement minute; an obtainable entry is later than the move.",
+   "record": "idx-signals/research/BINANCE_ANN_1M/results/RESULT.json",
+   "sources": [
+    "KOD:idx-signals/research/BINANCE_ANN_1M/results/RESULT.json"
+   ]
+  },
+  {
+   "id": "BINANCE_ANN_1S_HOLDOUT",
+   "name": "Binance announcements, seconds-scale holdout",
+   "plain": "Does the seconds-scale announcement entry that passed in 2020-2023 also work on 2024-2026?",
+   "short": "Split-second announcement trade, recent years",
+   "outcome": "no_answer",
+   "lesson": "A 2-second computer trade passed on 2020-23 data; the recheck never ran, too few cases since 2024.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/BINANCE_ANN_1S_HOLDOUT/OUTCOME.md",
+    "must_contain": [
+     "the run was not made",
+     "29 eligible events"
+    ]
+   },
+   "collected": 29,
+   "collected_label": "eligible events found",
+   "scored": 0,
+   "scored_label": "events tested (run not made)",
+   "needed": 40,
+   "needed_label": "events required by GO rule 1",
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-22",
+   "verdict": "Not run: 29 eligible events, below the 40 the GO rule needs; the 2020-2023 PASS is neither confirmed nor refuted.",
+   "record": "idx-signals/research/BINANCE_ANN_1S_HOLDOUT/OUTCOME.md",
+   "sources": [
+    "KOD:idx-signals/research/BINANCE_ANN_1S_HOLDOUT/OUTCOME.md"
+   ]
+  },
+  {
+   "id": "US_PLUS30_ENTRY_LINE",
+   "name": "US 'buy after a +30% day' line",
+   "plain": "Should KOD keep testing buying US stocks the day after a +30% day?",
+   "short": "Buying US stocks after +30%",
+   "outcome": "didnt_work",
+   "lesson": "Retired: every test of buying US stocks the day after a 30% jump lost money.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "handoff/decisions/2026-10-22_close_US_plus30_line_and_take_the_blueprint_next_step.md",
+    "must_contain": [
+     "The US \"buy after a +30% day\" entry is retired"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-22",
+   "verdict": "Retired by owner decision (E2 and repairs negative vs matched stocks; E9 negative).",
+   "record": "handoff/decisions/2026-10-22_close_US_plus30_line_and_take_the_blueprint_next_step.md",
+   "sources": [
+    "KOD:handoff/decisions/2026-10-22_close_US_plus30_line_and_take_the_blueprint_next_step.md"
+   ]
+  },
+  {
+   "id": "G2_RET30_CRYPTO_ENTRY",
+   "name": "Crypto 'buy the day after a +30% day'",
+   "plain": "Should KOD keep testing buying a coin the day after a +30% day?",
+   "short": "Buying coins after +30% days",
+   "outcome": "didnt_work",
+   "lesson": "Retired: about 3% worse per 5-day trade than random coins; better exits didn't fix it.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "handoff/decisions/2026-10-17_retire_G2_RET30_crypto_entry.md",
+    "must_contain": [
+     "retire \"buy the day after a +30% day\" as a crypto trading entry"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-17",
+   "verdict": "Retired by owner: about 3 points per 5-day trade worse than matched random coins under both exits (EXIT-ATR-v1).",
+   "record": "handoff/decisions/2026-10-17_retire_G2_RET30_crypto_entry.md",
+   "sources": [
+    "KOD:handoff/decisions/2026-10-17_retire_G2_RET30_crypto_entry.md"
+   ]
+  },
+  {
+   "id": "LIQ_REBOUND_v1",
+   "name": "Crypto liquidation rebound",
+   "plain": "Does buying BTC/ETH after a forced-deleveraging crash and holding 72 hours make money?",
+   "short": "Buying Bitcoin/Ether after forced-selling crashes",
+   "outcome": "didnt_work",
+   "lesson": "After forced-selling crashes, prices kept falling instead of bouncing; the test account lost about 24%.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/LIQ_REBOUND_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: FAIL"
+    ],
+    "json": {
+     "path": "idx-signals/research/LIQ_REBOUND_v1/run/RESULT.json",
+     "key": "verdict",
+     "equals": "FAIL"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-31",
+   "verdict": "FAIL: forced deleveraging continued rather than reverted; independently re-derived.",
+   "record": "idx-signals/research/LIQ_REBOUND_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/LIQ_REBOUND_v1/REPORT.md",
+    "KOD:idx-signals/research/LIQ_REBOUND_v1/run/RESULT.json"
+   ]
+  },
+  {
+   "id": "MSCI_DELETION_v1",
+   "name": "MSCI Indonesia deletions (development)",
+   "plain": "Does buying IDX stocks deleted from MSCI indexes at the closing auction make money over 20 sessions (2019-2022)?",
+   "short": "Index-dropped stocks, early test",
+   "outcome": "didnt_work",
+   "lesson": "Looked great on 2019-22 data, about +14% a trade, then lost money on newer years.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/MSCI_DELETION_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: PROMISING"
+    ],
+    "json": {
+     "path": "idx-signals/research/MSCI_DELETION_v1/run/RESULT.json",
+     "key": "verdict",
+     "equals": "PROMISING"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "Optional owner call: a prospective paper log of MSCI Indonesia deletions (not opened).",
+   "next_date": null,
+   "closed_on": "2026-11-01",
+   "verdict": "PROMISING on development data only; superseded by the out-of-time test (NOT_CONFIRMED).",
+   "record": "idx-signals/research/MSCI_DELETION_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/MSCI_DELETION_v1/REPORT.md",
+    "KOD:idx-signals/research/MSCI_DELETION_v1/run/RESULT.json"
+   ]
+  },
+  {
+   "id": "MSCI_DELETION_OOT_v1",
+   "name": "MSCI Indonesia deletions (out of time)",
+   "plain": "Does the same frozen MSCI-deletion rule work on the 2025-2026 reviews?",
+   "short": "Index-dropped stocks, newer years",
+   "outcome": "didnt_work",
+   "lesson": "On 2025-26 data it had never seen, buying them lost 4.2% a trade; the test account fell 19%.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/MSCI_DELETION_OOT_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: NOT_CONFIRMED"
+    ],
+    "json": {
+     "path": "idx-signals/research/MSCI_DELETION_OOT_v1/run/RESULT.json",
+     "key": "verdict",
+     "equals": "NOT_CONFIRMED"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-01",
+   "verdict": "NOT_CONFIRMED: buying deletions lost -4.2% a trade net (46 trades, 28% winners; account IDR 160m to 129.5m, -19%), still -2.9% a trade without the two outliers. It beat matched controls (+4.5%, 95% -3.6% to +10.6%) only because the market fell.",
+   "record": "idx-signals/research/MSCI_DELETION_OOT_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/MSCI_DELETION_OOT_v1/REPORT.md",
+    "KOD:idx-signals/research/MSCI_DELETION_OOT_v1/run/RESULT.json"
+   ]
+  },
+  {
+   "id": "MSCI_DELETION_OPT_v1",
+   "name": "MSCI deletions, holding-period optimisation",
+   "plain": "Does choosing the holding period by walk-forward rescue the MSCI-deletion rule?",
+   "short": "Index-dropped stocks, holding time",
+   "outcome": "didnt_work",
+   "lesson": "Choosing a better holding time didn't rescue it; returns after costs still failed the bar.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/MSCI_DELETION_OPT_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: EXPLORATORY_REJECT"
+    ],
+    "json": {
+     "path": "idx-signals/research/MSCI_DELETION_OPT_v1/run/RESULT.json",
+     "key": "verdict",
+     "equals": "EXPLORATORY_REJECT"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-01",
+   "verdict": "EXPLORATORY_REJECT (net-return gate W2 fails).",
+   "record": "idx-signals/research/MSCI_DELETION_OPT_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/MSCI_DELETION_OPT_v1/REPORT.md",
+    "KOD:idx-signals/research/MSCI_DELETION_OPT_v1/run/RESULT.json"
+   ]
+  },
+  {
+   "id": "VIX_BASIS_v1",
+   "name": "VIX futures contango premium",
+   "plain": "Does selling VIX futures only in contango earn the volatility premium after costs on unseen years?",
+   "short": "Selling 'fear index' futures",
+   "outcome": "didnt_work",
+   "lesson": "Strong in the years its research paper studied; far weaker after, and lost money when costs doubled.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/VIX_BASIS_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: NOT_CONFIRMED"
+    ],
+    "json": {
+     "path": "idx-signals/research/VIX_BASIS_v1/run/RESULT.json",
+     "key": "verdict",
+     "equals": "NOT_CONFIRMED"
+    }
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-01",
+   "verdict": "NOT_CONFIRMED.",
+   "record": "idx-signals/research/VIX_BASIS_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/VIX_BASIS_v1/REPORT.md",
+    "KOD:idx-signals/research/VIX_BASIS_v1/run/RESULT.json"
+   ]
+  },
+  {
+   "id": "AVOID_TILT_v1",
+   "name": "Avoid recent +30% names (US)",
+   "plain": "Does a US portfolio that skips stocks with a recent +30% day beat the same portfolio without the skip?",
+   "short": "Skip stocks after +30% jumps",
+   "outcome": "worked",
+   "lesson": "Passed on 2024-26 data: skipping 30% jumpers added about 2% a year, but still trailed an index fund.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/AVOID_TILT_v1/REPORT.md",
+    "must_contain": [
+     "Frozen verdict: PASS."
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-02",
+   "verdict": "PASS (holdout 2024-01..2026-10): +0.16% a month net, lower bound +0.12%, 85% of months. A decided result, not a paper rule yet.",
+   "record": "idx-signals/research/AVOID_TILT_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/AVOID_TILT_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "ADMISSION_HOLDOUT_v1",
+   "name": "Fresh 10-15% admission rule, holdout",
+   "plain": "Does admitting only fresh alerts in the 10-15% band improve the crypto account on 2024-2026?",
+   "short": "Pickier crypto entry rule",
+   "outcome": "didnt_work",
+   "lesson": "Failed its main check on 2024-26 data: both versions lost about 20%. Only the side checks looked better.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/ADMISSION_HOLDOUT_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: NOT CONFIRMED"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-31",
+   "verdict": "NOT CONFIRMED (summary/BASE worse).",
+   "record": "idx-signals/research/ADMISSION_HOLDOUT_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/ADMISSION_HOLDOUT_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "FILTER_BUY_v1",
+   "name": "Buy filter on KOD's kept spikes",
+   "plain": "Does KOD's filter pick US spikes that are better to buy than all spikes?",
+   "short": "KOD's filter for buying spikes",
+   "outcome": "didnt_work",
+   "lesson": "Didn't improve same-day buys. Skipping flagged spikes looked helpful over 5 days, but that wasn't the main test.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/FILTER_BUY_v1/REPORT.md",
+    "must_contain": [
+     "Registered verdict: FILTER NOT SHOWN."
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-30",
+   "verdict": "FILTER NOT SHOWN: the gain does not clear the bar in both periods.",
+   "record": "idx-signals/research/FILTER_BUY_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/FILTER_BUY_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "PROFIT_REPLAY_v1",
+   "name": "Profit replay of the short calls",
+   "plain": "Would shorting KOD's flagged US spikes for one day have been reliably profitable after costs?",
+   "short": "Betting against flagged US spikes",
+   "outcome": "didnt_work",
+   "lesson": "The drop happens overnight before you can bet against it; a few sudden rebounds wiped out gains.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/PROFIT_REPLAY_v1/REPORT.md",
+    "must_contain": [
+     "Verdict: FAILS the go/no-go."
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-30",
+   "verdict": "FAILS the go/no-go: +0.07% a trade under typical costs, not reliably profitable.",
+   "record": "idx-signals/research/PROFIT_REPLAY_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/PROFIT_REPLAY_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "US_INSIDER_OFFICER_v1",
+   "name": "US officer insider buys",
+   "plain": "Do US stocks bought by their own officers beat the market enough to trade?",
+   "short": "Following executives buying own stock",
+   "outcome": "didnt_work",
+   "lesson": "Executives' purchases did a bit better, but too few cases to tell it apart from luck.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/US_INSIDER_OFFICER_v1/REPORT.md",
+    "must_contain": [
+     "Verdict: FAIL"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-27",
+   "verdict": "FAIL (G1 t 1.21 < 1.65); closed per protocol, no rerun.",
+   "record": "idx-signals/research/US_INSIDER_OFFICER_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/US_INSIDER_OFFICER_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "LEAD_LADDER_INTL_v1",
+   "name": "Lead ladder, international",
+   "plain": "Do the pre-move features found in IDX replicate on other exchanges?",
+   "short": "Early-warning signs, other countries",
+   "outcome": "didnt_work",
+   "lesson": "Earlier warning signs didn't repeat in nine other markets; they predict big moves, not direction.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/LEAD_LADDER_INTL_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: NOT_REPLICATED"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-26",
+   "verdict": "NOT_REPLICATED.",
+   "record": "idx-signals/research/LEAD_LADDER_INTL_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/LEAD_LADDER_INTL_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "FLOW_IDX_v1",
+   "name": "IDX foreign/broker flow lead",
+   "plain": "Does money flow in IDX stocks show up before their big up moves?",
+   "short": "Big-money buying in Indonesian stocks",
+   "outcome": "didnt_work",
+   "lesson": "Foreign and big-buyer activity didn't show up before big rises; 0 of 256 checks passed.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/FLOW_IDX_v1/REPORT.md",
+    "must_contain": [
+     "## Verdict: NO_FLOW_LEAD"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-26",
+   "verdict": "NO_FLOW_LEAD: 0 of 256 gated cells pass.",
+   "record": "idx-signals/research/FLOW_IDX_v1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/FLOW_IDX_v1/REPORT.md"
+   ]
+  },
+  {
+   "id": "E1",
+   "name": "E1: IDX moonshot detector (D1)",
+   "plain": "Can a detector spot IDX stocks starting a big repricing, and does buying them make money?",
+   "short": "Spotting Indonesian stock jumps",
+   "outcome": "didnt_work",
+   "lesson": "Spotted jumps under way, but caught only 1 in 10 in time; buying lost 4% a trade.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/E1/REPORT.md",
+    "must_contain": [
+     "the obvious way to act on it loses",
+     "money. The paper policy therefore passes on D1 candidates"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-08",
+   "verdict": "D1 sees repricings better than chance, but acting on it loses money; paper policy PASSes (no buy). Part of the closed early-entry record.",
+   "record": "idx-signals/research/E1/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/E1/REPORT.md"
+   ]
+  },
+  {
+   "id": "E2",
+   "name": "E2: US and crypto big-up-day detectors",
+   "plain": "Does buying US stocks or coins the day after a detector's big-up-day flag make money?",
+   "short": "Big-mover detector, stocks and crypto",
+   "outcome": "didnt_work",
+   "lesson": "Flagged movers only after they'd moved; buying next day lost 3.7% a trade in stocks, 1.9% in crypto.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/E2/REPORT.md",
+    "must_contain": [
+     "buying them the next day reliably loses money"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-08",
+   "verdict": "Buying the next day reliably loses money; paper policy PASSes. Part of the closed early-entry record.",
+   "record": "idx-signals/research/E2/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/E2/REPORT.md"
+   ]
+  },
+  {
+   "id": "E3",
+   "name": "E3: IDX execution plans",
+   "plain": "Is there an execution plan (entry/exit) that makes the IDX ARA detectors tradable?",
+   "short": "Buy/sell plans for Indonesian jumps",
+   "outcome": "didnt_work",
+   "lesson": "None of 108 buy-and-sell plans qualified; every one lost money in 2022.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/E3/REPORT.md",
+    "must_contain": [
+     "no execution plan admitted"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-14",
+   "verdict": "No execution plan admitted (108 harness runs); validation not run. Part of the closed early-entry record.",
+   "record": "idx-signals/research/E3/REPORT.md",
+   "sources": [
+    "KOD:idx-signals/research/E3/REPORT.md"
+   ]
+  },
+  {
+   "id": "IGNITION_SCAN_v0",
+   "name": "Hermes ignition scan (crypto, hourly)",
+   "plain": "Can KOD catch crypto moves in their first hours, and does buying every ignition make money?",
+   "short": "Catching crypto moves within hours",
+   "outcome": "didnt_work",
+   "lesson": "Caught moves within hours, but typical coins were already up 14%; buying all lost 4% a trade.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "docs/research_sources/hermes_20261104/01_CLUE_LEDGER.md",
+    "must_contain": [
+     "IGNITION_SCAN_v0 (crypto, 1h, 2020\u201322, 5,267 events) \u00b7 SMALL WIN (detection) + FAIL (buy-all)"
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-04",
+   "verdict": "SMALL WIN for detection, FAIL for buying all ignitions (2020-22, 5,267 events); its holdout follow-up COMBO_HOLDOUT also failed.",
+   "record": "docs/research_sources/hermes_20261104/01_CLUE_LEDGER.md",
+   "sources": [
+    "KOD:docs/research_sources/hermes_20261104/01_CLUE_LEDGER.md"
+   ]
+  },
+  {
+   "id": "CALL_CERT_v1",
+   "name": "Call certificate history check (closed)",
+   "plain": "On past data, could the machine certify a calling bar that keeps its 'dumps tomorrow' calls right at least half the time?",
+   "short": "Certifying 'falls tomorrow' calls",
+   "outcome": "worked",
+   "lesson": "In 2023, 'falls 10% tomorrow' calls were right 70% vs 35% by chance; betting on them didn't pay.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/CALL_CERT_v1/results/RESULT.json",
+    "json": [
+     {
+      "path": "idx-signals/research/CALL_CERT_v1/results/RESULT.json",
+      "key": "events",
+      "equals": 6225
+     },
+     {
+      "path": "idx-signals/research/CALL_CERT_v1/results/RESULT.json",
+      "key": "tests.DUMP on NEXT_DUMP10_1.verdict",
+      "equals": "HOLDS"
+     },
+     {
+      "path": "idx-signals/research/CALL_CERT_v1/results/RESULT.json",
+      "key": "tests.DUMP on NEXT_DUMP10_1.check_2023.calls",
+      "equals": 44
+     }
+    ]
+   },
+   "collected": 6225,
+   "collected_label": "historical spike events",
+   "scored": 44,
+   "scored_label": "2023 test calls (DUMP on NEXT_DUMP10_1)",
+   "needed": null,
+   "needed_label": "single pre-registered run",
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-29",
+   "verdict": "The next-day dump call certifies, and the certificate held on 2023 (44 calls, 70.5% right; losing rate 0.295 against the 0.5 level). The other three calls cannot be certified.",
+   "record": "idx-signals/research/CALL_CERT_v1/results/RESULT.json",
+   "sources": [
+    "KOD:idx-signals/research/CALL_CERT_v1/results/RESULT.json"
+   ]
+  },
+  {
+   "id": "LEARNER_v1",
+   "name": "LEARNER v1 (withdrawn)",
+   "plain": "The first self-learning forecaster; its claim was withdrawn before any outcome existed and LEARNER v2 replaced it.",
+   "short": "First self-learning forecaster",
+   "outcome": "no_answer",
+   "lesson": "Pulled before any results: its scoring could pass it without real skill. A fixed version replaced it.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "record": "idx-signals/research/LEARNER_v1/ADDENDUM_1.md",
+    "must_contain": [
+     "the claim is withdrawn before any outcome existed",
+     "The successor is `research/LEARNER_v2`"
+    ]
+   },
+   "collected": 2,
+   "collected_label": "forecasts sealed",
+   "scored": 0,
+   "scored_label": "outcomes scored",
+   "needed": null,
+   "needed_label": "claim withdrawn",
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-10-29",
+   "verdict": "Claim withdrawn 2026-10-29 before any outcome, for defects listed in its addendum; successor LEARNER v2.",
+   "record": "idx-signals/research/LEARNER_v1/ADDENDUM_1.md",
+   "sources": [
+    "KOD:idx-signals/research/LEARNER_v1/ADDENDUM_1.md",
+    "KOD:idx-signals/paper/learner.jsonl"
+   ]
+  },
+  {
+   "id": "LLM_ANON_BACKTEST_v1",
+   "name": "AI judge on anonymised spike numbers (closed)",
+   "plain": "Given only anonymised numbers about a spike, can an AI's odds beat plain averages and a simple formula?",
+   "short": "AI judging spikes, numbers only",
+   "outcome": "didnt_work",
+   "lesson": "264 spikes, 24 AI judges: no better than plain averages or a simple formula; it never said BACK.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/LLM_ANON_BACKTEST_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/LLM_ANON_BACKTEST_v1/results.json",
+      "key": "pass",
+      "equals": false
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-07",
+   "verdict": "NOT PASSED: the judge matched the base rate and the logistic model; 0 BACK calls.",
+   "record": "idx-signals/research/LLM_ANON_BACKTEST_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/LLM_ANON_BACKTEST_v1/RESULTS.md"
+   ]
+  },
+  {
+   "id": "BREADTH_v1",
+   "name": "Trade-count jump at crypto ignitions (closed)",
+   "plain": "Do crypto spikes with many more trades than usual, not just more dollars, do better afterwards?",
+   "short": "Many small trades behind spikes",
+   "outcome": "didnt_work",
+   "lesson": "12,383 past spikes: more trades than dollars predicted nothing; the two periods disagreed.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/BREADTH_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/BREADTH_v1/results.json",
+      "key": "pass",
+      "equals": false
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-07",
+   "verdict": "NOT PASSED in 2020-22 or 2023-26; dropped per the stamped protocol. ONE itself had B = 1.25.",
+   "record": "idx-signals/research/BREADTH_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/BREADTH_v1/RESULTS.md"
+   ]
+  },
+  {
+   "id": "SPEED_v1",
+   "name": "Minute-level entry speed on crypto ignitions (closed)",
+   "plain": "Does buying 1 minute after a crypto spike signal, instead of 5, 30 or 240, make it profitable?",
+   "short": "Buying crypto spikes in minutes",
+   "outcome": "didnt_work",
+   "lesson": "2,000 past spikes: buying within a minute lost 3.9% a trade; faster was worse, every speed lost.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/SPEED_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/SPEED_v1/results.json",
+      "key": "verdict",
+      "equals": "FIRM NO"
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-08",
+   "verdict": "FIRM NO: the 1-minute arm loses even at 0.6-point cost; 1-min minus 240-min = -1.9 points.",
+   "record": "idx-signals/research/SPEED_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/SPEED_v1/RESULTS.md"
+   ]
+  },
+  {
+   "id": "KRONOS_CHALLENGER_v1",
+   "name": "Kronos price model as a spike filter (closed)",
+   "plain": "Can the public Kronos price-forecasting model pick which crypto spikes to buy?",
+   "short": "Kronos AI picking crypto spikes",
+   "outcome": "didnt_work",
+   "lesson": "Picked 4 of 128 spikes and all 4 lost; worse than guessing 'no change'. Cash did better.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/codex/kronos-challenger-20261108",
+    "record": "idx-signals/research/KRONOS_CHALLENGER_v1/results/RESULT.json",
+    "json": [
+     {
+      "path": "idx-signals/research/KRONOS_CHALLENGER_v1/results/RESULT.json",
+      "key": "promotion_authorized",
+      "equals": false
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-08",
+   "verdict": "Not promoted: lost to cash; formal evaluator verdict INSUFFICIENT_EVIDENCE (4 accepted, below 10).",
+   "record": "idx-signals/research/KRONOS_CHALLENGER_v1/results/REPORT.md",
+   "sources": [
+    "KOD@codex/kronos-challenger-20261108:idx-signals/research/KRONOS_CHALLENGER_v1/results/REPORT.md"
+   ]
+  },
+  {
+   "id": "CRASH_BOUNCE_IDX_v1",
+   "name": "Buying Indonesian stocks after a crash (closed)",
+   "plain": "Do Indonesian stocks bounce back in the days after a big crash day, enough to profit after costs?",
+   "short": "Indonesian stocks after crashes",
+   "outcome": "didnt_work",
+   "lesson": "5,574 crash days: no bounce; stocks did about what others did, and costs made it lose 2%.",
+   "group": "closed",
+   "reader": "closed_record",
+   "params": {
+    "ref": "origin/claude/hopeful-hypatia-ktzpog",
+    "record": "idx-signals/research/CRASH_BOUNCE_IDX_v1/results.json",
+    "json": [
+     {
+      "path": "idx-signals/research/CRASH_BOUNCE_IDX_v1/results.json",
+      "key": "verdict",
+      "equals": "FIRM NO"
+     }
+    ]
+   },
+   "stale_after_hours": 8760,
+   "next_milestone": "None: closed.",
+   "next_date": null,
+   "closed_on": "2026-11-08",
+   "verdict": "FIRM NO: pooled 5-day net -2.2% at 1.5% cost; no bounce before costs.",
+   "record": "idx-signals/research/CRASH_BOUNCE_IDX_v1/RESULTS.md",
+   "sources": [
+    "KOD@claude/hopeful-hypatia-ktzpog:idx-signals/research/CRASH_BOUNCE_IDX_v1/RESULTS.md"
+   ]
+  }
+ ],
+ "jobs": [
+  {
+   "job": "us_scan",
+   "name": "US nightly paper scan",
+   "market": "US",
+   "reader": "scan",
+   "expected_every_hours": 24,
+   "grace_hours": 1,
+   "source": "KOD:idx-signals/paper/ledger.jsonl (type SCAN, market US)",
+   "params": {
+    "ledger": "idx-signals/paper/ledger.jsonl",
+    "market": "US",
+    "calendar": "NYSE",
+    "scheduled_utc": "22:47",
+    "run_day_offset": 0,
+    "ok_within_hours": 1,
+    "deadline_utc": "13:30"
+   }
+  },
+  {
+   "job": "idx_scan",
+   "name": "IDX nightly paper scan",
+   "market": "IDX",
+   "reader": "scan",
+   "expected_every_hours": 24,
+   "grace_hours": 1,
+   "source": "KOD:idx-signals/paper/ledger.jsonl (type SCAN, market IDX)",
+   "params": {
+    "ledger": "idx-signals/paper/ledger.jsonl",
+    "market": "IDX",
+    "calendar": "IDX",
+    "scheduled_utc": "10:17",
+    "run_day_offset": 0,
+    "ok_within_hours": 1,
+    "deadline_utc": "01:45"
+   }
+  },
+  {
+   "job": "crypto_scan",
+   "name": "Crypto daily paper scan",
+   "market": "CRYPTO",
+   "reader": "scan",
+   "expected_every_hours": 24,
+   "grace_hours": 1,
+   "source": "KOD:idx-signals/paper/ledger.jsonl (type SCAN, market CRYPTO)",
+   "params": {
+    "ledger": "idx-signals/paper/ledger.jsonl",
+    "market": "CRYPTO",
+    "calendar": "DAILY",
+    "scheduled_utc": "00:23",
+    "run_day_offset": 1,
+    "ok_within_hours": 1,
+    "deadline_utc": "02:00"
+   }
+  },
+  {
+   "job": "llm_us",
+   "name": "LLM arm: US calls",
+   "market": "US",
+   "reader": "llm_calls",
+   "expected_every_hours": 24,
+   "grace_hours": 14.5,
+   "source": "KOD:idx-signals/research/LLM_ARM_v1/calls*.jsonl (market US) vs idx-signals/paper/speculations.jsonl",
+   "params": {
+    "register": "idx-signals/paper/speculations.jsonl",
+    "calls_dir": "idx-signals/research/LLM_ARM_v1",
+    "market": "US",
+    "start": "2026-11-02",
+    "calendar": "NYSE"
+   }
+  },
+  {
+   "job": "llm_idx",
+   "name": "LLM arm: IDX calls",
+   "market": "IDX",
+   "reader": "llm_calls",
+   "expected_every_hours": 24,
+   "grace_hours": 15.5,
+   "source": "KOD:idx-signals/research/LLM_ARM_v1/calls*.jsonl (market IDX) vs idx-signals/paper/speculations.jsonl",
+   "params": {
+    "register": "idx-signals/paper/speculations.jsonl",
+    "calls_dir": "idx-signals/research/LLM_ARM_v1",
+    "market": "IDX",
+    "start": "2026-11-02",
+    "calendar": "IDX"
+   }
+  },
+  {
+   "job": "trend_core",
+   "name": "TREND_CORE daily paper log",
+   "market": "CRYPTO",
+   "reader": "trend_core",
+   "expected_every_hours": 24,
+   "grace_hours": 8,
+   "source": "KOD:handoff/fresh-eyes-2026-11-01/paper/ledger.jsonl",
+   "params": {
+    "ledger": "handoff/fresh-eyes-2026-11-01/paper/ledger.jsonl",
+    "symbols": [
+     "BTCUSDT",
+     "ETHUSDT"
+    ],
+    "scheduled_utc": "02:41",
+    "ok_within_hours": 8,
+    "calendar": "DAILY",
+    "start": "2026-10-31"
+   }
+  },
+  {
+   "job": "paper_book_plan",
+   "name": "Paper book plans",
+   "market": "US",
+   "reader": "ledger_by_session",
+   "expected_every_hours": 24,
+   "grace_hours": 14,
+   "source": "KOD:idx-signals/paper/paper_book.jsonl (BOOK_PLAN by signal_session)",
+   "params": {
+    "ledger": "idx-signals/paper/paper_book.jsonl",
+    "type": "BOOK_PLAN",
+    "session_field": "signal_session",
+    "time_field": "made_at",
+    "start": "2026-10-30",
+    "calendar": "NYSE",
+    "deadline_utc": "13:30"
+   }
+  },
+  {
+   "job": "paper_account_marks",
+   "name": "Paper account nightly marks",
+   "market": "US",
+   "reader": "ledger_by_session",
+   "expected_every_hours": 24,
+   "grace_hours": 14,
+   "source": "KOD:idx-signals/paper/paper_account.jsonl (ACCT_MARK by session)",
+   "params": {
+    "ledger": "idx-signals/paper/paper_account.jsonl",
+    "type": "ACCT_MARK",
+    "session_field": "session",
+    "time_field": "made_at",
+    "start": "2026-10-30",
+    "calendar": "NYSE",
+    "deadline_utc": "14:30"
+   }
+  },
+  {
+   "job": "premove_forecast",
+   "name": "Pre-move shadow: daily seal",
+   "market": "CRYPTO",
+   "reader": "ledger_by_session",
+   "expected_every_hours": 24,
+   "grace_hours": 2,
+   "source": "KOD:idx-signals/paper/premove_shadow.jsonl (PREMOVE_SHADOW_FORECAST by decision_date)",
+   "params": {
+    "ledger": "idx-signals/paper/premove_shadow.jsonl",
+    "type": "PREMOVE_SHADOW_FORECAST",
+    "session_field": "decision_date",
+    "time_field": "made_at",
+    "start": "2026-10-30",
+    "calendar": "DAILY",
+    "deadline_utc": "02:00"
+   }
+  },
+  {
+   "job": "premove_score",
+   "name": "Pre-move shadow: 5-day scoring",
+   "market": "CRYPTO",
+   "reader": "ledger_by_session",
+   "expected_every_hours": 24,
+   "grace_hours": 2,
+   "source": "KOD:idx-signals/paper/premove_shadow.jsonl (PREMOVE_SHADOW_RESOLUTION; date = last outcome day, decision day + 5)",
+   "params": {
+    "ledger": "idx-signals/paper/premove_shadow.jsonl",
+    "type": "PREMOVE_SHADOW_RESOLUTION",
+    "session_field": "decision_date",
+    "time_field": "resolved_at",
+    "start": "2026-10-30",
+    "calendar": "DAILY",
+    "deadline_utc": "02:00",
+    "session_offset_days": 5,
+    "only_if_type": "PREMOVE_SHADOW_FORECAST"
+   }
+  },
+  {
+   "job": "crypto_account_sync",
+   "name": "Crypto account sync",
+   "market": "CRYPTO",
+   "reader": "crypto_account_sync",
+   "expected_every_hours": 24,
+   "grace_hours": 2,
+   "source": "KOD:idx-signals/paper/crypto_account.jsonl vs idx-signals/paper/ledger.jsonl (crypto DECISION)",
+   "params": {
+    "ledger": "idx-signals/paper/crypto_account.jsonl",
+    "policy_ledger": "idx-signals/paper/ledger.jsonl",
+    "start": "2026-10-30",
+    "deadline_utc": "02:00",
+    "calendar": "DAILY"
+   }
+  },
+  {
+   "job": "catalyst_sec13d",
+   "name": "Catalyst batch: SEC13D",
+   "market": "US",
+   "reader": "catalyst_batch",
+   "expected_every_hours": 24,
+   "grace_hours": 14,
+   "source": "KOD:idx-signals/paper/catalysts.jsonl (BATCH family SEC13D)",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "SEC13D",
+    "start": "2026-10-28",
+    "calendar": "NYSE",
+    "deadline_utc": "14:00"
+   }
+  },
+  {
+   "job": "catalyst_sec13d_v2",
+   "name": "Catalyst batch: SEC13D_V2",
+   "market": "US",
+   "reader": "catalyst_batch",
+   "expected_every_hours": 24,
+   "grace_hours": 14,
+   "source": "KOD:idx-signals/paper/catalysts.jsonl (BATCH family SEC13D_V2)",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "SEC13D_V2",
+    "start": "2026-10-28",
+    "calendar": "NYSE",
+    "deadline_utc": "14:00",
+    "gap_from": "SEC13D"
+   }
+  },
+  {
+   "job": "catalyst_dilution_8k",
+   "name": "Catalyst batch: DILUTION_8K",
+   "market": "US",
+   "reader": "catalyst_batch",
+   "expected_every_hours": 24,
+   "grace_hours": 14,
+   "source": "KOD:idx-signals/paper/catalysts.jsonl (BATCH family DILUTION_8K)",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "DILUTION_8K",
+    "start": "2026-10-28",
+    "calendar": "NYSE",
+    "deadline_utc": "14:00"
+   }
+  },
+  {
+   "job": "catalyst_form4",
+   "name": "Catalyst batch: FORM4",
+   "market": "US",
+   "reader": "catalyst_batch",
+   "expected_every_hours": 24,
+   "grace_hours": 14,
+   "source": "KOD:idx-signals/paper/catalysts.jsonl (BATCH family FORM4)",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "FORM4",
+    "start": "2026-10-28",
+    "calendar": "NYSE",
+    "deadline_utc": "14:00"
+   }
+  },
+  {
+   "job": "catalyst_form4_sharp",
+   "name": "Catalyst batch: FORM4_SHARP",
+   "market": "US",
+   "reader": "catalyst_batch",
+   "expected_every_hours": 24,
+   "grace_hours": 14,
+   "source": "KOD:idx-signals/paper/catalysts.jsonl (BATCH family FORM4_SHARP)",
+   "params": {
+    "ledger": "idx-signals/paper/catalysts.jsonl",
+    "family": "FORM4_SHARP",
+    "start": "2026-10-28",
+    "calendar": "NYSE",
+    "deadline_utc": "14:00"
+   }
+  }
+ ]
+}
+

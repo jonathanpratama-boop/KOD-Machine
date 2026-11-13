@@ -1,0 +1,15 @@
+{
+  "source_repository": "jonathanpratama-boop/KOD-Machine",
+  "source_branch": "claude/hopeful-hypatia-ktzpog",
+  "retrieved_on": "2026-11-13",
+  "upstream_git_blobs": {
+    "tools/status/build_status.py": "46f561ffc34058bfdce30dd6aabcc3be18159c4d",
+    "tools/status/experiments.json": "f0c217564e01da3f19db2eb46f3459bb20206c26"
+  },
+  "changes": [
+    "recognize explicit terminal supplement status",
+    "separate source-build and cloud-refresh clocks",
+    "independent hourly rebuild from current source refs"
+  ],
+  "registry_entries": 62
+}

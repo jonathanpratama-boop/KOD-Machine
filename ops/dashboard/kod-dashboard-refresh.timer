@@ -1,0 +1,10 @@
+[Unit]
+Description=Refresh KOD study records hourly
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=kod-dashboard-refresh.service
+
+[Install]
+WantedBy=timers.target
