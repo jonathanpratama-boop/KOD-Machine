@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh KOD dashboard source records
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Nice=10
+UMask=0077
+TimeoutStartSec=0
+ExecStart=/usr/bin/python3 -B /var/lib/kod-research-r2-ops/repairs/dashboard-closeout-20261113/code/ops/dashboard/refresh_dashboard.py --code-root /var/lib/kod-research-r2-ops/repairs/dashboard-closeout-20261113/code --state-root /var/lib/kod-research-r2-ops/dashboard-sources --output /var/lib/kod-research-r2-ops/repairs/prospective-check-20261108/dashboard_data.json --status /var/lib/kod-research-r2-ops/repairs/prospective-check-20261108/SOURCE_REFRESH.json
