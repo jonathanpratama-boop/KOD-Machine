@@ -1,0 +1,175 @@
+{
+ "generated_at": "2026-11-12T17:05:42Z",
+ "sets_left_out": [
+  "ATYR 2026-10-30",
+  "ENLV 2026-10-28",
+  "GOVX 2026-11-11",
+  "MASK 2026-10-30",
+  "OMEX 2026-10-30",
+  "PARA 2026-10-28",
+  "SCAG 2026-10-28",
+  "SLXN 2026-11-11",
+  "TOPS 2026-11-09",
+  "WHLR 2026-10-30",
+  "XXII 2026-11-05"
+ ],
+ "unresolved_kept_in_both": [
+  "NUWE 2026-10-27",
+  "OMH 2026-11-04",
+  "VCIG 2026-11-02"
+ ],
+ "speculation_register_US": {
+  "as_published": [
+   "## US: 168 sets over 12 signal sessions (2026-10-27 .. 2026-11-11, 14.00 sets per scan)",
+   "| Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |",
+   "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|",
+   "| BASE5 | 57 | 57 | 57 | 6 | -12.50% | -11.72% | -1.82% | -10.68% | -2.24 | 0.963 | - / next 60 | accumulating (no look reached) |",
+   "| sd per session (source) | 2pt | 5pt | 10pt | to next look |",
+   "|---|---:|---:|---:|---:|",
+   "| 0.130 (validation trade sd 0.3429 (run 20261008T115656Z_MOONSHOT_E2_US_D1_v1), paired, / sqrt(sets per session)) | 378 | 61 | 16 | 1 |",
+   "PATH20 windows resolved: 0; NEXT1: 118.",
+   "| Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |",
+   "|---|---:|---:|---:|---:|---:|---:|---:|",
+   "| RUN30_5 | 57 | 0.105 | 0.052 | 0.154 | 0.0965 | 0.2500 | 0.1386 |",
+   "| FADE10_5 | 57 | 0.544 | 0.348 | 0.403 | 0.2679 | 0.2500 | 0.2607 |",
+   "| GAIN0_5 | 57 | 0.263 | 0.377 | 0.425 | 0.2201 | 0.2500 | 0.2291 |",
+   "| BEATS_TWINS_5 | 57 | 0.333 | 0.510 | 0.500 | 0.2500 | 0.2500 | 0.2581 |",
+   "| RUN30_20 | 0 | | | | | | |",
+   "| DOUBLE_20 | 0 | | | | | | |",
+   "| DOWN10_1 | 118 | 0.263 | 0.053 | 0.372 | 0.2116 | 0.2500 | 0.2005 |",
+   "| UP10_1 | 118 | 0.220 | 0.047 | 0.257 | 0.1980 | 0.2500 | 0.2019 |",
+   "| BEATS_TWINS_1 | 116 | 0.500 | 0.512 | 0.500 | 0.2500 | 0.2500 | 0.2542 |"
+  ],
+  "corrected": [
+   "## US: 157 sets over 12 signal sessions (2026-10-27 .. 2026-11-11, 13.08 sets per scan)",
+   "| Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |",
+   "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|",
+   "| BASE5 | 50 | 50 | 50 | 6 | -10.27% | -11.21% | -0.94% | -9.33% | -2.30 | 0.965 | - / next 60 | accumulating (no look reached) |",
+   "| sd per session (source) | 2pt | 5pt | 10pt | to next look |",
+   "|---|---:|---:|---:|---:|",
+   "| 0.134 (validation trade sd 0.3429 (run 20261008T115656Z_MOONSHOT_E2_US_D1_v1), paired, / sqrt(sets per session)) | 405 | 65 | 17 | 1 |",
+   "PATH20 windows resolved: 0; NEXT1: 112.",
+   "| Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |",
+   "|---|---:|---:|---:|---:|---:|---:|---:|",
+   "| RUN30_5 | 50 | 0.100 | 0.059 | 0.154 | 0.0929 | 0.2500 | 0.1404 |",
+   "| FADE10_5 | 50 | 0.540 | 0.352 | 0.403 | 0.2672 | 0.2500 | 0.2623 |",
+   "| GAIN0_5 | 50 | 0.260 | 0.396 | 0.425 | 0.2196 | 0.2500 | 0.2322 |",
+   "| BEATS_TWINS_5 | 50 | 0.340 | 0.511 | 0.500 | 0.2500 | 0.2500 | 0.2651 |",
+   "| RUN30_20 | 0 | | | | | | |",
+   "| DOUBLE_20 | 0 | | | | | | |",
+   "| DOWN10_1 | 112 | 0.250 | 0.053 | 0.369 | 0.2083 | 0.2500 | 0.1977 |",
+   "| UP10_1 | 112 | 0.223 | 0.047 | 0.250 | 0.1991 | 0.2500 | 0.1980 |",
+   "| BEATS_TWINS_1 | 110 | 0.500 | 0.513 | 0.500 | 0.2500 | 0.2500 | 0.2543 |"
+  ]
+ },
+ "learner_v2_4": {
+  "as_published": {
+   "headline": {
+    "statement": "NEXT_DUMP10_1",
+    "n_pairs": 88,
+    "auc": 0.6538734896943852,
+    "auc_bench": 0.6304193319118693
+   },
+   "statements": {
+    "NEXT_DUMP10_1": {
+     "n": 88,
+     "rate": 0.23863636363636365,
+     "auc": 0.6538734896943852,
+     "auc_bench": 0.6304193319118693
+    },
+    "DUMP10_5": {
+     "n": 20,
+     "rate": 0.3,
+     "auc": 0.6428571428571429,
+     "auc_bench": 0.5833333333333334
+    }
+   }
+  },
+  "corrected": {
+   "headline": {
+    "statement": "NEXT_DUMP10_1",
+    "n_pairs": 82,
+    "auc": 0.6388888888888888,
+    "auc_bench": 0.6076388888888888
+   },
+   "statements": {
+    "NEXT_DUMP10_1": {
+     "n": 82,
+     "rate": 0.21951219512195122,
+     "auc": 0.6388888888888888,
+     "auc_bench": 0.6076388888888888
+    },
+    "DUMP10_5": {
+     "n": 16,
+     "rate": 0.375,
+     "auc": 0.6833333333333333,
+     "auc_bench": 0.8166666666666667
+    }
+   }
+  },
+  "pairs_on_left_out_sets": 10
+ },
+ "learner_v2_2_SPEC_US": {
+  "as_published": {
+   "SPEC_US:BEATS_TWINS_5": {
+    "n": 52.0,
+    "rate": 0.3269230769230769,
+    "brier_anchor": 0.25,
+    "brier_raw": 0.25042515547128846,
+    "brier_published": 0.25
+   },
+   "SPEC_US:DUMP10_5": {
+    "n": 52.0,
+    "rate": 0.3269230769230769,
+    "brier_anchor": 0.22583207692307694,
+    "brier_raw": 0.22583207692307694,
+    "brier_published": 0.22583207692307694
+   },
+   "SPEC_US:PUMP30_5": {
+    "n": 52.0,
+    "rate": 0.09615384615384616,
+    "brier_anchor": 0.09021984384615386,
+    "brier_raw": 0.09021984384615386,
+    "brier_published": 0.09021984384615386
+   },
+   "SPEC_US:PUMP_AND_DUMP_5": {
+    "n": 52.0,
+    "rate": 0.0,
+    "brier_anchor": 0.0038366874810000003,
+    "brier_raw": 0.0038366874810000003,
+    "brier_published": 0.0038366874810000003
+   }
+  },
+  "corrected": {
+   "SPEC_US:BEATS_TWINS_5": {
+    "n": 45.0,
+    "rate": 0.3333333333333333,
+    "brier_anchor": 0.25,
+    "brier_raw": 0.25255356414631114,
+    "brier_published": 0.25
+   },
+   "SPEC_US:DUMP10_5": {
+    "n": 45.0,
+    "rate": 0.35555555555555557,
+    "brier_anchor": 0.23138677777777777,
+    "brier_raw": 0.23138677777777777,
+    "brier_published": 0.23138677777777777
+   },
+   "SPEC_US:PUMP30_5": {
+    "n": 45.0,
+    "rate": 0.08888888888888889,
+    "brier_anchor": 0.08518813444444445,
+    "brier_raw": 0.08518813444444445,
+    "brier_published": 0.08518813444444445
+   },
+   "SPEC_US:PUMP_AND_DUMP_5": {
+    "n": 45.0,
+    "rate": 0.0,
+    "brier_anchor": 0.003836687481,
+    "brier_raw": 0.003836687481,
+    "brier_published": 0.003836687481
+   }
+  },
+  "pairs_on_left_out_sets": 28
+ }
+}

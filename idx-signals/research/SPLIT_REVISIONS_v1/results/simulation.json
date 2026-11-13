@@ -1,0 +1,289 @@
+{
+ "reconstruction_check": {
+  "GOVX": {
+   "previous_close_sealed_by_the_scan": 0.112,
+   "previous_close_reconstructed": 0.112,
+   "equal_within_1_percent": true
+  },
+  "SLXN": {
+   "previous_close_sealed_by_the_scan": 0.109,
+   "previous_close_reconstructed": 0.109,
+   "equal_within_1_percent": true
+  }
+ },
+ "nights": {
+  "night_1": {
+   "run_at": "2026-11-11T23:00:40Z",
+   "pull": "the scan's own pull: the provider does not list the split of GOVX and SLXN yet",
+   "records_appended": 168,
+   "appended_by_assessment": {
+    "ARTIFACT_CONFIRMED": 4,
+    "ARTIFACT_PROBABLE": 5,
+    "NOT_ASSESSABLE": 5,
+    "NO_ACTION_FOUND": 145,
+    "REAL_MOVE_AFTER_SPLIT": 4,
+    "UNEXPLAINED_EXTREME_MOVE": 4,
+    "UNITS_INCONSISTENT": 1
+   },
+   "marked_as_the_scans_own_pull": 19,
+   "reassessments": [],
+   "named_sets_standing": {
+    "SMX 2026-11-10": {
+     "assessment": "REAL_MOVE_AFTER_SPLIT",
+     "previous_session": "2026-11-09",
+     "units": "UNCHANGED",
+     "assessed_at": "2026-11-11T23:00:40Z"
+    },
+    "GOVX 2026-11-11": {
+     "assessment": "UNEXPLAINED_EXTREME_MOVE",
+     "previous_session": "2026-11-10",
+     "units": "UNCHANGED",
+     "assessed_at": "2026-11-11T23:00:40Z"
+    },
+    "SLXN 2026-11-11": {
+     "assessment": "UNEXPLAINED_EXTREME_MOVE",
+     "previous_session": "2026-11-10",
+     "units": "UNCHANGED",
+     "assessed_at": "2026-11-11T23:00:40Z"
+    }
+   },
+   "validator_problems": [],
+   "removed_corrected": [
+    "ATYR 2026-10-30",
+    "ENLV 2026-10-28",
+    "MASK 2026-10-30",
+    "OMEX 2026-10-30",
+    "PARA 2026-10-28",
+    "SCAG 2026-10-28",
+    "TOPS 2026-11-09",
+    "WHLR 2026-10-30",
+    "XXII 2026-11-05"
+   ],
+   "removed_at_the_time": [
+    "SMX 2026-11-10"
+   ],
+   "unresolved": [
+    "ADIL 2026-10-28",
+    "GNTA 2026-11-02",
+    "GOVX 2026-11-11",
+    "HUBC 2026-11-03",
+    "NUWE 2026-10-27",
+    "OMH 2026-11-04",
+    "RCT 2026-11-06",
+    "SGRX 2026-10-30",
+    "SLXN 2026-11-11",
+    "VCIG 2026-11-02"
+   ],
+   "records_added_by_running_the_same_night_twice": 0,
+   "hook_returned_the_ledger_for_commit": true
+  },
+  "night_2": {
+   "run_at": "2026-11-12T23:00:40Z",
+   "pull": "the provider now lists the split and shows re-based closes",
+   "records_appended": 2,
+   "appended_by_assessment": {
+    "ARTIFACT_CONFIRMED": 2
+   },
+   "marked_as_the_scans_own_pull": 0,
+   "reassessments": [
+    {
+     "set": "GOVX 2026-11-11",
+     "assessment": "ARTIFACT_CONFIRMED",
+     "split": "2026-11-11 1:24",
+     "split_adjusted_ret1": -0.1964,
+     "names_the_record_it_supersedes": true
+    },
+    {
+     "set": "SLXN 2026-11-11",
+     "assessment": "ARTIFACT_CONFIRMED",
+     "split": "2026-11-11 1:24",
+     "split_adjusted_ret1": 0.2347,
+     "names_the_record_it_supersedes": true
+    }
+   ],
+   "named_sets_standing": {
+    "SMX 2026-11-10": {
+     "assessment": "REAL_MOVE_AFTER_SPLIT",
+     "previous_session": "2026-11-09",
+     "units": "UNCHANGED",
+     "assessed_at": "2026-11-11T23:00:40Z"
+    },
+    "GOVX 2026-11-11": {
+     "assessment": "ARTIFACT_CONFIRMED",
+     "previous_session": "2026-11-10",
+     "units": "PRE_SPLIT_CONFIRMED",
+     "assessed_at": "2026-11-12T23:00:40Z"
+    },
+    "SLXN 2026-11-11": {
+     "assessment": "ARTIFACT_CONFIRMED",
+     "previous_session": "2026-11-10",
+     "units": "PRE_SPLIT_CONFIRMED",
+     "assessed_at": "2026-11-12T23:00:40Z"
+    }
+   },
+   "validator_problems": [],
+   "removed_corrected": [
+    "ATYR 2026-10-30",
+    "ENLV 2026-10-28",
+    "GOVX 2026-11-11",
+    "MASK 2026-10-30",
+    "OMEX 2026-10-30",
+    "PARA 2026-10-28",
+    "SCAG 2026-10-28",
+    "SLXN 2026-11-11",
+    "TOPS 2026-11-09",
+    "WHLR 2026-10-30",
+    "XXII 2026-11-05"
+   ],
+   "removed_at_the_time": [
+    "SMX 2026-11-10"
+   ],
+   "unresolved": [
+    "ADIL 2026-10-28",
+    "GNTA 2026-11-02",
+    "HUBC 2026-11-03",
+    "NUWE 2026-10-27",
+    "OMH 2026-11-04",
+    "RCT 2026-11-06",
+    "SGRX 2026-10-30",
+    "VCIG 2026-11-02"
+   ],
+   "records_added_by_running_the_same_night_twice": 0,
+   "hook_returned_the_ledger_for_commit": true
+  },
+  "night_3": {
+   "run_at": "2026-11-13T23:00:40Z",
+   "pull": "the provider returns no bars for GOVX",
+   "records_appended": 1,
+   "appended_by_assessment": {
+    "NOT_ASSESSABLE": 1
+   },
+   "marked_as_the_scans_own_pull": 0,
+   "reassessments": [
+    {
+     "set": "GOVX 2026-11-11",
+     "assessment": "NOT_ASSESSABLE",
+     "split": "",
+     "split_adjusted_ret1": null,
+     "names_the_record_it_supersedes": true
+    }
+   ],
+   "named_sets_standing": {
+    "SMX 2026-11-10": {
+     "assessment": "REAL_MOVE_AFTER_SPLIT",
+     "previous_session": "2026-11-09",
+     "units": "UNCHANGED",
+     "assessed_at": "2026-11-11T23:00:40Z"
+    },
+    "GOVX 2026-11-11": {
+     "assessment": "ARTIFACT_CONFIRMED",
+     "previous_session": "2026-11-10",
+     "units": "PRE_SPLIT_CONFIRMED",
+     "assessed_at": "2026-11-12T23:00:40Z"
+    },
+    "SLXN 2026-11-11": {
+     "assessment": "ARTIFACT_CONFIRMED",
+     "previous_session": "2026-11-10",
+     "units": "PRE_SPLIT_CONFIRMED",
+     "assessed_at": "2026-11-12T23:00:40Z"
+    }
+   },
+   "validator_problems": [],
+   "removed_corrected": [
+    "ATYR 2026-10-30",
+    "ENLV 2026-10-28",
+    "GOVX 2026-11-11",
+    "MASK 2026-10-30",
+    "OMEX 2026-10-30",
+    "PARA 2026-10-28",
+    "SCAG 2026-10-28",
+    "SLXN 2026-11-11",
+    "TOPS 2026-11-09",
+    "WHLR 2026-10-30",
+    "XXII 2026-11-05"
+   ],
+   "removed_at_the_time": [
+    "SMX 2026-11-10"
+   ],
+   "unresolved": [
+    "ADIL 2026-10-28",
+    "GNTA 2026-11-02",
+    "HUBC 2026-11-03",
+    "NUWE 2026-10-27",
+    "OMH 2026-11-04",
+    "RCT 2026-11-06",
+    "SGRX 2026-10-30",
+    "VCIG 2026-11-02"
+   ],
+   "records_added_by_running_the_same_night_twice": 0,
+   "hook_returned_the_ledger_for_commit": true
+  },
+  "night_4": {
+   "run_at": "2026-11-14T23:00:40Z",
+   "pull": "the provider answers for GOVX again",
+   "records_appended": 1,
+   "appended_by_assessment": {
+    "ARTIFACT_CONFIRMED": 1
+   },
+   "marked_as_the_scans_own_pull": 0,
+   "reassessments": [
+    {
+     "set": "GOVX 2026-11-11",
+     "assessment": "ARTIFACT_CONFIRMED",
+     "split": "2026-11-11 1:24",
+     "split_adjusted_ret1": -0.1964,
+     "names_the_record_it_supersedes": true
+    }
+   ],
+   "named_sets_standing": {
+    "SMX 2026-11-10": {
+     "assessment": "REAL_MOVE_AFTER_SPLIT",
+     "previous_session": "2026-11-09",
+     "units": "UNCHANGED",
+     "assessed_at": "2026-11-11T23:00:40Z"
+    },
+    "GOVX 2026-11-11": {
+     "assessment": "ARTIFACT_CONFIRMED",
+     "previous_session": "2026-11-10",
+     "units": "PRE_SPLIT_CONFIRMED",
+     "assessed_at": "2026-11-14T23:00:40Z"
+    },
+    "SLXN 2026-11-11": {
+     "assessment": "ARTIFACT_CONFIRMED",
+     "previous_session": "2026-11-10",
+     "units": "PRE_SPLIT_CONFIRMED",
+     "assessed_at": "2026-11-12T23:00:40Z"
+    }
+   },
+   "validator_problems": [],
+   "removed_corrected": [
+    "ATYR 2026-10-30",
+    "ENLV 2026-10-28",
+    "GOVX 2026-11-11",
+    "MASK 2026-10-30",
+    "OMEX 2026-10-30",
+    "PARA 2026-10-28",
+    "SCAG 2026-10-28",
+    "SLXN 2026-11-11",
+    "TOPS 2026-11-09",
+    "WHLR 2026-10-30",
+    "XXII 2026-11-05"
+   ],
+   "removed_at_the_time": [
+    "SMX 2026-11-10"
+   ],
+   "unresolved": [
+    "ADIL 2026-10-28",
+    "GNTA 2026-11-02",
+    "HUBC 2026-11-03",
+    "NUWE 2026-10-27",
+    "OMH 2026-11-04",
+    "RCT 2026-11-06",
+    "SGRX 2026-10-30",
+    "VCIG 2026-11-02"
+   ],
+   "records_added_by_running_the_same_night_twice": 0,
+   "hook_returned_the_ledger_for_commit": true
+  }
+ }
+}
