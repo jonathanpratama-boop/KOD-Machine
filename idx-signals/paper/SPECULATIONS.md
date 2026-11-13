@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-13T10:40:54Z from `paper/speculations.jsonl`: 248 sets sealed, 292 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-13T10:41:33Z from `paper/speculations.jsonl`: 248 sets sealed, 304 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -8,27 +8,27 @@ Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, 
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
-| BASE5 | 14 | 7 | 7 | 3 | -10.69% | -12.26% | -1.10% | -9.59% | -3.93 | 0.970 | - / next 60 | accumulating (no look reached) |
+| BASE5 | 21 | 11 | 11 | 5 | -6.81% | -11.62% | +0.27% | -7.08% | -2.74 | 0.974 | - / next 60 | accumulating (no look reached) |
 
 Projection (labelled): sessions of resolved sets needed for t >= 3 if the true paired effect were 2, 5 or 10 points per set, and sessions to the next look at the current candidate rate.
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.134 (validation trade sd 0.1967 (run 20261009T050040Z_MOONSHOT_E1_D1_v1.1), paired, / sqrt(sets per session)) | 402 | 65 | 17 | 13 |
+| 0.134 (validation trade sd 0.1967 (run 20261009T050040Z_MOONSHOT_E1_D1_v1.1), paired, / sqrt(sets per session)) | 402 | 65 | 17 | 12 |
 
-PATH20 windows resolved: 0; NEXT1: 39.
+PATH20 windows resolved: 0; NEXT1: 44.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| RUN30_5 | 14 | 0.286 | 0.000 | 0.183 | 0.2146 | 0.2500 | 0.2500 |
-| FADE10_5 | 7 | 0.714 | 0.000 | 0.359 | 0.3303 | 0.2500 | 0.2500 |
-| GAIN0_5 | 7 | 0.143 | 0.371 | 0.311 | 0.1507 | 0.2500 | 0.2500 |
-| BEATS_TWINS_5 | 7 | 0.143 | 0.486 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| RUN30_5 | 21 | 0.238 | 0.000 | 0.183 | 0.1844 | 0.2500 | 0.2411 |
+| FADE10_5 | 11 | 0.545 | 0.000 | 0.359 | 0.2827 | 0.2500 | 0.2500 |
+| GAIN0_5 | 11 | 0.273 | 0.491 | 0.311 | 0.1998 | 0.2500 | 0.2500 |
+| BEATS_TWINS_5 | 11 | 0.273 | 0.473 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | RUN30_20 | 0 | | | | | | |
 | DOUBLE_20 | 0 | | | | | | |
-| DOWN10_1 | 38 | 0.000 | 0.000 | 0.303 | 0.1513 | 0.2500 | 0.1316 |
-| UP10_1 | 38 | 0.263 | 0.016 | 0.435 | 0.2139 | 0.2500 | 0.2085 |
-| BEATS_TWINS_1 | 38 | 0.421 | 0.500 | 0.500 | 0.2500 | 0.2500 | 0.2492 |
+| DOWN10_1 | 43 | 0.000 | 0.000 | 0.267 | 0.1337 | 0.2500 | 0.1163 |
+| UP10_1 | 43 | 0.256 | 0.019 | 0.416 | 0.2083 | 0.2500 | 0.2037 |
+| BEATS_TWINS_1 | 43 | 0.419 | 0.502 | 0.500 | 0.2500 | 0.2500 | 0.2489 |
 
 ## US: 183 sets over 13 signal sessions (2026-10-27 .. 2026-11-12, 14.08 sets per scan)
 
@@ -528,18 +528,6 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 
 | Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |
 |---|---|---|---|---:|---:|---:|---|
-| CRYPTO-2026-11-10-G2_RET30-INIT | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.20, BEATS_TWINS_1=0/0.40 |
-| 2026-11-04-F1_ARA-TMPO | BASE5 | RESOLVED | NOT_FILLABLE | n/a | n/a | n/a | RUN30_5=0/0.00, FADE10_5=?/0.00, GAIN0_5=?/0.60, BEATS_TWINS_5=?/0.40 |
-| 2026-11-04-F1_ARA-YUPI | BASE5 | RESOLVED | NOT_FILLABLE | n/a | n/a | n/a | RUN30_5=1/0.00, FADE10_5=?/0.00, GAIN0_5=?/0.60, BEATS_TWINS_5=?/0.60 |
-| 2026-11-04-F1_ARA-FLMC | BASE5 | RESOLVED | NOT_FILLABLE | n/a | n/a | n/a | RUN30_5=1/0.00, FADE10_5=?/0.00, GAIN0_5=?/0.60, BEATS_TWINS_5=?/0.60 |
-| 2026-11-11-F1_ARA-TRUS | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
-| 2026-11-11-F1_ARA-HRME | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
-| 2026-11-11-F1_ARA-AGAR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=1/0.00, BEATS_TWINS_1=1/0.40 |
-| 2026-11-11-F1_ARA-CBRE | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.20, BEATS_TWINS_1=0/0.40 |
-| 2026-11-11-F1_ARA-TAMA | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.40 |
-| US-2026-11-04-G2_RET30-OMH | BASE5 | RESOLVED | TRADED | -68.63% | +3.17% | -71.79% | RUN30_5=1/0.00, FADE10_5=1/0.00, GAIN0_5=0/0.40, BEATS_TWINS_5=0/0.40 |
-| US-2026-11-04-G2_RET30-HPAI | BASE5 | RESOLVED | TRADED | -4.60% | -13.20% | +8.60% | RUN30_5=0/0.00, FADE10_5=0/0.33, GAIN0_5=0/0.00, BEATS_TWINS_5=1/0.67 |
-| US-2026-11-04-G2_RET30-CRIS | BASE5 | RESOLVED | TRADED | -43.95% | +3.13% | -47.09% | RUN30_5=0/0.20, FADE10_5=1/0.20, GAIN0_5=0/0.20, BEATS_TWINS_5=0/0.40 |
 | US-2026-11-04-G2_RET30-PMAX | BASE5 | RESOLVED | TRADED | -21.85% | +3.07% | -24.92% | RUN30_5=0/0.20, FADE10_5=1/0.20, GAIN0_5=0/0.40, BEATS_TWINS_5=0/0.40 |
 | US-2026-11-04-G2_RET30-CMTG | BASE5 | RESOLVED | TRADED | -17.67% | -8.12% | -9.55% | RUN30_5=0/0.00, FADE10_5=1/0.40, GAIN0_5=0/0.00, BEATS_TWINS_5=0/0.60 |
 | US-2026-11-04-G2_RET30-DKI | BASE5 | RESOLVED | TRADED | -26.94% | -0.19% | -26.75% | RUN30_5=0/0.00, FADE10_5=1/0.20, GAIN0_5=0/0.40, BEATS_TWINS_5=0/0.40 |
@@ -568,4 +556,16 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | US-2026-11-11-G2_RET30-REED | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.25, UP10_1=1/0.00, BEATS_TWINS_1=1/0.50 |
 | US-2026-11-11-G2_RET30-SLXN | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
 | CRYPTO-2026-11-06-G2_RET30-ONE | BASE5 | RESOLVED | TRADED | -17.32% | -7.43% | -9.88% | RUN30_5=0/0.00, FADE10_5=1/0.20, GAIN0_5=0/0.00, BEATS_TWINS_5=0/0.60 |
+| 2026-11-04-F1_ARA-BOBA | BASE5 | RESOLVED | TRADED | -17.33% | -0.29% | -17.04% | RUN30_5=0/0.00, FADE10_5=1/0.00, GAIN0_5=0/0.40, BEATS_TWINS_5=0/0.40 |
+| 2026-11-04-F1_ARA-AIMS | BASE5 | RESOLVED | NOT_FILLABLE | n/a | n/a | n/a | RUN30_5=1/0.00, FADE10_5=?/0.00, GAIN0_5=?/0.20, BEATS_TWINS_5=?/0.60 |
+| 2026-11-05-F1_ARA-YUPI | BASE5 | RESOLVED | TRADED | -8.34% | -0.37% | -7.97% | RUN30_5=0/0.00, FADE10_5=0/0.00, GAIN0_5=0/0.60, BEATS_TWINS_5=0/0.40 |
+| 2026-11-05-F1_ARA-BELL | BASE5 | RESOLVED | TRADED | +5.37% | +3.00% | +2.37% | RUN30_5=0/0.00, FADE10_5=0/0.00, GAIN0_5=1/0.80, BEATS_TWINS_5=1/0.60 |
+| 2026-11-05-F1_ARA-BAJA | BASE5 | RESOLVED | TRADED | +20.17% | +8.36% | +11.81% | RUN30_5=0/0.00, FADE10_5=0/0.00, GAIN0_5=1/1.00, BEATS_TWINS_5=1/0.40 |
+| 2026-11-05-F1_ARA-FLMC | BASE5 | RESOLVED | NOT_FILLABLE | n/a | n/a | n/a | RUN30_5=0/0.00, FADE10_5=?/0.00, GAIN0_5=?/0.80, BEATS_TWINS_5=?/0.60 |
+| 2026-11-05-F1_ARA-AIMS | BASE5 | RESOLVED | NOT_FILLABLE | n/a | n/a | n/a | RUN30_5=0/0.00, FADE10_5=?/0.00, GAIN0_5=?/0.80, BEATS_TWINS_5=?/0.40 |
+| 2026-11-12-F1_ARA-TRON | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.60 |
+| 2026-11-12-F1_ARA-AGAR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
+| 2026-11-12-F1_ARA-AIMS | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.20, BEATS_TWINS_1=0/0.40 |
+| 2026-11-12-F1_ARA-VKTR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=1/0.00, BEATS_TWINS_1=1/0.60 |
+| 2026-11-12-F1_ARA-TAMA | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 
