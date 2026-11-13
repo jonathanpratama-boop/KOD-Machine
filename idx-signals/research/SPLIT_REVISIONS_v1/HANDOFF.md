@@ -136,9 +136,9 @@ On the next scheduled run, check:
 - `python3 -m idxsig paper-verify` passes;
 - the paper book report ends with the section "Secondary view: split-unit assessments" and its three views;
 - on later nights a line marked `[reassessment]` appears only when a set's assessment changed;
-- ARAI 2026-11-12: if the provider lists a split for it, a reassessment record should appear that supersedes its
-  first assessment, and the corrected view should leave the set out from then on. If no split is ever listed, it
-  stays unresolved, as VCIG has.
+- ARAI 2026-11-12: on the first run whose pull lists a split for it, its assessment should be `ARTIFACT_CONFIRMED`
+  (as a first assessment, or as a reassessment that supersedes an earlier unresolved one), and the corrected view
+  should leave the set out from then on. If no split is ever listed, it stays unresolved, as VCIG has.
 
 ## 6. Effect on published results
 
