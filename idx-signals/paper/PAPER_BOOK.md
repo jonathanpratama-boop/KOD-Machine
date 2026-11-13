@@ -4,26 +4,26 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-13T07:59:40.798913Z; latest US scan session: 2026-11-12.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-12T22:59:41Z (signal session 2026-11-12).
+- Assessed 2026-11-13T23:04:21.890670Z; latest US scan session: 2026-11-13.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-13T23:02:00Z (signal session 2026-11-13).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
-- SEC configuration was not assessed by this offline report; check the environment running the US forecast job.
+- SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-13T07:59:40Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-13T23:04:21Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 121 spikes planned, 11 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 140 spikes planned, 11 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 109 | 107 | 2 | 1 | $-80 | -4.02% |
-| ALL | every spike | 121 | 110 | 11 | 4 | $-1,140 | -10.37% |
+| KOD | every BUY_OK | 128 | 126 | 2 | 1 | $-80 | -4.02% |
+| ALL | every spike | 140 | 129 | 11 | 4 | $-1,140 | -10.37% |
 | AVOIDED | every DONT_BUY (kept out) | 12 | 3 | 9 | 3 | $-1,060 | -11.78% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
@@ -31,6 +31,25 @@ Generated 2026-11-13T07:59:40Z. Paper only: no orders, no money. Protocol: `rese
 
 | Signal | Ticker | Dump tomorrow | KOD | You | Status | Net |
 |---|---|---:|---|---|---|---:|
+| 2026-11-13 | ZBAO | 0.43 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | VTSI | 0.13 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | TGHL | 0.16 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | SLSN | 0.15 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | SLND | 0.09 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | SHIM | 0.10 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | SHFS | 0.43 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | SBC | 0.09 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | RAIN | 0.13 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | ONFO | 0.38 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | NMAX | 0.09 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | LFTO | 0.08 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | LFMD | 0.09 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | FCUV | 0.34 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | FCDH | 0.14 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | BKHA | 0.22 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | BGIN | 0.14 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | AKAN | 0.28 | BUY_OK | - | OPEN | - |
+| 2026-11-13 | AEI | 0.14 | BUY_OK | - | OPEN | - |
 | 2026-11-12 | XLAB | 0.28 | BUY_OK | - | OPEN | - |
 | 2026-11-12 | TGHL | 0.17 | BUY_OK | - | OPEN | - |
 | 2026-11-12 | TGEN | 0.14 | BUY_OK | - | OPEN | - |
@@ -156,7 +175,7 @@ Generated 2026-11-13T07:59:40Z. Paper only: no orders, no money. Protocol: `rese
 
 ## Secondary view: split-unit assessments (display only, the frozen verdict above is unchanged)
 
-9 of 121 planned spikes are split artifacts on current evidence (7 confirmed, 2 probable): a reverse split left the previous close in pre-split units, so the recorded +30% day did not happen. 0 are unresolved and stay in every view. 1 carried an artifact tag that current evidence does not support. Ledgers: `paper/split_flags.jsonl` (rule `SPLIT_ARTIFACT_V11`, the tag at the time) and `paper/split_assessments.jsonl` (rule `SPLIT_UNITS_V1`, research/SPLIT_REVISIONS_v1).
+9 of 140 planned spikes are split artifacts on current evidence (7 confirmed, 2 probable): a reverse split left the previous close in pre-split units, so the recorded +30% day did not happen. 0 are unresolved and stay in every view. 1 carried an artifact tag that current evidence does not support. Ledgers: `paper/split_flags.jsonl` (rule `SPLIT_ARTIFACT_V11`, the tag at the time) and `paper/split_assessments.jsonl` (rule `SPLIT_UNITS_V1`, research/SPLIT_REVISIONS_v1).
 
 | Spike | Session | Tag at the time | Tag recorded before entry cutoff | Current assessment | Assessed |
 |---|---|---|---|---|---|
@@ -175,12 +194,12 @@ The same books three ways. As frozen counts every planned spike. Known at the ti
 
 | Book | View | Positions | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|
-| KOD | As frozen | 109 | 2 | 1 | $-80 | -4.02% |
-| KOD | Known at the time | 107 | 2 | 1 | $-80 | -4.02% |
-| KOD | Corrected | 105 | 2 | 1 | $-80 | -4.02% |
-| ALL | As frozen | 121 | 11 | 4 | $-1,140 | -10.37% |
-| ALL | Known at the time | 119 | 11 | 4 | $-1,140 | -10.37% |
-| ALL | Corrected | 112 | 7 | 2 | $-1,087 | -15.52% |
+| KOD | As frozen | 128 | 2 | 1 | $-80 | -4.02% |
+| KOD | Known at the time | 126 | 2 | 1 | $-80 | -4.02% |
+| KOD | Corrected | 124 | 2 | 1 | $-80 | -4.02% |
+| ALL | As frozen | 140 | 11 | 4 | $-1,140 | -10.37% |
+| ALL | Known at the time | 138 | 11 | 4 | $-1,140 | -10.37% |
+| ALL | Corrected | 131 | 7 | 2 | $-1,087 | -15.52% |
 | AVOIDED | As frozen | 12 | 9 | 3 | $-1,060 | -11.78% |
 | AVOIDED | Known at the time | 12 | 9 | 3 | $-1,060 | -11.78% |
 | AVOIDED | Corrected | 7 | 5 | 1 | $-1,006 | -20.13% |
