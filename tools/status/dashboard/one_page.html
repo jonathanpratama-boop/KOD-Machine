@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KOD · Research status</title>
+<style>
+:root{color-scheme:light;--paper:#f6f5f0;--white:#fff;--ink:#222b28;--muted:#616d66;--line:#dce1d9;--green:#285744;--pale:#e7eee7;--amber:#89561c;--amber-bg:#fff3df;--red:#9a4036}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}a{color:var(--green);text-underline-offset:3px}button,summary,a,input{outline-offset:4px}button:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--green)}
+.page{max-width:1360px;margin:auto;padding:32px 44px 60px}.masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:26px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:14px}.brand b{font-size:28px;letter-spacing:-1.5px}.brand span{padding-left:14px;border-left:1px solid var(--line);color:var(--muted);font-size:14px}.snapshot{text-align:right;color:var(--muted);font-size:12px}.snapshot strong{display:block;color:var(--ink);font-weight:550;font-size:13px}.snapshot .old{color:var(--amber)}
+.hero{display:grid;grid-template-columns:1.6fr 1fr;gap:40px;padding:36px 0 28px}.eyebrow{font-size:11px;font-weight:650;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);margin:0 0 8px}h1{font-size:clamp(30px,3.3vw,46px);font-weight:550;letter-spacing:-1.8px;line-height:1.12;margin:0 0 14px}.intro{max-width:590px;color:var(--muted);margin:0;font-size:15px}.stats{display:grid;grid-template-columns:repeat(3,1fr);align-self:center;border-left:1px solid var(--line)}.stat{padding-left:24px}.stat b{display:block;font-size:36px;line-height:1.2;font-weight:500;letter-spacing:-1px}.stat span{font-size:12px;color:var(--muted);display:block;max-width:110px}
+.brief{display:grid;grid-template-columns:1fr 1.25fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:30px}.brief>div{background:#eef1e9;padding:16px 20px}.brief>div:last-child{background:#fff7e9}.brief small{display:block;color:var(--muted);font-size:11px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}.brief strong{font-size:14px;font-weight:600}.brief p{font-size:12px;color:var(--muted);margin:5px 0 0}
+.toolbar{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 12px}.toolbar h2{margin:0;font-size:19px;letter-spacing:-.4px;font-weight:600}.toolbar p{margin:3px 0 0;font-size:12px;color:var(--muted)}.search{position:relative}.search input{width:260px;padding:10px 13px;background:var(--white);border:1px solid var(--line);border-radius:7px;font-size:13px}.board{border:1px solid var(--line);border-radius:10px;background:var(--white);overflow:clip}.column-head,.experiment{display:grid;grid-template-columns:minmax(240px,1.45fr) minmax(210px,1fr) minmax(200px,1fr) 150px;gap:24px}.column-head{padding:12px 22px;background:#edf0ea;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#536158}.experiment{padding:22px;border-top:1px solid var(--line);align-items:start}.experiment:first-child{border-top:0}.experiment[data-cloud="true"]{background:#f7faf6}.category{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin:0 0 5px}.experiment h3{font-size:15px;line-height:1.4;margin:0 0 7px;font-weight:600}.question{font-size:12px;color:var(--muted);margin:0}.evidence strong{font-size:24px;font-weight:550;letter-spacing:-.6px;line-height:1.1}.evidence .denominator{font-size:15px;color:var(--muted);font-weight:400}.metric-label{font-size:12px;margin:4px 0 7px}.capture{font-size:11px;color:var(--muted);margin:6px 0}.bar{height:4px;border-radius:3px;background:#edf0eb;overflow:hidden;margin-top:9px}.bar span{height:100%;display:block;background:#62876e}.requirement{font-size:11px;line-height:1.5;color:var(--muted);margin:8px 0 0}.date{font-size:14px;font-weight:600}.date-kind{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:3px 0 7px}.next-note{font-size:12px;color:var(--muted);margin:0}.tag{display:inline-flex;align-items:center;gap:6px;border-radius:4px;padding:4px 7px;font-size:11px;font-weight:600;background:var(--pale);color:var(--green)}.tag:before{content:"";height:5px;width:5px;background:currentColor;border-radius:50%}.tag.warn{color:var(--amber);background:var(--amber-bg)}.tag.bad{color:var(--red);background:#f8eae5}.checked{font-size:11px;color:var(--muted);margin:8px 0 0}.check-state{font-size:11px;color:var(--muted);margin:4px 0}.detail{grid-column:1/-1;font-size:12px;margin-top:-8px}.detail summary{width:fit-content;color:var(--green);cursor:pointer;font-size:11px;padding:4px 0}.detail[open]{padding-top:7px;border-top:1px dashed var(--line)}.detail-content{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:10px 0 0}.detail-content p{margin:0 0 12px;color:var(--muted);overflow-wrap:anywhere}.detail-content b{display:block;color:var(--ink);margin-bottom:4px;font-weight:600}.source-links{display:flex;gap:10px;flex-wrap:wrap}.detail-content .source-path{font:11px/1.6 ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere}.empty{padding:30px;color:var(--muted)}
+.archive{margin-top:22px;border:1px solid var(--line);border-radius:10px;padding:16px 20px;background:#f0f1eb}.archive>summary{font-size:13px;font-weight:550;cursor:pointer}.archive>summary span{color:var(--muted);font-weight:400;margin-left:8px}.archive-content{margin-top:18px}.archive-content h3{font-size:15px;margin:24px 0 10px}.archive-content p,.archive-content li{font-size:12px;color:var(--muted)}.record{padding:13px 0;border-bottom:1px solid var(--line)}.record b{font-size:13px}.record p{margin:4px 0 0}.record small{color:var(--muted);font-size:10px}.record .detail{margin-top:5px}.job{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding:9px 0;font-size:12px}.job span:last-child{color:var(--muted)}footer{display:flex;gap:20px;justify-content:space-between;color:var(--muted);font-size:11px;padding-top:24px}footer p{margin:0;max-width:700px}.download{white-space:nowrap;border:0;padding:0;color:var(--green);background:none;font-size:11px;text-decoration:underline;cursor:pointer}noscript{display:block;padding:30px}
+@media(max-width:1050px){.page{padding:26px}.column-head,.experiment{grid-template-columns:1.25fr 1fr 1fr;gap:20px}.column-head span:last-child{display:none}.health{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.checked,.check-state{margin:0}.detail{margin-top:-12px}.hero{gap:20px}.stat{padding-left:15px}}
+@media(max-width:650px){.page{padding:20px 16px 40px}.masthead{align-items:start;gap:14px}.brand{display:block}.brand span{display:block;border:0;padding:0;font-size:11px}.brand b{font-size:25px}.snapshot{font-size:10px;max-width:180px}.snapshot strong{font-size:11px}.hero{display:block;padding:28px 0 22px}h1{font-size:34px;letter-spacing:-1.3px}.intro{font-size:13px}.stats{border:0;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}.stat{padding:0}.stat b{font-size:29px}.stat span{font-size:11px}.brief{grid-template-columns:1fr;margin-bottom:24px}.brief>div{padding:14px 16px}.toolbar{align-items:stretch;flex-direction:column;gap:12px}.search input{width:100%}.column-head{display:none}.experiment{grid-template-columns:1fr 1fr;gap:18px;padding:20px 16px}.experiment>div:first-child{grid-column:1/-1}.experiment h3{font-size:16px}.evidence strong{font-size:26px}.detail{margin-top:-8px}.detail-content{grid-template-columns:1fr;gap:0}.question{font-size:13px}.category{font-size:10px}.health{gap:8px}.archive{padding:15px}.archive>summary span{display:block;margin:4px 0 0}footer{flex-direction:column;gap:12px}.job{display:block}.job span{display:block}}
+@media(prefers-reduced-motion:no-preference){.experiment{animation:arrive .25s ease-out}@keyframes arrive{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}}
+/* Compact terminal theme. Layout and evidence stay in one continuous page. */
+:root{color-scheme:dark;--paper:#080a0c;--white:#0b0e11;--ink:#e0e5e9;--muted:#a0acb6;--line:#303943;--green:#ff9e24;--pale:#12271e;--amber:#ffd35b;--amber-bg:#302610;--red:#ff7e76}
+body{font:14px/1.55 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}.page{max-width:1800px;padding:12px 18px 32px}.masthead{gap:15px;padding:8px 12px;background:#151a20;border:1px solid var(--line);border-top:3px solid #ff9824}.brand{gap:12px}.brand b{font-size:26px;letter-spacing:1px;color:#ffab3b}.brand span{font-size:13px;color:#c0c9d0;text-transform:uppercase;letter-spacing:1px}.snapshot{font-size:12px}.snapshot strong{font-size:13px;color:#e4e9ed}.snapshot .old{color:#ffd35b}.hero{grid-template-columns:1.6fr 1fr;gap:24px;padding:20px 12px 18px}.eyebrow{font-size:12px;letter-spacing:1px;color:#ffab3b}h1{font-size:28px;letter-spacing:-.6px;font-weight:600;line-height:1.2;margin-bottom:8px}.intro{font-size:13px;max-width:640px}.stats{border:1px solid var(--line);background:#10151a}.stat{padding:10px 12px;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat b{font-size:30px;line-height:1.1;color:var(--ink);font-weight:500;letter-spacing:-1px}.stat span{font-size:12px;max-width:130px;margin-top:5px}.brief{margin-bottom:18px;border-radius:0;background:var(--line)}.brief>div{background:#101820;padding:10px 12px}.brief>div:last-child{background:#201b10}.brief small{color:var(--muted);font-size:12px;margin-bottom:3px}.brief strong{font-size:14px}.brief p{font-size:12px;line-height:1.5;margin-top:4px}.toolbar{margin-bottom:8px;align-items:center;gap:12px}.toolbar h2{font-size:15px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink)}.toolbar p{font-size:12px;margin-top:2px}.search input{width:275px;border-radius:0;background:#111a22;border-color:#3b4e60;padding:7px 10px;color:#80d2ff;font-size:13px}.search input::placeholder{color:#a0acb6}.board{border-radius:0}.column-head{padding:8px 12px;background:#202a33;color:var(--muted);font-size:12px;letter-spacing:.4px}.column-head,.experiment{grid-template-columns:minmax(230px,1.45fr) minmax(200px,1fr) minmax(200px,1fr) 165px;gap:20px}.experiment{padding:14px 12px;row-gap:10px;border-color:#28323c}.experiment:nth-child(even){background:#0f141a}.experiment:hover{background:#14202c}.experiment[data-cloud="true"]{background:#0f141a}.category{font-size:12px;letter-spacing:.6px;color:#8d9dac;margin-bottom:4px}.experiment h3{font-size:15px;color:var(--ink);line-height:1.4;margin-bottom:5px}.question{font-size:13px;color:#b0bbc4;line-height:1.5}.evidence strong{font-size:26px;color:var(--ink);font-weight:500;letter-spacing:-.5px}.evidence .denominator{font-size:15px;color:#8998a6}.metric-label{font-size:12px;margin:4px 0 5px;color:#d0d8df}.capture{font-size:12px;color:#9db4c5;margin:5px 0}.bar{height:3px;background:#29333d;margin-top:7px;border-radius:0}.bar span{background:#4f9bd1}.requirement{font-size:12px;margin-top:6px;color:#a7b1ba}.date{color:var(--ink);font-size:14px}.date-kind{font-size:12px;color:#8c9ba7;letter-spacing:.4px;margin:3px 0 6px}.next-note{font-size:12px;line-height:1.5}.tag{font-size:12px;padding:3px 6px;border-radius:0;color:#6fdf9a;background:#14271e;border:1px solid #294b38;font-weight:500}.tag.warn{color:#ffd35b;background:#2d250f;border-color:#66521c}.tag.bad{color:#ff8e85;background:#321815;border-color:#6d352f}.checked,.check-state{font-size:12px;line-height:1.6;margin-top:6px}.detail{margin-top:0;font-size:12px}.detail summary{font-size:12px;color:#7bcaff;padding:3px 0}.detail-content{gap:12px}.detail-content b{color:var(--ink);font-size:12px}.detail-content p{font-size:12px;line-height:1.6}.detail-content .source-path{font-size:12px;color:#7bcaff}.archive{background:#11161c;border-radius:0;padding:10px 12px;margin-top:14px}.archive>summary{font-size:14px;color:var(--ink)}.archive>summary span{font-size:12px;color:#a0acb6}.archive-content h3{font-size:14px;color:var(--ink)}.archive-content p,.archive-content li{font-size:12px}.record{padding:10px 0}.record b{font-size:13px}.record small{font-size:12px;color:#93bfdc}.job{font-size:12px}.download{color:#7bcaff;font-size:12px}footer{padding-top:14px;font-size:12px}a{color:#7bcaff}button:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline-color:#75d0ff}
+.column-head,.experiment{grid-template-columns:minmax(250px,1.4fr) minmax(230px,1fr) minmax(220px,1fr) 170px}
+@media(max-width:1050px){.column-head,.experiment{grid-template-columns:1.2fr 1fr 1fr;gap:15px}.column-head span:last-child{display:none}.health{grid-column:1/-1;display:flex;gap:10px;align-items:center}.checked,.check-state{margin:0}.hero{gap:18px}.stat{padding:9px}.stat b{font-size:27px}}
+@media(max-width:650px){.page{padding:8px 10px 24px}.masthead{padding:8px}.brand span{font-size:12px;padding:0;border:0;letter-spacing:.4px}.brand b{font-size:25px}.snapshot{font-size:12px;max-width:190px}.snapshot strong{font-size:12px}.hero{display:block;padding:18px 4px 16px}h1{font-size:26px;letter-spacing:-.6px}.intro{font-size:12px}.stats{margin-top:14px;padding:0;border:1px solid var(--line)}.stat{padding:9px}.stat b{font-size:28px}.stat span{font-size:12px}.brief{margin-bottom:16px}.brief>div{padding:10px}.brief strong{font-size:13px}.brief p{font-size:12px}.toolbar{align-items:stretch;gap:9px}.toolbar h2{font-size:14px}.toolbar p{font-size:12px}.search input{width:100%;font-size:13px}.experiment{grid-template-columns:1fr 1fr;padding:14px 10px;gap:14px}.experiment[data-cloud="true"]{padding-left:7px}.experiment>div:first-child{grid-column:1/-1}.experiment h3{font-size:15px}.question{font-size:13px}.evidence strong{font-size:26px}.health{gap:8px}.checked,.check-state{font-size:12px}.archive{padding:11px}.archive>summary span{margin-top:4px}footer{font-size:12px}}
+
+.experiment.attn-warn{border-left:3px solid var(--amber);padding-left:9px;background:#17140a}.experiment.attn-bad{border-left:3px solid var(--red);padding-left:9px;background:#1a0f0e}.change{font-size:13px;margin:7px 0 0;color:var(--muted)}.change.up{color:#6fdf9a}.brief>div.alert{background:#2a2110}.brief>div.alert small{color:var(--amber)}
+.cloud-results{grid-column:1/-1;min-width:0;border-top:1px solid var(--line);padding-top:10px}.cloud-result-heading{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px}.cloud-result-heading b{color:#e0e5e9}.cloud-result-heading span{color:var(--muted)}.cloud-results table{width:100%;table-layout:fixed;border-collapse:collapse;margin:8px 0;font-size:12px}.cloud-results th,.cloud-results td{text-align:right;padding:7px 9px;border-bottom:1px solid var(--line);overflow-wrap:anywhere;vertical-align:top}.cloud-results th{font-size:11px;font-weight:500;color:var(--muted);background:#18212a}.cloud-results th:first-child,.cloud-results td:first-child{text-align:left;width:14%}.cloud-results .positive{color:#6fdf9a}.cloud-results .negative{color:#ff8e85}.cloud-results .result-note{font-size:12px;color:var(--muted);margin:5px 0}.cloud-results .result-warning{color:var(--amber)}.cloud-results .event-line{font-size:12px;margin:5px 0;color:#b0bbc4}@media(max-width:650px){.cloud-results th,.cloud-results td{padding:6px 3px;font-size:11px}.cloud-results th:first-child,.cloud-results td:first-child{width:15%}.cloud-result-heading{display:block}.cloud-result-heading span{display:block;margin-top:3px}}
+.prospective-check{margin:12px 0;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.cloud-results .prospective-summary{color:var(--ink);font-weight:600}.prospective-event{padding:6px 0;border-top:1px solid #28323c}.prospective-event p{overflow-wrap:anywhere}
+@media print{body{background:white;color:black}.page{padding:0}.archive{display:none}.experiment,.experiment:nth-child(even),.experiment[data-cloud="true"]{background:white;break-inside:avoid}.search,.download{display:none}}
+</style>
+</head>
+<body>
+<script id="kod-data" type="application/json">__KOD_DATA__</script>
+<main class="page">
+  <header class="masthead"><div class="brand"><b>KOD</b><span>Research status</span></div><div class="snapshot"><strong id="snapshot-date"></strong><span id="snapshot-age"></span> · saved report</div></header>
+  <div class="hero"><div><h1 id="headline">No strategy has passed a live test yet.</h1><p class="intro">Each test has a set review point. Results are judged once enough outcomes and trading days are recorded.</p></div><div class="stats"><div class="stat"><b id="live-count"></b><span>active tests and collectors</span></div><div class="stat"><b id="theme-count"></b><span>research questions</span></div><div class="stat"><b id="passed-count"></b><span>strategies passed a live test</span></div></div></div>
+  <aside class="brief" aria-label="Upcoming review and attention"><div><small>Next results review · estimated</small><strong id="next-look"></strong><p>The date depends on how many results come in and how many trading days they cover.</p></div><div><small>Needs attention</small><strong id="attention"></strong><p id="attention-note"></p></div></aside>
+  <div class="toolbar"><div><h2>Ongoing experiments</h2><p id="scope"></p></div><label class="search"><input id="search" type="search" aria-label="Find an experiment" placeholder="Find an experiment…"></label></div>
+  <div class="board"><div class="column-head" aria-hidden="true"><span>Experiment</span><span>Results so far</span><span>What happens next</span><span>Last update</span></div><div id="experiments"></div></div>
+  <details class="archive"><summary>Past tests, jobs &amp; sources <span id="archive-counts"></span></summary><div class="archive-content" id="archive"></div></details>
+  <footer><p id="snapshot-note"></p></footer>
+  <noscript>Turn on JavaScript to view the experiment records.</noscript>
+</main>
+<script>
+'use strict';
+const data = JSON.parse(document.getElementById('kod-data').textContent);
+const build = data.build[0];
+const sourceRefresh = data.source_refresh || {};
+const sourceOverdue = (Date.now() - Date.parse(build.built_at)) > 2*3600000;
+const sourceStale = sourceRefresh.status === 'STALE' || sourceOverdue;
+const summary = data.summary[0];
+const programs = new Map(data.programs.map(program => [program.id, program]));
+const server = new Map(data.server.map(study => [study.study, study]));
+const cloudResults = data.cloud_results?.schema === 'KOD_R2_RESULTS_V1' ? data.cloud_results : null;
+const ongoing = data.experiments.filter(experiment => experiment.group !== 'closed').map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
+const historical = data.experiments.filter(experiment => experiment.group === 'closed');
+const count = value => value == null ? '—' : new Intl.NumberFormat('en-US').format(value);
+const text = value => value == null ? '' : String(value);
+// Display copy only. Original research records remain available in the details and download.
+const copy = {
+  LLM_ARM_v1: {
+    name: 'AI calls vs KOD forecasts',
+    question: 'Does an AI opinion on a flagged spike predict its next five trading days better than KOD alone?',
+    scored: 'AI calls with a five-day result', collected: 'AI calls recorded',
+    requirement: 'scored calls before the first review',
+  },
+  SPEC_REGISTER_US: {
+    question: 'After a US stock jumps 30%, does its five-day plan beat a group of similar stocks?',
+    scored: 'five-day results compared with similar stocks', collected: 'plans recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  SPEC_REGISTER_IDX: {
+    name: 'IDX spikes vs similar stocks',
+    question: 'After an Indonesian stock hits its daily upper limit, does its five-day plan beat similar stocks?',
+    scored: 'five-day results compared with similar stocks', collected: 'plans recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  SPEC_REGISTER_CRYPTO: {
+    question: 'After a coin jumps 30%, does its five-day plan beat a group of similar coins?',
+    scored: 'five-day results compared with similar coins', collected: 'plans recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  LEARNER_v2_2: {
+    name: 'KOD probability forecasts',
+    question: 'Can KOD predict which spikes and company filings will lead to stronger returns than similar assets?',
+    scored: 'completed four-week blocks', collected: 'forecasts recorded',
+    requirement: 'completed four-week blocks, plus at least 60 scored pairs',
+  },
+  LEARNER_v2_4: {
+    name: 'Next-day drop forecasts',
+    question: 'After a US stock jumps 30%, can KOD predict a drop of at least 10% the next day while similar stocks hold up?',
+    scored: 'forecasts with next-day results', collected: 'forecasts recorded',
+    requirement: 'results across at least 30 signal days',
+  },
+  CALL_CERT: {
+    name: 'High-confidence drop forecasts',
+    question: 'When KOD makes a high-confidence call that a stock will drop 10% tomorrow, is it right at least half the time?',
+    scored: 'calls with results', collected: 'calls recorded',
+  },
+  PAPER_BOOK_v1: {
+    name: 'US spike paper portfolio',
+    question: 'Do KOD’s paper buys make money, and do the stocks it skips perform worse?',
+    scored: 'closed paper trades', collected: 'trade plans recorded',
+    requirement: 'closed trades, including at least 50 buys and 50 skips',
+  },
+  PAPER_ACCOUNT_v1_BASE: {
+    name: '$10k paper account · spike-low stop',
+    question: 'Which orders fill, which are rejected, and what happens when the stop is set at the spike day’s low?',
+    scored: 'closed paper trades', collected: 'buy or skip decisions',
+  },
+  PAPER_ACCOUNT_v1_FIXED5: {
+    name: '$10k paper account · 5% stop',
+    question: 'How does the same paper account behave with a stop 5% below the entry price?',
+    scored: 'closed paper trades', collected: 'buy or skip decisions',
+  },
+  CRYPTO_ACCOUNT_v1: {
+    question: 'Does the crypto paper account correctly record buys, skips and fills at recorded prices?',
+    scored: 'closed paper trades', collected: 'decisions recorded',
+  },
+  PREMOVE_SHADOW_v1: {
+    name: 'Crypto jump forecasts',
+    question: 'Over a year, does the newer crypto model pick future jumpers better than the current model and a shuffled control?',
+    scored: 'days with complete five-day results', collected: 'days of predictions recorded',
+    requirement: 'scheduled prediction days, with the final five-day results due before review',
+  },
+  CATALYST_SEC13D: {
+    name: 'New investor stakes',
+    question: 'After an investor reports a stake of at least 5%, does the stock beat similar stocks over 20 trading days?',
+    scored: '20-day results for qualifying filings', collected: 'filing cases recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  CATALYST_SEC13D_V2: {
+    name: 'New investor stakes · wider comparison',
+    question: 'Does the broader 13D filing rule beat a group of 20 similar stocks over 20 trading days?',
+    scored: '20-day results for qualifying filings', collected: 'filing cases recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  CATALYST_DILUTION_8K: {
+    name: 'New share sales',
+    question: 'After a company reports selling new shares, does its stock trail similar stocks over 20 trading days?',
+    scored: '20-day results compared with similar stocks', collected: 'filing cases recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  CATALYST_FORM4: {
+    name: 'Insider purchases',
+    question: 'After insiders buy their own company’s stock, does it beat similar stocks over 20 trading days?',
+    scored: '20-day results compared with similar stocks', collected: 'filing cases recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  CATALYST_FORM4_SHARP: {
+    name: 'Insider purchases · strict filter',
+    question: 'Do insider purchases that pass the tighter filter beat similar stocks over 60 trading days?',
+    scored: '60-day results for qualifying filings', collected: 'filing cases recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  CATALYST_DOCUMENT_CLASS: {
+    name: 'Combined filing signals',
+    question: 'Across investor stakes, share sales and insider purchases, does filing type predict returns against similar stocks?',
+    scored: '20-day results for qualifying filings', collected: 'qualifying filing cases recorded',
+    requirement: 'paired results across at least 15 signal days',
+  },
+  trend_core_paper: {
+    name: 'Bitcoin/Ether trend test',
+    question: 'Can the fixed Bitcoin/Ether trend rule complete its 90-day paper test without gaps?',
+    scored: 'completed reviews', collected: 'days logged',
+    requirement: 'consecutive logged days before review',
+  },
+  'srv:timing_capture_30': {
+    name: 'Four-hour price collection',
+    question: 'Does the server record all 30 scheduled price snapshots on time?',
+    scored: 'scheduled slots completed', collected: 'snapshots saved',
+    requirement: 'scheduled slots before review',
+  },
+  'srv:supplement_30m': {
+    name: 'Half-hour price collection',
+    question: 'Does the half-hour collector capture the prices between the four-hour snapshots?',
+    scored: 'scheduled slots reached', collected: 'snapshots saved',
+    requirement: 'planned collection slots',
+  },
+  'srv:research_r2': {
+    question: 'How much opportunity remains when KOD checks for crypto jumps every 1, 5, 30 or 240 minutes?',
+    scored: 'events with a full 24-hour result',
+  },
+};
+const wording = (experiment, field, fallback) => copy[experiment.id]?.[field] || fallback;
+function date(value, time = false) {
+  if (!value) return 'Awaiting enough evidence';
+  const parsed = new Date(value.length === 10 ? value + 'T00:00:00+07:00' : value);
+  if (!Number.isFinite(parsed.getTime())) return text(value);
+  const options = {timeZone:'Asia/Jakarta', day:'numeric', month:'short', year:'numeric'};
+  if (time) Object.assign(options, {hour:'2-digit',minute:'2-digit',hour12:false});
+  return new Intl.DateTimeFormat('en-GB',options).format(parsed) + (time ? ' WIB' : '');
+}
+function age(value) {
+  const elapsed = (Date.now() - Date.parse(value)) / 3600000;
+  if (!Number.isFinite(elapsed)) return 'Time unavailable';
+  if (elapsed < 0) return 'Timestamp is in the future';
+  if (elapsed < 1) return Math.floor(elapsed * 60) + ' min old';
+  if (elapsed < 48) return Math.floor(elapsed) + ' h old';
+  return Math.floor(elapsed / 24) + ' days old';
+}
+function element(tag, className, content) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (content != null) node.textContent = content;
+  return node;
+}
+function sourceLinks(raw) {
+  const box = element('div','source-links');
+  for (const item of text(raw).split(';').map(value => value.trim()).filter(Boolean)) {
+    let url;
+    if (item.startsWith('KOD:') && !item.slice(4).startsWith('origin/')) {
+      url = 'https://github.com/jonathanpratama-boop/KOD-Machine/blob/' + encodeURIComponent(build.kod_commit) + '/' + item.slice(4).split('/').map(encodeURIComponent).join('/');
+    } else if (item.startsWith('KOD@') && item.includes(':')) {
+      const split=item.indexOf(':');
+      url='https://github.com/jonathanpratama-boop/KOD-Machine/blob/' + encodeURIComponent(item.slice(4,split)) + '/' + item.slice(split+1).split('/').map(encodeURIComponent).join('/');
+    } else if (item.startsWith('BACKUPS:')) {
+      const parts = item.split(':');
+      url = 'https://github.com/jonathanpratama-boop/KOD-Timing-Backups/blob/' + encodeURIComponent(parts[1]) + '/' + parts.slice(2).join(':').split('/').map(encodeURIComponent).join('/');
+    }
+    if (url && !/[*]/.test(item)) {
+      const link = element('a','source-path',item); link.href = url; link.target='_blank'; link.rel='noopener noreferrer';box.append(link);
+    } else box.append(element('span','source-path',item));
+  }
+  return box;
+}
+function detailBlock(label, content) {
+  const block = element('div');block.append(element('b','',label));
+  block.append(typeof content === 'string' ? element('p','',content) : content);
+  return block;
+}
+function evidence(experiment) {
+  const box = element('div','evidence');
+  if (experiment.id === 'srv:research_r2' && cloudResults) {
+    box.append(element('strong','',count(cloudResults.events_with_completed_24h)),element('p','metric-label','independent events with a 24-hour result'));
+    box.append(element('p','capture',count(cloudResults.independent_events) + ' independent ' + (cloudResults.independent_events === 1 ? 'event' : 'events') + ' recorded'));
+    const coverage = cloudResults.coverage?.on_time_fraction;
+    box.append(element('p','capture',coverage == null ? 'On-time coverage unavailable' : (coverage * 100).toFixed(2) + '% of minute readings received on time'));
+    box.append(element('p','requirement','Four timing entries on one event count as one independent event.'));
+    return box;
+  }
+  const trendDays = experiment.id === 'trend_core_paper';
+  const number = element('strong','',count(trendDays ? experiment.collected : experiment.scored));
+  if (experiment.needed != null) number.append(element('span','denominator',' / ' + count(experiment.needed)));
+  box.append(number,element('p','metric-label',trendDays ? 'consecutive days logged' : wording(experiment,'scored',experiment.scored_label)));
+  const r2 = experiment.id === 'srv:research_r2';
+  if (r2) {
+    const match = text(experiment.note).match(/(\d+) market event\(s\) admitted/);
+    if (match) box.append(element('p','capture',match[1] + (Number(match[1]) === 1 ? ' qualifying move recorded' : ' qualifying moves recorded')));
+    const study = server.get(experiment.id);
+    const coverage = study?.coverage == null ? 'Coverage unavailable' : (study.coverage * 100).toFixed(2) + '% received on time';
+    box.append(element('p','capture',count(experiment.collected) + ' one-minute prices · ' + coverage));
+    box.append(element('p','requirement','This report doesn’t show how many checks had enough data.'));
+    box.append(changeLine(experiment));
+    return box;
+  }
+  box.append(element('p','capture',trendDays ? count(experiment.scored) + ' reviews completed' : count(experiment.collected) + ' ' + wording(experiment,'collected',experiment.collected_label)));
+  if (experiment.id === 'LEARNER_v2_2') {
+    const pairs = text(experiment.note).match(/(\d+) forward-scored pairs/);
+    if (pairs) box.append(element('p','capture',pairs[1] + ' forecast pairs scored so far'));
+  }
+  if (experiment.needed != null) {
+    // Only show a completion fraction when its numerator and denominator share a unit.
+    const value = trendDays ? experiment.collected : experiment.scored;
+    const bar = element('div','bar');
+    bar.setAttribute('role','meter');bar.setAttribute('aria-label',trendDays ? 'Logged days toward 90-day check' : wording(experiment,'scored',experiment.scored_label));
+    bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax',experiment.needed);bar.setAttribute('aria-valuenow',Math.min(value,experiment.needed));
+    bar.setAttribute('aria-valuetext',count(value) + ' of ' + count(experiment.needed) + '. ' + experiment.needed_label);
+    const fill = element('span');fill.style.width = Math.min(100,100 * value / experiment.needed) + '%';bar.append(fill);box.append(bar);
+    const note = text(experiment.note).match(/(?:signal sessions among scored (?:sets|outcomes):|scored signal sessions)\s*(\d+)\s+of\s+(\d+)\s+needed/);
+    if (note) box.append(element('p','requirement',note[1] + ' / ' + note[2] + ' required signal days'));
+    box.append(element('p','requirement','Review after ' + count(experiment.needed) + ' ' + wording(experiment,'requirement',experiment.needed_label)));
+  } else box.append(element('p','requirement',experiment.id.startsWith('PAPER_ACCOUNT') || experiment.id === 'CRYPTO_ACCOUNT_v1' ? 'Tracks account activity. A profit test still needs to be defined.' : 'See the rules for review conditions.'));
+  box.append(changeLine(experiment));
+  return box;
+}
+function prospectiveCheckBlock(results) {
+  const check = results.prospective_check;
+  if (!check?.enabled) return null;
+  const box = element('div','prospective-check');
+  const heading = element('div','cloud-result-heading');
+  heading.append(element('b','','Did new signals beat their comparison coins?'));
+  box.append(heading,element('p','result-note','Check started ' + date(check.started_at,true) + '. Uses one-minute checks and a fixed 24-hour exit. Comparison coins are locked when each signal appears, before its result. Both use the same cost assumption.'));
+  const advantage = check.mean_excess == null || !Number.isFinite(check.mean_excess)
+    ? 'Awaiting paired results'
+    : (check.mean_excess > 0 ? '+' : check.mean_excess < 0 ? '−' : '') + Math.abs(check.mean_excess * 100).toFixed(2) + ' pp';
+  box.append(element('p','result-note prospective-summary','Average advantage: ' + advantage));
+  box.append(element('p','result-note',count(check.completed_pairs) + ' completed paired signals · ' + count(check.beat_controls) + ' ahead · ' + count(check.tied_controls) + ' tied · ' + count(check.behind_controls) + ' behind'));
+  box.append(element('p','result-note',count(check.pending_pairs) + ' pending · ' + count(check.unavailable_pairs) + ' unavailable · ' + count(check.distinct_signal_dates) + ' signal dates'));
+  if (check.total_signals === 0) box.append(element('p','result-note','No new signals yet. The next qualifying signal and its comparison coins will be recorded here.'));
+  else if (check.completed_pairs === 0) box.append(element('p','result-note','No completed paired results yet. Pending and unavailable comparisons do not count as zero returns.'));
+  const earlierOne = results.events.some(event=>event.symbol === 'ONEUSDT' && Date.parse(event.reference_at) < Date.parse(check.started_at));
+  if (earlierOne) box.append(element('p','result-note','ONE’s earlier result is shown above and is excluded from this new-signal check.'));
+  const returns = (value, excess = false) => value == null || !Number.isFinite(value)
+    ? 'Unavailable'
+    : (value > 0 ? '+' : value < 0 ? '−' : '') + Math.abs(value * 100).toFixed(2) + (excess ? ' pp' : '%');
+  for (const event of check.events) {
+    const row = element('div','prospective-event');
+    const label = event.status === 'COMPLETE' ? 'Complete' : event.status === 'PENDING' ? 'Pending' : 'Unavailable';
+    row.append(element('p','event-line',event.symbol + ' · ' + label));
+    const locked = event.selection_verified ? 'Comparisons locked ' + date(event.selected_at,true) : 'Comparison selection unverified';
+    row.append(element('p','result-note',locked + ' · ' + (event.controls.length ? event.controls.join(', ') : 'No comparison coins available')));
+    const pending = event.status === 'PENDING';
+    row.append(element('p','result-note','KOD: ' + (event.net_return == null && pending ? 'Pending' : returns(event.net_return)) + ' · Comparison mean: ' + (event.control_mean_net_return == null && pending ? 'Pending' : returns(event.control_mean_net_return)) + ' · Advantage: ' + (event.excess == null && pending ? 'Pending' : returns(event.excess,true))));
+    if (event.reason) row.append(element('p','result-note result-warning',text(event.reason)));
+    box.append(row);
+  }
+  box.append(element('p','result-note','Signals on the same market date may move together. These comparisons track results; they do not certify a repeatable edge.'));
+  return box;
+}
+function cloudResultBlock() {
+  const results = cloudResults;
+  const box = element('div','cloud-results');
+  const heading = element('div','cloud-result-heading');
+  heading.append(element('b','','24-hour results by checking speed'),element('span','','Results read ' + date(results.as_of,true)));
+  box.append(heading);
+  const table = element('table');table.setAttribute('aria-label','Cloud study 24-hour returns by checking speed');
+  const head = element('thead'), titles = element('tr');
+  for (const title of ['Check every','Completed / entered','Mean net return','vs BTC/ETH','vs similar coins']) titles.append(element('th','',title));
+  for (const cell of titles.children) cell.setAttribute('scope','col');
+  head.append(titles);table.append(head);
+  const body = element('tbody');
+  const metric = (value, unit, missing) => {
+    if (value == null || !Number.isFinite(value)) return element('td','',missing);
+    return element('td',value > 0 ? 'positive' : value < 0 ? 'negative' : '',(value > 0 ? '+' : value < 0 ? '−' : '') + Math.abs(value * 100).toFixed(2) + unit);
+  };
+  for (const arm of results.arms.slice().sort((a,b)=>a.minutes-b.minutes)) {
+    const row = element('tr');
+    row.append(element('td','',arm.minutes + ' min'),element('td','',count(arm.completed_24h) + ' / ' + count(arm.event_entries)));
+    const missing = arm.awaiting_24h > 0 && arm.completed_24h === 0 ? 'Pending' : 'Unavailable';
+    const controls = metric(arm.mean_control_excess,' pp',arm.completed_control_pairs > 0 ? missing : 'Unavailable');
+    if (arm.mean_control_excess != null && arm.completed_control_pairs > 0) controls.append(element('div','',count(arm.completed_control_pairs) + ' paired ' + (arm.completed_control_pairs === 1 ? 'event' : 'events')));
+    row.append(metric(arm.mean_net_return,'%',missing),metric(arm.mean_benchmark_excess,' pp',missing),controls);
+    body.append(row);
+  }
+  table.append(body);box.append(table);
+  const prospective = prospectiveCheckBlock(results); if (prospective) box.append(prospective);
+  box.append(element('p','result-note','Net returns use recorded midpoint quotes minus an assumed 2 percentage points for round-trip costs. Quoted prices are estimates of execution. Differences are percentage points (pp).'));
+  const inputs = results.comparison_inputs || {};
+  const ready = inputs.status === 'READY';
+  box.append(element('p','result-note' + (ready ? '' : ' result-warning'),(ready ? 'Comparison inputs ready for future events' : 'Comparison inputs: ' + text(inputs.status || 'unavailable').toLowerCase().replaceAll('_',' ')) + ' · ' + count(inputs.eligible_symbols) + ' / ' + count(inputs.total_symbols) + ' coins eligible' + (inputs.as_of ? ' · checked ' + date(inputs.as_of,true) : '')));
+  if (results.events_without_controls > 0) box.append(element('p','result-note result-warning',count(results.events_without_controls) + (results.events_without_controls === 1 ? ' recorded event has' : ' recorded events have') + ' no matched comparison coins. Those earlier comparisons remain unavailable.'));
+  if (results.next_primary_due_at) box.append(element('p','result-note','Next 24-hour outcome due ' + date(results.next_primary_due_at,true) + '. It appears here after a later report is saved.'));
+  for (const event of results.events) {
+    const complete = event.arms.filter(arm=>arm.primary_status === 'COMPLETE').length;
+    const missing = event.arms.filter(arm=>arm.primary_status === 'CENSORED').length;
+    let status = complete ? count(complete) + ' of 4 timing results complete' : missing ? count(missing) + ' timing results unavailable' : '24-hour result pending';
+    if (!complete && event.primary_deadline_at) status += ' · due ' + date(event.primary_deadline_at,true);
+    box.append(element('p','event-line',event.symbol + ' · observed ' + date(event.reference_at,true) + ' · ' + status));
+  }
+  const source = element('a','source-path','Latest saved outcome data');
+  source.href = 'https://github.com/jonathanpratama-boop/KOD-Timing-Backups/blob/research-r2-20261105T181200Z/DASHBOARD_RESULTS.json';
+  source.target = '_blank'; source.rel = 'noopener noreferrer'; box.append(source);
+  return box;
+}
+function review(experiment) {
+  const box = element('div');
+  const r2 = experiment.id === 'srv:research_r2';
+  let value = experiment.verdict_date || experiment.projected_date;
+  let kind = experiment.verdict_basis === 'scheduled' ? 'Scheduled review' : 'Estimated review';
+  let description = experiment.next_milestone;
+  if (r2) {value='2026-11-13T01:12:00+07:00';kind='First-week check';description='Check how many moves we caught and how many can be compared. Data collection ends 11 Dec, 01:14 WIB.';}
+  else if (experiment.plumbing) kind='Scheduled collection end';
+  else if (!value) {value=experiment.next_date;kind=value ? 'Next update' : 'Waiting for more results';}
+  const milestonePassed = !r2 && experiment.next_date && experiment.next_date < WIB_DAY(Date.parse(build.built_at));
+  if (milestonePassed && kind === 'Next update') { value = null; kind = 'Milestone needs an update'; }
+  box.append(element('div','date',value ? date(value) : 'No date yet'),element('div','date-kind',kind));
+  const firstSentence = text(description).match(/^.*?[.!?](?:\s|$)/);
+  const displayed = (r2 ? description : firstSentence ? firstSentence[0].trim() : description)
+    .replace(/\bBASE5\b/g, 'five-day')
+    .replace(/\bNEXT1\b/g, 'next-day')
+    .replace(/\bH20\b/g, '20-day')
+    .replace(/\bH60\b/g, '60-day');
+  let nextText = displayed;
+  if (/^Unblock: no .*batch/.test(text(description))) nextText = 'This milestone note is older than the latest update. See the source notes.';
+  if (experiment.id === 'CALL_CERT') {
+    const open = text(experiment.note).match(/(\d+) calls? open/);
+    if (open) nextText = open[1] + (Number(open[1]) === 1 ? ' call remains open in the source record.' : ' calls remain open in the source record.');
+  }
+  box.append(element('p','next-note',milestonePassed ? 'The last listed milestone was ' + date(experiment.next_date) + '. See the latest source notes for current results.' : nextText));
+  return box;
+}
+function rowStatus(experiment) {
+  const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
+  const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
+  const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
+  return problem ? 'bad' : stale || /STALE|UNKNOWN/.test(experiment.state) ? 'warn' : 'ok';
+}
+const WIB_DAY=ms=>new Date(ms+7*3600000).toISOString().slice(0,10);
+const historyBy=new Map();
+for (const row of data.history) { if (!historyBy.has(row.experiment)) historyBy.set(row.experiment,[]); historyBy.get(row.experiment).push(row); }
+for (const rows of historyBy.values()) rows.sort((a,b)=>a.date.localeCompare(b.date));
+function changeLine(experiment) {
+  const rows=historyBy.get(experiment.id) || [];
+  const today=WIB_DAY(Date.parse(build.built_at)), yesterday=WIB_DAY(Date.parse(build.built_at)-86400000);
+  let last=null;
+  rows.forEach((row,i)=> {
+    const before=rows[i-1] || {collected:0,scored:0};
+    const judged=(row.scored||0)-(before.scored||0), recorded=(row.collected||0)-(before.collected||0);
+    if (judged>0 || recorded>0) last={date:row.date,judged,recorded};
+  });
+  if (!last) return element('p','change','nothing recorded yet');
+  const parts=[];
+  if (last.judged>0) parts.push('▲ +' + count(last.judged) + ' judged');
+  if (last.recorded>0) parts.push('+' + count(last.recorded) + ' recorded');
+  const when=last.date===today ? 'today' : last.date===yesterday ? 'yesterday' : date(last.date).replace(/ 20\d\d$/,'');
+  const fresh=last.date>=yesterday;
+  return element('p','change' + (fresh ? ' up' : ''), parts.join(' · ') + ' · ' + when + (fresh ? '' : ' (quiet since)'));
+}
+function health(experiment) {
+  const box=element('div','health');
+  const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
+  const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
+  const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
+  const unknown=/STALE|UNKNOWN/.test(experiment.state);
+  const label=stale ? 'Update overdue' : problem ? 'Needs attention' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
+  box.append(element('span','tag' + (stale || unknown ? ' warn' : problem ? ' bad' : ''),label),element('p','checked',date(experiment.as_of,true)));
+  box.append(element('p','check-state',stale ? experiment.state.charAt(0) + experiment.state.slice(1).toLowerCase() + ' at last update' : age(experiment.as_of)));
+  return box;
+}
+function paperBookViews() {
+  const block=element('div','cloud-results');
+  const views=data.paper_book_views;
+  block.append(element('h4','','Original and corrected figures'));
+  if (!views || views.status !== 'PUBLISHED') {
+    block.append(element('p','','The corrected comparison has not been published in the current source report yet. Original book totals remain above.'));
+    return block;
+  }
+  block.append(element('p','',views.note + ' Unresolved: ' + (views.unresolved_count === null || views.unresolved_count === undefined ? 'not reported' : views.unresolved_count) + '. Report: ' + date(views.report_generated_at,true)));
+  const table=element('table'), head=element('tr');
+  for (const label of views.columns) head.append(element('th','',label));
+  table.append(head);
+  for (const values of views.rows) {
+    const row=element('tr');for (const value of values) row.append(element('td','',value));table.append(row);
+  }
+  block.append(table,sourceLinks(views.source));return block;
+}
+function experimentRow(experiment) {
+  const row=element('article','experiment');row.dataset.experimentId=experiment.id;
+  if (experiment.id === 'srv:research_r2') row.dataset.cloud='true';
+  const status=rowStatus(experiment); if (status!=='ok') row.classList.add('attn-'+status);
+  const heading=element('div');heading.append(element('p','category',programs.get(experiment.program)?.name || 'Research'),element('h3','',wording(experiment,'name',experiment.short || experiment.name)),element('p','question',wording(experiment,'question',experiment.plain)));
+  row.append(heading,evidence(experiment),review(experiment),health(experiment));
+  if (experiment.id === 'srv:research_r2' && cloudResults) row.append(cloudResultBlock());
+  if (experiment.id === 'PAPER_BOOK_v1') row.append(paperBookViews());
+  const details=element('details','detail');details.append(element('summary','','Rules, notes & sources'));
+  const content=element('div','detail-content');
+  content.append(detailBlock('Source notes',text(experiment.note) || 'No additional notes.'),detailBlock('What happens next · source note',text(experiment.next_milestone)));
+  content.append(detailBlock('Needed before review',text(experiment.needed_label)),detailBlock('Sources',sourceLinks(experiment.source)));
+  if (experiment.id === 'srv:research_r2') content.append(detailBlock('When results are ready','Each move needs a full 24 hours of follow-up. The collection end date is fixed. A useful conclusion also depends on how many moves we can compare.'));
+  details.append(content);row.append(details);return row;
+}
+function render() {
+  const query=document.getElementById('search').value.trim().toLowerCase();
+  const selected=ongoing.filter(experiment=>[wording(experiment,'name',''),wording(experiment,'question',''),experiment.short,experiment.name,experiment.plain,programs.get(experiment.program)?.name].join(' ').toLowerCase().includes(query));
+  const rank=e=>({bad:0,warn:1,ok:2})[rowStatus(e)];
+  const ordered=selected.slice().sort((a,b)=> {
+    if (rank(a)!==rank(b)) return rank(a)-rank(b);
+    if (a.id === 'srv:research_r2') return -1;
+    if (b.id === 'srv:research_r2') return 1;
+    return (programs.get(a.program)?.order || 0)-(programs.get(b.program)?.order || 0);
+  });
+  document.getElementById('experiments').replaceChildren(...ordered.map(experimentRow));
+  if (!ordered.length) document.getElementById('experiments').append(element('p','empty','No experiments match your search.'));
+}
+function renderArchive() {
+  const box=document.getElementById('archive');
+  box.append(element('p','','This report includes ' + historical.length + ' closed tests and checks. Another ' + data.gaps.length + ' items are missing or aren’t tracked here.'));
+  box.append(element('h3','','Past results'));
+  const labels={worked:'Passed its historical test',didnt_work:'Didn’t pass its test',no_answer:'Inconclusive',not_an_idea:'Audit or system check'};
+  for (const experiment of historical) {
+    const entry=element('article','record');entry.append(element('small','',labels[experiment.outcome] || text(experiment.outcome || experiment.state)),element('br'),element('b','',experiment.short || experiment.name),element('p','',experiment.lesson || experiment.plain));
+    const details=element('details','detail');details.append(element('summary','','Notes and sources'));const detail=element('div','detail-content');detail.append(detailBlock('Source notes',text(experiment.note)),detailBlock('Sources',sourceLinks(experiment.source)));details.append(detail);entry.append(details);box.append(entry);
+  }
+  box.append(element('h3','','Scheduled jobs'));
+  for (const run of data.runs) {
+    const entry=element('div','job');const old=(Date.now()-Date.parse(run.last_success_at))/3600000 > run.expected_every_hours + run.grace_hours;
+    entry.append(element('span','',run.job),element('span','',(old ? 'Update overdue · ' : '') + date(run.last_success_at,true)));entry.title=run.last_record;box.append(entry);
+  }
+  box.append(element('h3','','Earlier cloud trials'));
+  for (const study of data.server.filter(study=>!ongoing.some(experiment=>experiment.id===study.study))) {
+    const entry=element('div','record');entry.append(element('b','',study.name),element('p','',study.status + ' · ' + text(study.issues)),sourceLinks(study.source));box.append(entry);
+  }
+  box.append(element('h3','','Missing or untracked sources'));
+  for (const gap of data.gaps) {const entry=element('div','record');entry.append(element('b','',gap.path),element('p','',gap.detail));box.append(entry);}
+  box.append(element('h3','','Activity'));
+  for (const event of data.events.slice().sort((a,b)=>text(b.at).localeCompare(text(a.at)))) {const entry=element('div','record');entry.append(element('small','',date(event.at,true)),element('br'),element('b','',event.title),element('p','',event.detail));box.append(entry);}
+}
+document.getElementById('snapshot-date').textContent='Studies ' + date(build.built_at,true);
+document.getElementById('snapshot-age').textContent=age(build.built_at) + (sourceStale ? ' · source refresh overdue' : '');
+document.getElementById('live-count').textContent=count(ongoing.length);
+document.getElementById('theme-count').textContent=count(data.programs.length);
+document.getElementById('passed-count').textContent=count(summary.proven_live);
+if (summary.proven_live > 0) document.getElementById('headline').textContent=count(summary.proven_live) + ' live tests passed.';
+document.getElementById('next-look').textContent=summary.next_verdict_what + ' · ' + date(summary.next_verdict_date);
+const issues=ongoing.filter(experiment=>['STALLED','HALTED','FAILED','UNKNOWN'].includes(experiment.state)).map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
+if (sourceStale) issues.unshift('Study records need a refresh; cloud results have their own update time');
+document.getElementById('attention').textContent=issues.join(' · ') || 'No issues reported';
+document.querySelector('.brief>div:last-child').classList.toggle('alert',issues.length>0);
+document.getElementById('attention-note').textContent='Cloud status expires after an hour. Check the time of the last update before relying on it.';
+document.getElementById('scope').textContent=count(data.experiments.filter(experiment=>experiment.group!=='closed' && !experiment.plumbing).length) + ' ongoing tests · ' + count(ongoing.filter(experiment=>experiment.plumbing).length) + ' supporting collectors · all times WIB';
+document.getElementById('archive-counts').textContent=count(historical.length) + ' closed tests and checks · ' + count(data.gaps.length) + ' items missing or untracked';
+document.getElementById('snapshot-note').textContent='Study records built ' + date(build.built_at,true) + ' · KOD ' + String(build.kod_commit || 'unknown').slice(0,12) + (build.cloud_refreshed_at ? ' · Cloud refreshed ' + date(build.cloud_refreshed_at,true) : '') + (sourceStale ? ' · Source refresh is overdue. Previous study records are retained.' : '') + '. This saved copy won’t update itself.';
+const latestReport=element('a','source-path','Latest automatically refreshed report');
+latestReport.href='https://github.com/jonathanpratama-boop/KOD-Timing-Backups/blob/research-r2-20261105T181200Z/DASHBOARD.html';
+latestReport.target='_blank';latestReport.rel='noopener noreferrer';document.getElementById('snapshot-note').append(' · ',latestReport);
+document.getElementById('search').addEventListener('input',render);
+render();renderArchive();
+</script>
+</body>
+</html>
+
+

@@ -621,7 +621,7 @@ class NotEventBased(LedgerCase):
                 self.assertEqual(sa.verify(records=forked, specs=specs), [])
 
     def test_unexplained_extreme_move_then_refresh_without_events(self):
-        spec, specs = cex(), [cex()]
+        specs = [cex()]
         first = sa.propose_assessments(specs, [], {"CEX": cex_own_pull()}, "pull", N1, seal_session=S)
         self.assertEqual((first[0]["assessment"], first[0]["evidence_gap"]), ("UNEXPLAINED_EXTREME_MOVE", None))
         records = self.write(*first)
@@ -636,7 +636,7 @@ class NotEventBased(LedgerCase):
 
     def test_standing_not_assessable_is_not_protected(self):
         # A set whose records are all NOT_ASSESSABLE (no priced bar): its standing finding is not event-based.
-        spec, specs = cex(), [cex()]
+        specs = [cex()]
         first = sa.propose_assessments(specs, [], {"CEX": None}, "pull", N1)
         self.assertEqual((first[0]["assessment"], first[0]["evidence_gap"]), ("NOT_ASSESSABLE", None))
         records = self.write(*first)
