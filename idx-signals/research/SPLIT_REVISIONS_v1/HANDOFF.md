@@ -189,3 +189,11 @@ python3 research/SPLIT_REVISIONS_v1/dry_run_and_effect.py EVIDENCE KODCHECK_RESU
 python3 research/SPLIT_REVISIONS_v1/render_results.py
 python3 research/SPLIT_REVISIONS_v1/simulate_nightly.py EVIDENCE
 ```
+
+## 9. Trial merge onto the current default branch
+
+On 2026-11-13 00:10 the branch was merged, in a throwaway copy that was then deleted, onto `9573c48` (183 US sets).
+The merge had no conflict. On the result: the split tests and the paper book tests pass (179 tests:
+`test_split_assessments` 147, `test_split_units_fixture` 2, `test_split_flags` 23, `test_paper_book` 7);
+`idxsig paper-verify` passes; `tools/check_append_only.py` passes for `--all` and for the range of the merge. The
+merge-note check was not run: it needs the repository's full history, and the note is the architect's to write.
