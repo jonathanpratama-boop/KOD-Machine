@@ -85,6 +85,20 @@ DILUTION_SESSIONS = 20
 MOVED_ALREADY = 1.15
 MICROCAP_USD = 50e6
 EN_DILUTION_DAYS = 28
+# IDX codes that are also ordinary words in EmitenNews headline slugs (ADDENDUM_4, frozen 2026-11-09).
+# A slug "names" such a code only when it names no other IDX code: "laba-buva-..." is about BUVA, not
+# LABA ("profit"). Chosen from the 2026 sitemap's most frequent code-shaped words.
+COMMON_WORD_CODES = frozenset(
+    """agar aksi area auto ayam baik baja bali bank beef beli best bina bird blue bola buah buka bull
+    bumi cash chip city coal coin crab cuan data daya deal dewa dewi east edge emas euro fast film fire
+    food gema gold golf good gula guna hope idea ikan indo jati jawa jaya kayu keju king kopi kota laba
+    labs laju land life link live main mari mark maya mega meja mutu naik nasi nice nine obat pada palm
+    part pipa pola raja real reli roda roti runs safe same satu ship sofa star tamu taxi trim true truk
+    uang visi viva wifi wine zinc""".split()
+)
+# Fixed phrases whose first word is an IDX code but which never name the company ("aksi korporasi":
+# corporate action, a section label).
+NOT_A_NAME = (("aksi", "korporasi"),)
 TAGS_FROM = (
     "2026-10-28T00:00:00Z"  # Speculation Register sets sealed from the day this protocol was frozen
 )
@@ -960,8 +974,46 @@ def idx_index_batch(
 
 
 # ------------------------------------------------------------------------------- DILUTION_RECENT tags
+def names_code(slug: str, ticker: str, universe: frozenset | None = None) -> bool:
+    """Does an EmitenNews slug name this IDX code (CATALYST_REGISTER_v1 ADDENDUM_4)?
+
+    The code must be a whole word of the slug, not the start of a phrase in NOT_A_NAME. A code that
+    is also an ordinary word (COMMON_WORD_CODES) names the company only when the slug names no other
+    IDX code of `universe`; without a universe that cannot be decided, and ValueError says so."""
+    words = slug.lower().split("-")
+    code = ticker.lower()
+    at = [
+        i
+        for i, w in enumerate(words)
+        if w == code and not any(tuple(words[i : i + len(p)]) == p for p in NOT_A_NAME)
+    ]
+    if not at:
+        return False
+    if code not in COMMON_WORD_CODES:
+        return True
+    if universe is None:
+        raise ValueError(f"{ticker} is also an ordinary word; the IDX code list is needed")
+    return not any(w in universe and w != code for w in words)
+
+
+def idx_universe() -> frozenset | None:
+    """IDX codes (lower case) of the latest Yahoo pull manifest, or None if none can be read."""
+    from .provenance import latest_manifest
+
+    try:
+        lines = latest_manifest("yahoo_recent").read_text(encoding="utf-8").splitlines()[1:]
+        codes = {json.loads(x)["ticker"].split(".")[0].lower() for x in lines if '"ticker"' in x}
+    except (FileNotFoundError, ValueError, KeyError):
+        return None
+    return frozenset(codes) or None
+
+
 def idx_dilution_slugs(
-    raw: bytes, ticker: str, until: str, days: int = EN_DILUTION_DAYS
+    raw: bytes,
+    ticker: str,
+    until: str,
+    days: int = EN_DILUTION_DAYS,
+    universe: frozenset | None = None,
 ) -> list[str]:
     from .sensors import EN_SLUG, dilution_kinds
 
@@ -971,7 +1023,7 @@ def idx_dilution_slugs(
         if not (start <= lastmod[:10] <= until):
             continue
         kinds = dilution_kinds(slug)
-        if kinds and ticker.lower() in slug.lower().split("-"):
+        if kinds and names_code(slug, ticker, universe):
             out.append(f"{slug}|{lastmod[:10]}|{','.join(kinds)}")
     return out
 
@@ -998,7 +1050,7 @@ def dilution_tags(
 ) -> list[dict]:
     proto, proto_sha = protocol()
     today = now.astimezone(NY).date().isoformat()
-    by_ticker, map_status, raws, out = None, None, {}, []
+    by_ticker, map_status, raws, out, universe = None, None, {}, [], None
     for s in sets:
         evidence, value, source = [], None, None
         if s["market"] == "US":
@@ -1031,11 +1083,21 @@ def dilution_tags(
                 for y in years:
                     if y not in raws:
                         raws[y] = en_fetch(EN_SITEMAP_URL.format(year=y))
-                evidence = [x for y in years for x in idx_dilution_slugs(raws[y], s["ticker"], day)]
+                if universe is None:
+                    universe = idx_universe()
+                if universe is None and s["ticker"].lower() in COMMON_WORD_CODES:
+                    raise ValueError("no IDX code list for a code that is also a word")
+                evidence = [
+                    x
+                    for y in years
+                    for x in idx_dilution_slugs(raws[y], s["ticker"], day, universe=universe)
+                ]
                 value, source = (
                     bool(evidence),
                     "EmitenNews sitemap " + ", ".join(str(y) for y in years),
                 )
+            except ValueError:  # a code that is also a word, and no IDX code list to decide it
+                evidence, value, source = [], None, "IDX code list unavailable (ADDENDUM_4)"
             except Exception as exc:  # recorded as unknown, never guessed
                 source = f"EmitenNews sitemap unavailable: {type(exc).__name__}"
         out.append(
