@@ -1,0 +1,1324 @@
+{
+ "protocol_sha256": "5a73c155b9afa90cd32c2ce7648f40105b8c079990e595472ce805273a2462f5",
+ "coins": {
+  "SOLUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.5227,
+     "changes_per_year": 10.405701754385964,
+     "rule": {
+      "CAGR": 0.9023,
+      "Sharpe": 1.33,
+      "MaxDD": -0.5243,
+      "vol": 0.627
+     },
+     "matched": {
+      "CAGR": 0.5363,
+      "Sharpe": 1.184,
+      "MaxDD": -0.492,
+      "vol": 0.4456
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.9385,
+      "Sharpe": 1.194,
+      "MaxDD": -0.7625
+     },
+     "excess": {
+      "annual_mean_diff": 0.3061547902991205,
+      "annual_mean_diff_ci90": [
+       -0.05166057139357053,
+       0.6778230757821798
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0831,
+      "sharpe_diff": 0.1457324171692944,
+      "sharpe_diff_ci90": [
+       -0.42816398447807436,
+       0.7301426970645513
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.3513
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2020-09-20",
+      "2026-09-29"
+     ],
+     "exposure": 0.4907,
+     "changes_per_year": 9.4525215810995,
+     "rule": {
+      "CAGR": 1.4097,
+      "Sharpe": 1.469,
+      "MaxDD": -0.6624,
+      "vol": 0.8351
+     },
+     "matched": {
+      "CAGR": 0.5625,
+      "Sharpe": 1.09,
+      "MaxDD": -0.7563,
+      "vol": 0.5449
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.8393,
+      "Sharpe": 1.1,
+      "MaxDD": -0.9627
+     },
+     "excess": {
+      "annual_mean_diff": 0.6331395311872474,
+      "annual_mean_diff_ci90": [
+       0.25209703579145676,
+       1.033012751537055
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0038,
+      "sharpe_diff": 0.3794918835001372,
+      "sharpe_diff_ci90": [
+       -0.05598679918898371,
+       0.849557856647196
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.0763
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.5227,
+     "changes_per_year": 10.405701754385964,
+     "rule": {
+      "CAGR": 0.7401,
+      "Sharpe": 1.186,
+      "MaxDD": -0.5708,
+      "vol": 0.6284
+     },
+     "matched": {
+      "CAGR": 0.4969,
+      "Sharpe": 1.126,
+      "MaxDD": -0.4998,
+      "vol": 0.4456
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.9385,
+      "Sharpe": 1.194,
+      "MaxDD": -0.7625
+     },
+     "excess": {
+      "annual_mean_diff": 0.24370158138945097,
+      "annual_mean_diff_ci90": [
+       -0.12285726828948852,
+       0.6217141927640487
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1414,
+      "sharpe_diff": 0.06049750206809783,
+      "sharpe_diff_ci90": [
+       -0.527280719508266,
+       0.6520596642788123
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.4495
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2020-09-20",
+      "2026-09-29"
+     ],
+     "exposure": 0.4907,
+     "changes_per_year": 9.4525215810995,
+     "rule": {
+      "CAGR": 1.2226,
+      "Sharpe": 1.372,
+      "MaxDD": -0.6791,
+      "vol": 0.8358
+     },
+     "matched": {
+      "CAGR": 0.5138,
+      "Sharpe": 1.032,
+      "MaxDD": -0.7658,
+      "vol": 0.5449
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.8393,
+      "Sharpe": 1.1,
+      "MaxDD": -0.9627
+     },
+     "excess": {
+      "annual_mean_diff": 0.5844863089603265,
+      "annual_mean_diff_ci90": [
+       0.19611681335031764,
+       0.9924097312724885
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0068,
+      "sharpe_diff": 0.3401503097769731,
+      "sharpe_diff_ci90": [
+       -0.10202984932516783,
+       0.8111715449442342
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.1004
+     }
+    }
+   }
+  },
+  "BNBUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.5716,
+     "changes_per_year": 14.141081871345028,
+     "rule": {
+      "CAGR": 0.1966,
+      "Sharpe": 0.643,
+      "MaxDD": -0.5124,
+      "vol": 0.4049
+     },
+     "matched": {
+      "CAGR": 0.2215,
+      "Sharpe": 0.836,
+      "MaxDD": -0.379,
+      "vol": 0.2894
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.3501,
+      "Sharpe": 0.845,
+      "MaxDD": -0.582
+     },
+     "excess": {
+      "annual_mean_diff": 0.01867285736970937,
+      "annual_mean_diff_ci90": [
+       -0.20002103318776554,
+       0.2431522538421181
+      ],
+      "p_one_sided_mean_diff_le_0": 0.4404,
+      "sharpe_diff": -0.19233357064946377,
+      "sharpe_diff_ci90": [
+       -0.7830233137366273,
+       0.3899586900305986
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.7148
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2017-12-16",
+      "2026-09-29"
+     ],
+     "exposure": 0.5523,
+     "changes_per_year": 10.68847352024922,
+     "rule": {
+      "CAGR": 0.9845,
+      "Sharpe": 1.25,
+      "MaxDD": -0.7431,
+      "vol": 0.7645
+     },
+     "matched": {
+      "CAGR": 0.5348,
+      "Sharpe": 1.072,
+      "MaxDD": -0.5149,
+      "vol": 0.524
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.8075,
+      "Sharpe": 1.08,
+      "MaxDD": -0.8004
+     },
+     "excess": {
+      "annual_mean_diff": 0.3939088317814367,
+      "annual_mean_diff_ci90": [
+       0.11930317058491648,
+       0.6882658132048781
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0076,
+      "sharpe_diff": 0.17780246824528437,
+      "sharpe_diff_ci90": [
+       -0.13029388477936682,
+       0.5025292268183047
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.1793
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.5716,
+     "changes_per_year": 14.141081871345028,
+     "rule": {
+      "CAGR": 0.0599,
+      "Sharpe": 0.344,
+      "MaxDD": -0.5856,
+      "vol": 0.4078
+     },
+     "matched": {
+      "CAGR": 0.203,
+      "Sharpe": 0.783,
+      "MaxDD": -0.3853,
+      "vol": 0.2894
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.3501,
+      "Sharpe": 0.845,
+      "MaxDD": -0.582
+     },
+     "excess": {
+      "annual_mean_diff": -0.0863514888270576,
+      "annual_mean_diff_ci90": [
+       -0.3183055931658016,
+       0.14850796075535058
+      ],
+      "p_one_sided_mean_diff_le_0": 0.7259,
+      "sharpe_diff": -0.4390585026767475,
+      "sharpe_diff_ci90": [
+       -1.057421244712241,
+       0.15404631161197657
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.8903
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2017-12-16",
+      "2026-09-29"
+     ],
+     "exposure": 0.5523,
+     "changes_per_year": 10.68847352024922,
+     "rule": {
+      "CAGR": 0.8089,
+      "Sharpe": 1.128,
+      "MaxDD": -0.7686,
+      "vol": 0.7659
+     },
+     "matched": {
+      "CAGR": 0.4999,
+      "Sharpe": 1.029,
+      "MaxDD": -0.5298,
+      "vol": 0.5237
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.8075,
+      "Sharpe": 1.08,
+      "MaxDD": -0.8004
+     },
+     "excess": {
+      "annual_mean_diff": 0.32520162516768214,
+      "annual_mean_diff_ci90": [
+       0.04315000908476849,
+       0.6258468730217226
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0285,
+      "sharpe_diff": 0.09938264525956873,
+      "sharpe_diff_ci90": [
+       -0.2213478160798678,
+       0.4211920154428044
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.3184
+     }
+    }
+   }
+  },
+  "XRPUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4349,
+     "changes_per_year": 13.073830409356724,
+     "rule": {
+      "CAGR": 0.0893,
+      "Sharpe": 0.42,
+      "MaxDD": -0.6575,
+      "vol": 0.5394
+     },
+     "matched": {
+      "CAGR": 0.2763,
+      "Sharpe": 0.845,
+      "MaxDD": -0.396,
+      "vol": 0.3636
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.4847,
+      "Sharpe": 0.854,
+      "MaxDD": -0.7202
+     },
+     "excess": {
+      "annual_mean_diff": -0.08038874084126096,
+      "annual_mean_diff_ci90": [
+       -0.4731797362479727,
+       0.36271541245481353
+      ],
+      "p_one_sided_mean_diff_le_0": 0.6328,
+      "sharpe_diff": -0.4242675328891521,
+      "sharpe_diff_ci90": [
+       -1.1340065947504505,
+       0.16756059599149473
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.8822
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2018-06-13",
+      "2026-09-29"
+     ],
+     "exposure": 0.4325,
+     "changes_per_year": 11.199274166941603,
+     "rule": {
+      "CAGR": 0.098,
+      "Sharpe": 0.475,
+      "MaxDD": -0.6868,
+      "vol": 0.6916
+     },
+     "matched": {
+      "CAGR": 0.1783,
+      "Sharpe": 0.588,
+      "MaxDD": -0.4434,
+      "vol": 0.4361
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.1262,
+      "Sharpe": 0.598,
+      "MaxDD": -0.8324
+     },
+     "excess": {
+      "annual_mean_diff": 0.07161772041148139,
+      "annual_mean_diff_ci90": [
+       -0.23180294503676954,
+       0.39396496379996454
+      ],
+      "p_one_sided_mean_diff_le_0": 0.3632,
+      "sharpe_diff": -0.11381790996428738,
+      "sharpe_diff_ci90": [
+       -0.536591694140378,
+       0.28082439210166965
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.689
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4349,
+     "changes_per_year": 13.073830409356724,
+     "rule": {
+      "CAGR": -0.0266,
+      "Sharpe": 0.213,
+      "MaxDD": -0.6965,
+      "vol": 0.5418
+     },
+     "matched": {
+      "CAGR": 0.2507,
+      "Sharpe": 0.789,
+      "MaxDD": -0.4071,
+      "vol": 0.3636
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.4847,
+      "Sharpe": 0.854,
+      "MaxDD": -0.7202
+     },
+     "excess": {
+      "annual_mean_diff": -0.17118323505630087,
+      "annual_mean_diff_ci90": [
+       -0.571997605703306,
+       0.27941015582433804
+      ],
+      "p_one_sided_mean_diff_le_0": 0.7507,
+      "sharpe_diff": -0.5753175824742336,
+      "sharpe_diff_ci90": [
+       -1.3227754738484898,
+       0.04119192230976943
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.9386
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2018-06-13",
+      "2026-09-29"
+     ],
+     "exposure": 0.4325,
+     "changes_per_year": 11.199274166941603,
+     "rule": {
+      "CAGR": -0.0026,
+      "Sharpe": 0.336,
+      "MaxDD": -0.7385,
+      "vol": 0.6929
+     },
+     "matched": {
+      "CAGR": 0.1501,
+      "Sharpe": 0.533,
+      "MaxDD": -0.4637,
+      "vol": 0.436
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.1262,
+      "Sharpe": 0.598,
+      "MaxDD": -0.8324
+     },
+     "excess": {
+      "annual_mean_diff": 0.0006914296305423818,
+      "annual_mean_diff_ci90": [
+       -0.3062874053854405,
+       0.32569630891405527
+      ],
+      "p_one_sided_mean_diff_le_0": 0.513,
+      "sharpe_diff": -0.1965841247385238,
+      "sharpe_diff_ci90": [
+       -0.6313934892456103,
+       0.20367265939546586
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.7908
+     }
+    }
+   }
+  },
+  "DOGEUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4225,
+     "changes_per_year": 8.804824561403509,
+     "rule": {
+      "CAGR": 0.2882,
+      "Sharpe": 0.708,
+      "MaxDD": -0.6338,
+      "vol": 0.6377
+     },
+     "matched": {
+      "CAGR": 0.1196,
+      "Sharpe": 0.494,
+      "MaxDD": -0.4886,
+      "vol": 0.3553
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.0805,
+      "Sharpe": 0.506,
+      "MaxDD": -0.8518
+     },
+     "excess": {
+      "annual_mean_diff": 0.2757691981725674,
+      "annual_mean_diff_ci90": [
+       -0.13526876612278038,
+       0.7207925330875403
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1404,
+      "sharpe_diff": 0.21364365193347962,
+      "sharpe_diff_ci90": [
+       -0.34682490958488393,
+       0.7162385261323096
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.2662
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2019-08-14",
+      "2026-09-29"
+     ],
+     "exposure": 0.4412,
+     "changes_per_year": 9.671658986175116,
+     "rule": {
+      "CAGR": 0.9276,
+      "Sharpe": 0.799,
+      "MaxDD": -0.7294,
+      "vol": 1.7716
+     },
+     "matched": {
+      "CAGR": 0.5023,
+      "Sharpe": 0.767,
+      "MaxDD": -0.5995,
+      "vol": 0.8324
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.6334,
+      "Sharpe": 0.773,
+      "MaxDD": -0.9233
+     },
+     "excess": {
+      "annual_mean_diff": 0.7774226326795907,
+      "annual_mean_diff_ci90": [
+       0.1452835999160186,
+       1.5596839417522386
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0145,
+      "sharpe_diff": 0.031974723909583135,
+      "sharpe_diff_ci90": [
+       -0.17133526340205554,
+       0.3340690490476791
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.3516
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4225,
+     "changes_per_year": 8.804824561403509,
+     "rule": {
+      "CAGR": 0.1952,
+      "Sharpe": 0.59,
+      "MaxDD": -0.6809,
+      "vol": 0.6376
+     },
+     "matched": {
+      "CAGR": 0.093,
+      "Sharpe": 0.427,
+      "MaxDD": -0.5083,
+      "vol": 0.3553
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.0805,
+      "Sharpe": 0.506,
+      "MaxDD": -0.8518
+     },
+     "excess": {
+      "annual_mean_diff": 0.22494038443243242,
+      "annual_mean_diff_ci90": [
+       -0.1959007332186189,
+       0.677525393621453
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1963,
+      "sharpe_diff": 0.1638846770553525,
+      "sharpe_diff_ci90": [
+       -0.41112463605439814,
+       0.6748738048990423
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.3252
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2019-08-14",
+      "2026-09-29"
+     ],
+     "exposure": 0.4412,
+     "changes_per_year": 9.671658986175116,
+     "rule": {
+      "CAGR": 0.7748,
+      "Sharpe": 0.753,
+      "MaxDD": -0.7717,
+      "vol": 1.7719
+     },
+     "matched": {
+      "CAGR": 0.4614,
+      "Sharpe": 0.734,
+      "MaxDD": -0.6141,
+      "vol": 0.8321
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.6334,
+      "Sharpe": 0.773,
+      "MaxDD": -0.9233
+     },
+     "excess": {
+      "annual_mean_diff": 0.7229091055956577,
+      "annual_mean_diff_ci90": [
+       0.0839838251809624,
+       1.5125630253903612
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0244,
+      "sharpe_diff": 0.018508155697554936,
+      "sharpe_diff_ci90": [
+       -0.19896798284066528,
+       0.3043804820674549
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.4021
+     }
+    }
+   }
+  },
+  "ADAUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4225,
+     "changes_per_year": 10.405701754385964,
+     "rule": {
+      "CAGR": 0.2842,
+      "Sharpe": 0.731,
+      "MaxDD": -0.6008,
+      "vol": 0.5297
+     },
+     "matched": {
+      "CAGR": 0.0839,
+      "Sharpe": 0.397,
+      "MaxDD": -0.5366,
+      "vol": 0.3691
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": -0.0014,
+      "Sharpe": 0.408,
+      "MaxDD": -0.8829
+     },
+     "excess": {
+      "annual_mean_diff": 0.240663031635729,
+      "annual_mean_diff_ci90": [
+       -0.12541311733276841,
+       0.6158370079456532
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1397,
+      "sharpe_diff": 0.33405774207380085,
+      "sharpe_diff_ci90": [
+       -0.3358755731272912,
+       0.9580695595598927
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.2024
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2018-05-27",
+      "2026-09-29"
+     ],
+     "exposure": 0.4304,
+     "changes_per_year": 9.939304461942259,
+     "rule": {
+      "CAGR": 0.5693,
+      "Sharpe": 0.989,
+      "MaxDD": -0.6799,
+      "vol": 0.6918
+     },
+     "matched": {
+      "CAGR": 0.1335,
+      "Sharpe": 0.504,
+      "MaxDD": -0.6107,
+      "vol": 0.4294
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.0274,
+      "Sharpe": 0.515,
+      "MaxDD": -0.9515
+     },
+     "excess": {
+      "annual_mean_diff": 0.4679348584871375,
+      "annual_mean_diff_ci90": [
+       0.17432405803154963,
+       0.7771361384845682
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0032,
+      "sharpe_diff": 0.48534900768965067,
+      "sharpe_diff_ci90": [
+       0.09215747382370995,
+       0.8693288697225826
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.0212
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4225,
+     "changes_per_year": 10.405701754385964,
+     "rule": {
+      "CAGR": 0.1749,
+      "Sharpe": 0.563,
+      "MaxDD": -0.6579,
+      "vol": 0.5306
+     },
+     "matched": {
+      "CAGR": 0.0586,
+      "Sharpe": 0.333,
+      "MaxDD": -0.5512,
+      "vol": 0.369
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": -0.0014,
+      "Sharpe": 0.408,
+      "MaxDD": -0.8829
+     },
+     "excess": {
+      "annual_mean_diff": 0.17585104653249273,
+      "annual_mean_diff_ci90": [
+       -0.19830977239329836,
+       0.5576063609674451
+      ],
+      "p_one_sided_mean_diff_le_0": 0.2221,
+      "sharpe_diff": 0.2301227480946145,
+      "sharpe_diff_ci90": [
+       -0.47237404682264894,
+       0.8747118527337063
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.296
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2018-05-27",
+      "2026-09-29"
+     ],
+     "exposure": 0.4304,
+     "changes_per_year": 9.939304461942259,
+     "rule": {
+      "CAGR": 0.4404,
+      "Sharpe": 0.865,
+      "MaxDD": -0.728,
+      "vol": 0.6936
+     },
+     "matched": {
+      "CAGR": 0.1028,
+      "Sharpe": 0.44,
+      "MaxDD": -0.631,
+      "vol": 0.4293
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.0274,
+      "Sharpe": 0.515,
+      "MaxDD": -0.9515
+     },
+     "excess": {
+      "annual_mean_diff": 0.41092996275397764,
+      "annual_mean_diff_ci90": [
+       0.11038701874116877,
+       0.7260083627600061
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0106,
+      "sharpe_diff": 0.4249286559979572,
+      "sharpe_diff_ci90": [
+       0.023387688616860407,
+       0.8202084868637516
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.0406
+     }
+    }
+   }
+  },
+  "AVAXUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4532,
+     "changes_per_year": 9.872076023391813,
+     "rule": {
+      "CAGR": 0.3302,
+      "Sharpe": 0.767,
+      "MaxDD": -0.6469,
+      "vol": 0.6191
+     },
+     "matched": {
+      "CAGR": 0.0991,
+      "Sharpe": 0.436,
+      "MaxDD": -0.5778,
+      "vol": 0.3952
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.0129,
+      "Sharpe": 0.448,
+      "MaxDD": -0.9028
+     },
+     "excess": {
+      "annual_mean_diff": 0.3026448194539213,
+      "annual_mean_diff_ci90": [
+       -0.08965450789087505,
+       0.7056461235705136
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1012,
+      "sharpe_diff": 0.3311595684292867,
+      "sharpe_diff_ci90": [
+       -0.31277320682920756,
+       0.9471398793006841
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.2044
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2020-11-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4456,
+     "changes_per_year": 10.312644742936545,
+     "rule": {
+      "CAGR": 0.5718,
+      "Sharpe": 0.932,
+      "MaxDD": -0.8169,
+      "vol": 0.8662
+     },
+     "matched": {
+      "CAGR": 0.2644,
+      "Sharpe": 0.711,
+      "MaxDD": -0.6304,
+      "vol": 0.508
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.2138,
+      "Sharpe": 0.722,
+      "MaxDD": -0.9563
+     },
+     "excess": {
+      "annual_mean_diff": 0.44573767632494243,
+      "annual_mean_diff_ci90": [
+       -0.005184374669205479,
+       0.9191537713841424
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0521,
+      "sharpe_diff": 0.22048354503052586,
+      "sharpe_diff_ci90": [
+       -0.23700493387719712,
+       0.6734961047845275
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.223
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4532,
+     "changes_per_year": 9.872076023391813,
+     "rule": {
+      "CAGR": 0.2222,
+      "Sharpe": 0.63,
+      "MaxDD": -0.7175,
+      "vol": 0.6204
+     },
+     "matched": {
+      "CAGR": 0.0705,
+      "Sharpe": 0.369,
+      "MaxDD": -0.5957,
+      "vol": 0.3951
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.0129,
+      "Sharpe": 0.448,
+      "MaxDD": -0.9028
+     },
+     "excess": {
+      "annual_mean_diff": 0.24509808342474432,
+      "annual_mean_diff_ci90": [
+       -0.15643842242694772,
+       0.6600013717347426
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1576,
+      "sharpe_diff": 0.2610498871458175,
+      "sharpe_diff_ci90": [
+       -0.4020701136548748,
+       0.8866641376150491
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.262
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2020-11-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4456,
+     "changes_per_year": 10.312644742936545,
+     "rule": {
+      "CAGR": 0.4389,
+      "Sharpe": 0.83,
+      "MaxDD": -0.829,
+      "vol": 0.8671
+     },
+     "matched": {
+      "CAGR": 0.2252,
+      "Sharpe": 0.649,
+      "MaxDD": -0.6494,
+      "vol": 0.5079
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.2138,
+      "Sharpe": 0.722,
+      "MaxDD": -0.9563
+     },
+     "excess": {
+      "annual_mean_diff": 0.3896417759234816,
+      "annual_mean_diff_ci90": [
+       -0.06658302070856364,
+       0.8732088894903246
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0793,
+      "sharpe_diff": 0.18048799230015353,
+      "sharpe_diff_ci90": [
+       -0.2872532796824727,
+       0.6389804925009496
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.2706
+     }
+    }
+   }
+  },
+  "LINKUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.508,
+     "changes_per_year": 11.472953216374268,
+     "rule": {
+      "CAGR": 0.3393,
+      "Sharpe": 0.775,
+      "MaxDD": -0.5286,
+      "vol": 0.6078
+     },
+     "matched": {
+      "CAGR": 0.2331,
+      "Sharpe": 0.707,
+      "MaxDD": -0.4587,
+      "vol": 0.4195
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.293,
+      "Sharpe": 0.718,
+      "MaxDD": -0.7538
+     },
+     "excess": {
+      "annual_mean_diff": 0.1739901023831566,
+      "annual_mean_diff_ci90": [
+       -0.1414674599396883,
+       0.4932774698760134
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1817,
+      "sharpe_diff": 0.06707946328174925,
+      "sharpe_diff_ci90": [
+       -0.470451400224594,
+       0.5585134249708548
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.4276
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2019-02-25",
+      "2026-09-29"
+     ],
+     "exposure": 0.5296,
+     "changes_per_year": 11.052631578947368,
+     "rule": {
+      "CAGR": 0.5238,
+      "Sharpe": 0.915,
+      "MaxDD": -0.828,
+      "vol": 0.8505
+     },
+     "matched": {
+      "CAGR": 0.4726,
+      "Sharpe": 0.962,
+      "MaxDD": -0.6016,
+      "vol": 0.569
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.603,
+      "Sharpe": 0.972,
+      "MaxDD": -0.9018
+     },
+     "excess": {
+      "annual_mean_diff": 0.23103694374370407,
+      "annual_mean_diff_ci90": [
+       -0.06218097147694395,
+       0.5264021775136105
+      ],
+      "p_one_sided_mean_diff_le_0": 0.0981,
+      "sharpe_diff": -0.04678374963220968,
+      "sharpe_diff_ci90": [
+       -0.38561257349451017,
+       0.28537009757952286
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.5938
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.508,
+     "changes_per_year": 11.472953216374268,
+     "rule": {
+      "CAGR": 0.2147,
+      "Sharpe": 0.614,
+      "MaxDD": -0.5884,
+      "vol": 0.6081
+     },
+     "matched": {
+      "CAGR": 0.2023,
+      "Sharpe": 0.647,
+      "MaxDD": -0.4685,
+      "vol": 0.4195
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.293,
+      "Sharpe": 0.718,
+      "MaxDD": -0.7538
+     },
+     "excess": {
+      "annual_mean_diff": 0.10175736805613332,
+      "annual_mean_diff_ci90": [
+       -0.2228980721984869,
+       0.43047473487726795
+      ],
+      "p_one_sided_mean_diff_le_0": 0.3037,
+      "sharpe_diff": -0.033303820415257014,
+      "sharpe_diff_ci90": [
+       -0.5931896903881841,
+       0.4736925974710831
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.5531
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2019-02-25",
+      "2026-09-29"
+     ],
+     "exposure": 0.5296,
+     "changes_per_year": 11.052631578947368,
+     "rule": {
+      "CAGR": 0.3856,
+      "Sharpe": 0.804,
+      "MaxDD": -0.8646,
+      "vol": 0.8506
+     },
+     "matched": {
+      "CAGR": 0.4282,
+      "Sharpe": 0.908,
+      "MaxDD": -0.627,
+      "vol": 0.5689
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": 0.603,
+      "Sharpe": 0.972,
+      "MaxDD": -0.9018
+     },
+     "excess": {
+      "annual_mean_diff": 0.16666085896605587,
+      "annual_mean_diff_ci90": [
+       -0.13426784244356962,
+       0.4677318421944913
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1818,
+      "sharpe_diff": -0.1049616924826499,
+      "sharpe_diff_ci90": [
+       -0.4547205228229094,
+       0.23203885347469505
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.6988
+     }
+    }
+   }
+  },
+  "LTCUSDT": {
+   "binance": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4861,
+     "changes_per_year": 13.607456140350877,
+     "rule": {
+      "CAGR": -0.107,
+      "Sharpe": 0.063,
+      "MaxDD": -0.7048,
+      "vol": 0.5447
+     },
+     "matched": {
+      "CAGR": 0.0528,
+      "Sharpe": 0.321,
+      "MaxDD": -0.4066,
+      "vol": 0.3409
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": -0.0128,
+      "Sharpe": 0.331,
+      "MaxDD": -0.7014
+     },
+     "excess": {
+      "annual_mean_diff": -0.07484731589472267,
+      "annual_mean_diff_ci90": [
+       -0.3571093440754256,
+       0.21043616467411233
+      ],
+      "p_one_sided_mean_diff_le_0": 0.663,
+      "sharpe_diff": -0.25748333299727866,
+      "sharpe_diff_ci90": [
+       -0.8056099273780261,
+       0.27211797043964486
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.7961
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2018-01-22",
+      "2026-09-29"
+     ],
+     "exposure": 0.4727,
+     "changes_per_year": 11.618342262842736,
+     "rule": {
+      "CAGR": 0.0638,
+      "Sharpe": 0.423,
+      "MaxDD": -0.7936,
+      "vol": 0.6564
+     },
+     "matched": {
+      "CAGR": 0.0408,
+      "Sharpe": 0.306,
+      "MaxDD": -0.6336,
+      "vol": 0.424
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": -0.1135,
+      "Sharpe": 0.317,
+      "MaxDD": -0.8991
+     },
+     "excess": {
+      "annual_mean_diff": 0.14798998115849454,
+      "annual_mean_diff_ci90": [
+       -0.07606865336268602,
+       0.3744939635780131
+      ],
+      "p_one_sided_mean_diff_le_0": 0.1361,
+      "sharpe_diff": 0.11700695570605145,
+      "sharpe_diff_ci90": [
+       -0.24674310572213012,
+       0.47131636463632015
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.2983
+     }
+    }
+   },
+   "etoro": {
+    "primary": {
+     "window": [
+      "2023-01-01",
+      "2026-09-29"
+     ],
+     "exposure": 0.4861,
+     "changes_per_year": 13.607456140350877,
+     "rule": {
+      "CAGR": -0.205,
+      "Sharpe": -0.149,
+      "MaxDD": -0.781,
+      "vol": 0.5454
+     },
+     "matched": {
+      "CAGR": 0.0315,
+      "Sharpe": 0.261,
+      "MaxDD": -0.4156,
+      "vol": 0.3409
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": -0.0128,
+      "Sharpe": 0.331,
+      "MaxDD": -0.7014
+     },
+     "excess": {
+      "annual_mean_diff": -0.17012375777109423,
+      "annual_mean_diff_ci90": [
+       -0.4627426423409021,
+       0.1247126442723181
+      ],
+      "p_one_sided_mean_diff_le_0": 0.8273,
+      "sharpe_diff": -0.4098085145846168,
+      "sharpe_diff_ci90": [
+       -0.9731174800287364,
+       0.13574952381905347
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.8955
+     }
+    },
+    "whole_history": {
+     "window": [
+      "2018-01-22",
+      "2026-09-29"
+     ],
+     "exposure": 0.4727,
+     "changes_per_year": 11.618342262842736,
+     "rule": {
+      "CAGR": -0.0368,
+      "Sharpe": 0.273,
+      "MaxDD": -0.8827,
+      "vol": 0.6571
+     },
+     "matched": {
+      "CAGR": 0.0149,
+      "Sharpe": 0.247,
+      "MaxDD": -0.6419,
+      "vol": 0.4239
+     },
+     "hold_100pct_no_costs": {
+      "CAGR": -0.1135,
+      "Sharpe": 0.317,
+      "MaxDD": -0.8991
+     },
+     "excess": {
+      "annual_mean_diff": 0.07442863309205737,
+      "annual_mean_diff_ci90": [
+       -0.15542949144194376,
+       0.3067247389258796
+      ],
+      "p_one_sided_mean_diff_le_0": 0.2926,
+      "sharpe_diff": 0.02568450790471052,
+      "sharpe_diff_ci90": [
+       -0.3477560330725454,
+       0.3861275400015628
+      ],
+      "p_one_sided_sharpe_diff_le_0": 0.4541
+     }
+    }
+   }
+  }
+ },
+ "pooled": {
+  "binance": {
+   "annual_mean": 0.14533234282227758,
+   "ci90": [
+    -0.07544682208030858,
+    0.3737832087159634
+   ],
+   "p_one_sided_le_0": 0.1421,
+   "days": 1368,
+   "coins_positive": 6
+  },
+  "etoro": {
+   "annual_mean": 0.07046124777260013,
+   "ci90": [
+    -0.15794529289041975,
+    0.3052464688031425
+   ],
+   "p_one_sided_le_0": 0.3164,
+   "days": 1368,
+   "coins_positive": 5
+  }
+ },
+ "verdict": "INCONCLUSIVE"
+}
