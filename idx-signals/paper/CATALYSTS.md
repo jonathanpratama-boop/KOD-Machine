@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-16T23:15:39Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-16T23:32:18Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 26 (FIRE 9, ABSTAIN 17) over 9 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 14, SEALED 26, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 29 (FIRE 11, ABSTAIN 18) over 10 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 14, SEALED 29, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,27 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP FCPT (Four Corners Property Trust, Inc.) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-460757`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 23.32 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-460757` by Lenehan William H (President and CEO); purchases USD 149,992; top executive yes; holding up +0.8%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-460757.
-Twins (band+liq+mom+dd): EPAC 39.37, BETA 23.33, SDGR 29.53, NBR 84.68, APAM 38.43, EXP 180.79, VIRT 59.33, STOK 26.68, SLG 49, LAZ 40.4, PVLA 152.48, SKM 34.57, ZLAB 24.6, PUK 25.57, VSNT 35.94, USLM 111.18, MRCY 81.415, RHI 42, KBH 47.9, RCI 33.24.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP TRIN (Trinity Capital Inc.) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-460772`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 17.7 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-460772` by Brown Kyle Steven (CEO, President and CIO); purchases USD 58,000; top executive yes; holding up +0.5%.
-Coverage **ABSTAIN** (ROUTINE); dilution filings 0; routine owners 1 of 1; parent CAT-FORM4-0001193125-26-460772.
-Twins (band+liq+mom+dd): LION 14.03, VYX 10.48, OLN 17.46, AQN 5.6, LBTYA 10.77, BANC 17.83, CALY 17.1, CERT 11.57, CRK 15.18, SMPL 12.57, FSK 11.72, APLE 19.46, OBDC 10.97, GDYN 13.21, CYRX 19.89, RLJ 12.94, AHCO 7.66, TME 9.05, SVV 10.46, SLN 19.83.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP WY (WEYERHAEUSER CO) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-FORM4_SHARP-0001197193-26-000008`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 20.81 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001197193-26-000008` by BECKWITT RICHARD (director); purchases USD 306,600; top executive no; holding up +46.8%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001197193-26-000008.
-Twins (band+liq+mom+dd): DKS 149.7, WYNN 85.06, SPHR 125.56, KRMN 40.66, LVS 40.39, FLR 48.98, GS 916.56, WFRD 86.45, AN 177.75, TPG 48.26, FTAI 180.2, DB 36.62, ARGX 960.04, PRAX 328.13, MANE 129.66, RH 129.39, ENTG 147.41, POR 45.91, CHWY 22.52, UAL 109.31.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP NGS (NATURAL GAS SERVICES GROUP INC) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
 Set `CAT-FORM4_SHARP-0001236849-26-000015`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 29.7 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001236849-26-000015` by JACKSON JOHN EARL (director); purchases USD 57,790; top executive no; holding up n/a.
@@ -207,4 +186,25 @@ Form 4 `0002119764-26-000036` by Elsztain Alejandro Gustavo (director); purchase
 Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002119764-26-000036.
 Twins (band+liq+mom+dd): SD 13.04, MTRX 9.19, TTAM 11.25, PAYP 14.35, USNA 13.24, GPRK 9.42, TLX 9.23, MNRO 10.48, ILPT 6.07, PAX 9.17, MH 11.6, CEPU 10.86, GTE 9.47, ALLT 7.95, ZVRA 9.08, OBE 9.89, AGBK 6.26, VTS 15.42, RMR 16.75, MASS 9.74.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D BANL (CBL International Ltd) - accepted 2026-11-16T09:20:59-05:00, sealed 2026-11-16T23:32:15Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D-0001493152-26-052084`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 3.225 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
+Filing `0001493152-26-052084` by Chia Teck Lim; Item 4 intent words: board, acquisition, director.
+Coverage **FIRE**; pre-entry move +3.70%, market value USD 88.7M, dilution filings 0.
+Twins (band+liq+mom+dd): ONEG 1.08, XRTX 1.04, SPHL 2.35, JEM 2.85, ANTA 2.185.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D AZTR (Azitra, Inc.) - accepted 2026-11-16T17:15:45-05:00, sealed 2026-11-16T23:32:15Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D-0000945621-26-001427`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 0.627 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
+Filing `0000945621-26-001427` by Young Pharmaceuticals, Inc.; Item 4 intent words: board, director.
+Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 3.8M, dilution filings 0.
+Twins (band+liq+mom+dd): BMR 0.8743, YDDL 1, BIOX 0.1997, ICCM 0.7601, RMCF 0.691.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D FUN (Six Flags Entertainment Corporation/NEW) - accepted 2026-11-16T18:01:33-05:00, sealed 2026-11-16T23:32:15Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D-0000919574-26-008157`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 11.61 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
+Filing `0000919574-26-008157` by H PARTNERS MANAGEMENT, LLC; Item 4 intent words: board, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 1,187.8M, dilution filings 0.
+Twins (band+liq+mom): MLTX 11.73, SBH 18.75, TIC 10.39, AMPL 17.77, CAPR 8.3.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
