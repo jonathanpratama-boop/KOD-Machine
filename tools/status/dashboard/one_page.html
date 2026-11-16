@@ -51,6 +51,7 @@ const summary = data.summary[0];
 const programs = new Map(data.programs.map(program => [program.id, program]));
 const server = new Map(data.server.map(study => [study.study, study]));
 const cloudResults = data.cloud_results?.schema === 'KOD_R2_RESULTS_V1' ? data.cloud_results : null;
+const isStopped = experiment => /STALLED|HALTED|FAILED|ERROR|PROVIDER_STOPPED|PAUSED|STOPPED/.test(String(experiment.state || '').toUpperCase());
 const isFinished = experiment => experiment.group === 'closed' || ['CLOSED','COMPLETED'].includes(experiment.state);
 const ongoing = data.experiments.filter(experiment => !isFinished(experiment)).map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
 const historical = data.experiments.filter(isFinished);
@@ -359,7 +360,13 @@ function review(experiment) {
   let value = experiment.verdict_date || experiment.projected_date;
   let kind = experiment.verdict_basis === 'scheduled' ? 'Scheduled review' : 'Estimated review';
   let description = experiment.next_milestone;
-  if (r2) {value='2026-11-13T01:12:00+07:00';kind='First-week check';description='Check how many moves we caught and how many can be compared. Data collection ends 11 Dec, 01:14 WIB.';}
+  if (r2) {
+    const checkpoint = '2026-11-13T01:12:00+07:00';
+    const checkpointPassed = Date.now() >= Date.parse(checkpoint);
+    value = checkpointPassed ? '2026-12-06T01:12:00+07:00' : checkpoint;
+    kind = checkpointPassed ? 'Admissions close · fixed' : 'First-week check';
+    description = (checkpointPassed ? 'First-week checkpoint was 13 Nov, 01:12 WIB; this date alone does not confirm review completion. ' : 'Check how many moves we caught and how many can be compared. ') + 'Data collection ends 11 Dec, 01:14 WIB. Historical gaps remain recorded.';
+  }
   else if (experiment.plumbing) kind='Scheduled collection end';
   else if (!value) {value=experiment.next_date;kind=value ? 'Next update' : 'Waiting for more results';}
   const milestonePassed = !r2 && experiment.next_date && experiment.next_date < WIB_DAY(Date.parse(build.built_at));
@@ -384,7 +391,7 @@ function rowStatus(experiment) {
   if (isFinished(experiment)) return 'ok';
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
   const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours;
-  const problem=/STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
+  const problem=isStopped(experiment);
   return problem ? 'bad' : stale || /STALE|UNKNOWN/.test(experiment.state) ? 'warn' : 'ok';
 }
 const WIB_DAY=ms=>new Date(ms+7*3600000).toISOString().slice(0,10);
@@ -413,10 +420,10 @@ function health(experiment) {
   const finished=isFinished(experiment);
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
   const stale=!finished && (!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours);
-  const problem=!finished && /STALLED|HALTED|FAILED|ERROR/.test(experiment.state);
+  const problem=!finished && isStopped(experiment);
   const unknown=!finished && /STALE|UNKNOWN/.test(experiment.state);
-  const label=finished ? 'Closed' : stale ? 'Update overdue' : problem ? 'Needs attention' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
-  box.append(element('span','tag' + (stale || unknown ? ' warn' : problem ? ' bad' : ''),label),element('p','checked',date(experiment.as_of,true)));
+  const label=finished ? 'Closed' : problem ? (experiment.state === 'PROVIDER_STOPPED' ? 'Provider stopped' : 'Needs attention') : stale ? 'Update overdue' : unknown ? 'Status unavailable' : experiment.plumbing ? 'Collecting' : 'Running';
+  box.append(element('span','tag' + (problem ? ' bad' : stale || unknown ? ' warn' : ''),label),element('p','checked',date(experiment.as_of,true)));
   box.append(element('p','check-state',finished ? 'Final recorded update' : stale ? experiment.state.charAt(0) + experiment.state.slice(1).toLowerCase() + ' at last update' : age(experiment.as_of)));
   return box;
 }
@@ -500,7 +507,7 @@ document.getElementById('theme-count').textContent=count(data.programs.length);
 document.getElementById('passed-count').textContent=count(summary.proven_live);
 if (summary.proven_live > 0) document.getElementById('headline').textContent=count(summary.proven_live) + ' live tests passed.';
 document.getElementById('next-look').textContent=summary.next_verdict_what + ' · ' + date(summary.next_verdict_date);
-const issues=ongoing.filter(experiment=>['STALLED','HALTED','FAILED','UNKNOWN'].includes(experiment.state)).map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
+const issues=ongoing.filter(experiment=>isStopped(experiment) || experiment.state === 'UNKNOWN').map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
 if (sourceStale) issues.unshift('Study records need a refresh; cloud results have their own update time');
 const paperInput=data.paper_book_views?.input_health;
 if (!['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(paperInput?.status)) issues.push('Paper-book inputs · ' + (paperInput?.status ? paperInput.status.toLowerCase().replaceAll('_',' ') : 'coverage not reported'));
@@ -518,5 +525,6 @@ render();renderArchive();
 </script>
 </body>
 </html>
+
 
 
