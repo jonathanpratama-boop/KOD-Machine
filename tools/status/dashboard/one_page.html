@@ -242,9 +242,9 @@ function evidence(experiment) {
   if (experiment.id === 'guidance_margin') {
     const trial = guidanceMargin.trial || {}, feed = guidanceMargin.feed || {};
     box.append(element('strong','',count(trial.filled_pairs)),element('p','metric-label','paired paper entries'));
-    box.append(element('p','capture',count(trial.admitted) + ' admitted · ' + count(trial.excluded) + ' excluded'));
+    box.append(element('p','capture',count(trial.admitted) + ' admitted · ' + count(trial.excluded) + ' excluded at paper admission'));
     box.append(element('p','capture',count(feed.discovered_count) + ' releases found · ' + count(feed.extraction_attempted_count) + ' read by the API'));
-    box.append(element('p','capture',count(feed.review_pending_count) + ' awaiting review'));
+    box.append(element('p','capture',count(feed.excluded_count) + ' excluded by source checks · ' + count(feed.review_pending_count) + ' awaiting review'));
     box.append(element('p','requirement','Missing or excluded cases do not count as successful comparisons.'));
     return box;
   }
@@ -485,8 +485,8 @@ function health(experiment) {
   const box=element('div','health');
   if (experiment.id === 'guidance_margin') {
     const elapsed=(Date.now()-Date.parse(guidanceMargin.as_of))/3600000;
-    const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed>30;
-    const problem=/ERROR|FAILED|STOPPED|UNAVAILABLE|DEGRADED/.test(text(guidanceMargin.state)) || guidanceMargin.feed?.state === 'DEGRADED';
+    const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed>1;
+    const problem=/ERROR|FAILED|STOPPED|UNAVAILABLE|DEGRADED|NEEDS_ATTENTION/.test(text(guidanceMargin.state)) || guidanceMargin.feed?.state === 'DEGRADED';
     const label=stale ? 'Update overdue' : problem ? 'Needs attention' : (guidanceMargin.trial?.filled_pairs > 0 ? 'Paper study running' : 'Collecting disclosures');
     box.append(element('span','tag' + (stale || problem ? ' warn' : ''),label),element('p','checked',guidanceMargin.as_of ? date(guidanceMargin.as_of,true) : 'No update reported'));
     return box;
@@ -585,7 +585,7 @@ document.getElementById('passed-count').textContent=count(summary.proven_live);
 if (summary.proven_live > 0) document.getElementById('headline').textContent=count(summary.proven_live) + ' live tests passed.';
 document.getElementById('next-look').textContent=summary.next_verdict_what + ' · ' + date(summary.next_verdict_date);
 const issues=ongoing.filter(experiment=>isStopped(experiment) || experiment.state === 'UNKNOWN').map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
-if (guidanceMargin && (/UNAVAILABLE|DEGRADED/.test(text(guidanceMargin.state)) || guidanceMargin.feed?.state === 'DEGRADED')) issues.unshift('Guidance study · source collection needs attention');
+if (guidanceMargin && (/UNAVAILABLE|DEGRADED|NEEDS_ATTENTION/.test(text(guidanceMargin.state)) || guidanceMargin.feed?.state === 'DEGRADED')) issues.unshift('Guidance study · collection or paper scoring needs attention');
 if (sourceStale) issues.unshift('Study records need a refresh; cloud results have their own update time');
 const paperInput=data.paper_book_views?.input_health;
 if (!['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(paperInput?.status)) issues.push('Paper-book inputs · ' + (paperInput?.status ? paperInput.status.toLowerCase().replaceAll('_',' ') : 'coverage not reported'));
