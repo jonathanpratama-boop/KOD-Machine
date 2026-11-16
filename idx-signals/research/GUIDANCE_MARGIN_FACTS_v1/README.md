@@ -1,6 +1,6 @@
 # Guidance-margin facts: offline development
 
-This is an offline fact validator and revision journal. It is **not an autonomous reader, a trading strategy, a launched experiment or evidence of profit**. No model API has been called. The existing cloud timing study continues separately.
+This is an offline fact validator, revision journal and a one-call development reader adapter. It is **not an autonomous reader, a trading strategy, a launched experiment or evidence of profit**. No model API has been called. The existing cloud timing study continues separately.
 
 ## Why this work exists
 
@@ -40,3 +40,15 @@ Use a new output directory for each rehearsal; existing artifacts are not overwr
 5. Freeze the prospective protocol, independently test the full capture-to-account path, then add the new comparison to the existing dashboard and start its isolated job. None of those deployment steps has been claimed complete here.
 
 The fact contract is development-versioned. It is not an RFC3161-frozen trading protocol. There is no new account engine, recurring model charge, new collector shutdown quota or real-money order.
+
+## Development OpenAI adapter
+
+`idxsig.guidance_margin_reader` builds a strict structured extraction request from source text alone, binds quoted numbers locally and preserves the first response and actual usage. The model cannot provide verification flags or change trusted source clocks/identity. Partial source excerpts may correctly produce missing facts. The adapter has no default model, scheduler, retries, trades or automatic env-file loading. See [READER_CONTRACT.md](READER_CONTRACT.md).
+
+Prepare a request without calling the API:
+
+```sh
+PYTHONPATH=idx-signals python3 -m idxsig.guidance_margin_reader --fixtures idx-signals/research/GUIDANCE_MARGIN_FACTS_v1/fixtures.json --fixture-id rbbn-provisional-source-pair --model MODEL_SNAPSHOT_ID --out /tmp/kod-reader-prepared
+```
+
+A deliberate `--live` invocation makes at most one attempt using the process's OPENAI_API_KEY; it requires a different new output directory. Keep these private artifacts outside the public repository. A rejected, incomplete or failed response is retained, never silently replaced. Known missing source headers must be collected from complete source material before an extraction-quality claim can be made.
