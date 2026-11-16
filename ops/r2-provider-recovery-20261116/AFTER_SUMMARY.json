@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-11-16T07:34:59.419576+00:00",
+  "coverage": {
+    "fixed_primary_asset_count": 130,
+    "settled_minutes": 15201,
+    "on_time_closed_total": 1591200,
+    "expected_closed_total": 1976130,
+    "pooled_on_time_coverage": 0.8052101835405565
+  },
+  "frozen_code_files_verified": 452,
+  "changed_frozen_files": [],
+  "provider_latched": false,
+  "service": "MainPID=441305\nExecMainStartTimestamp=Mon 2026-11-16 07:16:05 UTC\nActiveState=active\nSubState=running\n",
+  "capture": {
+    "phase": "RUNNING",
+    "last_minute_commit_at": "2026-11-16T07:34:00.314435Z"
+  },
+  "engine": {
+    "as_of": "2026-11-16T07:34:57.818498Z",
+    "status": "RUNNING"
+  },
+  "raw_after_sha256": "78f9ab8d07f3c0e7f4b6aaf3cc987de621c52f2a6b16795942a31fe7a5874c22",
+  "raw_after_retained": "work/revamp-execution-20261116/cloud-repair/AFTER.json in task evidence; published health/backup independently verified in PUBLICATION_VERIFICATION.json"
+}
