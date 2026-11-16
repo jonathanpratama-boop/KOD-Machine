@@ -1,0 +1,28 @@
+{
+  "frozen_at": "2026-11-16T10:52:12.395652+00:00",
+  "trial_started_at": "2026-11-16T10:51:25.028121+00:00",
+  "policy": {
+    "capital_per_arm_usd": "10000",
+    "cost_per_side_fraction": "0.0025",
+    "descriptive_sessions": [
+      1,
+      3,
+      5
+    ],
+    "entry_time_et": "09:30",
+    "hold_sessions": 20,
+    "initial_disclosure_lookback_days": 7,
+    "max_positions": 10,
+    "max_source_to_entry_sessions": 6,
+    "minimum_entry_price": "2",
+    "revenue_raise_pct": "1",
+    "slot_usd": "1000"
+  },
+  "policy_sha256": "373fb5d3f03602869217767bb34accfde9efe74718b85e733887657bcfcc99a6",
+  "files": {
+    "idx-signals/research/GUIDANCE_MARGIN_PAPER_v1/PROTOCOL.md": "95fbc72f7e717dfaf7be5517249a6540497df1bb315066c4f795aef4435797c4",
+    "idx-signals/idxsig/guidance_margin_trial.py": "c9d3835595f759126c94de85e25f9de47ffcc1796ecd970c516c1c65018d96fb"
+  },
+  "scope": "Policy frozen before any candidate admission or individual price outcome; API source feasibility was already explored. Prospective entries only; initial recent and new publication cohorts remain separate.",
+  "timestamp_evidence": "Local clock and subsequent Git publication; no independent timestamp authority claimed"
+}

@@ -51,9 +51,16 @@ const summary = data.summary[0];
 const programs = new Map(data.programs.map(program => [program.id, program]));
 const server = new Map(data.server.map(study => [study.study, study]));
 const cloudResults = data.cloud_results?.schema === 'KOD_R2_RESULTS_V1' ? data.cloud_results : null;
+const guidanceMargin = data.guidance_margin || null;
 const isStopped = experiment => /STALLED|HALTED|FAILED|ERROR|PROVIDER_STOPPED|PAUSED|STOPPED/.test(String(experiment.state || '').toUpperCase());
 const isFinished = experiment => experiment.group === 'closed' || ['CLOSED','COMPLETED'].includes(experiment.state);
 const ongoing = data.experiments.filter(experiment => !isFinished(experiment)).map(experiment => experiment.id === 'srv:research_r2' && cloudResults ? {...experiment,as_of:cloudResults.as_of,state:cloudResults.status} : experiment);
+if (guidanceMargin) ongoing.push({
+  id:'guidance_margin', name:'Revenue forecasts with and without the margin check', short:'Guidance margin paper test',
+  plain:'Does an improving operating-margin forecast add value to a revenue-raise signal?',
+  state:guidanceMargin.state || 'UNKNOWN', as_of:guidanceMargin.as_of,
+  stale_after_hours:30, plumbing:false, issue:guidanceMargin.reason || '',
+});
 const historical = data.experiments.filter(isFinished);
 const count = value => value == null ? '—' : new Intl.NumberFormat('en-US').format(value);
 const text = value => value == null ? '' : String(value);
@@ -232,6 +239,15 @@ function detailBlock(label, content) {
 }
 function evidence(experiment) {
   const box = element('div','evidence');
+  if (experiment.id === 'guidance_margin') {
+    const trial = guidanceMargin.trial || {}, feed = guidanceMargin.feed || {};
+    box.append(element('strong','',count(trial.filled_pairs)),element('p','metric-label','paired paper entries'));
+    box.append(element('p','capture',count(trial.admitted) + ' admitted · ' + count(trial.excluded) + ' excluded'));
+    box.append(element('p','capture',count(feed.discovered_count) + ' releases found · ' + count(feed.extraction_attempted_count) + ' read by the API'));
+    box.append(element('p','capture',count(feed.review_pending_count) + ' awaiting review'));
+    box.append(element('p','requirement','Missing or excluded cases do not count as successful comparisons.'));
+    return box;
+  }
   if (experiment.id === 'srv:research_r2' && cloudResults) {
     box.append(element('strong','',count(cloudResults.events_with_completed_24h)),element('p','metric-label','independent events with a 24-hour result'));
     box.append(element('p','capture',count(cloudResults.independent_events) + ' independent ' + (cloudResults.independent_events === 1 ? 'event' : 'events') + ' recorded'));
@@ -354,8 +370,58 @@ function cloudResultBlock() {
   source.target = '_blank'; source.rel = 'noopener noreferrer'; box.append(source);
   return box;
 }
+function guidanceResultBlock() {
+  const box = element('div','cloud-results');
+  const trial = guidanceMargin.trial || {}, feed = guidanceMargin.feed || {}, credits = guidanceMargin.credits || {};
+  const heading = element('div','cloud-result-heading');
+  heading.append(element('b','','Same signals, two paper decisions'),element('span','','Started ' + date(trial.started_at || guidanceMargin.started_at,true)));
+  box.append(heading);
+  box.append(element('p','result-note','Revenue only buys a qualifying revenue-forecast raise. Revenue + margin buys the same event only when the comparable operating-margin forecast also improves; otherwise its matching slot stays in cash.'));
+  const table = element('table');table.setAttribute('aria-label','Guidance paper results after trading costs');
+  const head = element('thead'), titles = element('tr');
+  for (const label of ['Cohort / close','Paired results','Revenue only','Revenue + margin','Difference']) {const cell=element('th','',label);cell.setAttribute('scope','col');titles.append(cell);}
+  head.append(titles);table.append(head);
+  const body = element('tbody');
+  const number = value => value === null || value === undefined || value === '' ? null : Number.isFinite(Number(value)) ? Number(value) : null;
+  const money = value => number(value) === null ? 'Unavailable' : new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(value));
+  const groups = trial.cohorts?.NEW_RELEASE || trial.cohorts?.INITIAL_RECENT
+    ? [['New releases',trial.cohorts?.NEW_RELEASE],['Initial recent',trial.cohorts?.INITIAL_RECENT]]
+    : [['All observations',trial]];
+  for (const [cohort, group] of groups) for (const horizon of ['1','3','5','20']) {
+    const outcome = group?.horizons?.[horizon] || {}, pnl = outcome.net_pnl_usd || {};
+    const n = number(outcome.paired_events), have = n !== null && n > 0;
+    const a=number(pnl.revenue),b=number(pnl.revenue_and_margin);
+    const missing = n === 0 ? 'Pending' : 'Unavailable';
+    const row=element('tr');
+    row.append(element('td','',cohort + ' · ' + horizon + (horizon === '20' ? ' primary' : ' early')),element('td','',count(n)),
+      element('td','',have ? money(a) : missing),element('td','',have ? money(b) : missing),
+      element('td','',have && a !== null && b !== null ? money(b-a) : missing));
+    body.append(row);
+  }
+  table.append(body);box.append(table);
+  const cost = number(trial.policy?.cost_per_side_fraction);
+  box.append(element('p','result-note','Figures are total modeled P&L on the matching observations at each horizon, not actual fills. ' + (cost === null ? 'Cost assumption unavailable.' : 'Assumed costs: ' + (100*cost).toFixed(2) + '% each way.')));
+  box.append(element('p','result-note','The 1-, 3- and 5-session rows are early observations. The main comparison holds for 20 trading sessions. A few results do not establish a repeatable edge.'));
+  box.append(element('p','result-note',count(feed.prospective_count) + ' new releases since collection began · ' + count(feed.development_count) + ' older releases retained separately. Initial recent disclosures may enter only after review, at a future opening; they are reported separately from new releases.'));
+  if (trial.missed_entries > 0 || trial.missing_terminal_outcomes > 0) box.append(element('p','result-note result-warning',count(trial.missed_entries) + ' planned entries missed · ' + count(trial.missing_terminal_outcomes) + ' primary closes unavailable. These are not zero-return results.'));
+  if (feed.source_scope) box.append(element('p','result-note','Coverage: ' + text(feed.source_scope) + '.'));
+  const spent = credits.estimated_spend_usd ?? credits.estimated_cost_usd ?? feed.api_estimated_usd;
+  const expiry = credits.expires_at ?? feed.credit_expiry_at;
+  const calls = credits.calls ?? feed.api_calls;
+  box.append(element('p','result-note','API: ' + count(calls) + ' calls · estimated usage ' + money(spent) + (expiry ? ' · credits expire ' + date(expiry,true) : ' · credit expiry unavailable') + '. Usage is an estimate, not a billing balance.'));
+  if (guidanceMargin.reason) box.append(element('p','result-note result-warning',text(guidanceMargin.reason)));
+  if (feed.fetch_error_count > 0 || feed.state === 'DEGRADED') box.append(element('p','result-note result-warning','Source collection needs attention: ' + count(feed.fetch_error_count) + ' fetch errors. The saved observations are retained.'));
+  const source=element('a','source-path','Saved guidance experiment status');
+  source.href='https://github.com/jonathanpratama-boop/KOD-Timing-Backups/blob/research-r2-20261105T181200Z/GUIDANCE_MARGIN_STATUS.json';source.target='_blank';source.rel='noopener noreferrer';box.append(source);
+  return box;
+}
 function review(experiment) {
   const box = element('div');
+  if (experiment.id === 'guidance_margin') {
+    box.append(element('div','date','After the first entry'),element('div','date-kind','1, 3 and 5 trading sessions'));
+    box.append(element('p','next-note','Early results appear after each scheduled close. New disclosures must qualify first; the 20-session comparison follows later.'));
+    return box;
+  }
   const r2 = experiment.id === 'srv:research_r2';
   let value = experiment.verdict_date || experiment.projected_date;
   let kind = experiment.verdict_basis === 'scheduled' ? 'Scheduled review' : 'Estimated review';
@@ -417,6 +483,14 @@ function changeLine(experiment) {
 }
 function health(experiment) {
   const box=element('div','health');
+  if (experiment.id === 'guidance_margin') {
+    const elapsed=(Date.now()-Date.parse(guidanceMargin.as_of))/3600000;
+    const stale=!Number.isFinite(elapsed) || elapsed<0 || elapsed>30;
+    const problem=/ERROR|FAILED|STOPPED|UNAVAILABLE|DEGRADED/.test(text(guidanceMargin.state)) || guidanceMargin.feed?.state === 'DEGRADED';
+    const label=stale ? 'Update overdue' : problem ? 'Needs attention' : (guidanceMargin.trial?.filled_pairs > 0 ? 'Paper study running' : 'Collecting disclosures');
+    box.append(element('span','tag' + (stale || problem ? ' warn' : ''),label),element('p','checked',guidanceMargin.as_of ? date(guidanceMargin.as_of,true) : 'No update reported'));
+    return box;
+  }
   const finished=isFinished(experiment);
   const elapsed=(Date.now()-Date.parse(experiment.as_of))/3600000;
   const stale=!finished && (!Number.isFinite(elapsed) || elapsed<0 || elapsed > experiment.stale_after_hours);
@@ -456,6 +530,7 @@ function experimentRow(experiment) {
   row.append(heading,evidence(experiment),review(experiment),health(experiment));
   if (experiment.id === 'srv:research_r2' && cloudResults) row.append(cloudResultBlock());
   if (experiment.id === 'PAPER_BOOK_v1') row.append(paperBookViews());
+  if (experiment.id === 'guidance_margin') {row.append(guidanceResultBlock());return row;}
   const details=element('details','detail');details.append(element('summary','','Rules, notes & sources'));
   const content=element('div','detail-content');
   content.append(detailBlock('Source notes',text(experiment.note) || 'No additional notes.'),detailBlock('What happens next · source note',text(experiment.next_milestone)));
@@ -469,6 +544,8 @@ function render() {
   const rank=e=>({bad:0,warn:1,ok:2})[rowStatus(e)];
   const ordered=selected.slice().sort((a,b)=> {
     if (rank(a)!==rank(b)) return rank(a)-rank(b);
+    if (a.id === 'guidance_margin') return -1;
+    if (b.id === 'guidance_margin') return 1;
     if (a.id === 'srv:research_r2') return -1;
     if (b.id === 'srv:research_r2') return 1;
     return (programs.get(a.program)?.order || 0)-(programs.get(b.program)?.order || 0);
@@ -508,6 +585,7 @@ document.getElementById('passed-count').textContent=count(summary.proven_live);
 if (summary.proven_live > 0) document.getElementById('headline').textContent=count(summary.proven_live) + ' live tests passed.';
 document.getElementById('next-look').textContent=summary.next_verdict_what + ' · ' + date(summary.next_verdict_date);
 const issues=ongoing.filter(experiment=>isStopped(experiment) || experiment.state === 'UNKNOWN').map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
+if (guidanceMargin && (/UNAVAILABLE|DEGRADED/.test(text(guidanceMargin.state)) || guidanceMargin.feed?.state === 'DEGRADED')) issues.unshift('Guidance study · source collection needs attention');
 if (sourceStale) issues.unshift('Study records need a refresh; cloud results have their own update time');
 const paperInput=data.paper_book_views?.input_health;
 if (!['CURRENT','CURRENT_NO_OPPORTUNITY'].includes(paperInput?.status)) issues.push('Paper-book inputs · ' + (paperInput?.status ? paperInput.status.toLowerCase().replaceAll('_',' ') : 'coverage not reported'));

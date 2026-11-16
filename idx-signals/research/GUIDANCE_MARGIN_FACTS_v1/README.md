@@ -1,5 +1,7 @@
 # Guidance-margin facts: offline development
 
+**Current integration:** the development findings below are preserved. A separate [paired paper pilot](../GUIDANCE_MARGIN_PAPER_v1/PROTOCOL.md) now supplies the strategy, actual decision clocks, source coverage and scoring that this module alone did not provide. Its source checks and source-only review can exclude a disclosure; they do not require every development example to become a trade. The original development contract and evaluation results are unchanged.
+
 This is an offline fact validator, revision journal and a one-call development reader adapter. It is **not an autonomous reader, a trading strategy, a launched experiment or evidence of profit**. Live development API calls have now been evaluated: the repaired version passed five controls but failed both complete real-disclosure pairs. The unattended reader remains on hold. See [the 16 November development evaluation](DEVELOPMENT_EVAL_20261116.md). The existing cloud timing study continues separately.
 
 A [two-call stronger-model follow-up](MODEL_COMPARISON_20261116.md) improved real-number extraction, but neither complete source comparison passed. It did not change the reader code, expected facts or HOLD decision.
