@@ -1,0 +1,360 @@
+{
+  "as_of": "2026-11-16",
+  "selection": "source-census-v2-selection.md",
+  "window": [
+    "2026-10-01",
+    "2026-11-15"
+  ],
+  "selected_issuers": 20,
+  "observed_earnings_events": 13,
+  "explicit_as_reported_source_pairs": 1,
+  "component_derived_pairs_separate": 0,
+  "fully_admissible_live_events": 0,
+  "earnings_event_enumeration_unknown": 7,
+  "observed_other_guidance_events": 1,
+  "strict_fact_pairs_certified": 0,
+  "scope": "Bounded primary earnings-release census plus Oracle investor-day disclosure; not every deck/transcript/8-K. Negative classifications apply to inspected releases. One explicit AS-REPORTED pair is extractable (KTOS), but strict comparability is not established because of acquisition/perimeter and latest-prior flags. Explicit source-pair count is not a strict eligibility count.",
+  "prices_boundary": "No market-price series, future returns, holdouts or strategy outcomes requested or computed. Search responses incidentally contain acquisition consideration, offering prices and stock-data links; not used to select or classify facts. Exact web-tool responses retained.",
+  "rows": [
+    {
+      "ordinal": 1,
+      "cik": 1439725,
+      "ticker": "BDSX",
+      "date": "2026-11-05",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY2026 revenue101–103m and approximately80% gross margin; no operating-profit/margin forecast. Historical expenses and qualitative path to profitability are not a joint FY pair.",
+      "urls": [
+        "https://investors.biodesix.com/news-releases/news-release-details/biodesix-announces-third-quarter-2026-results-and-highlights",
+        "https://www.sec.gov/Archives/edgar/data/1439725/000119312526449738/bdsx-20261105.htm"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "cik": 1739445,
+      "ticker": "ACA",
+      "date": null,
+      "event": null,
+      "status": "ACQUIRED_WITH_PREMERGER_EVENT_ENUMERATION_UNKNOWN",
+      "strict_pair": null,
+      "reason": "Exact-CIK Oct23 8-K confirms merger into CRH and suspension/delisting. No in-window Arcosa earnings release located; acquisition is not proof no earlier disclosure. CRH Q3 results are another issuer and were not substituted.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1739445/000114036126040596/ef20084131_8k.htm"
+      ],
+      "corporate_event_date": "2026-10-23"
+    },
+    {
+      "ordinal": 3,
+      "cik": 913277,
+      "ticker": "CLAR",
+      "date": "2026-11-05",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY2026 revenue251–255m from245–255m and adjusted EBITDA15–17m from12–13m. Margin refers to EBITDA; no operating-profit guidance substitute.",
+      "urls": [
+        "https://www.claruscorp.com/all-sec-filings/content/0001104659-26-123362/tm2629056d1_ex99-1.htm"
+      ]
+    },
+    {
+      "ordinal": 4,
+      "cik": 1669162,
+      "ticker": "KNSL",
+      "date": "2026-10-22",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Insurance quarterly/nine-month actual net operating earnings, underwriting and combined ratios; no joint full-year revenue/operating-profit forecast found.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000049/earningsrelease3q2026.htm"
+      ]
+    },
+    {
+      "ordinal": 5,
+      "cik": 64463,
+      "ticker": "SLNH",
+      "date": null,
+      "event": null,
+      "status": "IR_CALENDAR_OUTSIDE_WINDOW_NOT_EXHAUSTIVE",
+      "strict_pair": null,
+      "reason": "Nov9 issuer notice schedules Q3 earnings Nov16 after cutoff. Complete all-disclosure enumeration not verified, so no observed earnings event is not coded as confirmed absence.",
+      "urls": [
+        "https://www.solunacomputing.com/news/q3-2026-earnings-call/"
+      ]
+    },
+    {
+      "ordinal": 6,
+      "cik": 883984,
+      "ticker": "ICUI",
+      "date": "2026-11-05",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY2026 guidance net income73–83m, EPS2.89–3.29, adjusted EBITDA415–435m and adjusted EPS8.60–9.00; higher-end language. No joint FY revenue/operating-profit pair found.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/883984/000088398426000049/exhibit991q32026er.htm"
+      ]
+    },
+    {
+      "ordinal": 7,
+      "cik": 47217,
+      "ticker": "HPQ",
+      "date": null,
+      "event": null,
+      "status": "IR_CALENDAR_OUTSIDE_WINDOW_NOT_EXHAUSTIVE",
+      "strict_pair": null,
+      "reason": "Nov3 issuer notice schedules FY2026/Q4 earnings Nov24. Full SEC/all-disclosure enumeration not verified.",
+      "urls": [
+        "https://investor.hp.com/news-events/news/news-details/2026/HP-Inc--to-Announce-Fourth-Quarter-Fiscal-2026-Earnings-on-November-24-2026-and-to-Attend-Upcoming-Investor-Conferences/default.aspx"
+      ]
+    },
+    {
+      "ordinal": 8,
+      "cik": 72573,
+      "ticker": "MOV",
+      "date": null,
+      "event": null,
+      "status": "EVENT_ENUMERATION_UNKNOWN",
+      "strict_pair": null,
+      "reason": "Located Aug26 Q2 FY2027 release outside window. Current IR news archive rendered controls without entries; no in-window release located. This is missing enumeration, not no-event proof.",
+      "urls": [
+        "https://investors.movadogroup.com/news/default.aspx",
+        "https://www.sec.gov/Archives/edgar/data/72573/000095014226002427/eh260824240_ex9901.htm"
+      ]
+    },
+    {
+      "ordinal": 9,
+      "cik": 1069258,
+      "ticker": "KTOS",
+      "date": "2026-11-05",
+      "event": true,
+      "status": "EXPLICIT_PAIR_LATEST_PRIOR_AND_SCOPE_FLAGS",
+      "strict_pair": false,
+      "explicit_source_pair": true,
+      "same_consolidation_perimeter_verified": false,
+      "admissible_under_full_fact_contract": false,
+      "strict_contract_issue": "An acquisition occurred between releases; no constant-perimeter forward revenue/profit bridge verified. Not a strict eligible pair under the original unchanged-consolidation-perimeter rule.",
+      "fully_admissible": false,
+      "reason": "Current and prior releases explicitly give same FY26 consolidated revenue and GAAP operating-income forecasts in USD millions. This is an as-reported source pair; an Oct9 acquisition and changed amortization/SBC forecasts prevent treating it as constant-perimeter organic improvement. Latest-prior completeness and exact first-public time unverified.",
+      "fiscal_period": "FY2026",
+      "basis": "GAAP consolidated as reported",
+      "currency": "USD",
+      "unit": "millions",
+      "new": {
+        "revenue": [
+          1780,
+          1810
+        ],
+        "revenue_midpoint": 1795,
+        "operating_profit": [
+          2,
+          7
+        ],
+        "operating_profit_midpoint": 4.5,
+        "implied_margin_pct": 0.25069637883008355,
+        "amortization": [
+          55,
+          58
+        ],
+        "stock_compensation": [
+          66,
+          68
+        ]
+      },
+      "prior": {
+        "release_date": "2026-08-04",
+        "revenue": [
+          1750,
+          1810
+        ],
+        "revenue_midpoint": 1780,
+        "operating_profit": [
+          16,
+          22
+        ],
+        "operating_profit_midpoint": 19,
+        "implied_margin_pct": 1.0674157303370786,
+        "amortization": [
+          43,
+          46
+        ],
+        "stock_compensation": [
+          60,
+          64
+        ]
+      },
+      "revenue_revision_pct": 0.8426966292134797,
+      "margin_revision_percentage_points": -0.8167193515069952,
+      "direction": "REVENUE_MIDPOINT_UP_LESS_THAN_ONE_PERCENT_AND_MARGIN_DOWN",
+      "prior_binding": "Two dated SEC exhibits; no same-table prior label. Targeted intervening-guidance searches found no replacement, but exhaustive feed access failed; newest prior not certified.",
+      "first_public_time": "DATE_ONLY_KNOWN",
+      "earnings_call_time": "2026-11-05T17:00:00-05:00",
+      "earnings_call_is_not_release_time": true,
+      "kod_receipt_time": null,
+      "locators": [
+        "Current SEC exhibit Financial Forecast Estimates rows83–90; prior issuer release rows203–211.",
+        "Jetset acquisition Oct9 at SEC prospectus cited below; no causal apportionment of forecast change inferred."
+      ],
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000085/ktos202609278kexhibit991.htm",
+        "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000075/ktos202606288kexhibit991.htm",
+        "https://www.kratosdefense.com/newsroom/kratos-reports-second-quarter-2026-financial-results",
+        "https://www.sec.gov/Archives/edgar/data/1069258/000162828026065829/kratos-424b3october2026.htm"
+      ],
+      "access_failures": [
+        "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000085/0001069258-26-000085-index.html",
+        "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000085/0001069258-26-000085-index.htm",
+        "https://ir.kratosdefense.com/financial-information/sec-filings"
+      ]
+    },
+    {
+      "ordinal": 10,
+      "cik": 1145986,
+      "ticker": "ASPN",
+      "date": "2026-11-05",
+      "event": true,
+      "status": "WRONG_PERIOD_AND_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "Outlook is Q4 revenue60–75m, net loss8–11m and EBITDA5–13m; FY figure only capex. No total FY revenue/op-profit pair. Do not create synthetic full-year guidance by adding YTD actuals.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1145986/000117184326007142/exh_991.htm"
+      ]
+    },
+    {
+      "ordinal": 11,
+      "cik": 1613103,
+      "ticker": "MDT",
+      "date": null,
+      "event": null,
+      "status": "IR_CALENDAR_OUTSIDE_WINDOW_NOT_EXHAUSTIVE",
+      "strict_pair": null,
+      "reason": "Nov4 issuer notice schedules Q2 FY2027 earnings Nov24. Complete intervening disclosure enumeration not verified.",
+      "urls": [
+        "https://news.medtronic.com/2026-11-04-Medtronic-to-announce-financial-results-for-its-second-quarter-of-fiscal-year-2027"
+      ]
+    },
+    {
+      "ordinal": 12,
+      "cik": 1341439,
+      "ticker": "ORCL",
+      "date": null,
+      "event": null,
+      "status": "NON_EARNINGS_TARGETS_MISSING_BOUND_PRIOR",
+      "strict_pair": false,
+      "reason": "Oct28 investor-day release supplies FY30 revenue225bn-plus and non-GAAP operating margin40%-plus. Those are open lower bounds with no bound prior same-year pair established; do not turn them into midpoint revisions. No in-window earnings release located; earnings enumeration incomplete.",
+      "non_earnings_disclosure_date": "2026-10-28",
+      "non_earnings_source_read": true,
+      "urls": [
+        "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Investor-Day-2026-Accelerating-Value-Creation/default.aspx"
+      ]
+    },
+    {
+      "ordinal": 13,
+      "cik": 783325,
+      "ticker": "WEC",
+      "date": "2026-10-29",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY EPS5.60–5.64 versus5.51–5.61. No joint annual revenue/operating-profit guidance pair; EPS is not substituted.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/783325/000078332526000104/a2026q3wecearningsreleasee.htm"
+      ]
+    },
+    {
+      "ordinal": 14,
+      "cik": 1682149,
+      "ticker": "DVLT",
+      "date": null,
+      "event": null,
+      "status": "NO_EARNINGS_ON_ENUMERATED_IR_PAGES_SEC_COVERAGE_UNKNOWN",
+      "strict_pair": null,
+      "reason": "IR archive pages1–2 cover through Nov13 back to Sep23 without Q3 results; Nov9 management disclosure says Q3 date to be announced. This supports IR-source absence only. Complete SEC event enumeration not verified; Nasdaq suspension notice retained as source fact, not price outcome.",
+      "urls": [
+        "https://ir.datavaultsite.com/news-events/press-releases",
+        "https://ir.datavaultsite.com/news-events/press-releases?page=2",
+        "https://ir.datavaultsite.com/sec-filings/all-sec-filings/content/0001104659-26-124046/tm2629197d1_ex99-1.htm"
+      ]
+    },
+    {
+      "ordinal": 15,
+      "cik": 1448893,
+      "ticker": "ESNT",
+      "date": "2026-11-06",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Quarterly insurance financial supplement, dividend and buyback; no joint full-year revenue/operating-profit forecast.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1448893/000144889326000029/a93026financialsupplement.htm"
+      ]
+    },
+    {
+      "ordinal": 16,
+      "cik": 1871509,
+      "ticker": "PTLO",
+      "date": "2026-11-05",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC_AND_MISSING_PRIOR_REVENUE",
+      "strict_pair": false,
+      "reason": "FY26 revenue768–773m with prior marked N/A; restaurant-level adjusted EBITDA margin20–20.5% and total adjusted EBITDA98–101m. Restaurant margin excludes corporate cost and is not total operating margin; release explicitly says GAAP reconciliation unavailable.",
+      "urls": [
+        "https://investors.portillos.com/news-releases/news-release-details/portillos-inc-announces-third-quarter-2026-financial-results"
+      ]
+    },
+    {
+      "ordinal": 17,
+      "cik": 889900,
+      "ticker": "PTEN",
+      "date": "2026-10-28",
+      "event": true,
+      "status": "WRONG_PERIOD_AND_PERIMETER",
+      "strict_pair": false,
+      "reason": "Q4 segment adjusted gross profit forecasts and operational rig/capex estimates, not FY total revenue and operating profit/margin.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/889900/000088990026000070/a2026q3earningsreleaseex991.htm"
+      ]
+    },
+    {
+      "ordinal": 18,
+      "cik": 1524472,
+      "ticker": "XYL",
+      "date": "2026-10-27",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY revenue8.95bn with reported/organic revisions; FY23.2% margin is adjusted EBITDA, not operating margin. Current-quarter operating margins are historical actuals. No joint annual operating-margin forecast found in release.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1524472/000152447226000146/xyl10272026ex991.htm",
+        "https://prod.xylem.com/en-uk/resources/press-releases/xylem-reports-third-quarter-2026-results-and-announces-strategic-actions-to-accelerate-growth/"
+      ]
+    },
+    {
+      "ordinal": 19,
+      "cik": 1711279,
+      "ticker": "KRYS",
+      "date": "2026-11-02",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "FY guidance is non-GAAP R&D plus SG&A155–165m; no bound annual revenue/operating-profit guidance pair.",
+      "urls": [
+        "https://ir.krystalbio.com/news-releases/news-release-details/krystal-biotech-announces-third-quarter-2026-financial-and"
+      ]
+    },
+    {
+      "ordinal": 20,
+      "cik": 1077183,
+      "ticker": "NEO",
+      "date": "2026-10-28",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY26 revenue807–809m from802–806m; forecast net loss30–32m and EBITDAabout60m. Net loss/EBITDA are not operating income. No direct operating-profit forecast; no inferred substitution.",
+      "urls": [
+        "https://ir.neogenomics.com/sec-filings/all-sec-filings/content/0001077183-26-000078/a99-109302026earningsrelea.htm"
+      ]
+    }
+  ]
+}

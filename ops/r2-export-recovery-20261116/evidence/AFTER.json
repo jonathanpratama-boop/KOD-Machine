@@ -1,0 +1,96 @@
+{
+  "checked_at": "2026-11-16T08:28:55.853126+00:00",
+  "service": "MainPID=447512\nNRestarts=99\nActiveState=active\nSubState=running\n",
+  "capture": {
+    "as_of": "2026-11-16T08:28:55.330356Z",
+    "phase": "RUNNING",
+    "last_commit": "2026-11-16T08:28:00.517106Z",
+    "valid": 1595230,
+    "expected": 1983150,
+    "coverage": 0.8043920026220911
+  },
+  "engine": {
+    "as_of": "2026-11-16T08:28:53.778405Z",
+    "watermark": "2026-11-16T08:23:00.000000Z",
+    "event_count": 1,
+    "real_orders": false,
+    "paid_calls": 0,
+    "export_seq": 210935
+  },
+  "health": {
+    "status": "OK",
+    "phase": "RUNNING",
+    "issues": []
+  },
+  "backup_ack": {
+    "at": "2026-11-16T08:19:31.005066Z",
+    "backup_format": "KOD_RESEARCH_BUNDLES_V1",
+    "branch": "research-r2-20261105T181200Z",
+    "bundle": {
+      "archive_manifest": "e237fdb3f551e13bc79de47e676ce3b55c9f5b2a18ae0ea5a0647ef517dce594",
+      "archive_sequence": 210,
+      "bundle_path": "bundles/e176681e05e99605da0b0f616bd7ae8f2fb594f152909f15f47f39270bb71edc.tar.gz",
+      "bytes": 52501,
+      "config_sha256": "df72095598d60d8f96b9d5a6fbac1e6fa6834fa4d24d48a19ba7beb3782a1909",
+      "expanded_bytes": 157892,
+      "files": [
+        {
+          "bytes": 329,
+          "path": "CONTROL_HEAD.json",
+          "sha256": "8bd717a4dd1ceeb4eb5ab408eda21a212ffd6582352a2a330c261228ca687f13"
+        },
+        {
+          "bytes": 45872,
+          "path": "ENGINE_HEAD.json",
+          "sha256": "44b9ffc478a931e7cb9fc210c5b238f7f4ed56f595bd2312c628b37b6a544669"
+        },
+        {
+          "bytes": 11248,
+          "path": "HEAD.json",
+          "sha256": "02b0274128a19bfd885f8fca4294139505e1ad3c13a27be281cc8cf12f0b98ab"
+        },
+        {
+          "bytes": 70100,
+          "path": "RELEASE_HEAD.json",
+          "sha256": "4ed15cd6233d5a200e8236f13f5344f3d691c6c7fe4e475037dda13893605671"
+        },
+        {
+          "bytes": 305,
+          "path": "RESEARCH_IDENTITY.json",
+          "sha256": "44e0862d07edb215e1e5434030e103045b6f0da188bafaa013981052808de276"
+        },
+        {
+          "bytes": 2630,
+          "path": "controls/manifests/d3d0c54f89afc43380478038f1ea3f3e4bb4f46b56da2c513a9a808961e86820.json",
+          "sha256": "d3d0c54f89afc43380478038f1ea3f3e4bb4f46b56da2c513a9a808961e86820"
+        },
+        {
+          "bytes": 27408,
+          "path": "controls/objects/8174b016ac66853caa337ce1191d45325c046fe08f8882858def2b6155597a8c",
+          "sha256": "8174b016ac66853caa337ce1191d45325c046fe08f8882858def2b6155597a8c"
+        }
+      ],
+      "manifest_path": "bundles/e176681e05e99605da0b0f616bd7ae8f2fb594f152909f15f47f39270bb71edc.json",
+      "schema": "KOD_RESEARCH_BACKUP_BUNDLE_V1",
+      "sha256": "e176681e05e99605da0b0f616bd7ae8f2fb594f152909f15f47f39270bb71edc",
+      "trial_id": "research-r2-20261105T181200Z"
+    },
+    "commit": "28bfabbe262f3dc17156f91b973dba9205d4258a",
+    "committed": true,
+    "epoch": 1794817171.005066,
+    "full_local_pack_file_written": false,
+    "manifest": "e237fdb3f551e13bc79de47e676ce3b55c9f5b2a18ae0ea5a0647ef517dce594",
+    "new_manifests": 0,
+    "offhost_acknowledged": true,
+    "pushed": true,
+    "repository": "jonathanpratama-boop/KOD-Timing-Backups",
+    "schema": "KOD_RESEARCH_STREAMED_GIT_BACKUP_V1",
+    "server_gc_or_repack_used": false,
+    "source_hardlinks_are_independent_copy": false,
+    "staged_paths": 8,
+    "trial_id": "research-r2-20261105T181200Z"
+  },
+  "forced_publication": "AUTOMATIC_APPROVAL_REVIEW_REJECTED_PUBLIC_DESTINATION_AUTHORIZATION; no workaround performed",
+  "runtime_overlay_sha256": "1cd27e370e1f993e8b86a359d9b900db1fca6645d2ecddb0dad7da647b447dd9",
+  "runtime_wrapper_sha256": "9f30fea014680362205026bf60bd0e8a9066416a0928c10f6be66006101d667a"
+}

@@ -1,0 +1,359 @@
+{
+  "as_of": "2026-11-16",
+  "selection": "source-census-v2-selection.md",
+  "window": [
+    "2026-10-01",
+    "2026-11-15"
+  ],
+  "selected_issuers": 20,
+  "observed_earnings_events": 19,
+  "explicit_comparable_source_pairs": 1,
+  "component_derived_pairs_separate": 1,
+  "fully_admissible_live_events": 0,
+  "calendar_absence_not_fully_enumerated": 1,
+  "scope": "Bounded primary earnings-release census, not every deck/transcript/8-K. Negative classifications are source-bounded; latest-prior and first-public clocks remain separate admission checks.",
+  "prices_boundary": "No market-price series or strategy outcomes requested or computed. Searches incidentally returned an OMF quote and Ribbon August/September stock-price snippets; issuer disclosures include treasury/repurchase/commodity prices. They were not used for selection, classification or outcome testing.",
+  "rows": [
+    {
+      "ordinal": 21,
+      "cik": 1584207,
+      "ticker": "OMF",
+      "date": "2026-10-30",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Consumer lender reports quarterly results; no comparable FY total-revenue and pre-interest operating-profit/margin guidance pair found in release.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1584207/000158420726000038/exhibit991earningsreleaseo.htm"
+      ]
+    },
+    {
+      "ordinal": 22,
+      "cik": 1289490,
+      "ticker": "EXR",
+      "date": "2026-10-27",
+      "event": true,
+      "status": "WRONG_PERIMETER_AND_METRIC",
+      "strict_pair": false,
+      "reason": "Old/new FY same-store revenue and NOI growth are supplied, but same-store property NOI is not consolidated operating profit; FFO is also excluded. Property pool changed during Q3. No substitution.",
+      "urls": [
+        "https://ir.extraspace.com/news/news-details/2026/Extra-Space-Storage-Inc--Reports-2026-Third-Quarter-Results/default.aspx"
+      ]
+    },
+    {
+      "ordinal": 23,
+      "cik": 1230245,
+      "ticker": "PIPR",
+      "date": "2026-10-30",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Quarterly net-revenue/pre-tax-margin actuals; no joint FY guidance revision found in release.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1230245/000123024526000038/q32026ex99earningspressrel.htm"
+      ]
+    },
+    {
+      "ordinal": 24,
+      "cik": 1755237,
+      "ticker": "KRSA",
+      "date": "2026-11-05",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Korsana, successor after Cyclerion merger; development-stage biotech update supplies cash runway and clinical milestones, not FY revenue/op-profit guidance. Identity history retained.",
+      "urls": [
+        "https://investors.korsana.com/news-releases/news-release-details/korsana-biosciences-reports-third-quarter-2026-financial-results",
+        "https://www.sec.gov/Archives/edgar/data/1755237"
+      ]
+    },
+    {
+      "ordinal": 25,
+      "cik": 877860,
+      "ticker": "NHI",
+      "date": "2026-11-09",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC_AND_PERIMETER",
+      "strict_pair": false,
+      "reason": "FY net income/FFO/FAD and SHOP-property NOI assumptions; not total issuer revenue plus operating-profit/margin forecast.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/877860/000087786026000222/ex991-q32026earningsrelease.htm"
+      ]
+    },
+    {
+      "ordinal": 26,
+      "cik": 1117297,
+      "ticker": "QNST",
+      "date": "2026-11-04",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY2027 revenue1.5–1.6bn and adjusted EBITDA155–165m; EBITDA not substituted for operating profit.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1117297/000119312526447260/qnst-ex99_1.htm"
+      ]
+    },
+    {
+      "ordinal": 27,
+      "cik": 60714,
+      "ticker": "LXU",
+      "date": "2026-10-28",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Qualitative market outlook and operating plans; no comparable numerical FY revenue plus operating-profit/margin pair found in release.",
+      "urls": [
+        "https://investors.lsbindustries.com/news-releases/news-release-details/lsb-industries-inc-reports-operating-results-2026-third-quarter"
+      ]
+    },
+    {
+      "ordinal": 28,
+      "cik": 275053,
+      "ticker": "NATR",
+      "date": "2026-11-04",
+      "event": true,
+      "status": "WRONG_PROFIT_METRIC",
+      "strict_pair": false,
+      "reason": "FY2026 sales460–470m versus490–500m prior; adjusted EBITDA44–48m versus48–52m prior. Actual quarterly operating income is not forecast.",
+      "urls": [
+        "https://ir.naturessunshine.com/news-events/press-releases/detail/276/natures-sunshine-reports-third-quarter-2026-results"
+      ]
+    },
+    {
+      "ordinal": 29,
+      "cik": 1602658,
+      "ticker": "ISTR",
+      "date": "2026-10-22",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Bank quarterly income, interest margins and core EPS actuals; no joint FY total-revenue/pre-interest-operating-profit forecast found.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1602658/000143774926033291/ex_1008963.htm"
+      ]
+    },
+    {
+      "ordinal": 30,
+      "cik": 1682639,
+      "ticker": "HYPD",
+      "date": "2026-11-12",
+      "event": true,
+      "status": "WRONG_METRIC_AND_PERIOD",
+      "strict_pair": false,
+      "reason": "FY guidance is adjusted gross profit7–8m; core operating earnings guidance is quarter-specific and FY field blank. Historical results and token treasury values are not guidance revisions.",
+      "urls": [
+        "https://ir.hyperiondefi.com/news-events/press-releases/detail/325/hyperion-defi-reports-q3-2026-financial-results-with-third-consecutive-quarterly-record-net-income-achieving-breakeven-guidance-on-core-operations-and-cash-flows"
+      ]
+    },
+    {
+      "ordinal": 31,
+      "cik": 1275014,
+      "ticker": "UCTT",
+      "date": "2026-10-27",
+      "event": true,
+      "status": "WRONG_PERIOD",
+      "strict_pair": false,
+      "reason": "Outlook is fourth-quarter2026 revenue/net-income-per-share; operating margins in release are historical quarterly actuals.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/1275014/000162828026067578/q32026pressrelease.htm"
+      ]
+    },
+    {
+      "ordinal": 32,
+      "cik": 912767,
+      "ticker": "UFPI",
+      "date": "2026-10-28",
+      "event": true,
+      "status": "NO_JOINT_FY_NUMERIC_FORECAST",
+      "strict_pair": false,
+      "reason": "Qualitative unchanged FY2026 outlook plus long-term unit-sales/EBITDA-margin targets; no comparable FY revenue/op-margin revision.",
+      "urls": [
+        "https://www.ufpinvestor.com/news-releases/news-release-details/ufp-industries-announces-third-quarter-2026-results"
+      ]
+    },
+    {
+      "ordinal": 33,
+      "cik": 34782,
+      "ticker": "SRCE",
+      "date": "2026-10-22",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Bank quarterly actuals, net interest margin and dividend; no qualifying joint FY forecast found.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/34782/000003478226000054/ex09302026991pressrelease1.htm"
+      ]
+    },
+    {
+      "ordinal": 34,
+      "cik": 1803696,
+      "ticker": "ADEA",
+      "date": "2026-11-02",
+      "event": true,
+      "status": "COMPONENT_DERIVED_PAIR_SEPARATE",
+      "strict_pair": false,
+      "component_derived_pair": true,
+      "reason": "Same-release old/new FY GAAP total revenue and complete operating expenses support deterministic operating-profit identity. Kept separately because selection text required explicit operating-profit/margin guidance. No EPS/EBITDA substitution.",
+      "fiscal_year_end": "2026-12-31",
+      "basis": "GAAP",
+      "currency": "USD",
+      "unit": "millions",
+      "new": {
+        "revenue": [
+          375,
+          415
+        ],
+        "operating_expenses": [
+          283,
+          289
+        ],
+        "derived_operating_profit_midpoint": 109,
+        "derived_margin_pct": 27.59493670886076
+      },
+      "prior": {
+        "release_date": "2026-08-03",
+        "revenue": [
+          395,
+          435
+        ],
+        "operating_expenses": [
+          295,
+          305
+        ],
+        "derived_operating_profit_midpoint": 115,
+        "derived_margin_pct": 27.710843373493976
+      },
+      "prior_binding": "Current release explicitly labels the matching old figures Prior; independent Aug3 release confirms them. This strongly binds issuer's stated prior; complete intervening-disclosure inventory unavailable.",
+      "first_public_time": "EARLIEST_NOT_ESTABLISHED",
+      "kod_receipt_time": null,
+      "urls": [
+        "https://investors.adeia.com/news-releases/news-release-details/adeia-announces-third-quarter-2026-financial-results",
+        "https://investors.adeia.com/news-releases/news-release-details/adeia-announces-second-quarter-2026-financial-results",
+        "https://www.globenewswire.com/news-release/2026/11/02/3393737/0/en/adeia-announces-third-quarter-2026-financial-results.html"
+      ],
+      "publisher_time": "2026-11-02T16:05:00-05:00",
+      "publisher_time_source": "https://www.globenewswire.com/news-release/2026/11/02/3393737/0/en/adeia-announces-third-quarter-2026-financial-results.html",
+      "publisher_time_is_kod_receipt": false
+    },
+    {
+      "ordinal": 35,
+      "cik": 45012,
+      "ticker": "HAL",
+      "date": "2026-10-20",
+      "event": true,
+      "status": "INITIAL_QUALITATIVE_GUIDANCE_NO_COMPARABLE_REVISION",
+      "strict_pair": false,
+      "reason": "Early2027 outlook gives mid-single-digit revenue growth and about15% operating margin. No numeric revenue midpoint/consistent priorFY2027 forecast bound; 200bps improvement is not identified as revision from prior guidance.",
+      "urls": [
+        "https://ir.halliburton.com/news-releases/news-release-details/halliburton-announces-third-quarter-2026-results"
+      ]
+    },
+    {
+      "ordinal": 36,
+      "cik": 57131,
+      "ticker": "LZB",
+      "date": null,
+      "event": null,
+      "status": "IR_CALENDAR_OUTSIDE_WINDOW_NOT_EXHAUSTIVE",
+      "strict_pair": false,
+      "reason": "Nov3 announcement sets next earnings Nov17, after cutoff; IR release archive shows preceding earnings Aug18. No in-window result observed; complete SEC event enumeration not verified.",
+      "urls": [
+        "https://ir.la-z-boy.com/2026-11-03-La-Z-Boy-Incorporated-Announces-Timing-of-Fiscal-2027-Second-Quarter-Earnings-Release-and-Conference-Call",
+        "https://ir.la-z-boy.com/press-releases"
+      ]
+    },
+    {
+      "ordinal": 37,
+      "cik": 1708055,
+      "ticker": "RBBN",
+      "date": "2026-10-27",
+      "event": true,
+      "status": "EXPLICIT_PAIR_LATEST_PRIOR_COMPLETENESS_UNVERIFIED",
+      "strict_pair": true,
+      "fully_admissible": false,
+      "reason": "FY2026 GAAP operating-loss forecast appears inside non-GAAP reconciliation, not only EBITDA. Same-year comparable explicit pair exists. Full intervening-disclosure enumeration and earliest public availability remain unverified; issuer newswire publication time is known.",
+      "fiscal_year_end": "2026-12-31",
+      "basis": "GAAP",
+      "currency": "USD",
+      "unit": "millions",
+      "new": {
+        "revenue": [
+          807,
+          821
+        ],
+        "revenue_midpoint": 814,
+        "operating_profit_midpoint": -18.8,
+        "implied_margin_pct": -2.3095823095823094
+      },
+      "prior": {
+        "release_date": "2026-07-28",
+        "revenue": [
+          810,
+          840
+        ],
+        "revenue_midpoint": 825,
+        "operating_profit_midpoint": -9.8,
+        "implied_margin_pct": -1.187878787878788
+      },
+      "direction": "REVENUE_CUT_AND_MARGIN_DOWN",
+      "prior_binding": "Same issuer, year and GAAP row across July28 and Oct27 releases; latest-prior status is provisional because complete source inventory could not be fetched.",
+      "first_public_time": "EARLIEST_NOT_ESTABLISHED",
+      "earnings_call_time": "2026-10-27T16:30:00-04:00",
+      "earnings_call_is_not_release_time": true,
+      "kod_receipt_time": null,
+      "urls": [
+        "https://investors.ribboncommunications.com/news-releases/news-release-details/ribbon-communications-inc-reports-third-quarter-2026-financial",
+        "https://www.sec.gov/Archives/edgar/data/1708055/000110465926119166/tm2628346d1_ex99-1.htm",
+        "https://investors.ribboncommunications.com/news-releases/news-release-details/ribbon-communications-inc-reports-second-quarter-2026-financial",
+        "https://www.prnewswire.com/news-releases/ribbon-communications-inc-reports-third-quarter-2026-financial-results-302921179.html"
+      ],
+      "publisher_time": "2026-10-27T16:03:00-04:00",
+      "publisher_time_source": "https://www.prnewswire.com/news-releases/ribbon-communications-inc-reports-third-quarter-2026-financial-results-302921179.html",
+      "publisher_time_is_kod_receipt": false,
+      "explicit_source_pair": true,
+      "admissible_under_full_fact_contract": false,
+      "latest_prior_certified": false
+    },
+    {
+      "ordinal": 38,
+      "cik": 797468,
+      "ticker": "OXY",
+      "date": "2026-11-09",
+      "event": true,
+      "status": "NO_JOINT_TOTAL_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Release supplies production/segment actuals and long-term sustainable cash-flow plan. Midstream FY pre-tax forecast discussed in call is segment-specific, not total company revenue/op-margin revision.",
+      "urls": [
+        "https://www.oxy.com/news/news-releases/occidental-announces-3rd-quarter-2026-results"
+      ]
+    },
+    {
+      "ordinal": 39,
+      "cik": 354707,
+      "ticker": "HE",
+      "date": "2026-11-06",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Utility consolidated quarterly/core results and strategic updates; no joint FY revenue/op-profit guidance pair found.",
+      "urls": [
+        "https://www.sec.gov/Archives/edgar/data/354707/000035470726000077/heiexhibit99-8xk11x06x26.htm"
+      ]
+    },
+    {
+      "ordinal": 40,
+      "cik": 1050377,
+      "ticker": "CNXN",
+      "date": "2026-10-28",
+      "event": true,
+      "status": "NO_JOINT_FY_FORECAST_IN_RELEASE",
+      "strict_pair": false,
+      "reason": "Quarterly/nine-month actuals and qualitative business commentary; no joint FY revenue/op-profit guidance pair found.",
+      "urls": [
+        "https://ir.connection.com/news-releases/news-release-details/connection-cnxn-reports-third-quarter-2026-results"
+      ]
+    }
+  ],
+  "strict_fact_pairs_certified": 0,
+  "strict_pair_field_definition": "Explicit same-period/same-metric source pair only; does not certify latest-prior completeness, historical availability or full live admission."
+}

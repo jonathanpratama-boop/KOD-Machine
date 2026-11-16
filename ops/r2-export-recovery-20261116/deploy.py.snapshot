@@ -1,0 +1,57 @@
+"""Apply the reviewed export overlay while preserving DB and frozen source."""
+import datetime as dt
+import json
+from pathlib import Path
+import sqlite3
+import subprocess
+
+from export_recovery import file_hash
+
+BASE=Path('/var/lib/kod-research-r2-ops/repairs/export-recovery-20261116')
+CODE=Path('/opt/kod/research-r2')
+STATE=Path('/var/lib/kod/research-r2')
+DROPIN=Path('/etc/systemd/system/kod-research-r2.service.d/96-export-recovery.conf')
+
+def command(args):
+    return subprocess.run(args,text=True,capture_output=True,check=True).stdout
+
+def main():
+    if (BASE/'DEPLOYMENT.json').exists():raise RuntimeError('Deployment already recorded')
+    before=json.loads((BASE/'BEFORE.json').read_text())
+    checked=json.loads((BASE/'COPY_VALIDATION.json').read_text())
+    assert checked['status']=='PASS' and checked['decoded_rows_byte_identical']==22881
+    assert checked['live_cursor_before']==checked['live_cursor_after']==183158
+    for item in before['frozen_code_files']:
+        assert file_hash(CODE/item['path'])==item['sha256'],item['path']
+    assert file_hash(BASE/'before/research.sqlite')==before['db_snapshot_sha256']
+    assert not (STATE/'PROVIDER_STOP.json').exists() and not (STATE/'PAUSED.json').exists()
+    for path in BASE.glob('*.py'):path.chmod(0o644)
+    release=json.loads(command(['/usr/sbin/runuser','-u','kod','--','/usr/bin/python3','-B',str(BASE/'run.py'),'check']))
+    db=sqlite3.connect('file:'+str(STATE/'engine/research.sqlite')+'?mode=ro',uri=True)
+    try:
+        cursor=json.loads(db.execute("SELECT value FROM meta WHERE key='export_seq'").fetchone()[0])
+        assert cursor==183158
+        seq,expected=before['ledger_tip']
+        assert db.execute('SELECT hash FROM ledger WHERE seq=?',(seq,)).fetchone()[0]==expected
+    finally:db.close()
+    receipt={'recorded_at':dt.datetime.now(dt.timezone.utc).isoformat(),
+             'action':'INSTALL_STREAMED_OVERSIZE_LEDGER_EXPORT_FALLBACK',
+             'original_db_snapshot_sha256':before['db_snapshot_sha256'],
+             'frozen_code_files_verified':len(before['frozen_code_files']),
+             'live_export_seq_before':cursor,'copy_validation':checked,
+             'release_check':release,'overlay_sha256':file_hash(BASE/'export_recovery.py'),
+             'wrapper_sha256':file_hash(BASE/'run.py'),
+             'study_config_sha256':file_hash(CODE/'research.json'),
+             'study_data_deleted':False,'research_rules_changed':False,
+             'prior_provider_overlay_preserved':True}
+    (BASE/'PREPARED_DEPLOYMENT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+    command(['systemctl','stop','kod-research-r2.service'])
+    DROPIN.write_text('[Service]\nExecStart=\nExecStart=/usr/bin/python3 -B '+str(BASE/'run.py')+' run\n')
+    command(['systemctl','daemon-reload'])
+    command(['systemctl','start','kod-research-r2.service'])
+    receipt['start_requested_at']=dt.datetime.now(dt.timezone.utc).isoformat()
+    (BASE/'DEPLOYMENT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+    print(json.dumps({'status':'START_REQUESTED','overlay_sha256':receipt['overlay_sha256'],
+                      'recorded_at':receipt['recorded_at'],'receipt':str(BASE/'DEPLOYMENT.json')}))
+
+if __name__=='__main__':main()

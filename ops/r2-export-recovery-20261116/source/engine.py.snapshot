@@ -1,0 +1,627 @@
+"""Receipt-causal R2 replay and paper outcomes over an immutable capture archive.
+
+SQLite transactions bind input cursors, append-only hash-chained evidence and
+bounded derived state. Raw market evidence remains in the collector's archive.
+This is delayed-information replay, never a claim of actual orders or fills.
+An archive watermark is explicit: a packet discovered behind it is recorded as
+late and cannot rewrite a prior decision. No network acquisition occurs here.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import hashlib
+import gzip
+import json
+import math
+import os
+from pathlib import Path
+import sqlite3
+import statistics
+import time
+import zlib
+
+from broad_observer.hours import assemble_hour
+from broad_observer.trigger import evaluate_causal, SOURCE_SHA256
+from broad_observer.packets import unpack_attempts
+from broad_observer.store import BroadStore
+
+UTC = dt.timezone.utc
+ARMS = (1, 5, 30, 240)
+HORIZONS = (24, 72, 120)
+BENCHMARKS = ('BTCUSDT', 'ETHUSDT')
+VERSION = 'KOD_R2_RECEIPT_REPLAY_V1'
+
+# Compression is a storage representation only; canonical hashes and exported
+# evidence always cover the exact original UTF-8 JSON. A named SQLite declared
+# type keeps every existing ledger reader on decoded text without altering data.
+sqlite3.register_converter('KOD_JSON_ZLIB', lambda value: zlib.decompress(value).decode('utf-8'))
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+
+
+def stamp(value):
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if not math.isfinite(value): raise ValueError('finite clock required')
+        return float(value)
+    value = value if isinstance(value, dt.datetime) else dt.datetime.fromisoformat(value.replace('Z', '+00:00'))
+    if value.tzinfo is None: raise ValueError('aware clock required')
+    return value.timestamp()
+
+
+def iso(value):
+    return dt.datetime.fromtimestamp(stamp(value), UTC).isoformat(timespec='microseconds').replace('+00:00', 'Z')
+
+
+def digest(value):
+    return hashlib.sha256(canonical(value).encode()).hexdigest()
+
+
+def valid_quote(row):
+    try:
+        values = [float(row[k]) for k in ('bidPrice', 'askPrice', 'bidQty', 'askQty')]
+        if any(isinstance(row[k], bool) for k in ('bidPrice', 'askPrice', 'bidQty', 'askQty')): return None
+        if not all(math.isfinite(x) and x > 0 for x in values) or values[1] < values[0]: return None
+        bid, ask, bq, aq = values
+        return {'bid': bid, 'ask': ask, 'bid_qty': bq, 'ask_qty': aq,
+                'midpoint': (bid+ask)/2, 'spread_fraction': (ask-bid)/((bid+ask)/2)}
+    except (KeyError, ValueError, TypeError, OverflowError):
+        return None
+
+
+def outcome(entry, exit_quote):
+    gross = exit_quote['token']['midpoint']/entry['token']['midpoint']-1
+    legs = {}
+    for symbol in BENCHMARKS:
+        a, b = entry['benchmarks'].get(symbol), exit_quote['benchmarks'].get(symbol)
+        legs[symbol] = b['midpoint']/a['midpoint']-1 if a and b else None
+    benchmark = sum(legs.values())/2 if all(x is not None for x in legs.values()) else None
+    return {'gross_token_return': gross, 'modeled_net_token_return': gross-.02,
+            'friction_percentage_points': 2, 'cash_quote_unit_return': 0,
+            'benchmark_50_50_gross_return': benchmark, 'benchmark_legs': legs,
+            'gross_excess': gross-benchmark if benchmark is not None else None,
+            'net_excess': gross-.02-benchmark if benchmark is not None else None,
+            'ask_entry_bid_exit_gross_context': exit_quote['token']['bid']/entry['token']['ask']-1,
+            'actual_elapsed_seconds': stamp(exit_quote['received_at'])-stamp(entry['received_at']),
+            'quote_proxy_not_fill': True, 'source_quote_timestamp': None,
+            'unverified_fees_or_slippage_in_ask_bid_context': True}
+
+
+def matched_controls(event_symbol, features, count=5):
+    """Euclidean percentile distance, average tied ranks, deterministic symbol tie."""
+    usable = {s: v for s, v in features.items() if all(v.get(k) is not None and math.isfinite(float(v[k]))
+              for k in ('momentum_24h', 'median_quote_volume_30d'))}
+    if event_symbol not in usable: return []
+    ranks = {}
+    for key in ('momentum_24h', 'median_quote_volume_30d'):
+        ordered = sorted((float(v[key]), s) for s, v in usable.items())
+        vals = [x[0] for x in ordered]
+        for value, symbol in ordered:
+            lo, hi = vals.index(value), len(vals)-1-vals[::-1].index(value)
+            ranks.setdefault(symbol, {})[key] = ((lo+hi)/2)/(len(vals)-1) if len(vals)>1 else 0
+    target = ranks[event_symbol]
+    ranked = []
+    for symbol in ranks:
+        if symbol == event_symbol: continue
+        distance = sum((ranks[symbol][k]-target[k])**2 for k in target)**.5
+        ranked.append({'symbol': symbol, 'distance': distance, 'features': usable[symbol], 'percentiles': ranks[symbol]})
+    return sorted(ranked, key=lambda x: (x['distance'], x['symbol']))[:count]
+
+
+class ResearchEngine:
+    """Single writer with atomic exactly-once input application and evidence."""
+    def __init__(self, state_dir, config):
+        self.root = Path(state_dir); self.root.mkdir(parents=True, exist_ok=True)
+        self.config = config; self.config_hash = digest(config)
+        self.t0 = stamp(config['t0']); self.admission_end = self.t0+30*86400
+        self.end = self.t0+35*86400+120
+        if self.t0 % 60: raise ValueError('T0 must be a whole UTC minute')
+        self.primary = tuple(sorted(x['symbol'] for x in config['primary']))
+        if not self.primary or len(self.primary)>150 or len(set(self.primary)) != len(self.primary): raise ValueError('fixed unique primary required')
+        self.symbols = set(self.primary) | set(BENCHMARKS)
+        self.first_hour = math.ceil(self.t0/3600)*3600
+        self.db = sqlite3.connect(self.root/'research.sqlite', timeout=10, isolation_level=None,
+                                  detect_types=sqlite3.PARSE_DECLTYPES)
+        self.db.row_factory = sqlite3.Row
+        if self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='ledger'").fetchone():
+            payload_type=next(r['type'] for r in self.db.execute('PRAGMA table_info(ledger)') if r['name']=='payload')
+            if payload_type.upper()!='KOD_JSON_ZLIB':
+                self.db.close()
+                raise ValueError('old uncompressed prelaunch state: preserve it and rebuild a new isolated state directory')
+        self.db.executescript('''
+          PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON;
+          CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);
+          CREATE TABLE IF NOT EXISTS ledger(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT UNIQUE NOT NULL,kind TEXT NOT NULL,at REAL NOT NULL,payload KOD_JSON_ZLIB NOT NULL,prev TEXT NOT NULL,hash TEXT NOT NULL);
+          CREATE TABLE IF NOT EXISTS ledger_counts(kind TEXT PRIMARY KEY,n INTEGER NOT NULL);
+          CREATE TRIGGER IF NOT EXISTS ledger_count_insert AFTER INSERT ON ledger BEGIN INSERT INTO ledger_counts VALUES(NEW.kind,1) ON CONFLICT(kind) DO UPDATE SET n=n+1; END;
+          CREATE TRIGGER IF NOT EXISTS ledger_no_update BEFORE UPDATE ON ledger BEGIN SELECT RAISE(ABORT,'append only'); END;
+          CREATE TRIGGER IF NOT EXISTS ledger_no_delete BEFORE DELETE ON ledger BEGIN SELECT RAISE(ABORT,'append only'); END;
+          CREATE TABLE IF NOT EXISTS inputs(id TEXT PRIMARY KEY,hash TEXT NOT NULL);
+          CREATE TABLE IF NOT EXISTS pending(id TEXT PRIMARY KEY,at REAL NOT NULL,kind TEXT NOT NULL,payload TEXT NOT NULL);
+          CREATE INDEX IF NOT EXISTS pending_clock ON pending(at,kind,id);
+          CREATE TABLE IF NOT EXISTS minutes(symbol TEXT,opened REAL,received REAL,payload TEXT,hash TEXT,PRIMARY KEY(symbol,opened));
+          CREATE TABLE IF NOT EXISTS hours(symbol TEXT,opened REAL,available REAL,close REAL,volume REAL,payload TEXT,PRIMARY KEY(symbol,opened));
+          CREATE TABLE IF NOT EXISTS daily(symbol TEXT,opened REAL,available REAL,volume REAL,PRIMARY KEY(symbol,opened));
+          CREATE TABLE IF NOT EXISTS arm_state(arm INTEGER,symbol TEXT,last_hour REAL,last_trigger REAL,PRIMARY KEY(arm,symbol));
+          CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,symbol TEXT,hour REAL,reference REAL,payload TEXT);
+          CREATE TABLE IF NOT EXISTS positions(id TEXT PRIMARY KEY,event_id TEXT,arm INTEGER,symbol TEXT,role TEXT,decision REAL,status TEXT,entry TEXT);
+          CREATE TABLE IF NOT EXISTS endpoints(position_id TEXT,horizon INTEGER,deadline REAL,status TEXT,payload TEXT,PRIMARY KEY(position_id,horizon));
+          CREATE INDEX IF NOT EXISTS endpoint_due ON endpoints(status,deadline);
+          CREATE TABLE IF NOT EXISTS cursors(day TEXT PRIMARY KEY,next_seq INTEGER);
+        ''')
+        self._dirty_reference = False
+        counted=self.db.execute('SELECT COALESCE(sum(n),0) FROM ledger_counts').fetchone()[0]
+        last=self.db.execute('SELECT COALESCE(max(seq),0) FROM ledger').fetchone()[0]
+        if counted!=last:
+            self.db.execute('DELETE FROM ledger_counts')
+            self.db.execute('INSERT INTO ledger_counts SELECT kind,count(*) FROM ledger GROUP BY kind')
+        with self.transaction(self):
+            old = self.get('config_hash')
+            if old and old != self.config_hash: raise ValueError('frozen configuration differs')
+            if not old:
+                self.set('config_hash', self.config_hash); self.set('watermark', self.t0-174*3600)
+                self.set('next_cutoff', self.t0)
+                self.emit('config', 'PROTOCOL', self.t0, {'version': VERSION, 'config': config,
+                    'admission_end': iso(self.admission_end), 'collection_end': iso(self.end),
+                    'economic_lane': 'NOT_COVERED_PENDING_MANUAL_COMPLETE_EVIDENCE_ACCEPTANCE',
+                    'causal_source_sha256': SOURCE_SHA256, 'delayed_information_replay': True,
+                    'reference_missing_hour_settlement_seconds': 120,
+                    'first_eligible_hour_open': iso(self.first_hour),
+                    'controls_distance': 'Euclidean average-tie percentile ranks; symbol tie-break'})
+                for arm in (0,)+ARMS:
+                    self.db.executemany('INSERT INTO arm_state VALUES(?,?,?,NULL)', [(arm,s,self.first_hour-3600) for s in self.primary])
+
+    class transaction:
+        def __init__(self, engine): self.engine=engine
+        def __enter__(self): self.engine.db.execute('BEGIN IMMEDIATE'); return self
+        def __exit__(self, typ, value, traceback): self.engine.db.execute('ROLLBACK' if typ else 'COMMIT')
+
+    def get(self, key, default=None):
+        row=self.db.execute('SELECT value FROM meta WHERE key=?',(key,)).fetchone()
+        return json.loads(row[0]) if row else default
+
+    def set(self,key,value):
+        self.db.execute('INSERT OR REPLACE INTO meta VALUES(?,?)',(key,canonical(value)))
+
+    def emit(self, ident, kind, at, payload):
+        encoded=canonical(payload)
+        previous=self.db.execute('SELECT * FROM ledger WHERE id=?',(ident,)).fetchone()
+        if previous:
+            if previous['kind']!=kind or previous['payload']!=encoded: raise ValueError('evidence identity conflict '+ident)
+            return
+        row=self.db.execute('SELECT hash FROM ledger ORDER BY seq DESC LIMIT 1').fetchone()
+        prev=row[0] if row else '0'*64
+        item={'id':ident,'kind':kind,'at':iso(at),'payload':payload,'prev':prev}
+        self.db.execute('INSERT INTO ledger(id,kind,at,payload,prev,hash) VALUES(?,?,?,?,?,?)',
+                        (ident,kind,stamp(at),sqlite3.Binary(zlib.compress(encoded.encode(),6)),prev,digest(item)))
+
+    def enqueue(self, input_id, items, *, cursor=None):
+        """items are minute/quote/daily/hour_warmup with actual receipt clocks."""
+        fingerprint=digest(items)
+        with self.transaction(self):
+            old=self.db.execute('SELECT hash FROM inputs WHERE id=?',(input_id,)).fetchone()
+            if old:
+                if old[0]!=fingerprint: raise ValueError('immutable input changed')
+                return False
+            for i,item in enumerate(items):
+                at=stamp(item['received_at']); ident=input_id+':'+str(i)
+                if at>self.end: continue
+                if at<self.get('watermark'):
+                    self.emit('late:'+ident,'LATE_ARCHIVE_INPUT',at,{'input_id':input_id,'item_id':ident,'kind':item['kind'],
+                        'actual_received_at':iso(at),'processed_watermark':iso(self.get('watermark')),'prior_decisions_rewritten':False})
+                else:
+                    self.db.execute('INSERT OR IGNORE INTO pending VALUES(?,?,?,?)',(ident,at,item['kind'],canonical(item)))
+            self.db.execute('INSERT INTO inputs VALUES(?,?)',(input_id,fingerprint))
+            if cursor: self.db.execute('INSERT OR REPLACE INTO cursors VALUES(?,?)',cursor)
+            self.emit('input:'+input_id,'SOURCE_PACKET',max([stamp(x['received_at']) for x in items] or [self.get('watermark')]),
+                      {'input_id':input_id,'normalized_items_sha256':fingerprint,'items':len(items),'cursor':cursor})
+        return True
+
+    def _hour(self,item):
+        symbol=item['symbol']; opened=stamp(item['opened']); at=stamp(item['received_at'])
+        if symbol not in self.symbols: return
+        if opened%3600 or at<opened+3600: raise ValueError('invalid closed-hour clocks')
+        value={'close':float(item['close']),'quote_volume':float(item['quote_volume'])}
+        if not all(math.isfinite(x) and x>=0 for x in value.values()) or value['close']<=0: raise ValueError('invalid hour')
+        old=self.db.execute('SELECT payload FROM hours WHERE symbol=? AND opened=?',(symbol,opened)).fetchone()
+        if old:
+            if json.loads(old[0])!=value: self.emit('hour-conflict:'+symbol+':'+str(opened)+':'+digest(value),'HOUR_CONFLICT',at,{'symbol':symbol,'opened':iso(opened),'retained_first':True})
+            return
+        self.db.execute('INSERT INTO hours VALUES(?,?,?,?,?,?)',(symbol,opened,at,value['close'],value['quote_volume'],canonical(value)))
+        settled=self.db.execute('SELECT last_hour FROM arm_state WHERE arm=0 AND symbol=?',(symbol,)).fetchone()
+        if settled and opened>=self.first_hour and opened<=settled[0]:
+            self.emit('late-complete-hour:'+symbol+':'+str(opened),'LATE_COMPLETE_HOUR',at,
+                {'symbol':symbol,'hour_open_at':iso(opened),'actual_available_at':iso(at),
+                 'reason':'Reference decision already settled; retained for future features, earlier comparisons unavailable',
+                 'prior_decisions_rewritten':False})
+        if opened >= self.first_hour: self._dirty_reference = True
+        day=math.floor(opened/86400)*86400
+        rows=self.db.execute('SELECT * FROM hours WHERE symbol=? AND opened>=? AND opened<? ORDER BY opened',(symbol,day,day+86400)).fetchall()
+        if len(rows)==24:
+            self.db.execute('INSERT OR IGNORE INTO daily VALUES(?,?,?,?)',(symbol,day,max(r['available'] for r in rows),sum(r['volume'] for r in rows)))
+
+    def _minute(self,item):
+        r=item['record']; symbol=r['symbol']; opened=stamp(r['open_at']); at=stamp(r['received_at'])
+        if symbol not in self.symbols: return
+        if opened%60: raise ValueError('minute grid required')
+        if r.get('source_conflict') or r.get('conflicting_duplicate'):
+            self.emit('minute-conflict:'+symbol+':'+str(opened)+':'+digest(r),'MINUTE_QUALITY',at,{'symbol':symbol,'opened':iso(opened),'status':'SOURCE_CONFLICT_EXCLUDED'}); return
+        rawhash=digest(r.get('source',r))
+        old=self.db.execute('SELECT hash FROM minutes WHERE symbol=? AND opened=?',(symbol,opened)).fetchone()
+        if old:
+            if old[0]!=rawhash: self.emit('minute-conflict:'+symbol+':'+str(opened)+':'+rawhash,'MINUTE_CONFLICT',at,{'retained_first':True,'symbol':symbol,'opened':iso(opened)})
+            return
+        self.db.execute('INSERT INTO minutes VALUES(?,?,?,?,?)',(symbol,opened,at,canonical(r),rawhash))
+        hour=math.floor(opened/3600)*3600
+        rows=self.db.execute('SELECT payload FROM minutes WHERE symbol=? AND opened>=? AND opened<? ORDER BY opened',(symbol,hour,hour+3600)).fetchall()
+        if len(rows)==60:
+            result=assemble_hour([json.loads(x[0]) for x in rows],symbol,iso(hour),iso(at))
+            if result['status']=='COMPLETE':
+                self._hour({'symbol':symbol,'opened':iso(hour),'received_at':result['available_at'],
+                    'close':result['hour']['close'],'quote_volume':result['hour']['quote_volume']})
+
+    def _features(self,symbol,at):
+        last=math.floor(at/3600)*3600-3600
+        rows=self.db.execute('SELECT opened,close FROM hours WHERE symbol=? AND opened IN (?,?) AND available<=?',(symbol,last,last-24*3600,at)).fetchall()
+        p={r['opened']:r['close'] for r in rows}
+        momentum=p[last]/p[last-24*3600]-1 if last in p and last-24*3600 in p else None
+        day=math.floor(at/86400)*86400
+        daily=self.db.execute('SELECT opened,volume FROM daily WHERE symbol=? AND opened>=? AND opened<? AND available<=?',(symbol,day-30*86400,day,at)).fetchall()
+        median=statistics.median(r['volume'] for r in daily) if len(daily)==30 else None
+        return {'momentum_24h':momentum,'median_quote_volume_30d':median,
+                'momentum_hour_end':iso(last+3600),'daily_cutoff_exclusive':iso(day),
+                'complete_daily_bars':len(daily)}
+
+    def _evaluate(self, arm, symbol, opened, cutoff):
+        rows=self.db.execute('SELECT * FROM hours WHERE symbol=? AND opened>=? AND opened<=? AND available<=?',
+                             (symbol,opened-171*3600,opened,cutoff)).fetchall()
+        known={r['opened']:r for r in rows}
+        grid=[opened-(171-i)*3600 for i in range(172)]
+        result=evaluate_causal([known[x]['close'] if x in known else None for x in grid],
+                               [known[x]['volume'] if x in known else None for x in grid])
+        state=self.db.execute('SELECT * FROM arm_state WHERE arm=? AND symbol=?',(arm,symbol)).fetchone()
+        last=state['last_trigger']; emitted=result['raw_trigger'] is True and (last is None or opened-last>=72*3600)
+        if result['raw_trigger'] is True and not emitted: result['status']='COOLDOWN'
+        if emitted: last=opened
+        self.db.execute('UPDATE arm_state SET last_hour=?,last_trigger=? WHERE arm=? AND symbol=?',(opened,last,arm,symbol))
+        ident=f'{symbol}:{int(opened)}'; eligible=self.t0<=cutoff<self.admission_end
+        compact_result={k:result[k] for k in ('status','raw_trigger','reason','features')}
+        self.emit(f'detector:{arm}:{ident}','DETECTOR',cutoff,{'arm_minutes':arm,'symbol':symbol,'hour_open_at':iso(opened),
+                  'decision_cutoff':iso(cutoff),'result':compact_result,'emitted':emitted,'admission_clock_eligible':eligible})
+        if not emitted or not eligible: return
+        if arm==0:
+            features={s:self._features(s,cutoff) for s in self.primary}
+            controls=matched_controls(symbol,features)
+            payload={'event_id':ident,'symbol':symbol,'hour_open_at':iso(opened),'reference_at':iso(cutoff),
+                'controls':controls,'control_target_features':features[symbol],
+                'controls_status':'AVAILABLE' if controls else 'UNAVAILABLE_PRE_EVENT_FEATURES',
+                'trigger':result,'economic_episode':False}
+            self.db.execute('INSERT OR IGNORE INTO events VALUES(?,?,?,?,?)',(ident,symbol,opened,cutoff,canonical(payload)))
+            self.emit('event:'+ident,'EVENT',cutoff,payload)
+        else:
+            row=self.db.execute('SELECT * FROM events WHERE id=?',(ident,)).fetchone()
+            if not row:
+                self.emit(f'unmatched:{arm}:{ident}','UNMATCHED_ARM_TRIGGER',cutoff,
+                    {'event_id':ident,'arm_minutes':arm,'reason':'REFERENCE_UNAVAILABLE_OR_ALREADY_SETTLED; no fabricated reference event'}); return
+            event=json.loads(row['payload'])
+            for target,role in [(symbol,'EVENT')]+[(c['symbol'],'CONTROL') for c in event['controls']]:
+                pid=f'{ident}:{arm}:{target}'
+                self.db.execute('INSERT OR IGNORE INTO positions VALUES(?,?,?,?,?,?,?,NULL)',(pid,ident,arm,target,role,cutoff,'AWAIT_ENTRY'))
+                self.emit('decision:'+pid,'ARM_DECISION',cutoff,{'event_id':ident,'position_id':pid,'symbol':target,'role':role,
+                    'arm_minutes':arm,'reference_at':iso(row['reference']),'decision_at':iso(cutoff),
+                    'detection_delay_seconds':cutoff-row['reference'],'entry_window_end':iso(min(cutoff+120,self.admission_end)),
+                    'common_exit_deadlines':{str(h):iso(row['reference']+h*3600) for h in HORIZONS}})
+
+    def _evaluate_due(self,arm,cutoff):
+        if cutoff<self.t0 or cutoff>=self.admission_end: return
+        for symbol in self.primary:
+            state=self.db.execute('SELECT last_hour FROM arm_state WHERE arm=? AND symbol=?',(arm,symbol)).fetchone()
+            opened=state[0]+3600
+            while opened+3600<=cutoff:
+                row=self.db.execute('SELECT available FROM hours WHERE symbol=? AND opened=?',(symbol,opened)).fetchone()
+                complete=row and row[0]<=cutoff
+                if not complete and cutoff<opened+3600+120: break
+                actual=row[0] if arm==0 and complete else cutoff
+                self._evaluate(arm,symbol,opened,actual)
+                opened+=3600
+
+    def _advance_cutoffs(self,until,inclusive=True):
+        next_at=self.get('next_cutoff')
+        while next_at<=until if inclusive else next_at<until:
+            if next_at>=self.admission_end: break
+            self._evaluate_due(0,next_at)
+            for arm in ARMS:
+                if round((next_at-self.t0)/60)%arm==0: self._evaluate_due(arm,next_at)
+            next_at+=60
+        self.set('next_cutoff',next_at)
+
+    def _quote(self,item):
+        start,received=stamp(item['request_started_at']),stamp(item['received_at'])
+        if start>received: return
+        rows={r['symbol']:valid_quote(r) for r in item['rows'] if r.get('symbol') in self.symbols}
+        def selected(symbol):
+            q=rows.get(symbol)
+            if not q: return None
+            return {'batch_id':item['batch_id'],'request_started_at':iso(start),'received_at':iso(received),'token':q,
+                    'benchmarks':{s:rows.get(s) for s in BENCHMARKS},'source_quote_timestamp':None}
+        awaiting=self.db.execute("SELECT * FROM positions WHERE status='AWAIT_ENTRY' AND decision<=? AND decision+120>=?",(start,received)).fetchall()
+        for p in awaiting:
+            q=selected(p['symbol'])
+            if not q or received>=self.admission_end: continue
+            event=self.db.execute('SELECT reference FROM events WHERE id=?',(p['event_id'],)).fetchone()
+            self.db.execute("UPDATE positions SET status='ENTERED',entry=? WHERE id=?",(canonical(q),p['id']))
+            self.emit('entry:'+p['id'],'PAPER_ENTRY',received,{'position_id':p['id'],'quote':q,'first_eligible':True,'actual_fill':False})
+            for h in HORIZONS:
+                self.db.execute('INSERT INTO endpoints VALUES(?,?,?,?,NULL)',(p['id'],h,event[0]+h*3600,'AWAIT_EXIT'))
+        endpoints=self.db.execute("SELECT e.*,p.symbol,p.entry FROM endpoints e JOIN positions p ON e.position_id=p.id WHERE e.status='AWAIT_EXIT' AND e.deadline<=? AND e.deadline+120>=?",(start,received)).fetchall()
+        for e in endpoints:
+            q=selected(e['symbol'])
+            if not q: continue
+            result={'position_id':e['position_id'],'horizon_hours':e['horizon'],
+                'role':{24:'PRIMARY',72:'DIAGNOSTIC',120:'SECONDARY'}[e['horizon']],
+                'common_deadline':iso(e['deadline']),'exit':q,'returns':outcome(json.loads(e['entry']),q),
+                'sampled_exit_delay_seconds':received-e['deadline']}
+            result['descriptive_return_label']=(result['returns']['gross_token_return']>=.10 if e['horizon']==24
+                else result['returns']['gross_token_return']>=.20 if e['horizon']==120 else None)
+            self.db.execute("UPDATE endpoints SET status='COMPLETE',payload=? WHERE position_id=? AND horizon=?",(canonical(result),e['position_id'],e['horizon']))
+            self.emit('outcome:'+e['position_id']+':'+str(e['horizon']),'OUTCOME',received,result)
+
+    def _expire(self,until):
+        for row in self.db.execute("SELECT * FROM positions WHERE status='AWAIT_ENTRY' AND (decision+120<? OR ? >= ?)",(until,until,self.admission_end)).fetchall():
+            self.db.execute("UPDATE positions SET status='NOT_ENTERED' WHERE id=?",(row['id'],))
+            self.emit('missing-entry:'+row['id'],'NOT_ENTERED',until,{'position_id':row['id'],'missing_not_zero':True})
+        for row in self.db.execute("SELECT * FROM endpoints WHERE status='AWAIT_EXIT' AND deadline+120<?",(until,)).fetchall():
+            self.db.execute("UPDATE endpoints SET status='CENSORED' WHERE position_id=? AND horizon=?",(row['position_id'],row['horizon']))
+            self.emit('censored:'+row['position_id']+':'+str(row['horizon']),'CENSORED',until,{'position_id':row['position_id'],'horizon_hours':row['horizon'],'missing_not_zero':True})
+
+    def process_until(self,until,max_items=1000):
+        until=min(stamp(until),self.end)
+        if until<self.get('watermark'): return self.health()
+        with self.transaction(self):
+            pending=self.db.execute('SELECT * FROM pending WHERE at<=? ORDER BY at,CASE kind WHEN \'minute\' THEN 0 WHEN \'hour_warmup\' THEN 0 ELSE 1 END,id LIMIT ?', (until,max_items+1)).fetchall()
+            if len(pending)>max_items:
+                until=pending[max_items]['at']-.000001
+                pending=[r for r in pending[:max_items] if r['at']<=until]
+            groups={}
+            for row in pending: groups.setdefault(row['at'],[]).append(row)
+            for at,group in groups.items():
+                self._advance_cutoffs(at,False)
+                for row in group:
+                    item=json.loads(row['payload'])
+                    if item['kind']=='minute': self._minute(item)
+                    elif item['kind']=='hour_warmup':
+                        if stamp(item['opened'])>=self.t0: raise ValueError('hour warmup cannot create prospective bars')
+                        self._hour(item)
+                    elif item['kind']=='daily':
+                        opened=stamp(item['opened'])
+                        if opened%86400 or opened+86400>at: raise ValueError('unclosed daily warmup')
+                        self.db.execute('INSERT OR IGNORE INTO daily VALUES(?,?,?,?)',(item['symbol'],opened,at,float(item['quote_volume'])))
+                if self._dirty_reference:
+                    self._evaluate_due(0,at)
+                    self._dirty_reference = False
+                self._advance_cutoffs(at,True)
+                for row in group:
+                    item=json.loads(row['payload'])
+                    if item['kind']=='quote': self._quote(item)
+                    self.db.execute('DELETE FROM pending WHERE id=?',(row['id'],))
+                self._expire(at)
+            self._advance_cutoffs(until,True); self._expire(until)
+            self.set('watermark',until)
+            self.db.execute('DELETE FROM minutes WHERE opened<?',(until-3*3600,))
+            self.db.execute('DELETE FROM hours WHERE opened<?',(until-180*3600,))
+            self.db.execute('DELETE FROM daily WHERE opened<?',(until-32*86400,))
+            self.emit('checkpoint:'+iso(until),'RESEARCH_CHECKPOINT',until,{'watermark':iso(until),
+                'economic_lane':'NOT_COVERED_PENDING_MANUAL_ACCEPTANCE','missing_warmup_is_unknown':True})
+        return self.health()
+
+    def health(self):
+        counts={r[0]:r[1] for r in self.db.execute('SELECT kind,n FROM ledger_counts')}
+        return {'schema':'KOD_RESEARCH_R2_HEALTH_V1','version':VERSION,'config_sha256':self.config_hash,
+            't0':iso(self.t0),'admission_end':iso(self.admission_end),'collection_end':iso(self.end),
+            'processed_receipt_watermark':iso(self.get('watermark')),'ledger_counts':counts,
+            'event_count':self.db.execute('SELECT count(*) FROM events').fetchone()[0],
+            'pending_items':self.db.execute('SELECT count(*) FROM pending').fetchone()[0],
+            'complete_hour_rows':self.db.execute('SELECT count(*) FROM hours').fetchone()[0],
+            'economic_lane':'NOT_COVERED_PENDING_MANUAL_COMPLETE_EVIDENCE_ACCEPTANCE',
+            'source_capture_is_not_an_edge_claim':True,'real_orders':False,'paid_calls':0}
+
+    def verify_ledger(self):
+        prev='0'*64; count=0
+        for r in self.db.execute('SELECT * FROM ledger ORDER BY seq'):
+            value={'id':r['id'],'kind':r['kind'],'at':iso(r['at']),'payload':json.loads(r['payload']),'prev':prev}
+            if r['prev']!=prev or r['hash']!=digest(value): raise ValueError('ledger hash-chain mismatch')
+            prev=r['hash']; count+=1
+        return {'records':count,'tip_sha256':prev}
+
+    def backup(self,path):
+        target=sqlite3.connect(path)
+        try: self.db.backup(target)
+        finally: target.close()
+        return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+    def export_incremental(self,directory,limit=5000):
+        """Immutable gzip ledger chunks, including input order/replay boundaries.
+
+        Chunk bytes plus original raw packets/config/warmup are authoritative
+        backup. SQLite caches need not be repeatedly versioned. Restore replays
+        SOURCE_PACKET in ledger order and calls process_until at each
+        RESEARCH_CHECKPOINT watermark, then compares the entire ledger hashchain.
+        The export cursor advances only after atomic durable chunk publication.
+        """
+        destination=Path(directory);destination.mkdir(parents=True,exist_ok=True)
+        with self.transaction(self):
+            after=self.get('export_seq',0)
+            if not 1<=limit<=10000: raise ValueError('bounded export limit required')
+            rows=[dict(r) for r in self.db.execute('SELECT * FROM ledger WHERE seq>? ORDER BY seq LIMIT ?',(after,limit))]
+            if not rows: return {'records':0,'last_seq':after}
+            boundaries=[i for i,r in enumerate(rows) if r['kind'] in ('PROTOCOL','SOURCE_PACKET','RESEARCH_CHECKPOINT')]
+            if not boundaries:
+                rows=[dict(r) for r in self.db.execute('SELECT * FROM ledger WHERE seq>? ORDER BY seq LIMIT 10000',(after,))]
+                boundaries=[i for i,r in enumerate(rows) if r['kind'] in ('PROTOCOL','SOURCE_PACKET','RESEARCH_CHECKPOINT')]
+            if not boundaries: raise ValueError('ledger transaction exceeds bounded export; preserve local DB and report')
+            rows=rows[:boundaries[-1]+1]
+            raw=('\n'.join(canonical(r) for r in rows)+'\n').encode()
+            packed=gzip.compress(raw,compresslevel=6,mtime=0)
+            sha=hashlib.sha256(packed).hexdigest()
+            name=f"ledger-{rows[0]['seq']:010d}-{rows[-1]['seq']:010d}-{sha}.jsonl.gz"
+            path=destination/name
+            if path.exists():
+                if path.read_bytes()!=packed: raise ValueError('immutable ledger export changed')
+            else:
+                temporary=destination/(name+'.tmp')
+                with temporary.open('wb') as stream: stream.write(packed);stream.flush();os.fsync(stream.fileno())
+                os.replace(temporary,path)
+                fd=os.open(destination,os.O_RDONLY)
+                try: os.fsync(fd)
+                finally: os.close(fd)
+            self.set('export_seq',rows[-1]['seq'])
+            return {'records':len(rows),'last_seq':rows[-1]['seq'],'file':str(path),'sha256':sha,
+                    'ledger_tip':rows[-1]['hash'],'cache_backup_required':False}
+
+    def import_warmup(self,path):
+        """Import frozen pre-T0 REST warmup; exact bytes and receipt are required.
+
+        JSON manifest: {responses:[{symbol,interval:'1h'|'1d',raw_path,
+        raw_sha256,received_at,started_at,cutoff_exclusive}]}. raw_path relative
+        to manifest; .gz stores exact compressed response bytes. Hash covers
+        DECOMPRESSED response. Binance kline rows use open[0],close[4],quote[7].
+        """
+        path=Path(path); manifest=json.loads(path.read_text()); added=0
+        for r in manifest['responses']:
+            started,received=stamp(r['started_at']),stamp(r['received_at'])
+            if started>received or received>=self.t0: raise ValueError('warmup must actually be received before T0')
+            rawpath=(path.parent/r['raw_path']).resolve()
+            if path.parent.resolve() not in rawpath.parents: raise ValueError('warmup path outside frozen directory')
+            raw=rawpath.read_bytes()
+            if rawpath.suffix=='.gz': raw=gzip.decompress(raw)
+            if hashlib.sha256(raw).hexdigest()!=r['raw_sha256']: raise ValueError('warmup raw SHA256 differs')
+            step={'1h':3600,'1d':86400}[r['interval']];items=[]
+            cutoff=min(stamp(r['cutoff_exclusive']),self.t0,received)
+            for row in json.loads(raw):
+                opened=float(row[0])/1000
+                if opened%step or opened+step>cutoff: continue
+                item={'kind':'hour_warmup' if step==3600 else 'daily','symbol':r['symbol'],
+                    'opened':iso(opened),'received_at':r['received_at'],'quote_volume':row[7],
+                    'raw_sha256':r['raw_sha256'],'close':row[4]}
+                items.append(item)
+            added+=int(self.enqueue('warmup:'+r['symbol']+':'+r['interval']+':'+r['raw_sha256'],items))
+        return {'responses_added':added,'manifest_sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
+
+    def close(self): self.db.close()
+
+
+def rebuild_from_exports(state_dir,config,directory,input_loader):
+    """Restore exact authoritative decisions; input_loader returns frozen raw items.
+
+    Inputs are resolved by immutable input_id (archive event hash or warmup hash),
+    never by a new network request. Verifies chunk bytes, chain, item identities,
+    then equality of the rebuilt complete ledger tip. State_dir must be empty.
+    """
+    root=Path(state_dir)
+    if (root/'research.sqlite').exists(): raise ValueError('restore requires new isolated state directory')
+    engine=ResearchEngine(root,config);prev='0'*64;expected_seq=1;tip=None
+    try:
+        for path in sorted(Path(directory).glob('ledger-*.jsonl.gz')):
+            raw=path.read_bytes()
+            if hashlib.sha256(raw).hexdigest()!=path.name.removesuffix('.jsonl.gz').split('-')[-1]: raise ValueError('backup chunk SHA256 differs')
+            for line in gzip.decompress(raw).splitlines():
+                r=json.loads(line);p=json.loads(r['payload'])
+                if r['seq']!=expected_seq or r['prev']!=prev: raise ValueError('backup ledger sequence/chain gap')
+                expected={'id':r['id'],'kind':r['kind'],'at':iso(r['at']),'payload':p,'prev':prev}
+                if digest(expected)!=r['hash']: raise ValueError('backup evidence hash differs')
+                if r['kind']=='SOURCE_PACKET':
+                    items=input_loader(p['input_id'])
+                    if digest(items)!=p['normalized_items_sha256']: raise ValueError('restored raw items differ')
+                    engine.enqueue(p['input_id'],items,cursor=p['cursor'])
+                elif r['kind']=='RESEARCH_CHECKPOINT': engine.process_until(p['watermark'])
+                prev=r['hash'];expected_seq+=1;tip=r
+        if tip is None: raise ValueError('no exported ledger')
+        actual=engine.verify_ledger()
+        if actual!={'records':expected_seq-1,'tip_sha256':prev}: raise ValueError('restored decisions differ from original ledger')
+        engine.set('export_seq',expected_seq-1)
+        return engine
+    except BaseException:
+        engine.close();raise
+
+
+def archive_items(store,event):
+    """Decode exact PACK_V1 bytes; no normalized cache establishes receipt time."""
+    result=[]
+    references=event.get('raw_objects')
+    if references is None: references=[r['body_object'] for r in event.get('requests',[]) if 'body_object' in r]
+    for reference in references:
+        for index,member in enumerate(unpack_attempts(store.read_object(reference))):
+            if 'closed_message_map' in member:
+                body=member['body']
+                for entry in member['closed_message_map']:
+                    off,n=entry['raw_offset'],entry['raw_length']
+                    if not isinstance(off,int) or not isinstance(n,int) or off<0 or n<0 or off+n>len(body): raise ValueError('raw candle slice invalid')
+                    source=json.loads(body[off:off+n]); data=source.get('data',source); candle=data['k']
+                    if data.get('s')!=entry['symbol'] or not candle.get('x'): raise ValueError('raw candle mapping differs')
+                    record={**entry,'source':source}
+                    result.append({'kind':'minute','received_at':entry['received_at'],'record':record})
+            elif member.get('capacity_lane') in ('detailed','broad') and member.get('body'):
+                if member.get('status_code',member.get('http_status',200))!=200: continue
+                rows=json.loads(member['body'])
+                if isinstance(rows,dict) and 'symbol' in rows: rows=[rows]
+                if not isinstance(rows,list): continue
+                result.append({'kind':'quote','batch_id':event['hash']+':'+str(index),
+                    'received_at':member['received_at'],'request_started_at':member['request_started_at'],'rows':rows})
+    return result
+
+
+def poll_archive(engine,store,now,limit=300):
+    """Bounded cursor scan; only existing archive paths are opened by caller."""
+    catalog=json.loads((store.root/'CATALOG.json').read_text())
+    processed=0
+    for entry in catalog['days']:
+        day=entry['day']; old=engine.db.execute('SELECT next_seq FROM cursors WHERE day=?',(day,)).fetchone()
+        cursor=old[0] if old else 0
+        if entry.get('sealed') and cursor>=entry.get('next_seq',float('inf')): continue
+        for event in store.iter_batches(day,after_seq=cursor,limit=min(limit-processed,10000)):
+            items=archive_items(store,event) if event['kind'] in ('capacity_minute_end','capacity_diagnostic','research_minute_end','research_diagnostic') else []
+            engine.enqueue(event['hash'],items,cursor=(day,event['seq']+1)); processed+=1
+            if processed>=limit: return {'ingested_batches':processed,'backlog_possible':True,'health':engine.health()}
+    # Raw receipt clocks can precede archive commit by ~2 minutes. A declared
+    # five-minute archival grace avoids finalizing just before normal commit.
+    return {'ingested_batches':processed,'backlog_possible':False,
+            'health':engine.process_until(math.floor((stamp(now)-300)/60)*60)}
+
+
+def final_archive_drain(engine,store,collector_closed_at,limit=30):
+    """After collector close/commit, drain all remaining finite receipt evidence.
+
+    Caller must have joined the collector and observed its final archive commit.
+    Repeat bounded calls while backlog_possible or pending_items remains. Unlike
+    normal polling, no artificial archival grace remains after the source closes.
+    """
+    if stamp(collector_closed_at)<engine.end: raise ValueError('cannot final-drain before finite capture endpoint')
+    result=poll_archive(engine,store,engine.end+300,limit=limit)
+    result['final_archive_drain']=True
+    result['complete']=(not result['backlog_possible'] and result['health']['pending_items']==0
+                        and stamp(result['health']['processed_receipt_watermark'])==engine.end)
+    return result
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--config',required=True);parser.add_argument('--source-store',required=True);parser.add_argument('--state-dir',required=True)
+    parser.add_argument('--once',action='store_true');parser.add_argument('--loop',action='store_true')
+    args=parser.parse_args()
+    source=Path(args.source_store)
+    if not (source/'CATALOG.json').is_file(): raise SystemExit('existing immutable source archive required')
+    engine=ResearchEngine(args.state_dir,json.loads(Path(args.config).read_text()))
+    store=BroadStore(source)
+    try:
+        while True:
+            result=poll_archive(engine,store,dt.datetime.now(UTC)); result['checked_at']=iso(dt.datetime.now(UTC))
+            temporary=engine.root/'HEALTH.tmp';temporary.write_text(canonical(result)+'\n');os.replace(temporary,engine.root/'HEALTH.json')
+            print(canonical(result),flush=True)
+            if not args.loop or stamp(dt.datetime.now(UTC))>engine.end+300: break
+            time.sleep(5 if result['backlog_possible'] else 15)
+    finally: engine.close()
+
+
+if __name__=='__main__': main()

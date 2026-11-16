@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-11-16T08:23:36.863305+00:00",
+  "action": "INSTALL_STREAMED_OVERSIZE_LEDGER_EXPORT_FALLBACK",
+  "original_db_snapshot_sha256": "7077781598c335a27acfb6fb37d17a4a48d5b1776a1b6ad23773fa05215c69d2",
+  "frozen_code_files_verified": 452,
+  "live_export_seq_before": 183158,
+  "copy_validation": {
+    "checked_at": "2026-11-16T08:22:15.541197+00:00",
+    "status": "PASS",
+    "frozen_failure_reproduced": true,
+    "live_cursor_before": 183158,
+    "live_cursor_after": 183158,
+    "copy_cursor_before": 183158,
+    "copy_cursor_after": 206039,
+    "copy_ledger_unchanged": {
+      "records": 212720,
+      "tip_sha256": "5e81f0f2640a3767b4bfe59ec00df5b577f66afd3444528a21f93a182a4a6a9b"
+    },
+    "decoded_rows_byte_identical": 22881,
+    "export": {
+      "records": 22881,
+      "last_seq": 206039,
+      "file": "/var/lib/kod-research-r2-ops/repairs/export-recovery-20261116/validation/repaired-export/ledger-0000183159-0000206039-afc5af5d4e77dcee7dd2b526a8e3330db56fe685dd9b997520bbcda3fe84cdf9.jsonl.gz",
+      "sha256": "afc5af5d4e77dcee7dd2b526a8e3330db56fe685dd9b997520bbcda3fe84cdf9",
+      "ledger_tip": "3b50441b2bdce6415c10b55417f8200ff51ac0e7f15389fc8c180087b094d6ee",
+      "cache_backup_required": false
+    },
+    "packed_bytes": 1430686,
+    "original_snapshot_sha256": "7077781598c335a27acfb6fb37d17a4a48d5b1776a1b6ad23773fa05215c69d2",
+    "elapsed_seconds": 28.739373811054975
+  },
+  "release_check": {
+    "status": "OK",
+    "config_sha256": "df72095598d60d8f96b9d5a6fbac1e6fa6834fa4d24d48a19ba7beb3782a1909"
+  },
+  "overlay_sha256": "1cd27e370e1f993e8b86a359d9b900db1fca6645d2ecddb0dad7da647b447dd9",
+  "wrapper_sha256": "8a8f2d7dc17e86c42a014a982766d26efcb19a3d97fc34e4087900868e1503b9",
+  "study_config_sha256": "df72095598d60d8f96b9d5a6fbac1e6fa6834fa4d24d48a19ba7beb3782a1909",
+  "study_data_deleted": false,
+  "research_rules_changed": false,
+  "prior_provider_overlay_preserved": true,
+  "start_requested_at": "2026-11-16T08:23:37.500871+00:00"
+}

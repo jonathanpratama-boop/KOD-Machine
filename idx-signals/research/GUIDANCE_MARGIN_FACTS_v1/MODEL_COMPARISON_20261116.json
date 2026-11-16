@@ -1,0 +1,129 @@
+{
+  "plan": {
+    "prepared_at": "2026-11-16T09:27:26.853095+00:00",
+    "model": "gpt-5.4-2026-03-05",
+    "cases": [
+      "rbbn-complete",
+      "mattel-complete-recast"
+    ],
+    "comparison": "One attempt each using exactly the same code, source packets and expected checks as mini pass 2. Chosen after mini failed. Development only; not independent validation. No further model escalation in this evaluation.",
+    "sha256": {
+      "fixtures.json": "0e69a3f99fb3b6124774dec38afd0eb17b787dd706237d184f3a8e9772356622",
+      "expected.json": "4491a86f50de8e6c9e6e040058e982ccc3eedd1a5b513f49e11d4f195c5afb1e"
+    },
+    "reader_sha256": "d6c9d8438f1c4eb03371a895a0d9c9041e0ccf1e8316aca11368451794d9d4fb",
+    "rates_per_million": {
+      "input": 2.5,
+      "cached_input": 0.25,
+      "output": 15
+    },
+    "rate_source": "https://developers.openai.com/api/docs/models/gpt-5.4"
+  },
+  "score": {
+    "scored_at": "2026-11-16T09:28:35.083158+00:00",
+    "development_only": true,
+    "rate_source": "https://developers.openai.com/api/docs/models/gpt-5.4",
+    "price_note": "Estimated list-price usage, not an invoice or cash purchase. Input $2.5/M, cached input $0.25/M, output $15/M.",
+    "expected_sha256": "4491a86f50de8e6c9e6e040058e982ccc3eedd1a5b513f49e11d4f195c5afb1e",
+    "passed_cases": 0,
+    "total_cases": 2,
+    "input_tokens": 95042,
+    "output_tokens": 2557,
+    "estimated_usd": 0.27596,
+    "rows": [
+      {
+        "id": "rbbn-complete",
+        "kind": "real_full_disclosure_pair",
+        "reader_status": "REJECTED",
+        "passed": false,
+        "problems": [
+          "Reader rejected first response: ValueError",
+          "current.revenue does not match expected source fact",
+          "current.operating_profit does not match expected source fact",
+          "current.operating_margin does not match expected source fact",
+          "current.basis does not match expected source fact",
+          "current.period_end does not match expected source fact",
+          "prior.revenue does not match expected source fact",
+          "prior.operating_profit does not match expected source fact",
+          "prior.operating_margin does not match expected source fact",
+          "prior.basis does not match expected source fact",
+          "prior.period_end does not match expected source fact"
+        ],
+        "matched_fields": 0,
+        "checked_fields": 10,
+        "qualification": null,
+        "input_tokens": 48403,
+        "cached_input_tokens": 0,
+        "output_tokens": 1636,
+        "estimated_usd": 0.1455475,
+        "elapsed_seconds": 23.915623875000165,
+        "response_sha256": "b06ad70b3d7364c19de0c825e7863c352055978e4ca6af4935113dfb75cc6dea",
+        "returned_model": "gpt-5.4-2026-03-05",
+        "received_at": "2026-11-16T09:27:50.788799+00:00",
+        "request_body_sha256": "04ee6710f2064fe3b39a6e4c46c20754252a43b0d96b487a8155de3ce0cff5b4"
+      },
+      {
+        "id": "mattel-complete-recast",
+        "kind": "real_full_disclosure_pair",
+        "reader_status": "CANDIDATE",
+        "passed": false,
+        "problems": [
+          "Accounting definition change not represented"
+        ],
+        "matched_fields": 8,
+        "checked_fields": 9,
+        "qualification": {
+          "derived": null,
+          "reasons": [
+            "current.period_start is missing",
+            "current.period_end is missing",
+            "current.perimeter_id is missing",
+            "current.revenue is missing",
+            "current.revenue.form is missing",
+            "current.revenue.unit is missing",
+            "current.revenue.qualifier is missing",
+            "prior.period_start is missing",
+            "prior.period_end is missing",
+            "prior.definition_id is missing",
+            "prior.perimeter_id is missing",
+            "prior.revenue is missing",
+            "prior.revenue.form is missing",
+            "prior.revenue.unit is missing",
+            "prior.revenue.qualifier is missing",
+            "external.latest_prior_source_id is missing",
+            "current.source.published_at is unknown",
+            "prior.source.published_at is unknown",
+            "external.source_authenticity: UNKNOWN",
+            "external.metric_binding: UNKNOWN",
+            "external.prior_completeness: UNKNOWN",
+            "external.basis_comparable: UNKNOWN",
+            "external.perimeter_comparable: UNKNOWN",
+            "clocks.decision_at is unknown"
+          ],
+          "status": "MISSING"
+        },
+        "input_tokens": 46639,
+        "cached_input_tokens": 0,
+        "output_tokens": 921,
+        "estimated_usd": 0.1304125,
+        "elapsed_seconds": 15.022431624998717,
+        "response_sha256": "7e889e17da13c40743b8b81f0901253fd54c2ae55b77603e898e29162f02fd7a",
+        "returned_model": "gpt-5.4-2026-03-05",
+        "received_at": "2026-11-16T09:28:05.832233+00:00",
+        "request_body_sha256": "e76c89ebe8f3a057384d2d9bb379fbb1c739cf2c390d7debb0dc701a1d811c5e"
+      }
+    ]
+  },
+  "selection": "Chosen after mini failed; same two inspected development cases. Not an untouched test or broad model benchmark.",
+  "decision": "HOLD_UNATTENDED_READER",
+  "qualitative_review": {
+    "rbbn-complete": "Full-year revenue centers 814 and 825, spreads 7 and 15, and GAAP losses 18.8 and 9.8 were identified. The spread token included +/- and M; the current quote also contained two copies of the spread. Binding rejected the ambiguous evidence; no candidate accepted.",
+    "mattel-complete-recast": "All eight predeclared numeric/null/basis fields passed. The current definition explicitly identified the recast, but the prior definition remained null, so the complete-case requirement did not pass. Bound candidate remains MISSING."
+  },
+  "cumulative_evaluation": {
+    "calls": 16,
+    "independent_real_pairs": 2,
+    "estimated_usd": 0.46306985,
+    "excludes": "earlier one-call connection test"
+  }
+}
