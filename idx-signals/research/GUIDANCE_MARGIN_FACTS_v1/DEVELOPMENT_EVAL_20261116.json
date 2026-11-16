@@ -1,0 +1,832 @@
+{
+  "schema": "guidance-reader-development-evaluation/v1",
+  "date": "2026-11-16",
+  "model": "gpt-5.4-mini-2026-03-17",
+  "decision": "HOLD_UNATTENDED_READER",
+  "independent_validation": false,
+  "source_preparation": "Supervised full press-release bodies, HTML table geometry and PDF OCR retained. No historical price outcomes read.",
+  "case_counts": {
+    "real_complete_disclosure_pairs": 2,
+    "synthetic_controls": 4,
+    "incomplete_source_control": 1
+  },
+  "passes": [
+    {
+      "scored_at": "2026-11-16T09:16:35.424241+00:00",
+      "development_only": true,
+      "rate_source": "https://developers.openai.com/api/docs/models/gpt-5.4-mini",
+      "price_note": "Estimated list-price usage, not an invoice or cash purchase. Input $0.75/M, cached input $0.075/M, output $4.50/M.",
+      "expected_sha256": "4491a86f50de8e6c9e6e040058e982ccc3eedd1a5b513f49e11d4f195c5afb1e",
+      "passed_cases": 1,
+      "total_cases": 7,
+      "input_tokens": 109497,
+      "output_tokens": 2976,
+      "estimated_usd": 0.09551475,
+      "rows": [
+        {
+          "id": "rbbn-complete",
+          "kind": "real_full_disclosure_pair",
+          "reader_status": "REJECTED",
+          "passed": false,
+          "problems": [
+            "Reader rejected first response: ValueError",
+            "current.revenue does not match expected source fact",
+            "current.operating_profit does not match expected source fact",
+            "current.operating_margin does not match expected source fact",
+            "current.basis does not match expected source fact",
+            "current.period_end does not match expected source fact",
+            "prior.revenue does not match expected source fact",
+            "prior.operating_profit does not match expected source fact",
+            "prior.operating_margin does not match expected source fact",
+            "prior.basis does not match expected source fact",
+            "prior.period_end does not match expected source fact"
+          ],
+          "matched_fields": 0,
+          "checked_fields": 10,
+          "qualification": null,
+          "input_tokens": 48324,
+          "cached_input_tokens": 0,
+          "output_tokens": 481,
+          "estimated_usd": 0.0384075,
+          "elapsed_seconds": 4.542037124998387,
+          "response_sha256": "23cf707cec99838e7ed7bcc807e80e0b1989e0d09bf349f6110d3b8ca025aa6c"
+        },
+        {
+          "id": "mattel-complete-recast",
+          "kind": "real_full_disclosure_pair",
+          "reader_status": "REJECTED",
+          "passed": false,
+          "problems": [
+            "Reader rejected first response: ValueError",
+            "current.revenue does not match expected source fact",
+            "current.operating_profit does not match expected source fact",
+            "current.operating_margin does not match expected source fact",
+            "current.basis does not match expected source fact",
+            "prior.revenue does not match expected source fact",
+            "prior.operating_profit does not match expected source fact",
+            "prior.operating_margin does not match expected source fact",
+            "prior.basis does not match expected source fact",
+            "Accounting definition change not represented"
+          ],
+          "matched_fields": 0,
+          "checked_fields": 9,
+          "qualification": null,
+          "input_tokens": 46560,
+          "cached_input_tokens": 0,
+          "output_tokens": 664,
+          "estimated_usd": 0.037908,
+          "elapsed_seconds": 6.8388605839991214,
+          "response_sha256": "4b8f6476aff991f739cf75c6620f7269c8ee83dc2655760eaddc5e7b43430654"
+        },
+        {
+          "id": "synthetic-clear-revision",
+          "kind": "synthetic_control",
+          "reader_status": "REJECTED",
+          "passed": false,
+          "problems": [
+            "Reader rejected first response: ValueError",
+            "current.revenue does not match expected source fact",
+            "current.operating_profit does not match expected source fact",
+            "current.operating_margin does not match expected source fact",
+            "current.basis does not match expected source fact",
+            "prior.revenue does not match expected source fact",
+            "prior.operating_profit does not match expected source fact",
+            "prior.operating_margin does not match expected source fact",
+            "prior.basis does not match expected source fact"
+          ],
+          "matched_fields": 0,
+          "checked_fields": 8,
+          "qualification": null,
+          "input_tokens": 2948,
+          "cached_input_tokens": 0,
+          "output_tokens": 380,
+          "estimated_usd": 0.003921,
+          "elapsed_seconds": 3.5597157920001337,
+          "response_sha256": "387d98ab323069dd62ae9f65cdf79035324a6fef1b4957ca351c0fbdb7eda8b2"
+        },
+        {
+          "id": "synthetic-unchanged",
+          "kind": "synthetic_control",
+          "reader_status": "CANDIDATE",
+          "passed": false,
+          "problems": [
+            "current.operating_margin does not match expected source fact",
+            "prior.operating_margin does not match expected source fact"
+          ],
+          "matched_fields": 6,
+          "checked_fields": 8,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current.definition_id is missing",
+              "current.perimeter_id is missing",
+              "prior.definition_id is missing",
+              "prior.perimeter_id is missing",
+              "external.latest_prior_source_id is missing",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "MISSING"
+          },
+          "input_tokens": 2930,
+          "cached_input_tokens": 0,
+          "output_tokens": 432,
+          "estimated_usd": 0.0041415,
+          "elapsed_seconds": 2.817646458001036,
+          "response_sha256": "ceade181a94634a5b9aa12e274df41621eb66cadd3eb0d0f0cc81f20c6bcf97e"
+        },
+        {
+          "id": "synthetic-missing-operating-profit",
+          "kind": "synthetic_control",
+          "reader_status": "CANDIDATE",
+          "passed": true,
+          "problems": [],
+          "matched_fields": 6,
+          "checked_fields": 6,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current.basis is missing",
+              "current.definition_id is missing",
+              "current.perimeter_id is missing",
+              "current: operating profit or margin missing",
+              "prior.basis is missing",
+              "prior.definition_id is missing",
+              "prior.perimeter_id is missing",
+              "prior: operating profit or margin missing",
+              "external.latest_prior_source_id is missing",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "MISSING"
+          },
+          "input_tokens": 2938,
+          "cached_input_tokens": 0,
+          "output_tokens": 266,
+          "estimated_usd": 0.0034005,
+          "elapsed_seconds": 2.3540805419997923,
+          "response_sha256": "db133e53f3714e7a7f3c994fc7316fbcd1ecd4387980e5ebcb5a7b2414ce2d09"
+        },
+        {
+          "id": "synthetic-accounting-change",
+          "kind": "synthetic_control",
+          "reader_status": "REJECTED",
+          "passed": false,
+          "problems": [
+            "Reader rejected first response: ValueError",
+            "current.revenue does not match expected source fact",
+            "current.operating_profit does not match expected source fact",
+            "current.operating_margin does not match expected source fact",
+            "current.basis does not match expected source fact",
+            "prior.revenue does not match expected source fact",
+            "prior.operating_profit does not match expected source fact",
+            "prior.operating_margin does not match expected source fact",
+            "prior.basis does not match expected source fact"
+          ],
+          "matched_fields": 1,
+          "checked_fields": 9,
+          "qualification": null,
+          "input_tokens": 2944,
+          "cached_input_tokens": 0,
+          "output_tokens": 385,
+          "estimated_usd": 0.0039405,
+          "elapsed_seconds": 2.3490412499995728,
+          "response_sha256": "abb708f1ebbc3cf57208db3cea53aa40992429d2a2f6ea22ecd238bb42d3b660"
+        },
+        {
+          "id": "rbbn-headerless-control",
+          "kind": "incomplete_source_control",
+          "reader_status": "CANDIDATE",
+          "passed": false,
+          "problems": [
+            "current.revenue guessed a unit without headers",
+            "current.operating_profit guessed a unit without headers",
+            "prior.revenue guessed a unit without headers",
+            "prior.operating_profit guessed a unit without headers"
+          ],
+          "matched_fields": 2,
+          "checked_fields": 6,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current.period_start is missing",
+              "current.definition_id is missing",
+              "current.perimeter_id is missing",
+              "prior.period_start is missing",
+              "prior.definition_id is missing",
+              "prior.perimeter_id is missing",
+              "external.latest_prior_source_id is missing",
+              "current.source.received_at is unknown",
+              "prior.source.published_at is unknown",
+              "prior.source.received_at is unknown",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "MISSING"
+          },
+          "input_tokens": 2853,
+          "cached_input_tokens": 0,
+          "output_tokens": 368,
+          "estimated_usd": 0.00379575,
+          "elapsed_seconds": 2.5819602089995897,
+          "response_sha256": "fb27bcf33d41f32f666cebf5ba1706e78673681c38fcfd920ef07c138ac3df72"
+        }
+      ]
+    },
+    {
+      "scored_at": "2026-11-16T09:17:23.941422+00:00",
+      "development_only": true,
+      "rate_source": "https://developers.openai.com/api/docs/models/gpt-5.4-mini",
+      "price_note": "Estimated list-price usage, not an invoice or cash purchase. Input $0.75/M, cached input $0.075/M, output $4.50/M.",
+      "expected_sha256": "4491a86f50de8e6c9e6e040058e982ccc3eedd1a5b513f49e11d4f195c5afb1e",
+      "passed_cases": 5,
+      "total_cases": 7,
+      "input_tokens": 110050,
+      "output_tokens": 4432,
+      "estimated_usd": 0.0915951,
+      "rows": [
+        {
+          "id": "rbbn-complete",
+          "kind": "real_full_disclosure_pair",
+          "reader_status": "REJECTED",
+          "passed": false,
+          "problems": [
+            "Reader rejected first response: ValueError",
+            "current.revenue does not match expected source fact",
+            "current.operating_profit does not match expected source fact",
+            "current.operating_margin does not match expected source fact",
+            "current.basis does not match expected source fact",
+            "current.period_end does not match expected source fact",
+            "prior.revenue does not match expected source fact",
+            "prior.operating_profit does not match expected source fact",
+            "prior.operating_margin does not match expected source fact",
+            "prior.basis does not match expected source fact",
+            "prior.period_end does not match expected source fact"
+          ],
+          "matched_fields": 0,
+          "checked_fields": 10,
+          "qualification": null,
+          "input_tokens": 48403,
+          "cached_input_tokens": 0,
+          "output_tokens": 761,
+          "estimated_usd": 0.03972675,
+          "elapsed_seconds": 4.642750708999301,
+          "response_sha256": "eca7825b8735ba5871bac60cee02c712b02668f8b28ae34b8646e734d5364456"
+        },
+        {
+          "id": "mattel-complete-recast",
+          "kind": "real_full_disclosure_pair",
+          "reader_status": "REJECTED",
+          "passed": false,
+          "problems": [
+            "Reader rejected first response: ValueError",
+            "current.revenue does not match expected source fact",
+            "current.operating_profit does not match expected source fact",
+            "current.operating_margin does not match expected source fact",
+            "current.basis does not match expected source fact",
+            "prior.revenue does not match expected source fact",
+            "prior.operating_profit does not match expected source fact",
+            "prior.operating_margin does not match expected source fact",
+            "prior.basis does not match expected source fact",
+            "Accounting definition change not represented"
+          ],
+          "matched_fields": 0,
+          "checked_fields": 9,
+          "qualification": null,
+          "input_tokens": 46639,
+          "cached_input_tokens": 2688,
+          "output_tokens": 800,
+          "estimated_usd": 0.03676485,
+          "elapsed_seconds": 5.575430417000462,
+          "response_sha256": "7c9789271bff85bccd1a96396fad0f4c23372e5202f60cd5ef8a231c523a5cd2"
+        },
+        {
+          "id": "synthetic-clear-revision",
+          "kind": "synthetic_control",
+          "reader_status": "CANDIDATE",
+          "passed": true,
+          "problems": [],
+          "matched_fields": 8,
+          "checked_fields": 8,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current.definition_id is missing",
+              "current.perimeter_id is missing",
+              "prior.definition_id is missing",
+              "prior.perimeter_id is missing",
+              "external.latest_prior_source_id is missing",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "MISSING"
+          },
+          "input_tokens": 3027,
+          "cached_input_tokens": 2688,
+          "output_tokens": 460,
+          "estimated_usd": 0.00252585,
+          "elapsed_seconds": 3.420451542000592,
+          "response_sha256": "b495dc77729860b639027e762743e96403fc52018ceab0b05a6ba33faaad2998"
+        },
+        {
+          "id": "synthetic-unchanged",
+          "kind": "synthetic_control",
+          "reader_status": "CANDIDATE",
+          "passed": true,
+          "problems": [],
+          "matched_fields": 8,
+          "checked_fields": 8,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current.definition_id is missing",
+              "prior.definition_id is missing",
+              "external.latest_prior_source_id is missing",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "MISSING"
+          },
+          "input_tokens": 3009,
+          "cached_input_tokens": 2688,
+          "output_tokens": 492,
+          "estimated_usd": 0.00265635,
+          "elapsed_seconds": 3.338340917000096,
+          "response_sha256": "a5478979a3ea560a3ab23e3e04f8920d48ea7c94207ee7422f6cb273a424693c"
+        },
+        {
+          "id": "synthetic-missing-operating-profit",
+          "kind": "synthetic_control",
+          "reader_status": "CANDIDATE",
+          "passed": true,
+          "problems": [],
+          "matched_fields": 6,
+          "checked_fields": 6,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current.basis is missing",
+              "current.definition_id is missing",
+              "current.perimeter_id is missing",
+              "current: operating profit or margin missing",
+              "prior.basis is missing",
+              "prior.definition_id is missing",
+              "prior.perimeter_id is missing",
+              "prior: operating profit or margin missing",
+              "external.latest_prior_source_id is missing",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "MISSING"
+          },
+          "input_tokens": 3017,
+          "cached_input_tokens": 2688,
+          "output_tokens": 406,
+          "estimated_usd": 0.0022753499999999998,
+          "elapsed_seconds": 2.8601062090001506,
+          "response_sha256": "5aba198325f336604cbdf15c1b37e39fa0ddf6d54aa99b39b87ee75b9ae9fa02"
+        },
+        {
+          "id": "synthetic-accounting-change",
+          "kind": "synthetic_control",
+          "reader_status": "CANDIDATE",
+          "passed": true,
+          "problems": [],
+          "matched_fields": 9,
+          "checked_fields": 9,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current/prior definition differ",
+              "external.latest_prior_source_id is missing",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "INCOMPARABLE"
+          },
+          "input_tokens": 3023,
+          "cached_input_tokens": 2688,
+          "output_tokens": 659,
+          "estimated_usd": 0.00341835,
+          "elapsed_seconds": 3.3724311660007515,
+          "response_sha256": "a4400c498a23623b7c270eacb4ebd9c2ad9df4e5e139b10137ada56820775682"
+        },
+        {
+          "id": "rbbn-headerless-control",
+          "kind": "incomplete_source_control",
+          "reader_status": "CANDIDATE",
+          "passed": true,
+          "problems": [],
+          "matched_fields": 6,
+          "checked_fields": 6,
+          "qualification": {
+            "derived": null,
+            "reasons": [
+              "current.revenue: unsupported unit 'UNSUPPORTED'",
+              "current.operating_profit: unsupported unit 'UNSUPPORTED'",
+              "prior.revenue: unsupported unit 'UNSUPPORTED'",
+              "prior.operating_profit: unsupported unit 'UNSUPPORTED'",
+              "current.period_start is missing",
+              "current.perimeter_id is missing",
+              "prior.period_start is missing",
+              "prior.perimeter_id is missing",
+              "external.latest_prior_source_id is missing",
+              "current.source.received_at is unknown",
+              "prior.source.published_at is unknown",
+              "prior.source.received_at is unknown",
+              "external.source_authenticity: UNKNOWN",
+              "external.metric_binding: UNKNOWN",
+              "external.prior_completeness: UNKNOWN",
+              "external.basis_comparable: UNKNOWN",
+              "external.perimeter_comparable: UNKNOWN",
+              "clocks.decision_at is unknown"
+            ],
+            "status": "INCOMPARABLE"
+          },
+          "input_tokens": 2932,
+          "cached_input_tokens": 2688,
+          "output_tokens": 854,
+          "estimated_usd": 0.004227600000000001,
+          "elapsed_seconds": 4.715651582999271,
+          "response_sha256": "4a47a4383e045263e35737ff493fc7538bd49f498389e7c38ae112be359fb064"
+        }
+      ]
+    }
+  ],
+  "total_calls_this_evaluation": 14,
+  "estimated_total_usd": 0.18710985,
+  "source_manifest": [
+    {
+      "id": "rbbn-current",
+      "url": "https://www.prnewswire.com/news-releases/ribbon-communications-inc-reports-third-quarter-2026-financial-results-302921179.html",
+      "original_file": "rbbn-current.html",
+      "original_bytes": 430645,
+      "original_sha256": "c21feffc0b26eaca649f851a2a6d7a4d19eca4d211cf86210cd8205be3780e5d",
+      "text_file": "rbbn-current.txt",
+      "text_bytes": 64369,
+      "text_sha256": "6cdfd4f1e604fc224563965b4b6912614f826c8c7e0baa61763e7ddcd7c902a2",
+      "published_at": "2026-10-27T20:03:00Z",
+      "received_at": "2026-11-16T08:59:21.970588+00:00",
+      "method": "Entire PRNewswire release-body; whitespace normalized; all table cells with source column and row spans retained; navigation/style/script excluded."
+    },
+    {
+      "id": "rbbn-prior",
+      "url": "https://www.prnewswire.com/news-releases/ribbon-communications-inc-reports-second-quarter-2026-financial-results-302836894.html",
+      "original_file": "rbbn-prior.html",
+      "original_bytes": 435320,
+      "original_sha256": "d1e49986f87a7d3ed976447bfa38443c418614262bd6eb3726bb4634b8ffdea6",
+      "text_file": "rbbn-prior.txt",
+      "text_bytes": 65390,
+      "text_sha256": "f0c7e387ed0496d1aaef6a73210513ad17b20f437c2053022a7a96ef29b50c55",
+      "published_at": "2026-07-28T21:03:00+01:00",
+      "received_at": "2026-11-16T09:00:04.108600+00:00",
+      "method": "Entire PRNewswire release-body; whitespace normalized; all table cells with source column and row spans retained; navigation/style/script excluded."
+    },
+    {
+      "id": "mattel-current",
+      "url": "https://s21.q4cdn.com/605014885/files/doc_financials/2026/q1/Mattel-Reports-First-Quarter-2026-Financial-Results.pdf",
+      "original_file": "mattel-current.pdf",
+      "original_bytes": 850802,
+      "original_sha256": "5e8a3a6d53d12d76f197696aeefcd15855aeafa20fe4d9d06098dca01b3bc60b",
+      "text_file": "mattel-current.txt",
+      "text_bytes": 62953,
+      "text_sha256": "b1780714b8c82c15d9efb412898c030f6e0aa5e72f11c8373dadd948036c2556",
+      "published_at": null,
+      "received_at": "2026-11-16T09:04:08.145989+00:00",
+      "method": "All PDF pages rendered and recognized locally with Apple Vision, accurate en-US, language correction off; OCR observations and coordinates retained; table on current p3/prior p4 visually checked. This source preparation was supervised, not unattended.",
+      "ocr_sha256": "e3bffb0afb6fa17d3813060208a76ff3f44198d3adfad0a7af56ff0d20a0317c"
+    },
+    {
+      "id": "mattel-prior",
+      "url": "https://s21.q4cdn.com/605014885/files/doc_financials/2025/q4/Mattel-Reports-Fourth-Quarter-2025-Financial-Results.pdf",
+      "original_file": "mattel-prior.pdf",
+      "original_bytes": 1325046,
+      "original_sha256": "788941764d563b82a878acaf9a3e6d810c5f5fc39fa88f17c88f212fdc4663a4",
+      "text_file": "mattel-prior.txt",
+      "text_bytes": 60431,
+      "text_sha256": "f0d5fc0e0c7e00c1814dc63979d8fbac8af618380cff66119f8634140296a4dd",
+      "published_at": null,
+      "received_at": "2026-11-16T09:04:08.022707+00:00",
+      "method": "All PDF pages rendered and recognized locally with Apple Vision, accurate en-US, language correction off; OCR observations and coordinates retained; table on current p3/prior p4 visually checked. This source preparation was supervised, not unattended.",
+      "ocr_sha256": "180c9b1c124c1cc75cee4dee7ebe0eba765397f757d8397fa99a3e6e82f6426a"
+    }
+  ],
+  "input_manifests": [
+    {
+      "prepared_at": "2026-11-16T09:12:12.893265+00:00",
+      "sha256": {
+        "fixtures.json": "0e69a3f99fb3b6124774dec38afd0eb17b787dd706237d184f3a8e9772356622",
+        "expected.json": "4491a86f50de8e6c9e6e040058e982ccc3eedd1a5b513f49e11d4f195c5afb1e",
+        "sources/manifest.json": "f81786a0c3f92c9ce1d3df862cfc2becd521ad4e1b16e60a6659244c40767ae3",
+        "reader_module": "448c0d80e66ac03fc042ffa58c69421b8662198d515c69fd1975afc93948ad6e"
+      }
+    },
+    {
+      "prepared_at": "2026-11-16T09:16:35.595795+00:00",
+      "sha256": {
+        "fixtures.json": "0e69a3f99fb3b6124774dec38afd0eb17b787dd706237d184f3a8e9772356622",
+        "expected.json": "4491a86f50de8e6c9e6e040058e982ccc3eedd1a5b513f49e11d4f195c5afb1e",
+        "sources/manifest.json": "f81786a0c3f92c9ce1d3df862cfc2becd521ad4e1b16e60a6659244c40767ae3",
+        "reader_module": "d6c9d8438f1c4eb03371a895a0d9c9041e0ccf1e8316aca11368451794d9d4fb"
+      },
+      "note": "One development repair pass after v1 failures, same source packets and expected facts. Not an independent validation. No failures deleted. Wire key order, explicit low reasoning, numeric token examples, and overlapping evidence rejection changed together; no causal attribution to an individual change."
+    }
+  ],
+  "expected_cases": {
+    "frozen_before_calls_at": "2026-11-16T09:12:12.893265+00:00",
+    "cases": [
+      {
+        "id": "rbbn-complete",
+        "kind": "real_full_disclosure_pair",
+        "expected": {
+          "current": {
+            "revenue": {
+              "form": "center_spread",
+              "unit": "USD_MILLIONS",
+              "center": 814,
+              "spread": 7
+            },
+            "operating_profit": {
+              "form": "point",
+              "unit": "USD_MILLIONS",
+              "point": -18.8
+            },
+            "operating_margin": null,
+            "basis": "GAAP",
+            "period_end": "2026-12-31"
+          },
+          "prior": {
+            "revenue": {
+              "form": "center_spread",
+              "unit": "USD_MILLIONS",
+              "center": 825,
+              "spread": 15
+            },
+            "operating_profit": {
+              "form": "point",
+              "unit": "USD_MILLIONS",
+              "point": -9.8
+            },
+            "operating_margin": null,
+            "basis": "GAAP",
+            "period_end": "2026-12-31"
+          }
+        },
+        "notes": "Full-year columns, signed loss, midpoint and spread. GAAP loss appears in outlook reconciliation; this is not a positive earnings signal. Latest-prior completeness unproved; no historical receipt claimed. Fiscal start may be null; it cannot be certified from a year-end label."
+      },
+      {
+        "id": "mattel-complete-recast",
+        "kind": "real_full_disclosure_pair",
+        "expected": {
+          "current": {
+            "revenue": null,
+            "operating_profit": {
+              "form": "range",
+              "unit": "USD_MILLIONS",
+              "low": 580,
+              "high": 630
+            },
+            "operating_margin": null,
+            "basis": "ADJUSTED"
+          },
+          "prior": {
+            "revenue": null,
+            "operating_profit": {
+              "form": "range",
+              "unit": "USD_MILLIONS",
+              "low": 550,
+              "high": 600
+            },
+            "operating_margin": null,
+            "basis": "ADJUSTED"
+          },
+          "definition_change": true
+        },
+        "notes": "Current PDF p3: adjusted profit recast excludes amortization of acquired intangibles, not an improvement. Prior PDF p4. Revenue growth is not a revenue level. definition_id must differ and explicitly identify amortization in current definition. Published clock and latest prior inventory not verified."
+      },
+      {
+        "id": "synthetic-clear-revision",
+        "kind": "synthetic_control",
+        "expected": {
+          "current": {
+            "revenue": {
+              "form": "range",
+              "unit": "USD_MILLIONS",
+              "low": 1040,
+              "high": 1060
+            },
+            "operating_profit": {
+              "form": "range",
+              "unit": "USD_MILLIONS",
+              "low": 140,
+              "high": 150
+            },
+            "operating_margin": null,
+            "basis": "GAAP"
+          },
+          "prior": {
+            "revenue": {
+              "form": "range",
+              "unit": "USD_MILLIONS",
+              "low": 990,
+              "high": 1010
+            },
+            "operating_profit": {
+              "form": "range",
+              "unit": "USD_MILLIONS",
+              "low": 90,
+              "high": 95
+            },
+            "operating_margin": null,
+            "basis": "GAAP"
+          }
+        },
+        "notes": "Artificial positive revision only; no performance evidence."
+      },
+      {
+        "id": "synthetic-unchanged",
+        "kind": "synthetic_control",
+        "expected": {
+          "current": {
+            "revenue": {
+              "form": "center_spread",
+              "unit": "USD_MILLIONS",
+              "center": 810,
+              "spread": 10
+            },
+            "operating_profit": null,
+            "operating_margin": {
+              "form": "point",
+              "unit": "PERCENT",
+              "point": 12
+            },
+            "basis": "GAAP"
+          },
+          "prior": {
+            "revenue": {
+              "form": "center_spread",
+              "unit": "USD_MILLIONS",
+              "center": 810,
+              "spread": 10
+            },
+            "operating_profit": null,
+            "operating_margin": {
+              "form": "point",
+              "unit": "PERCENT",
+              "point": 12
+            },
+            "basis": "GAAP"
+          }
+        },
+        "notes": "No revision in either metric; direct margin must not be replaced by a computed profit."
+      },
+      {
+        "id": "synthetic-missing-operating-profit",
+        "kind": "synthetic_control",
+        "expected": {
+          "current": {
+            "revenue": {
+              "form": "center_spread",
+              "unit": "USD_MILLIONS",
+              "center": 900,
+              "spread": 20
+            },
+            "operating_profit": null,
+            "operating_margin": null
+          },
+          "prior": {
+            "revenue": {
+              "form": "center_spread",
+              "unit": "USD_MILLIONS",
+              "center": 900,
+              "spread": 20
+            },
+            "operating_profit": null,
+            "operating_margin": null
+          }
+        },
+        "notes": "Neither net income nor EBITDA may fill missing operating profit."
+      },
+      {
+        "id": "synthetic-accounting-change",
+        "kind": "synthetic_control",
+        "expected": {
+          "current": {
+            "revenue": {
+              "form": "point",
+              "unit": "USD_MILLIONS",
+              "point": 1000
+            },
+            "operating_profit": {
+              "form": "point",
+              "unit": "USD_MILLIONS",
+              "point": 120
+            },
+            "operating_margin": null,
+            "basis": "ADJUSTED"
+          },
+          "prior": {
+            "revenue": {
+              "form": "point",
+              "unit": "USD_MILLIONS",
+              "point": 1000
+            },
+            "operating_profit": {
+              "form": "point",
+              "unit": "USD_MILLIONS",
+              "point": 100
+            },
+            "operating_margin": null,
+            "basis": "ADJUSTED"
+          },
+          "definition_change": true
+        },
+        "notes": "Definition change must be represented rather than called organic improvement."
+      },
+      {
+        "id": "rbbn-headerless-control",
+        "kind": "incomplete_source_control",
+        "expected": {
+          "unsupported_units": true
+        },
+        "notes": "Previously inspected headerless excerpts. Any numeric metric must be null or UNSUPPORTED. No new independent company/event."
+      }
+    ]
+  },
+  "supervised_ribbon_comparison": {
+    "counts_as_model_success": false,
+    "qualification": {
+      "status": "MISSING",
+      "reasons": [
+        "current.period_start is missing",
+        "current.perimeter_id is missing",
+        "prior.period_start is missing",
+        "prior.perimeter_id is missing",
+        "external.latest_prior_source_id is missing",
+        "external.source_authenticity: UNKNOWN",
+        "external.prior_completeness: UNKNOWN",
+        "external.basis_comparable: UNKNOWN",
+        "external.perimeter_comparable: UNKNOWN",
+        "clocks.decision_at is unknown"
+      ],
+      "derived": null
+    },
+    "arithmetic": {
+      "prior_revenue_midpoint": 825.0,
+      "current_revenue_midpoint": 814.0,
+      "revenue_revision_pct": -1.3333333333333333,
+      "prior_operating_profit": -9.8,
+      "current_operating_profit": -18.8,
+      "prior_implied_operating_margin_pct": -1.187878787878788,
+      "current_implied_operating_margin_pct": -2.3095823095823094,
+      "margin_change_pp": -1.1217035217035216
+    }
+  },
+  "cloud_check": {
+    "service": {
+      "MainPID": "447512",
+      "NRestarts": "99",
+      "ActiveState": "active",
+      "SubState": "running"
+    },
+    "status": "OK",
+    "generated_at": null,
+    "engine_as_of": "2026-11-16T09:12:57.904722Z",
+    "engine_status": "RUNNING",
+    "event_count": 1
+  },
+  "validation": {
+    "independent_fact_and_reader_tests": 54,
+    "new_implementation_authored_regressions": 7,
+    "total_targeted_tests": 61,
+    "ruff": "PASS"
+  }
+}

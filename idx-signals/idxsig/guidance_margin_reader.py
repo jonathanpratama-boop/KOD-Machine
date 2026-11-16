@@ -28,6 +28,19 @@ unique context quotes and exact numeric tokens, not character offsets or
 computed values. For a range use low/high; for explicit plus-minus use
 center/spread; otherwise a point. Unused numeric slots must be null. If a unit
 isn't explicitly supported, use UNSUPPORTED. Semantic labels remain unverified.
+Select full-year outlook columns, not quarterly guidance or historical actuals.
+Revenue means a forecast level, not a revenue growth rate. Prefer operating
+profit if both profit and margin are given; leave the other metric null. Preserve
+an explicit change to the definition of adjusted profit in definition_id. An
+unchanged forecast must not become a revision just because it is repeated.
+Each token is one complete number exactly as printed, including any currency
+sign, percent sign, grouping commas or negative parentheses. For "$36 to $48",
+use form=range with low token="$36" and high token="$48", not the whole range
+as one token. For "(2.4)", use form=point with point token="(2.4)". A single
+margin of "19.5%" is a point, not a center plus an invented spread. Never invent
+a zero spread for a point. The two tokens of a range or plus-minus must refer
+to distinct occurrences in the source. Read table headers and footnotes before
+choosing a forecast. If no forecast level or applicable unit is shown, abstain.
 Do not make a trading recommendation or certify any source or prior history."""
 
 _SOURCE_KEYS = (
@@ -59,6 +72,12 @@ _SLOTS_BY_FORM = {
 
 def _json_bytes(value):
     return (json.dumps(value, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n").encode()
+
+
+def _request_bytes(value):
+    # Structured output follows schema key order. Choose form before its numeric
+    # evidence: canonical sorting would place center before form on the wire.
+    return (json.dumps(value, ensure_ascii=False, allow_nan=False) + "\n").encode()
 
 
 def _loads(raw):
@@ -93,26 +112,31 @@ def _object_schema(properties):
     }
 
 
-def _nullable(schema):
-    return {"anyOf": [schema, {"type": "null"}]}
-
-
-_TOKEN_SCHEMA = _nullable(
-    _object_schema({"quote": {"type": "string"}, "token": {"type": "string"}})
-)
-_METRIC_SCHEMA = _nullable(
-    _object_schema(
-        {
-            "form": {"type": "string", "enum": list(_SLOTS_BY_FORM)},
-            "unit": {"type": "string", "enum": ["USD_MILLIONS", "PERCENT", "UNSUPPORTED"]},
-            "qualifier": {"type": "string", "enum": ["exact", "approximate", "ambiguous"]},
-            **{slot: _TOKEN_SCHEMA for slot in _SLOTS},
-        }
-    )
-)
+_TOKEN_SCHEMA = _object_schema({"quote": {"type": "string"}, "token": {"type": "string"}})
+# Enforce the same mutually exclusive slots at generation and binding. A single
+# object with independently nullable slots allowed schema-valid contradictions.
+_METRIC_SCHEMA = {
+    "anyOf": [
+        _object_schema(
+            {
+                "form": {"type": "string", "enum": [form]},
+                "unit": {"type": "string", "enum": ["USD_MILLIONS", "PERCENT", "UNSUPPORTED"]},
+                "qualifier": {"type": "string", "enum": ["exact", "approximate", "ambiguous"]},
+                **{
+                    slot: _TOKEN_SCHEMA if slot in used else {"type": "null"}
+                    for slot in _SLOTS
+                },
+            }
+        )
+        for form, used in _SLOTS_BY_FORM.items()
+    ]
+    + [{"type": "null"}]
+}
 _DOC_SCHEMA = _object_schema(
     {
         **{key: {"type": ["string", "null"]} for key in _LABEL_KEYS},
+        "period_kind": {"type": ["string", "null"], "enum": ["FULL_YEAR", None]},
+        "basis": {"type": ["string", "null"], "enum": ["GAAP", "ADJUSTED", None]},
         **{key: _METRIC_SCHEMA for key in _METRIC_KEYS},
     }
 )
@@ -192,6 +216,7 @@ def build_request(packet, model):
     return {
         "model": model,
         "store": False,
+        "reasoning": {"effort": "low"},
         "max_output_tokens": 6000,
         "input": [
             {"role": "developer", "content": PROMPT},
@@ -256,6 +281,10 @@ def _bind_metric(metric, raw):
             raise ValueError("numeric token is only part of a source number")
         value = float(_token_value(token))
         result[slot] = {"value": value, "start": start, "end": end}
+    if len(_SLOTS_BY_FORM[form]) == 2:
+        a, b = (result[slot] for slot in _SLOTS_BY_FORM[form])
+        if max(a["start"], b["start"]) < min(a["end"], b["end"]):
+            raise ValueError("range or spread evidence must use distinct source numbers")
     return result
 
 
@@ -318,7 +347,7 @@ def _transport(request, key):
         conn.request(
             "POST",
             "/v1/responses",
-            body=_json_bytes(request),
+            body=_request_bytes(request),
             headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"},
         )
         response = conn.getresponse()
@@ -384,11 +413,13 @@ def run_once(packet, out, model, transport=None):
     out.mkdir(parents=True, mode=0o700)
     started_at = _now()
     _write_new(out / "source_packet.json", packet)
+    _write_raw(out / "request_body.json", _request_bytes(request))
     _write_new(
         out / "request.json",
         {
             "request": request,
             "request_sha256": _sha(_json_bytes(request)),
+            "request_body_sha256": _sha(_request_bytes(request)),
             "prompt_sha256": _sha(PROMPT.encode()),
             "implementation_sha256": _sha(Path(__file__).read_bytes()),
             "started_at": started_at,

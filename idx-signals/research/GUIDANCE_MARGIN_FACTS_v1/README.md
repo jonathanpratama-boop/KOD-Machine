@@ -1,6 +1,6 @@
 # Guidance-margin facts: offline development
 
-This is an offline fact validator, revision journal and a one-call development reader adapter. It is **not an autonomous reader, a trading strategy, a launched experiment or evidence of profit**. No model API has been called. The existing cloud timing study continues separately.
+This is an offline fact validator, revision journal and a one-call development reader adapter. It is **not an autonomous reader, a trading strategy, a launched experiment or evidence of profit**. Live development API calls have now been evaluated: the repaired version passed five controls but failed both complete real-disclosure pairs. The unattended reader remains on hold. See [the 16 November development evaluation](DEVELOPMENT_EVAL_20261116.md). The existing cloud timing study continues separately.
 
 ## Why this work exists
 
@@ -34,7 +34,7 @@ Use a new output directory for each rehearsal; existing artifacts are not overwr
 ## Work still required before an unattended study
 
 1. Demonstrate the actual registered disclosure feed on the cloud, retain its coverage/errors and actual receipt clocks, and define a reliable latest-comparable-prior procedure. Unknown earlier-publication time must not be substituted with an earnings-call time. Historical missing receipt does not block a future receipt-based design.
-2. Connect an authorized provider and validate real model outputs against independently reviewed sources, including full tables, losses, acquisitions, adjusted definitions and missing histories. The owner's Personal OpenAI organization exists and dedicated-key creation was authorized; secure project/key setup is pending. No credential belongs in this repository.
+2. The dedicated OpenAI credential is installed privately and actual development calls have run. Reliable real-source extraction is still unresolved: complete tables, losses, acquisitions, adjusted definitions and missing histories need source-level qualification. The small supervised development check is not independent validation. No credential belongs in this repository.
 3. Fix eligibility, the mechanical and fact-rich decisions, comparison baseline, common clock, executable price/cost assumptions and finite-account policy before any outcome test. Reuse existing account code. A fact-rich arm beating a revenue-only arm would not itself prove LLM superiority over another reader with the same facts.
 4. Choose the evidence/review schedule from demonstrated event arrivals and relevant variability. The 2/32 source-discovery fraction is not a certified admission rate. Keep an inconclusive result possible.
 5. Freeze the prospective protocol, independently test the full capture-to-account path, then add the new comparison to the existing dashboard and start its isolated job. None of those deployment steps has been claimed complete here.
