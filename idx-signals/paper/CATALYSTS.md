@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-16T23:32:18Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-16T23:32:44Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 24 over 8 signal sessions; events seen: SEALED 24; coverage gaps 0.
+Sets 27 over 9 signal sessions; events seen: SEALED 27; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 13, FIRE 11
+- Classes: ABSTAIN 14, FIRE 13
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,27 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 220 tags: 55 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP NGS (NATURAL GAS SERVICES GROUP INC) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-FORM4_SHARP-0001236849-26-000015`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 29.7 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001236849-26-000015` by JACKSON JOHN EARL (director); purchases USD 57,790; top executive no; holding up n/a.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001236849-26-000015.
-Twins (band+liq+mom+dd): RDVT 73.57, SMC 30.69, BFS 28.37, PLOW 37.44, BLX 50.55, PMTS 24.93, AAUC 20.68, ITRN 48.23, MLKN 21.13, TBN 29.25, SNDA 33, NWPX 90.02, BBSI 30.77, PBT 31.03, MLR 48.3, TFPM 30.38, WHK 26, EIG 47.6, MOV 31.78, FET 76.87.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP FF (FutureFuel Corp.) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-FORM4_SHARP-0001437749-26-036877`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 2.9 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001437749-26-036877` by Polet Roeland (Chief Executive Officer), Bedell Donald C. (director); purchases USD 249,266; top executive yes; holding up +400.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001437749-26-036877.
-Twins (band+liq+mom+dd): ADTN 4.83, LWLG 3.21, DDD 1.53, KDK 1.11, DFDV 3.035, NRXP 2.19, SERV 2.62, TDUP 1.58, XGN 4.13, AIRJ 2.15, QTEX 1.25, XTND 1.39, TNXP 3.01, ACDC 3.15, TMC 2.31, NNBR 3.04, CRMD 4.66, GEMI 2.375, USAS 2.5, STTK 4.65.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP LPCN (Lipocine Inc.) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-FORM4_SHARP-0001493152-26-051673`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 1.71 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001493152-26-051673` by Patel Mahesh V. (Chief Executive Officer); purchases USD 79,488; top executive yes; holding up +31.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001493152-26-051673.
-Twins (band+liq+mom+dd): PMVP 1.27, RGP 2.67, PRLD 3.45, WHWK 3.06, OMH 5, FHTX 2.07, CAST 1.06, ARMP 3.87, TRVG 4.15, CLRO 3.37, OKUR 2.63, PRQR 1.41, TRON 1.41, CYCU 2.29, BLND 1.07, XTIA 1.03, SEV 1.57, EQ 1.29, VIVO 2.23, NVA 3.32.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP NXGL (NEXGEL, INC.) - filed 2026-11-13, sealed 2026-11-16T12:19:49Z, cutoff 2026-11-16T14:15:00Z
 Set `CAT-FORM4_SHARP-0001493152-26-051920`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 3.88 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +186,25 @@ Filing `0000919574-26-008157` by H PARTNERS MANAGEMENT, LLC; Item 4 intent words
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 1,187.8M, dilution filings 0.
 Twins (band+liq+mom): MLTX 11.73, SBH 18.75, TIC 10.39, AMPL 17.77, CAPR 8.3.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 BANL (CBL International Ltd) - accepted 2026-11-16T09:20:59-05:00, sealed 2026-11-16T23:32:40Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D_V2-0001493152-26-052084`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 3.225 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001493152-26-052084` by Chia Teck Lim; cover page max 41.5% of class; strong intent: none; Item 5(c): no transactions.
+Coverage **FIRE**; market value USD 88.7M from XBRL; parent CAT-SEC13D-0001493152-26-052084.
+Twins (band+liq+mom+dd): ONEG 1.08, XRTX 1.04, SPHL 2.35, JEM 2.85, ANTA 2.185, TVRD 1.1, CALC 1.19, ENLV 1.12, MGN 3.53, IMMP 3.4, LBGJ 1.7, AZR 3.81, REVB 3.82, CLLS 1.04, EPOW 3.3, LVO 2.72, WYHG 3.11, LGVN 2.14, FCUV 4.72, VRXA 1.045.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 AZTR (Azitra, Inc.) - accepted 2026-11-16T17:15:45-05:00, sealed 2026-11-16T23:32:40Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D_V2-0000945621-26-001427`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 0.627 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000945621-26-001427` by Young Pharmaceuticals, Inc.; cover page max 5.22% of class; strong intent: none; Item 5(c): 14 price(s).
+Coverage **ABSTAIN** (MICROCAP); market value USD 3.8M from XBRL; parent CAT-SEC13D-0000945621-26-001427.
+Twins (band+liq+mom+dd): BMR 0.8743, YDDL 1, BIOX 0.1997, ICCM 0.7601, RMCF 0.691, AZIO 0.4748, DCX 0.6902, SST 0.9333, SCKT 0.4074, CTOR 0.535, PETS 0.8977, INAB 0.816, VS 0.735, TOVX 0.14, BFRI 0.57, BTMD 0.9603, ACTU 0.268, VRAX 0.448, ZTG 0.3583, NMTC 0.745.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 FUN (Six Flags Entertainment Corporation/NEW) - accepted 2026-11-16T18:01:33-05:00, sealed 2026-11-16T23:32:40Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D_V2-0000919574-26-008157`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 11.61 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000919574-26-008157` by H PARTNERS MANAGEMENT, LLC; cover page max 7.2% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 1,187.8M from XBRL; parent CAT-SEC13D-0000919574-26-008157.
+Twins (band+liq+mom): MLTX 11.73, SBH 18.75, TIC 10.39, AMPL 17.77, CAPR 8.3, BHVN 13.8, MAX 14.86, RDY 14.7, EQPT 14.51, CALY 16.96, XPEV 9.67, IMNM 17.61, ARHS 13.27, VERX 18.4, WEN 8.47, HAYW 16.2, PZZA 19.89, XRAY 8.945, OTF 9.42, KD 16.69.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
