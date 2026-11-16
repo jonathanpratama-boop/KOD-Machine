@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-16T10:30:53Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-16T12:11:17Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -30,7 +30,7 @@ Sets 48 over 9 signal sessions; events seen: SEALED 48, SKIP_REPEAT_90D 42, SKIP
 
 ## FORM4 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-FORM4-v1`)
 
-Sets 112 over 6 signal sessions; events seen: SEALED 112, SKIP_NOT_IN_UNIVERSE 5, SKIP_NOT_PURCHASE 5022, SKIP_LATE 41, SKIP_NO_TICKER 4, SKIP_NOT_OPERATING 3, SKIP_REPEAT_90D 19; coverage gaps 0.
+Sets 139 over 7 signal sessions; events seen: SEALED 139, SKIP_NOT_IN_UNIVERSE 5, SKIP_NOT_PURCHASE 5649, SKIP_LATE 41, SKIP_NO_TICKER 4, SKIP_NOT_OPERATING 3, SKIP_REPEAT_90D 25; coverage gaps 0.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -103,108 +103,108 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP URG (UR-ENERGY INC) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001654954-26-009739`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 0.6185 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001654954-26-009739` by Walle Jade (VICE PRESIDENT FINANCE); purchases USD 109,999; top executive no; holding up +38.7%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001654954-26-009739.
-Twins (band+liq+mom+dd): SHFS 0.0225, CENN 0.182, EYPT 0.3195, OPTU 0.6374, AKBA 0.498, SIDU 0.9558, SDEV 0.7845, XRX 0.9912, SID 0.7723, ALLO 0.827, SLNH 0.5338, BMGL 0.57, RBNE 0.1202, CATX 0.8424, SITC 0.6944, DVLT 0.0564, NAK 0.604, ORBS 0.6734, JDZG 0.1916, RR 0.8188.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 FCPT (Four Corners Property Trust, Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001193125-26-460757`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 23.32 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001193125-26-460757` (1 filing(s)) by Lenehan William H (President and CEO).
+Coverage **FIRE**; purchases USD 149,992, owners 1, top executive yes, lag 0 days.
+Twins (band+liq+mom+dd): EPAC 39.37, BETA 23.33, SDGR 29.53, NBR 84.68, APAM 38.43.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### FORM4_SHARP TH (Target Hospitality Corp.) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001712189-26-000063`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 11.98 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001712189-26-000063` by Archer James Bradley (Director and CEO and President); purchases USD 312,675; top executive yes; holding up +1.5%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001712189-26-000063.
-Twins (band+liq+mom+dd): IE 6.95, BTU 17.41, WYFI 10.335, ADEA 16.63, STWD 11.44, MBLY 5.64, LPTH 7.21, STNE 7.72, UUUU 6.68, BFLY 6.67, MUX 11.95, MFA 5.56, UMAC 11.83, AESI 5.5, HMY 15.44, ORIC 8.5, UEC 6.8, NMRK 10.86, BLZE 8.79, FCEL 10.25.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 TRIN (Trinity Capital Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001193125-26-460772`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 17.7 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001193125-26-460772` (1 filing(s)) by Brown Kyle Steven (CEO, President and CIO).
+Coverage **FIRE**; purchases USD 58,000, owners 1, top executive yes, lag 2 days.
+Twins (band+liq+mom+dd): LION 14.03, VYX 10.48, OLN 17.46, AQN 5.6, LBTYA 10.77.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### FORM4_SHARP BLMN (Bloomin' Brands, Inc.) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001719998-26-000016`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 10.12 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001719998-26-000016` by Spanos Mike (CEO); purchases USD 502,000; top executive yes; holding up +20.6%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001719998-26-000016.
-Twins (band+liq+mom+dd): NHP 15.17, FOXF 17.32, ASAN 9.67, SGHC 11.42, DNLI 18.89, HAFN 9.62, AMPX 8.35, PTEN 10.67, GNW 8.41, LI 11.69, GNTX 19.37, BCRX 7.68, PWP 13.445, ABCL 11.62, WLTH 10.2, MFG 10.12, TALO 15.98, BXMT 10.82, LEGN 18.54, ASC 19.02.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 WY (WEYERHAEUSER CO) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001197193-26-000008`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 20.81 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001197193-26-000008` (1 filing(s)) by BECKWITT RICHARD (director).
+Coverage **FIRE**; purchases USD 306,600, owners 1, top executive no, lag 2 days.
+Twins (band+liq+mom+dd): DKS 149.7, WYNN 85.06, SPHR 125.56, KRMN 40.66, LVS 40.39.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### FORM4_SHARP LILA (Liberty Latin America Ltd.) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001724519-26-000014`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 9.73 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001724519-26-000014` by DE ANGOITIA ALFONSO (director); purchases USD 5,061,969; top executive no; holding up +52.4%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001724519-26-000014.
-Twins (band+liq+mom+dd): ASTL 5.61, ACEL 13.83, TLS 7.72, LFTO 18.71, JBGS 11.99, AHCO 7.87, SENS 10.04, EVC 9.43, MAGN 12.97, GRNT 6.49, PHR 12.62, PEPG 5.04, PUBM 19.02, SBGI 14.58, YEXT 7.65, CASK 17, INN 7.23, MITK 18.25, INTT 14.76, CODI 11.8.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 NGS (NATURAL GAS SERVICES GROUP INC) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001236849-26-000015`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 29.7 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001236849-26-000015` (1 filing(s)) by JACKSON JOHN EARL (director).
+Coverage **FIRE**; purchases USD 57,790, owners 1, top executive no, lag 0 days.
+Twins (band+liq+mom+dd): RDVT 73.57, SMC 30.69, BFS 28.37, PLOW 37.44, BLX 50.55.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### FORM4_SHARP ITIC (INVESTORS TITLE CO) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001804353-26-000010`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 251.59 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001804353-26-000010` by Parker, Jr. Elton C. (director); purchases USD 133,000; top executive no; holding up +13.3%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001804353-26-000010.
-Twins (band+liq+mom+dd): NSSC 30.34, ODC 73.15, CSV 27.9, ROOT 43.63, BGSI 74.46, MMI 24.25, ATLC 79.3, FLXS 75.13, NTGR 20.09, JILL 22.43, XPEL 37.62, HBB 30.5, VEON 75.15, FOR 22.24, CWCO 25.29, BXC 62.83, APEI 41.16, BWLP 22.09, ASTH 31.77, PBT 30.32.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 FF (FutureFuel Corp.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001437749-26-036877`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 2.9 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001437749-26-036877` (2 filing(s)) by Polet Roeland (Chief Executive Officer), Bedell Donald C. (director).
+Coverage **FIRE**; purchases USD 249,266, owners 2, top executive yes, lag 1 days.
+Twins (band+liq+mom+dd): ADTN 4.83, LWLG 3.21, DDD 1.53, KDK 1.11, DFDV 3.035.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### FORM4_SHARP ZVIA (Zevia PBC) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001847944-26-000007`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 1.06 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001847944-26-000007` by Ruberti Alexandre (President & CEO); purchases USD 99,910; top executive yes; holding up +6.7%.
-Coverage **ABSTAIN** (DILUTION_RECENT); dilution filings 1; routine owners 0 of 1; parent CAT-FORM4-0001847944-26-000007.
-Twins (band+liq+mom+dd): GNLX 1.9, PROK 1.15, BMM 3.15, ICU 1.05, ZONE 3.5, BIAF 2.34, IKT 1.53, MWYN 1.36, ATOM 2.9, ANNA 2.29, PMN 3.48, TWG 2.5, NKTX 1.265, WORX 1.27, LNZA 3.93, MOB 2.32, EMPD 2.03, HOLO 1.23, IPWR 2.19, YMAT 1.23.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 LPCN (Lipocine Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001493152-26-051673`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 1.71 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001493152-26-051673` (1 filing(s)) by Patel Mahesh V. (Chief Executive Officer).
+Coverage **FIRE**; purchases USD 79,488, owners 1, top executive yes, lag 0 days.
+Twins (band+liq+mom+dd): PMVP 1.27, RGP 2.67, PRLD 3.45, WHWK 3.06, OMH 5.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### FORM4_SHARP FIP (FTAI Infrastructure Inc.) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0001899883-26-000044`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 4.23 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001899883-26-000044` by Nicholson Kenneth J. (CEO and President); purchases USD 1,530,000; top executive yes; holding up +18.4%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001899883-26-000044.
-Twins (band+liq+mom+dd): MNKD 4.16, BDN 3.06, EGHT 2.33, EVGO 1.75, UIS 2.87, CLVT 2.3, CRON 3.41, CLNE 1.98, OABI 4.95, ACB 4.99, LZM 4.29, SSP 3.62, IRWD 4.85, GEVO 1.86, OPK 1.67.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 NXGL (NEXGEL, INC.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001493152-26-051920`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 3.88 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001493152-26-051920` (1 filing(s)) by Kieser Brian Joseph (Interim CEO).
+Coverage **FIRE**; purchases USD 732,688, owners 1, top executive yes, lag 3 days.
+Twins (band+liq+mom+dd): TORO 3.81, UPC 1.51, PAVM 1.63, EZGO 1.57, KTCC 1.3.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### FORM4_SHARP NOMD (Nomad Foods Ltd) - filed 2026-11-12, sealed 2026-11-13T10:55:58Z, cutoff 2026-11-13T14:15:00Z
-Set `CAT-FORM4_SHARP-0002111999-26-000011`, scan `SCAN-US-2026-11-12-G2_RET30`; signal close 11.65 on 2026-11-12; entry: the entry session's opening print (2026-11-13). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0002111999-26-000011` by BALDEW RUBEN (Chief Financial Officer); purchases USD 100,161; top executive yes; holding up +2.3%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002111999-26-000011.
-Twins (band+liq+mom+dd): IHS 8.41, LXFR 17.34, PAYO 7.18, DGICA 18.96, MATV 12.01, RELL 19.74, VREX 18.27, RNW 6.96, FDUS 19.32, KRNT 17.13, CFFN 8.46, VNCE 12.91, FMNB 15.46, MQ 18.03, TSLX 17.56, LFCR 6.4, GLAD 19.39, PRTH 7.91, FNKO 6.9.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+### FORM4 CRVS (Corvus Pharmaceuticals, Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001610717-26-000454`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 10.64 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001610717-26-000454` (1 filing(s)) by Arcara Jeffrey (Chief Business Officer).
+Coverage **FIRE**; purchases USD 50,475, owners 1, top executive no, lag 0 days.
+Twins (band+liq+mom+dd): RXST 5.32, OPRT 11.73, LOVE 15.14, WBTN 9.85, KRRO 13.61.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### SEC13D COUR (Coursera, Inc.) - accepted 2026-11-13T16:20:15-05:00, sealed 2026-11-13T23:06:05Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-SEC13D-0001072613-26-000890`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 3.51 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
-Filing `0001072613-26-000890` by NEW ENTERPRISE ASSOCIATES 13 LP; Item 4 intent words: board, merger, acquisition, director.
-Coverage **FIRE**; pre-entry move +0.00%, market value USD 889.1M, dilution filings 0.
-Twins (band+liq+mom+dd): PGEN 4.54, RCAT 3.8, SOUN 3.49, NUVB 3.99, UNIT 4.88.
-Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+### FORM4 CTEV (Claritev Corp) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001628280-26-073944`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 26.82 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001628280-26-073944` (1 filing(s)) by Dalton Travis (Pres., CEO & Executive Chair).
+Coverage **FIRE**; purchases USD 149,927, owners 1, top executive yes, lag 2 days.
+Twins (band+liq+mom+dd): NBTX 30.655, DMRA 21.6, TYRA 20.025, GIBO 75.65, ASMB 21.12.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### SEC13D_V2 COUR (Coursera, Inc.) - accepted 2026-11-13T16:20:15-05:00, sealed 2026-11-13T23:06:16Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-SEC13D_V2-0001072613-26-000890`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 3.51 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
-Filing `0001072613-26-000890` by NEW ENTERPRISE ASSOCIATES 13 LP; cover page max 5.1% of class; strong intent: none; Item 5(c): 0 price(s).
-Coverage **FIRE**; market value USD 889.1M from XBRL; parent CAT-SEC13D-0001072613-26-000890.
-Twins (band+liq+mom+dd): PGEN 4.54, RCAT 3.8, SOUN 3.49, NUVB 3.99, UNIT 4.88, OI 4.96, CRML 4.88, ENVX 1.6, FLNC 4.68, HIVE 1.57, PONY 4.46, INTR 4.15, DJT 4.64, KEEL 1.86, ASM 4.29, BBAI 1.91, OPEN 1.19, LAC 1.49, VISN 4.24, QS 3.68.
-Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+### FORM4 BW (Babcock & Wilcox Enterprises, Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001630805-26-000089`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 4.56 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001630805-26-000089` (1 filing(s)) by Tato Joseph A (director).
+Coverage **FIRE**; purchases USD 52,692, owners 1, top executive no, lag 2 days.
+Twins (band+liq+mom+dd): GT 4.12, LCID 2.955, NUAI 3.2, ORC 4.68, DCH 4.69.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### DILUTION_8K SPCE - event `0001193125-26-459413`, accepted 2026-11-13T08:39:13-05:00, sealed 2026-11-13T23:06:37Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-DILUTION_8K-0001193125-26-459413`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 1.84 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
-Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
-Coverage **FIRE**; pre-entry move -31.09%.
-Twins (band+liq+mom+dd): STTK 4.65, GLAS 1.27, BLDP 1.4, GCTS 1.26, SERV 2.62.
-Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+### FORM4 UPST (Upstart Holdings, Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001832812-26-000012`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 19.56 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001832812-26-000012` (1 filing(s)) by Gu Paul (Chief Executive Officer).
+Coverage **FIRE**; purchases USD 1,028,400, owners 1, top executive yes, lag 2 days.
+Twins (band+liq+mom+dd): CDE 13.98, FSLY 16.62, RGTI 9.62, PBR 18.34, IBRX 6.02.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### DILUTION_8K RAIN - event `0001213900-26-119274`, accepted 2026-11-13T09:18:50-05:00, sealed 2026-11-13T23:06:37Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-DILUTION_8K-0001213900-26-119274`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 0.7499 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
-Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
-Coverage **FIRE**; pre-entry move +58.21%.
-Twins (band+liq+mom+dd): PMAX 0.6403, LNKS 0.8998, CNEY 0.4672, RKDA 0.218, SCAG 0.9.
-Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+### FORM4 ABCL (AbCellera Biologics Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001834411-26-000010`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 11.49 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001834411-26-000010` (1 filing(s)) by Booth Andrew (Chief Financial Officer).
+Coverage **FIRE**; purchases USD 97,438, owners 1, top executive yes, lag 0 days.
+Twins (band+liq+mom+dd): BBNX 16.42, GENI 6.26, HTGC 15.87, EFC 11.11, VIR 9.96.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### DILUTION_8K XRX - event `0001193125-26-460692`, accepted 2026-11-13T16:16:11-05:00, sealed 2026-11-13T23:06:37Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-DILUTION_8K-0001193125-26-460692`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 0.9153 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
-Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
-Coverage **FIRE**; pre-entry move +0.00%.
-Twins (band+liq+mom+dd): OPTU 0.5245, RR 0.7553, EYPT 0.306, SID 0.6288, AKBA 0.4742.
-Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+### FORM4 CTRI (Centuri Holdings, Inc.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0001981599-26-000139`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 21.82 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0001981599-26-000139` (2 filing(s)) by MARIUCCI ANNE L (director), Patton Charles R. (director).
+Coverage **FIRE**; purchases USD 349,910, owners 2, top executive no, lag 2 days.
+Twins (band+liq+mom+dd): SBRA 20.44, HTO 60.56, ULS 80.36, MGNI 29.29, EXPO 87.31.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### DILUTION_8K ARAY - event `0001437749-26-036943`, accepted 2026-11-13T17:01:49-05:00, sealed 2026-11-13T23:06:37Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-DILUTION_8K-0001437749-26-036943`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 2.8 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
-Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
-Coverage **FIRE**; pre-entry move +0.00%.
-Twins (band+liq+mom+dd): VYGR 1.73, AARD 1.33, HYPD 2.58, GANX 1.04, AVX 3.86.
-Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+### FORM4 KEEL (Keel Infrastructure Corp.) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0002115914-26-000003`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 1.86 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0002115914-26-000003` (1 filing(s)) by Freedman Amy (director).
+Coverage **FIRE**; purchases USD 76,100, owners 1, top executive no, lag 1 days.
+Twins (band+liq+mom+dd): INTR 4.15, CYPH 1.87, SATL 3.3, NUVB 3.99, PONY 4.46.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
-### DILUTION_8K YYAI - event `0001493152-26-051834`, accepted 2026-11-13T17:15:19-05:00, sealed 2026-11-13T23:06:37Z, cutoff 2026-11-16T14:15:00Z
-Set `CAT-DILUTION_8K-0001493152-26-051834`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 0.76 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
-Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
-Coverage **FIRE**; pre-entry move +0.00%.
-Twins (band+liq+mom+dd): LNKS 0.8998, SCAG 0.9, SNES 0.862, BFRG 0.5415, CNEY 0.4672.
-Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+### FORM4 CRESY (CRESUD INC) - filed 2026-11-13, sealed 2026-11-16T12:10:50Z, cutoff 2026-11-16T14:15:00Z
+Set `CAT-FORM4-0002119764-26-000036`, scan `SCAN-US-2026-11-13-G2_RET30`; signal close 9.74 on 2026-11-13; entry: the entry session's opening print (2026-11-16). Windows: H20: entry +1, hold 20.
+Form 4 `0002119764-26-000036` (1 filing(s)) by Elsztain Alejandro Gustavo (director).
+Coverage **FIRE**; purchases USD 89,000, owners 1, top executive no, lag 1 days.
+Twins (band+liq+mom+dd): SD 13.04, MTRX 9.19, TTAM 11.25, PAYP 14.35, USNA 13.24.
+Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
