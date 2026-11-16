@@ -1,0 +1,94 @@
+{
+  "schema": "GUIDANCE_MARGIN_FACTS_DEVELOPMENT_V1",
+  "as_of": "2026-11-16T07:46:14.784167+00:00",
+  "purpose": "offline development; no model or trading result",
+  "fixture_sha256": "072ae4a556319ee42ddb0fd8430614fbd28b072b230cd93d49ffbf1745f443c9",
+  "implementation_sha256": "14c8e41a6d09e84a933de543bf8bb070774159bf63cd3f1e976630eb23e0995b",
+  "provider_calls": 0,
+  "orders": 0,
+  "rows": [
+    {
+      "id": "rbbn-provisional-source-pair",
+      "kind": "historical-development",
+      "qualification": {
+        "status": "UNVERIFIED",
+        "reasons": [
+          "current.source.received_at is unknown",
+          "prior.source.published_at is unknown",
+          "prior.source.received_at is unknown",
+          "external.prior_completeness: UNKNOWN",
+          "external.perimeter_comparable: UNKNOWN",
+          "clocks.extracted_at is unknown",
+          "clocks.decision_at is unknown"
+        ],
+        "derived": null
+      },
+      "record_hash": "906037a52db09c98e69a39d468cc79e596a6316c6877b9f7284206639bad32cb"
+    },
+    {
+      "id": "ktos-perimeter-change",
+      "kind": "historical-development",
+      "qualification": {
+        "status": "INCOMPARABLE",
+        "reasons": [
+          "current/prior perimeter differ",
+          "external.perimeter_comparable: FAILED",
+          "current.source.published_at is unknown",
+          "current.source.received_at is unknown",
+          "prior.source.published_at is unknown",
+          "prior.source.received_at is unknown",
+          "external.prior_completeness: UNKNOWN",
+          "clocks.extracted_at is unknown",
+          "clocks.decision_at is unknown"
+        ],
+        "derived": null
+      },
+      "record_hash": "5a6c213c8624f2c6432216e69c9f9218ff09275f73897b596b75e3bdebbfa44b"
+    },
+    {
+      "id": "mattel-accounting-recast",
+      "kind": "historical-development",
+      "qualification": {
+        "status": "INCOMPARABLE",
+        "reasons": [
+          "current/prior definition differ",
+          "external.basis_comparable: FAILED",
+          "current.revenue is missing",
+          "current.revenue.form is missing",
+          "current.revenue.unit is missing",
+          "current.revenue.qualifier is missing",
+          "prior.revenue is missing",
+          "prior.revenue.form is missing",
+          "prior.revenue.unit is missing",
+          "prior.revenue.qualifier is missing",
+          "current.source.received_at is unknown",
+          "prior.source.published_at is unknown",
+          "prior.source.received_at is unknown",
+          "external.prior_completeness: UNKNOWN",
+          "external.perimeter_comparable: UNKNOWN",
+          "clocks.extracted_at is unknown",
+          "clocks.decision_at is unknown"
+        ],
+        "derived": null
+      },
+      "record_hash": "3de7b6fcc48268bee045fabe5fe419f79941c62f14f8b7a67d692c58a6c808a1"
+    },
+    {
+      "id": "synthetic-comparable-growth",
+      "kind": "synthetic",
+      "qualification": {
+        "status": "FACTS_READY",
+        "reasons": [],
+        "derived": {
+          "current_revenue_midpoint": 130.0,
+          "prior_revenue_midpoint": 110.0,
+          "current_margin_midpoint_pct": 16.923076923076923,
+          "prior_margin_midpoint_pct": 10.0,
+          "revenue_revision_pct": 18.181818181818183,
+          "margin_revision_pp": 6.923076923076923
+        }
+      },
+      "record_hash": "c4dc32ba226aba6642d02ead48b5c7d92c90041f40f697dc39841c0750154159"
+    }
+  ]
+}

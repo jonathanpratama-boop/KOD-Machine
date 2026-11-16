@@ -12,10 +12,10 @@ At 20:10:05 UTC on 14 November, Binance's public book-ticker endpoint returned H
 
 ## Evidence and validation
 
-- `source/runtime.py` is the pre-repair transport implementation copied from the server.
-- `smoke.py` contains development checks.
+- `source/runtime.py.snapshot` is the pre-repair transport implementation copied from the server.
+- `smoke.py.snapshot` contains development checks.
 - `test_provider_recovery_independent.py` contains independently written behavioral tests. Nine methods passed locally and again on the deployment host.
-- `recover.py` checks the exact stopped state, preserved source hashes and current provider availability before recovery. It records before/after state hashes and refuses to rerun after a recovery receipt exists.
+- `recover.py.snapshot` checks the exact stopped state, preserved source hashes and current provider availability before recovery. It records before/after state hashes and refuses to rerun after a recovery receipt exists.
 - Overlay SHA-256: `5e9a890e746ca802c80d4206a4c21ceb8e93b3f300f3ec75ca8776f773aca574`.
 - Server evidence directory: `/var/lib/kod-research-r2-ops/repairs/provider-recovery-20261116/`.
 - Server service override: `/etc/systemd/system/kod-research-r2.service.d/95-provider-recovery.conf`.
@@ -25,3 +25,5 @@ At 20:10:05 UTC on 14 November, Binance's public book-ticker endpoint returned H
 The existing collector and backup schedules remain in place. The only new service override selects the corrected wrapper. If rollback is necessary, stop only `kod-research-r2.service`, remove `95-provider-recovery.conf`, reload the service configuration and start the prior wrapper. Preserve all post-repair observations. Do not restore the old capture state over new data, reset the study clock, erase the outage, or clear a new provider restriction without reviewing its actual reason.
 
 Starting the service is not evidence of healthy collection. Acceptance requires new received minute bars, an advancing engine heartbeat and off-server publication. Those observations are recorded in the accompanying cloud-state report.
+
+The `.snapshot` files retain exact deployed or pre-repair bytes as evidence. They are not maintained Python modules; the originals on the server retain their `.py` names. `CODE_MANIFEST.json` records those original deployment names and hashes. The executable overlay, launcher and independent tests retain their actual filenames.
