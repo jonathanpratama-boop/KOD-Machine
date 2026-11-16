@@ -1,0 +1,65 @@
+"""Reproduce and repair the real export failure only on a retained DB copy."""
+import datetime as dt
+import gzip
+import json
+from pathlib import Path
+import sqlite3
+import sys
+import time
+
+sys.path.insert(0, '/opt/kod/research-r2')
+from research_r2 import engine as module
+from export_recovery import install, OVERSIZE, file_hash
+
+BASE=Path('/var/lib/kod-research-r2-ops/repairs/export-recovery-20261116')
+LIVE=Path('/var/lib/kod/research-r2/engine/research.sqlite')
+
+def live_cursor():
+    connection=sqlite3.connect('file:'+str(LIVE)+'?mode=ro',uri=True)
+    try:return json.loads(connection.execute("SELECT value FROM meta WHERE key='export_seq'").fetchone()[0])
+    finally:connection.close()
+
+def main():
+    began=time.monotonic()
+    before=json.loads((BASE/'BEFORE.json').read_text())
+    assert file_hash(BASE/'before/research.sqlite')==before['db_snapshot_sha256']
+    live_before=live_cursor()
+    config=json.loads(Path('/opt/kod/research-r2/research.json').read_text())
+    instance=module.ResearchEngine(BASE/'validation',config)
+    try:
+        original_cursor=instance.get('export_seq',0)
+        original_tip=instance.verify_ledger()
+        try:instance.export_incremental(BASE/'validation/original-export',limit=5000)
+        except ValueError as error:assert str(error)==OVERSIZE
+        else:raise AssertionError('Frozen failure did not reproduce')
+        assert instance.get('export_seq',0)==original_cursor
+        install(module)
+        result=instance.export_incremental(BASE/'validation/repaired-export',limit=5000)
+        assert result['records']==22881 and result['last_seq']==206039
+        expected=iter(instance.db.execute('SELECT * FROM ledger WHERE seq>? AND seq<=? ORDER BY seq',
+                                        (original_cursor,result['last_seq'])))
+        count=0
+        with gzip.open(result['file'],'rt') as exported:
+            for line in exported:
+                row=next(expected)
+                assert line==module.canonical(dict(row))+'\n'
+                count+=1
+        assert next(expected,None) is None and count==result['records']
+        assert file_hash(result['file'])==result['sha256']
+        assert instance.get('export_seq')==result['last_seq']
+        assert instance.verify_ledger()==original_tip
+        live_after=live_cursor()
+        assert live_before==live_after==original_cursor
+        receipt={'checked_at':dt.datetime.now(dt.timezone.utc).isoformat(),'status':'PASS',
+                 'frozen_failure_reproduced':True,'live_cursor_before':live_before,
+                 'live_cursor_after':live_after,'copy_cursor_before':original_cursor,
+                 'copy_cursor_after':instance.get('export_seq'),'copy_ledger_unchanged':original_tip,
+                 'decoded_rows_byte_identical':count,'export':result,
+                 'packed_bytes':Path(result['file']).stat().st_size,
+                 'original_snapshot_sha256':before['db_snapshot_sha256'],
+                 'elapsed_seconds':time.monotonic()-began}
+        (BASE/'COPY_VALIDATION.json').write_text(json.dumps(receipt,indent=2)+'\n')
+        print(json.dumps(receipt))
+    finally:instance.close()
+
+if __name__=='__main__':main()
