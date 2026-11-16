@@ -2,6 +2,8 @@
 
 This is an offline fact validator, revision journal and a one-call development reader adapter. It is **not an autonomous reader, a trading strategy, a launched experiment or evidence of profit**. Live development API calls have now been evaluated: the repaired version passed five controls but failed both complete real-disclosure pairs. The unattended reader remains on hold. See [the 16 November development evaluation](DEVELOPMENT_EVAL_20261116.md). The existing cloud timing study continues separately.
 
+A [two-call stronger-model follow-up](MODEL_COMPARISON_20261116.md) improved real-number extraction, but neither complete source comparison passed. It did not change the reader code, expected facts or HOLD decision.
+
 ## Why this work exists
 
 E10 already tested revenue-guidance revisions with costs, delayed entry and a funded account; its published result failed. The distinct question is whether a comparable change in forecast operating margin adds information beyond a revenue revision. A higher revenue forecast can coexist with weaker operating profit. That observation does not establish that the market missed it or that KOD can earn money from it.
