@@ -4,26 +4,26 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-16T23:01:26.746102Z; latest US scan session: 2026-11-16.
+- Assessed 2026-11-16T23:01:59.641243Z; latest US scan session: 2026-11-16.
 - Latest compatible LEARNER v2.4 forecast: 2026-11-16T22:58:51Z (signal session 2026-11-16).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-16T23:01:26Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-16T23:01:59Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 151 spikes planned, 21 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 151 spikes planned, 44 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 138 | 123 | 12 | 2 | $-2,381 | -19.85% |
-| ALL | every spike | 151 | 127 | 21 | 5 | $-3,442 | -16.39% |
+| KOD | every BUY_OK | 138 | 97 | 35 | 5 | $-5,903 | -16.86% |
+| ALL | every spike | 151 | 101 | 44 | 8 | $-6,963 | -15.82% |
 | AVOIDED | every DONT_BUY (kept out) | 13 | 4 | 9 | 3 | $-1,060 | -11.78% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
@@ -132,32 +132,32 @@ Generated 2026-11-16T23:01:26Z. Paper only: no orders, no money. Protocol: `rese
 | 2026-11-09 | CVKD | 0.27 | BUY_OK | - | OPEN | - |
 | 2026-11-09 | CKX | 0.33 | BUY_OK | - | OPEN | - |
 | 2026-11-09 | AKBA | 0.22 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | VSA | 0.17 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | VIVK | 0.29 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | VAI | 0.15 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | STAK | 0.20 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | SNT | 0.16 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | SMX | 0.23 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | SKIN | 0.15 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | SERV | 0.10 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | SDA | 0.20 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | RDGT | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | RCT | 0.25 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | POM | 0.22 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | OPTU | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | OBX | 0.16 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | MTVA | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | KRMN | 0.09 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | KDK | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | INDI | 0.11 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | HTCO | 0.19 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | HPAI | 0.23 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | GOGO | 0.18 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | GIBO | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | FROG | 0.08 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | FLY | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | CIIT | 0.16 | BUY_OK | - | OPEN | - |
-| 2026-11-06 | CABR | 0.20 | BUY_OK | - | OPEN | - |
+| 2026-11-06 | VSA | 0.17 | BUY_OK | - | TRADED | -33.61% |
+| 2026-11-06 | VIVK | 0.29 | BUY_OK | - | TRADED | -13.88% |
+| 2026-11-06 | VAI | 0.15 | BUY_OK | - | TRADED | -2.33% |
+| 2026-11-06 | STAK | 0.20 | BUY_OK | - | TRADED | -50.35% |
+| 2026-11-06 | SNT | 0.16 | BUY_OK | - | TRADED | -2.06% |
+| 2026-11-06 | SMX | 0.23 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-06 | SKIN | 0.15 | BUY_OK | - | TRADED | -7.55% |
+| 2026-11-06 | SERV | 0.10 | BUY_OK | - | TRADED | -26.08% |
+| 2026-11-06 | SDA | 0.20 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-06 | RDGT | 0.14 | BUY_OK | - | TRADED | -9.92% |
+| 2026-11-06 | RCT | 0.25 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-06 | POM | 0.22 | BUY_OK | - | TRADED | -0.38% |
+| 2026-11-06 | OPTU | 0.14 | BUY_OK | - | TRADED | -9.14% |
+| 2026-11-06 | OBX | 0.16 | BUY_OK | - | TRADED | -7.63% |
+| 2026-11-06 | MTVA | 0.14 | BUY_OK | - | TRADED | -16.58% |
+| 2026-11-06 | KRMN | 0.09 | BUY_OK | - | TRADED | -18.08% |
+| 2026-11-06 | KDK | 0.14 | BUY_OK | - | TRADED | -17.11% |
+| 2026-11-06 | INDI | 0.11 | BUY_OK | - | TRADED | +6.66% |
+| 2026-11-06 | HTCO | 0.19 | BUY_OK | - | TRADED | -7.62% |
+| 2026-11-06 | HPAI | 0.23 | BUY_OK | - | TRADED | -33.71% |
+| 2026-11-06 | GOGO | 0.18 | BUY_OK | - | TRADED | -17.84% |
+| 2026-11-06 | GIBO | 0.14 | BUY_OK | - | TRADED | -51.75% |
+| 2026-11-06 | FROG | 0.08 | BUY_OK | - | TRADED | +8.00% |
+| 2026-11-06 | FLY | 0.14 | BUY_OK | - | TRADED | +5.49% |
+| 2026-11-06 | CIIT | 0.16 | BUY_OK | - | TRADED | -20.71% |
+| 2026-11-06 | CABR | 0.20 | BUY_OK | - | TRADED | -25.95% |
 | 2026-11-05 | ZNB | 0.22 | BUY_OK | - | TRADED | -30.41% |
 | 2026-11-05 | XXII | 0.36 | BUY_OK | - | TRADED | -56.37% |
 | 2026-11-05 | VXX | 0.11 | BUY_OK | - | TRADED | -13.98% |
@@ -207,12 +207,12 @@ The same books three ways. As frozen counts every planned spike. Known at the ti
 
 | Book | View | Positions | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|
-| KOD | As frozen | 138 | 12 | 2 | $-2,381 | -19.85% |
-| KOD | Known at the time | 135 | 12 | 2 | $-2,381 | -19.85% |
-| KOD | Corrected | 133 | 11 | 2 | $-1,818 | -16.53% |
-| ALL | As frozen | 151 | 21 | 5 | $-3,442 | -16.39% |
-| ALL | Known at the time | 148 | 21 | 5 | $-3,442 | -16.39% |
-| ALL | Corrected | 141 | 16 | 3 | $-2,824 | -17.65% |
+| KOD | As frozen | 138 | 35 | 5 | $-5,903 | -16.86% |
+| KOD | Known at the time | 135 | 35 | 5 | $-5,903 | -16.86% |
+| KOD | Corrected | 133 | 34 | 5 | $-5,339 | -15.70% |
+| ALL | As frozen | 151 | 44 | 8 | $-6,963 | -15.82% |
+| ALL | Known at the time | 148 | 44 | 8 | $-6,963 | -15.82% |
+| ALL | Corrected | 141 | 39 | 6 | $-6,345 | -16.27% |
 | AVOIDED | As frozen | 13 | 9 | 3 | $-1,060 | -11.78% |
 | AVOIDED | Known at the time | 13 | 9 | 3 | $-1,060 | -11.78% |
 | AVOIDED | Corrected | 8 | 5 | 1 | $-1,006 | -20.13% |
