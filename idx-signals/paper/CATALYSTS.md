@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-17T10:29:57Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-17T10:30:18Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 29 (FIRE 11, ABSTAIN 18) over 10 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 14, SEALED 29, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 31 (FIRE 11, ABSTAIN 20) over 10 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 14, SEALED 31, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,20 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### SEC13D BANL (CBL International Ltd) - accepted 2026-11-16T09:20:59-05:00, sealed 2026-11-16T23:32:15Z, cutoff 2026-11-17T14:15:00Z
-Set `CAT-SEC13D-0001493152-26-052084`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 3.225 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
-Filing `0001493152-26-052084` by Chia Teck Lim; Item 4 intent words: board, acquisition, director.
-Coverage **FIRE**; pre-entry move +3.70%, market value USD 88.7M, dilution filings 0.
-Twins (band+liq+mom+dd): ONEG 1.08, XRTX 1.04, SPHL 2.35, JEM 2.85, ANTA 2.185.
-Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
-
-### SEC13D AZTR (Azitra, Inc.) - accepted 2026-11-16T17:15:45-05:00, sealed 2026-11-16T23:32:15Z, cutoff 2026-11-17T14:15:00Z
-Set `CAT-SEC13D-0000945621-26-001427`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 0.627 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
-Filing `0000945621-26-001427` by Young Pharmaceuticals, Inc.; Item 4 intent words: board, director.
-Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 3.8M, dilution filings 0.
-Twins (band+liq+mom+dd): BMR 0.8743, YDDL 1, BIOX 0.1997, ICCM 0.7601, RMCF 0.691.
-Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
-
 ### SEC13D FUN (Six Flags Entertainment Corporation/NEW) - accepted 2026-11-16T18:01:33-05:00, sealed 2026-11-16T23:32:15Z, cutoff 2026-11-17T14:15:00Z
 Set `CAT-SEC13D-0000919574-26-008157`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 11.61 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
 Filing `0000919574-26-008157` by H PARTNERS MANAGEMENT, LLC; Item 4 intent words: board, director.
@@ -207,4 +193,18 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): FSV 155.87, ABM 54.64, YOU 56.18, BKSY 23.15, SPNT 26.42.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D CKX (CKX LANDS, INC.) - accepted 2026-11-16T19:45:23-05:00, sealed 2026-11-17T10:30:15Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D-0000950142-26-003080`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 14.51 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
+Filing `0000950142-26-003080` by Jacobs Private Equity II, LLC; Item 4 intent words: board, acquisition, proxy, director.
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); pre-entry move +0.00%, market value USD 29.8M, dilution filings 1.
+Twins (band+liq+mom+dd): MFI 8.47, UG 8.08, AENT 5.23, ATGL 8.9, VHI 16.85.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D AQB (AQUABOUNTY TECHNOLOGIES INC) - accepted 2026-11-16T21:52:53-05:00, sealed 2026-11-17T10:30:15Z, cutoff 2026-11-17T14:15:00Z
+Set `CAT-SEC13D-0001753926-26-002162`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 0.8017 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20.
+Filing `0001753926-26-002162` by UNIVEST SECURITIES, LLC; Item 4 intent words: board, director, letter.
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); pre-entry move +0.00%, market value USD 10.7M, dilution filings 2.
+Twins (band+liq+mom+dd): WETH 0.8227, TC 0.7886, CHAI 0.1668, JTAI 0.808, USBC 0.341.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
