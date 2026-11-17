@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-17T23:03:49Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-17T23:04:15Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 29 over 9 signal sessions; events seen: SEALED 29; coverage gaps 0.
+Sets 31 over 10 signal sessions; events seen: SEALED 31; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 16, FIRE 13
+- Classes: ABSTAIN 17, FIRE 14
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 226 tags: 55 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP OPAL (OPAL Fuels Inc.) - filed 2026-11-16, sealed 2026-11-17T10:37:24Z, cutoff 2026-11-17T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-074148`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 1.21 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-074148` by Sutton Scott McDougald (director); purchases USD 61,500; top executive no; holding up +100.0%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-074148.
-Twins (band+liq+mom+dd): ADCT 1.25, SXTC 2.99, GMTL 4.1, NAKA 4.59, DAVA 1.4, SOTK 4.135, YDES 4.83, ZSQR 2.22, ARAY 2.55, BRAI 1.68, SCYX 2.91, MOVE 4.7, AVX 3.62, ASTI 1.19, ZONE 3.15, NXDT 2.89, VYGR 1.63, CANG 1.47, LNZA 2.81, AMTX 1.18.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP REI (RING ENERGY, INC.) - filed 2026-11-16, sealed 2026-11-17T10:37:24Z, cutoff 2026-11-17T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-074217`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 1.11 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-074217` by Johl Sundip Singh (EVP, Chief Financial Officer); purchases USD 70,087; top executive yes; holding up +10.6%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-074217.
-Twins (band+liq+mom+dd): NXDR 2.04, CIG 1.86, AMPY 4.03, AIOT 2.22, NUS 3.93, CYH 2.13, VOXR 4.36, ALVO 4.405.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP TG (TREDEGAR CORP) - filed 2026-11-16, sealed 2026-11-17T10:37:24Z, cutoff 2026-11-17T14:15:00Z
 Set `CAT-FORM4_SHARP-0001628280-26-074262`, scan `SCAN-US-2026-11-16-G2_RET30`; signal close 5.64 on 2026-11-16; entry: the entry session's opening print (2026-11-17). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +193,18 @@ Filing `0001493152-26-052855` by 222 Capital, U/I dated March 25, 2003; Item 4 i
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 134.2M, dilution filings 0.
 Twins (band+liq+mom+dd): EDIT 1.825, PICS 4.83, TMC 1.86, DGXX 2.04, NNBR 2.77.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 TDTH (Trident Digital Tech Holdings Ltd) - accepted 2026-11-17T06:06:15-05:00, sealed 2026-11-17T23:04:10Z, cutoff 2026-11-18T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-121050`, scan `SCAN-US-2026-11-17-G2_RET30`; signal close 1.16 on 2026-11-17; entry: the entry session's opening print (2026-11-18). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-121050` by Lim Soon Huat; cover page max 15.56% of class; strong intent: none; Item 5(c): 2 price(s).
+Coverage **ABSTAIN** (MOVED_ALREADY); market value USD 73.8M from COVER_PAGE; parent CAT-SEC13D-0001213900-26-121050.
+Twins (band+liq+mom+dd): LNKS 1.01, RYOJ 2.4901, NCI 4.8971, CALC 1.22, NPT 1.79, CLLS 1.06, JFIN 1.31, RCON 1.14, TVRD 1.01, REVB 3.88, EPOW 3.21, LEXX 4.18, VRXA 1.04, TULP 2.46, GMM 1.39, LGVN 2.11, FCUV 4.58, XRTX 1.06, AHT 2.22, AKAN 2.05.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 FF (FutureFuel Corp.) - accepted 2026-11-17T16:30:06-05:00, sealed 2026-11-17T23:04:10Z, cutoff 2026-11-18T14:15:00Z
+Set `CAT-SEC13D_V2-0001493152-26-052855`, scan `SCAN-US-2026-11-17-G2_RET30`; signal close 3.06 on 2026-11-17; entry: the entry session's opening print (2026-11-18). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001493152-26-052855` by 222 Capital, U/I dated March 25, 2003; cover page max 9.7% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 134.2M from XBRL; parent CAT-SEC13D-0001493152-26-052855.
+Twins (band+liq+mom+dd): EDIT 1.825, PICS 4.83, TMC 1.86, DGXX 2.04, NNBR 2.77, DDD 1.38, PDYN 2.87, MNTN 4.77, JBI 3.12, XNDU 1.915, ALOY 4.705, XXI 4.45, AIV 1.41, CYH 2.02, OGG 2.07, FATE 1.02, ADAM 4.92, UPB 2.1, AIOT 2.055, TBLA 2.05.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
