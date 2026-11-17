@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-16T23:01:06Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-17T23:01:29Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 161 live forecasts, 24 calls, 9 wrong of 18 (50.0%); p that the true rate exceeds 50%: 0.593.
+- **Evidence so far:** 177 live forecasts, 28 calls, 9 wrong of 21 (42.9%); p that the true rate exceeds 50%: 0.808.
 
 ## The bar
 
@@ -18,17 +18,33 @@ Generated 2026-11-16T23:01:06Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-16 | VIVK | 0.665 | 0.560 | **DUMP** | 0.552 | pending |
-| 2026-11-16 | TDTH | 0.492 | 0.560 | - | 0.283 | pending |
-| 2026-11-16 | HIHO | 0.484 | 0.560 | - | 0.218 | pending |
-| 2026-11-16 | GMM | 0.671 | 0.560 | **DUMP** | 0.442 | pending |
-| 2026-11-16 | GDHG | 0.681 | 0.560 | **DUMP** | 0.320 | pending |
-| 2026-11-16 | ETS | 0.263 | 0.560 | - | 0.130 | pending |
+| 2026-11-17 | VAI | 0.385 | 0.561 | - | 0.174 | pending |
+| 2026-11-17 | TGL | 0.568 | 0.561 | **DUMP** | 0.228 | pending |
+| 2026-11-17 | SYPR | 0.241 | 0.561 | - | 0.103 | pending |
+| 2026-11-17 | SMTK | 0.642 | 0.561 | **DUMP** | 0.488 | pending |
+| 2026-11-17 | SLS | 0.454 | 0.561 | - | 0.219 | pending |
+| 2026-11-17 | SGRX | 0.441 | 0.561 | - | 0.223 | pending |
+| 2026-11-17 | NCT | 0.765 | 0.561 | **DUMP** | 0.608 | pending |
+| 2026-11-17 | MPU | 0.434 | 0.561 | - | 0.230 | pending |
+| 2026-11-17 | KALA | 0.433 | 0.561 | - | 0.147 | pending |
+| 2026-11-17 | GP | 0.372 | 0.561 | - | 0.275 | pending |
+| 2026-11-17 | GLSI | 0.286 | 0.561 | - | 0.127 | pending |
+| 2026-11-17 | FRTT | 0.376 | 0.561 | - | 0.187 | pending |
+| 2026-11-17 | DFSC | 0.578 | 0.561 | **DUMP** | 0.246 | pending |
+| 2026-11-17 | CVKD | 0.392 | 0.561 | - | 0.156 | pending |
+| 2026-11-17 | AZI | 0.438 | 0.561 | - | 0.228 | pending |
+| 2026-11-17 | AYTU | 0.333 | 0.561 | - | 0.134 | pending |
+| 2026-11-16 | VIVK | 0.665 | 0.560 | **DUMP** | 0.552 | dumped |
+| 2026-11-16 | TDTH | 0.492 | 0.560 | - | 0.283 | did not dump |
+| 2026-11-16 | HIHO | 0.484 | 0.560 | - | 0.218 | did not dump |
+| 2026-11-16 | GMM | 0.671 | 0.560 | **DUMP** | 0.442 | dumped |
+| 2026-11-16 | GDHG | 0.681 | 0.560 | **DUMP** | 0.320 | dumped |
+| 2026-11-16 | ETS | 0.263 | 0.560 | - | 0.130 | dumped |
 | 2026-11-16 | CYAB | 0.459 | 0.560 | - | 0.293 | pending |
-| 2026-11-16 | COSM | 0.560 | 0.560 | - | 0.262 | pending |
-| 2026-11-16 | CLRO | 0.512 | 0.560 | - | 0.311 | pending |
-| 2026-11-16 | BGIN | 0.457 | 0.560 | - | 0.183 | pending |
-| 2026-11-16 | AKAN | 0.495 | 0.560 | - | 0.310 | pending |
+| 2026-11-16 | COSM | 0.560 | 0.560 | - | 0.262 | did not dump |
+| 2026-11-16 | CLRO | 0.512 | 0.560 | - | 0.311 | did not dump |
+| 2026-11-16 | BGIN | 0.457 | 0.560 | - | 0.183 | did not dump |
+| 2026-11-16 | AKAN | 0.495 | 0.560 | - | 0.310 | did not dump |
 | 2026-11-13 | ZBAO | 0.527 | 0.559 | - | 0.434 | pending |
 | 2026-11-13 | VTSI | 0.405 | 0.559 | - | 0.128 | did not dump |
 | 2026-11-13 | TGHL | 0.440 | 0.559 | - | 0.156 | dumped |
