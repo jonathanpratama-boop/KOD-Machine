@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-18T23:02:46Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-18T23:02:58Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 31 over 10 signal sessions; events seen: SEALED 31; coverage gaps 0.
+Sets 32 over 11 signal sessions; events seen: SEALED 32; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 17, FIRE 14
+- Classes: ABSTAIN 17, FIRE 15
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 245 tags: 59 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP PRAA (PRA GROUP INC) - filed 2026-11-17, sealed 2026-11-18T10:37:32Z, cutoff 2026-11-18T14:15:00Z
-Set `CAT-FORM4_SHARP-0001185352-26-000002`, scan `SCAN-US-2026-11-17-G2_RET30`; signal close 11.17 on 2026-11-17; entry: the entry session's opening print (2026-11-18). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001185352-26-000002` by FREDRICKSON STEVEN D (director); purchases USD 295,000; top executive no; holding up n/a.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001185352-26-000002.
-Twins (band+liq+mom+dd): FTH 9.04, PBYI 7.14, RYAM 5.18, ARCT 7.97, GRRR 6.49, AORT 18.27, MBUU 18.97, XRPN 7.25, JANX 10.71, NXRT 14.73, OFRM 11.66, CIM 6.33, CADL 5.4, PAYS 9.81, MPLT 6.57, FUBO 6.87, HPK 7.57, LAND 6.32, STRO 8.92, FDMT 10.79.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP ITG (ITG, Inc./DE/) - filed 2026-11-17, sealed 2026-11-18T10:37:32Z, cutoff 2026-11-18T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-465620`, scan `SCAN-US-2026-11-17-G2_RET30`; signal close 5.37 on 2026-11-17; entry: the entry session's opening print (2026-11-18). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0000921895-26-003216` by Pale Fire Capital SE; Item 4 intent words: boar
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 850.7M, dilution filings 0.
 Twins (band+liq+mom+dd): NTLA 9.77, RES 5.16, GPRE 11.62, BKD 8.64, FRSH 12.79.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 TRIP (TripAdvisor, Inc.) - accepted 2026-11-18T17:23:00-05:00, sealed 2026-11-18T23:02:57Z, cutoff 2026-11-19T14:15:00Z
+Set `CAT-SEC13D_V2-0000921895-26-003216`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 7.22 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000921895-26-003216` by Pale Fire Capital SE; cover page max 7.4% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 850.7M from XBRL; parent CAT-SEC13D-0000921895-26-003216.
+Twins (band+liq+mom+dd): NTLA 9.77, RES 5.16, GPRE 11.62, BKD 8.64, FRSH 12.79, CGAU 18.79, AVAH 10.845, ASAN 9.2, AI 10.02, VET 10.29, BKV 18.79, VSTM 6.87, HAFN 8.92, EC 14.07, PTEN 9.71, WTTR 16.21, DLO 12.52, BILI 11.38, EFXT 19.16, CRSR 11.64.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
