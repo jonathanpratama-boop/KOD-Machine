@@ -16,3 +16,9 @@ API charges are estimates based on retained token usage. The reader reserves a c
 Only source-backed, reviewed facts are admitted. A second model read does not prove correctness; source coverage and agent review remain limitations of the pilot. Missing or contradictory facts are visible and excluded, rather than changed into zero. Daily opening prices are modeled fills. Splits or dividends reported during a holding period require review before valuation; the study shows that missing outcome instead of silently adjusting it.
 
 `run.py --skip-feed` updates existing paper prices and status without model calls. Restarting the timer does not reset state or backfill missed admissions. Inspect `journalctl -u kod-guidance-margin.service` and `STATUS.json` for failures. Preserve original journal rows when making corrections.
+
+### Applying a completed source review
+
+From the deployed guidance directory, run `PYTHONPATH=idx-signals /opt/kod/venv/bin/python -B -m idxsig.guidance_margin_feed --state /var/lib/kod/guidance-margin --apply-review /path/to/private-review.json`. Supply the release ID (`event_id`), its current `expected_status`, its retained `source_sha256`, a named `reviewer`, the `decision`, a `reason`, `evidence_urls` including the release, and an exact `evidence_quote`. Additional release quotes can go in `evidence_quotes`.
+
+Use `EXCLUDE` for a source-backed exclusion. For an unresolved issuer, use `RETRY_IDENTITY` to send the verified release through the ordinary checks or `HOLD_MISSING_PRIOR` when the evidence still lacks a comparable earlier forecast. Both require `ticker`, `issuer_cik` and `identity_evidence_url` matching the verified listing. Each applied decision retains the original flag and its own review time. The next scheduled cycle publishes the updated totals.

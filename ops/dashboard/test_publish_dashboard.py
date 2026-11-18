@@ -244,6 +244,10 @@ class DashboardPublicationTests(unittest.TestCase):
             'trial':{'admitted':1, 'filled_pairs':0, 'horizons':{'1':{'paired_events':0,
                 'net_pnl_usd':{'revenue':'0', 'revenue_and_margin':'0'}, 'raw_source':private}}},
             'feed':{'api_calls':2, 'api_estimated_usd':0.12, 'review_pending_count':1,
+                'review_closed_count':9,
+                'pending_reviews':[{'title':'Dolby results', 'status':'MISSING_PRIOR',
+                                    'reason':private, 'receipt':private},
+                                   {'title':private, 'status':'INVALID'}, None],
                 'entries':[{'raw_response':private}]},
             'credits':{'expires_at':'2026-12-03T13:41:10Z', 'authorization':private}}
         publisher.GUIDANCE_STATE.write_text(json.dumps(source))
@@ -256,6 +260,10 @@ class DashboardPublicationTests(unittest.TestCase):
         self.assertEqual(decoded['trial']['admitted'],1)
         self.assertEqual(decoded['trial']['horizons']['1']['paired_events'],0)
         self.assertEqual(decoded['feed']['api_calls'],2)
+        self.assertEqual(decoded['feed']['review_closed_count'],9)
+        self.assertEqual(decoded['feed']['pending_reviews'],[
+            {'title':'Dolby results', 'status':'MISSING_PRIOR',
+             'reason':'Find an earlier forecast for the same fiscal year and accounting basis.'}])
         rendered=(self.repository/'DASHBOARD.html').read_text()
         self.assertNotIn(private,rendered)
         self.assertIn('guidance_margin',rendered)

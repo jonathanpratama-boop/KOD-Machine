@@ -94,9 +94,24 @@ def guidance_public_status(path):
         'candidates', 'eligible', 'errors', 'coverage', 'source', 'model', 'api_calls',
         'estimated_cost_usd', 'credit_expires_at', 'updated_at', 'state', 'source_scope',
         'discovered_count', 'prospective_count', 'development_count', 'screened_out_count',
-        'extraction_attempted_count', 'candidate_count', 'review_pending_count', 'excluded_count',
+        'extraction_attempted_count', 'candidate_count', 'review_pending_count', 'review_closed_count', 'excluded_count',
         'fetch_error_count', 'api_estimated_usd', 'credit_expiry_at', 'credit_budget_usd',
         'api_remaining_estimate_usd'))
+    feed = raw.get('feed', {})
+    pending = feed.get('pending_reviews') if isinstance(feed, dict) else None
+    if isinstance(pending, list):
+        public_reasons = {
+            'IDENTITY_UNKNOWN': 'Confirm the issuer and its US listing.',
+            'MISSING_PRIOR': 'Find an earlier forecast for the same fiscal year and accounting basis.',
+            'INCOMPLETE_INVENTORY': 'Check the remaining earlier releases from this issuer.',
+            'EXTRACTION_REJECTED': 'Verify the extracted figures against the release.',
+            'REVIEW_PENDING': 'Check the source comparison.',
+        }
+        output['feed']['pending_reviews'] = [
+            {'title': row['title'], 'status': row['status'], 'reason': public_reasons[row['status']]}
+            for row in pending if isinstance(row, dict) and isinstance(row.get('title'), str)
+            and isinstance(row.get('status'), str) and row['status'] in public_reasons
+        ]
     output['credits'] = fields(raw.get('credits', {}), ('estimated_spend_usd', 'estimated_cost_usd',
         'available_usd', 'budget_usd', 'remaining_estimate_usd', 'expires_at', 'calls', 'status'))
     return output

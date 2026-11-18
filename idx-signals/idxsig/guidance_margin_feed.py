@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import copy
 import csv
+import fcntl
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import hashlib
@@ -26,6 +27,8 @@ import xml.etree.ElementTree as ET
 
 from . import guidance_margin_reader as reader
 from .guidance_margin_facts import qualify
+from .guidance_margin_identity import resolve_identity
+from .provenance import publish_bytes
 
 FEED_URL = "https://www.prnewswire.com/rss/financial-services-latest-news/earnings-list.rss"
 DEFAULT_MODEL = "gpt-5.4-2026-03-05"
@@ -542,6 +545,196 @@ def initialize(
     return state
 
 
+REVIEW_REASONS = {
+    "IDENTITY_UNKNOWN": "The issuer and US listing still need verification.",
+    "MISSING_PRIOR": "An earlier comparable guidance release is missing.",
+    "INCOMPLETE_INVENTORY": "The earlier issuer releases could not all be checked.",
+    "EXTRACTION_REJECTED": "The figures extracted from the release need checking.",
+    "REVIEW_PENDING": "The source comparison needs review.",
+}
+
+
+def retained_for_review(root, entry):
+    """Bind the review to the exact received release, including its parsed text."""
+    stamp = entry["source_sha256"]
+    folder = root / "sources" / entry["id"]
+    raw = (folder / (stamp + ".html")).read_bytes()
+    doc = json.loads((folder / (stamp + ".json")).read_text())
+    if (doc["id"], doc["url"], doc["raw_sha256"], sha(raw)) != (
+        entry["id"],
+        entry["url"],
+        stamp,
+        stamp,
+    ):
+        raise ValueError("Retained source identity or hash differs")
+    parsed = parse_release(raw)
+    if any(doc.get(key) != value for key, value in parsed.items()) or (
+        sha(doc["text"].encode()) != doc["text_sha256"]
+    ):
+        raise ValueError("Retained source metadata differs from the original release")
+    return doc
+
+
+def apply_review(
+    root,
+    *,
+    event_id,
+    expected_status,
+    source_sha256,
+    reviewer,
+    reason,
+    decision,
+    evidence_urls,
+    evidence_quote,
+    ticker=None,
+    issuer_cik=None,
+    identity_evidence_url=None,
+    evidence_quotes=(),
+    prior_url=None,
+    prior_sha256=None,
+    prior_quote=None,
+):
+    """Apply a source-only exclusion or requeue an unprocessed verified issuer."""
+    root = Path(root)
+    if not re.fullmatch(r"[0-9a-f]{24}", event_id) or not re.fullmatch(
+        r"[0-9a-f]{64}", source_sha256
+    ):
+        raise ValueError("Invalid release ID or source hash")
+    if expected_status not in REVIEW_REASONS or decision not in {
+        "EXCLUDE",
+        "RETRY_IDENTITY",
+        "HOLD_MISSING_PRIOR",
+    }:
+        raise ValueError("Unknown review flag or decision")
+    if not reviewer.strip() or not reason.strip() or not evidence_quote.strip():
+        raise ValueError("A reviewer, reason and retained quote are required")
+    if not isinstance(evidence_urls, (list, tuple)) or not all(
+        isinstance(url, str) and urllib.parse.urlsplit(url).scheme == "https"
+        for url in evidence_urls
+    ):
+        raise ValueError("Expected HTTPS evidence URLs")
+    if not isinstance(evidence_quotes, (list, tuple)) or any(
+        not isinstance(q, str) or not q.strip() for q in evidence_quotes
+    ):
+        raise ValueError("Expected a list of additional release quotes")
+    if any((prior_url, prior_sha256, prior_quote)) and (
+        not all((prior_url, prior_sha256, prior_quote))
+        or decision != "HOLD_MISSING_PRIOR"
+        or not re.fullmatch(r"[0-9a-f]{64}", prior_sha256)
+        or not prior_quote.strip()
+    ):
+        raise ValueError("Earlier evidence requires a retained prior URL, hash and quote")
+    if decision in {"HOLD_MISSING_PRIOR", "RETRY_IDENTITY"} and (
+        expected_status != "IDENTITY_UNKNOWN" or not ticker
+    ):
+        raise ValueError("An identity retry requires a verified issuer and an identity flag")
+    if any((ticker, issuer_cik, identity_evidence_url)) and not all(
+        (ticker, issuer_cik, identity_evidence_url)
+    ):
+        raise ValueError("An identity requires ticker, CIK and evidence URL")
+    request = dict(
+        event_id=event_id,
+        expected_status=expected_status,
+        source_sha256=source_sha256,
+        reviewer=reviewer,
+        reason=reason,
+        decision=decision,
+        evidence_quote=evidence_quote,
+        evidence_urls=list(evidence_urls),
+        ticker=ticker,
+        issuer_cik=issuer_cik,
+        identity_evidence_url=identity_evidence_url,
+        evidence_quotes=list(evidence_quotes),
+        prior_url=prior_url,
+        prior_sha256=prior_sha256,
+        prior_quote=prior_quote,
+    )
+    path = root / "applied_reviews" / event_id / (expected_status + "-" + source_sha256 + ".json")
+    key = str(path.relative_to(root))
+    with (root / ".feed.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads((root / "feed_state.json").read_text())
+        entry = state["entries"][event_id]
+        if (
+            entry.get("source_sha256") != source_sha256
+            or sha(entry["url"].encode())[:24] != event_id
+        ):
+            raise ValueError("Stale release or source hash")
+        receipt = json.loads(path.read_text()) if path.exists() else None
+        if receipt and receipt["request"] != request:
+            raise ValueError("Conflicting review for the same source and original flag")
+        if key in entry.get("applied_reviews", []):
+            if not receipt:
+                raise ValueError("Recorded review receipt is missing")
+            status(root, state)
+            return receipt
+        if entry["status"] != expected_status:
+            raise ValueError("The review flag has changed")
+        doc = retained_for_review(root, entry)
+        if entry["url"] not in evidence_urls or any(
+            " ".join(quote.split()) not in " ".join(doc["text"].split())
+            for quote in (evidence_quote, *evidence_quotes)
+        ):
+            raise ValueError("Evidence must include this release and its actual quotes")
+        if prior_url:
+            safe_url(prior_url)
+            earlier = retained_for_review(
+                root,
+                dict(id=sha(prior_url.encode())[:24], url=prior_url, source_sha256=prior_sha256),
+            )
+            if (
+                not doc.get("wire_account")
+                or earlier["wire_account"] != doc["wire_account"]
+                or moment(earlier["published_at"]) >= moment(entry["published_at"])
+                or " ".join(prior_quote.split()) not in " ".join(earlier["text"].split())
+            ):
+                raise ValueError(
+                    "Earlier source must be the same issuer, earlier and quoted exactly"
+                )
+        identity = None
+        if ticker:
+            identity = resolve_identity(doc["text"], doc.get("issuer_name"), title=entry["title"])
+            if not identity or (
+                identity["ticker"],
+                identity["issuer_cik"],
+                identity["source_url"],
+            ) != (ticker, issuer_cik, identity_evidence_url):
+                raise ValueError("Identity does not match verified SEC evidence for this release")
+        if decision == "RETRY_IDENTITY" and (
+            (root / "reader" / event_id).exists()
+            or entry.get("extraction")
+            or any(k.startswith(event_id + ":") for k in state.get("api_reservations", {}))
+        ):
+            raise ValueError("Existing reader attempt requires separate review")
+        if not receipt:
+            receipt = dict(
+                request=request,
+                reviewed_at=now(),
+                original_reason=entry.get("reason"),
+                release_received_at=entry["received_at"],
+                identity=identity,
+            )
+            publish_bytes(path, (json.dumps(receipt, ensure_ascii=False, indent=2) + "\n").encode())
+        entry.setdefault("applied_reviews", []).append(key)
+        if identity:
+            entry.update(
+                ticker=ticker, issuer_cik=issuer_cik, identity_evidence=receipt["identity"]
+            )
+        if decision == "RETRY_IDENTITY":
+            entry.update(
+                status="DISCOVERED",
+                reason="Verified issuer awaiting ordinary source checks",
+                reviewed_source_sha256=source_sha256,
+            )
+        elif decision == "HOLD_MISSING_PRIOR":
+            entry.update(status="MISSING_PRIOR", reason=reason)
+        else:
+            entry.update(status="REVIEWED_EXCLUDED", reason=reason)
+        write_json(root / "feed_state.json", state)
+        status(root, state)
+        return receipt
+
+
 def status(root, state):
     entries = list(state["entries"].values())
     counts = {s: sum(e["status"] == s for e in entries) for s in set(e["status"] for e in entries)}
@@ -568,19 +761,21 @@ def status(root, state):
         screened_out_count=counts.get("SCREENED_OUT", 0),
         extraction_attempted_count=sum("extraction" in e for e in entries),
         candidate_count=sum(bool(e.get("candidate_path")) for e in entries),
-        review_pending_count=sum(
-            e["status"]
-            in (
-                "REVIEW_PENDING",
-                "EXTRACTION_REJECTED",
-                "MISSING_PRIOR",
-                "INCOMPLETE_INVENTORY",
-                "IDENTITY_UNKNOWN",
-            )
+        review_pending_count=sum(e["status"] in REVIEW_REASONS for e in entries),
+        review_closed_count=counts.get("REVIEWED_EXCLUDED", 0)
+        + sum(
+            e["status"] == "FACTS_NOT_ELIGIBLE"
+            and bool(e.get("manual_reviewed_at") and e.get("original_status") in REVIEW_REASONS)
             for e in entries
         ),
+        pending_reviews=[
+            {"title": e["title"], "status": e["status"], "reason": REVIEW_REASONS[e["status"]]}
+            for e in entries
+            if e["status"] in REVIEW_REASONS
+        ],
         excluded_count=sum(
-            e["status"] in ("SCREENED_OUT", "SOURCE_INCOMPARABLE", "FACTS_NOT_ELIGIBLE")
+            e["status"]
+            in ("SCREENED_OUT", "SOURCE_INCOMPARABLE", "FACTS_NOT_ELIGIBLE", "REVIEWED_EXCLUDED")
             for e in entries
         ),
         api_remaining_estimate_usd=max(
@@ -598,8 +793,6 @@ def status(root, state):
 
 
 def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=None):
-    import fcntl
-
     root = Path(root)
     with (root / ".feed.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -639,7 +832,13 @@ def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=N
             if entry["status"] not in ("DISCOVERED", "FETCH_ERROR", "PREPARED"):
                 continue
             try:
-                current = retain_source(root, entry["url"], fetcher)
+                if entry.get("reviewed_source_sha256"):
+                    if entry["source_sha256"] != entry["reviewed_source_sha256"]:
+                        raise ValueError("Verified issuer is bound to a different source")
+                    current = retained_for_review(root, entry)
+                else:
+                    current = retain_source(root, entry["url"], fetcher)
+                entry["source_sha256"] = current["raw_sha256"]
                 # Feed publication clock is independently retained; HTML must agree when present.
                 if current["published_at"] and moment(current["published_at"]) != moment(
                     entry["published_at"]
@@ -649,14 +848,24 @@ def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=N
                     )
                     continue
                 current["published_at"] = entry["published_at"]
-                entry["source_sha256"] = current["raw_sha256"]
                 if not current["text"] or not screen(current["text"]):
                     entry.update(
                         status="SCREENED_OUT",
                         reason="Mechanical annual revenue + operating guidance screen absent; no API call",
                     )
                     continue
-                ticker, cik = ticker_from_text(current["text"], mapping)
+                if entry.get("reviewed_source_sha256"):
+                    identity = entry["identity_evidence"]
+                    ticker, cik = identity["ticker"], identity["issuer_cik"]
+                else:
+                    ticker, cik = ticker_from_text(current["text"], mapping)
+                    if not ticker:
+                        identity = resolve_identity(
+                            current["text"], current.get("issuer_name"), title=entry["title"]
+                        )
+                        if identity:
+                            ticker, cik = identity["ticker"], identity["issuer_cik"]
+                            entry["identity_evidence"] = identity
                 if not ticker:
                     entry.update(
                         status="IDENTITY_UNKNOWN",
@@ -825,12 +1034,33 @@ def main(argv=None):
     parser.add_argument("--state", type=Path, required=True)
     parser.add_argument("--cik-map", type=Path)
     parser.add_argument("--start-at")
-    parser.add_argument("--live", action="store_true")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--live", action="store_true")
+    mode.add_argument(
+        "--apply-review",
+        type=Path,
+        metavar="JSON",
+        help="Apply one documented source review to the existing queue",
+    )
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--credit-budget", type=float, default=57.0)
     parser.add_argument("--prior-spend", type=float, default=0.47)
     parser.add_argument("--credit-expiry", default=EXPIRY)
     args = parser.parse_args(argv)
+    if args.apply_review is not None:
+        if not (args.state / "feed_state.json").is_file():
+            parser.error("--apply-review requires an initialized feed")
+        receipt = apply_review(args.state, **json.loads(args.apply_review.read_text()))
+        print(
+            json.dumps(
+                {
+                    "event_id": receipt["request"]["event_id"],
+                    "decision": receipt["request"]["decision"],
+                    "reviewed_at": receipt["reviewed_at"],
+                }
+            )
+        )
+        return
     if not (args.state / "feed_state.json").exists():
         if not args.cik_map:
             parser.error("--cik-map is required on initialization")

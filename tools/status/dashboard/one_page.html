@@ -244,8 +244,11 @@ function evidence(experiment) {
     box.append(element('strong','',count(trial.filled_pairs)),element('p','metric-label','paired paper entries'));
     box.append(element('p','capture',count(trial.admitted) + ' admitted · ' + count(trial.excluded) + ' excluded at paper admission'));
     box.append(element('p','capture',count(feed.discovered_count) + ' releases found · ' + count(feed.extraction_attempted_count) + ' read by the API'));
-    box.append(element('p','capture',count(feed.excluded_count) + ' excluded by source checks · ' + count(feed.review_pending_count) + ' awaiting review'));
-    box.append(element('p','requirement','Missing or excluded cases do not count as successful comparisons.'));
+    const reviewed = feed.review_closed_count == null ? '' : ' (' + count(feed.review_closed_count) + ' after review)';
+    box.append(element('p','capture',count(feed.excluded_count) + ' releases ruled out' + reviewed + ' · ' + count(feed.review_pending_count) + ' awaiting review'));
+    for (const item of feed.pending_reviews || []) {
+      box.append(element('p','requirement',item.title + ' — ' + item.reason));
+    }
     return box;
   }
   if (experiment.id === 'srv:research_r2' && cloudResults) {
