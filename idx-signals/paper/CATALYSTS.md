@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-18T10:29:20Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-18T10:29:32Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 33 (FIRE 12, ABSTAIN 21) over 11 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 14, SEALED 33, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 33 (FIRE 12, ABSTAIN 21) over 11 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 15, SEALED 33, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
