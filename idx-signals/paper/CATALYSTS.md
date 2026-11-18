@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-18T10:38:14Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-18T23:02:46Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 33 (FIRE 12, ABSTAIN 21) over 11 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 15, SEALED 33, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 34 (FIRE 13, ABSTAIN 21) over 12 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 15, SEALED 34, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 5, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP ETN (Eaton Corp plc) - filed 2026-11-17, sealed 2026-11-18T10:37:32Z, cutoff 2026-11-18T14:15:00Z
-Set `CAT-FORM4_SHARP-0001104659-26-129065`, scan `SCAN-US-2026-11-17-G2_RET30`; signal close 337.11 on 2026-11-17; entry: the entry session's opening print (2026-11-18). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001104659-26-129065` by Foster David B (See Remarks below.), Johnson Gerald (director); purchases USD 170,894; top executive no; holding up +16.4%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001104659-26-129065.
-Twins (band+liq+mom+dd): SPCX 141.7, JBL 243.61, NKE 35.85, POWL 150.86, HRB 48.07, OVV 63.84, PR 22.18, QLYS 174.67, ENTG 140.78, MDGL 421.99, ETSY 82.62, MKC 44.73, W 107, XYL 94.65, BURL 235.14, AKAM 84.64, CTSH 60, NEM 111.26, PH 920.84, SLB 48.95.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP PRAA (PRA GROUP INC) - filed 2026-11-17, sealed 2026-11-18T10:37:32Z, cutoff 2026-11-18T14:15:00Z
 Set `CAT-FORM4_SHARP-0001185352-26-000002`, scan `SCAN-US-2026-11-17-G2_RET30`; signal close 11.17 on 2026-11-17; entry: the entry session's opening print (2026-11-18). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001185352-26-000002` by FREDRICKSON STEVEN D (director); purchases USD 295,000; top executive no; holding up n/a.
@@ -207,4 +200,11 @@ Form 4 `0001878313-26-000104` by Vitoc Vlad (Chief Executive Officer), Smith Sta
 Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001878313-26-000104.
 Twins (band+liq+mom+dd): CING 4.72, SMRT 1.49, TMCI 4.44, ENGN 1.72, BHR 1.53, DOUG 1.57, SEV 1.66, STFS 4.98, VFS 2.92, LUNG 2.735, CAMP 4, GECC 4.94, ONL 2.44, CHOW 3.53, ANTX 4.23, ABLV 2.21, SPWH 1.15, VEEA 4.67, RBBN 1.42, QTRX 2.86.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D TRIP (TripAdvisor, Inc.) - accepted 2026-11-18T17:23:00-05:00, sealed 2026-11-18T23:02:44Z, cutoff 2026-11-19T14:15:00Z
+Set `CAT-SEC13D-0000921895-26-003216`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 7.22 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20.
+Filing `0000921895-26-003216` by Pale Fire Capital SE; Item 4 intent words: board, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 850.7M, dilution filings 0.
+Twins (band+liq+mom+dd): NTLA 9.77, RES 5.16, GPRE 11.62, BKD 8.64, FRSH 12.79.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
