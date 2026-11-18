@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-17T23:01:29Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-18T23:00:29Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 177 live forecasts, 28 calls, 9 wrong of 21 (42.9%); p that the true rate exceeds 50%: 0.808.
+- **Evidence so far:** 190 live forecasts, 29 calls, 10 wrong of 25 (40.0%); p that the true rate exceeds 50%: 0.885.
 
 ## The bar
 
@@ -18,22 +18,35 @@ Generated 2026-11-17T23:01:29Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-17 | VAI | 0.385 | 0.561 | - | 0.174 | pending |
-| 2026-11-17 | TGL | 0.568 | 0.561 | **DUMP** | 0.228 | pending |
+| 2026-11-18 | VWAV | 0.590 | 0.562 | **DUMP** | 0.510 | pending |
+| 2026-11-18 | SVRE | 0.372 | 0.562 | - | 0.305 | pending |
+| 2026-11-18 | SKYA | 0.407 | 0.562 | - | 0.191 | pending |
+| 2026-11-18 | NUR | 0.392 | 0.562 | - | 0.240 | pending |
+| 2026-11-18 | MPU | 0.400 | 0.562 | - | 0.216 | pending |
+| 2026-11-18 | ICU | 0.356 | 0.562 | - | 0.244 | pending |
+| 2026-11-18 | HIHO | 0.389 | 0.562 | - | 0.186 | pending |
+| 2026-11-18 | CUE | 0.297 | 0.562 | - | 0.176 | pending |
+| 2026-11-18 | CLRO | 0.410 | 0.562 | - | 0.189 | pending |
+| 2026-11-18 | BTOC | 0.462 | 0.562 | - | 0.276 | pending |
+| 2026-11-18 | AZI | 0.399 | 0.562 | - | 0.213 | pending |
+| 2026-11-18 | ANPA | 0.334 | 0.562 | - | 0.204 | pending |
+| 2026-11-18 | AKAN | 0.557 | 0.562 | - | 0.317 | pending |
+| 2026-11-17 | VAI | 0.385 | 0.561 | - | 0.174 | dumped |
+| 2026-11-17 | TGL | 0.568 | 0.561 | **DUMP** | 0.228 | did not dump |
 | 2026-11-17 | SYPR | 0.241 | 0.561 | - | 0.103 | pending |
-| 2026-11-17 | SMTK | 0.642 | 0.561 | **DUMP** | 0.488 | pending |
-| 2026-11-17 | SLS | 0.454 | 0.561 | - | 0.219 | pending |
-| 2026-11-17 | SGRX | 0.441 | 0.561 | - | 0.223 | pending |
-| 2026-11-17 | NCT | 0.765 | 0.561 | **DUMP** | 0.608 | pending |
-| 2026-11-17 | MPU | 0.434 | 0.561 | - | 0.230 | pending |
-| 2026-11-17 | KALA | 0.433 | 0.561 | - | 0.147 | pending |
-| 2026-11-17 | GP | 0.372 | 0.561 | - | 0.275 | pending |
-| 2026-11-17 | GLSI | 0.286 | 0.561 | - | 0.127 | pending |
+| 2026-11-17 | SMTK | 0.642 | 0.561 | **DUMP** | 0.488 | dumped |
+| 2026-11-17 | SLS | 0.454 | 0.561 | - | 0.219 | did not dump |
+| 2026-11-17 | SGRX | 0.441 | 0.561 | - | 0.223 | did not dump |
+| 2026-11-17 | NCT | 0.765 | 0.561 | **DUMP** | 0.608 | dumped |
+| 2026-11-17 | MPU | 0.434 | 0.561 | - | 0.230 | did not dump |
+| 2026-11-17 | KALA | 0.433 | 0.561 | - | 0.147 | did not dump |
+| 2026-11-17 | GP | 0.372 | 0.561 | - | 0.275 | did not dump |
+| 2026-11-17 | GLSI | 0.286 | 0.561 | - | 0.127 | did not dump |
 | 2026-11-17 | FRTT | 0.376 | 0.561 | - | 0.187 | pending |
-| 2026-11-17 | DFSC | 0.578 | 0.561 | **DUMP** | 0.246 | pending |
-| 2026-11-17 | CVKD | 0.392 | 0.561 | - | 0.156 | pending |
-| 2026-11-17 | AZI | 0.438 | 0.561 | - | 0.228 | pending |
-| 2026-11-17 | AYTU | 0.333 | 0.561 | - | 0.134 | pending |
+| 2026-11-17 | DFSC | 0.578 | 0.561 | **DUMP** | 0.246 | dumped |
+| 2026-11-17 | CVKD | 0.392 | 0.561 | - | 0.156 | dumped |
+| 2026-11-17 | AZI | 0.438 | 0.561 | - | 0.228 | did not dump |
+| 2026-11-17 | AYTU | 0.333 | 0.561 | - | 0.134 | did not dump |
 | 2026-11-16 | VIVK | 0.665 | 0.560 | **DUMP** | 0.552 | dumped |
 | 2026-11-16 | TDTH | 0.492 | 0.560 | - | 0.283 | did not dump |
 | 2026-11-16 | HIHO | 0.484 | 0.560 | - | 0.218 | did not dump |
