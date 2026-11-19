@@ -4,13 +4,13 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-18T23:02:23.879492Z; latest US scan session: 2026-11-18.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-18T22:58:51Z (signal session 2026-11-18).
+- Assessed 2026-11-19T23:02:27.288081Z; latest US scan session: 2026-11-19.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-19T22:58:39Z (signal session 2026-11-19).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-As of the latest record (2026-11-18T23:01:36Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
+As of the latest record (2026-11-19T23:01:57Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
 
 ## The three plain answers
 
@@ -22,8 +22,8 @@ As of the latest record (2026-11-18T23:01:36Z). Paper only: no orders, no money.
 
 | Arm | Cash | Reserved | Available | Open value | Equity | Realized | Unrealized | Pending | Filled | Rejected | Cancelled | Declined | Closed |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| BASE | $10,105.51 | $2,607.30 | $7,498.21 | $0.00 | $10,105.51 | $105.51 | $0.00 | 3 | 1 | 11 | 0 | 149 | 1 |
-| FIXED5 | $9,787.01 | $1,720.24 | $8,066.77 | $0.00 | $9,787.01 | -$212.99 | $0.00 | 2 | 8 | 0 | 0 | 154 | 8 |
+| BASE | $10,105.51 | $2,363.42 | $7,742.09 | $0.00 | $10,105.51 | $105.51 | $0.00 | 3 | 1 | 12 | 0 | 159 | 1 |
+| FIXED5 | $9,787.01 | $1,720.24 | $8,066.77 | $0.00 | $9,787.01 | -$212.99 | $0.00 | 2 | 8 | 0 | 0 | 165 | 8 |
 
 ## Open positions and valuation
 
@@ -31,8 +31,8 @@ As of the latest record (2026-11-18T23:01:36Z). Paper only: no orders, no money.
 
 ## Drawdown (from recorded nightly marks only)
 
-- BASE: -0.32% across 14 mark(s), trough at the close of 2026-11-12
-- FIXED5: -2.18% across 14 mark(s), trough at the close of 2026-11-18
+- BASE: -0.32% across 15 mark(s), trough at the close of 2026-11-12
+- FIXED5: -2.18% across 15 mark(s), trough at the close of 2026-11-18
 
 ## Every decision
 
@@ -190,7 +190,7 @@ As of the latest record (2026-11-18T23:01:36Z). Paper only: no orders, no money.
 | 2026-11-17 | MPU | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.41 + 36.40 would exceed 1.5% of equity 10105.51 | - | - | - |
 | 2026-11-17 | DFSC | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.41 + 50.44 would exceed 1.5% of equity 10105.51 | - | - | - |
 | 2026-11-17 | GP | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.41 + 50.49 would exceed 1.5% of equity 10105.51 | - | - | - |
-| 2026-11-18 | CUE | BASE | KOD | order 247 @ <= 3.43, reserved $851.45 | pending: next open (before 2026-11-19T14:30:00Z) | - | - |
+| 2026-11-18 | CUE | BASE | KOD | order 247 @ <= 3.43, reserved $851.45 | REJECTED_STOP_TOO_WIDE: open 4.55 is above the permitted entry 3.43: the stop at 3.26 would be 28.35% away, more than 5% | - | - |
 | 2026-11-18 | HIHO | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.44 + 50.52 would exceed 1.5% of equity 10105.51 | - | - | - |
 | 2026-11-18 | CLRO | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.44 + 50.50 would exceed 1.5% of equity 10105.51 | - | - | - |
 | 2026-11-18 | SKYA | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.44 + 50.47 would exceed 1.5% of equity 10105.51 | - | - | - |
@@ -202,6 +202,17 @@ As of the latest record (2026-11-18T23:01:36Z). Paper only: no orders, no money.
 | 2026-11-18 | BTOC | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.44 + 50.48 would exceed 1.5% of equity 10105.51 | - | - | - |
 | 2026-11-18 | SVRE | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.44 + 50.50 would exceed 1.5% of equity 10105.51 | - | - | - |
 | 2026-11-18 | AKAN | BASE | KOD | declined: LIMIT_PLANNED_RISK: 151.44 + 50.38 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | ZKIN | BASE | KOD | order 535 @ <= 1.13, reserved $607.57 | pending: next open (before 2026-11-20T14:30:00Z) | - | - |
+| 2026-11-19 | MRKR | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.52 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | ELOG | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.52 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | LVWR | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.52 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | SEAT | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.52 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | BAER | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.52 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | HTCR | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.48 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | MPU | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.42 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | RAYA | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.50 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | POAS | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.42 would exceed 1.5% of equity 10105.51 | - | - | - |
+| 2026-11-19 | VIVS | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.76 + 50.51 would exceed 1.5% of equity 10105.51 | - | - | - |
 | 2026-10-30 | FMC | FIXED5 | KOD | order 138 @ <= 6.8, reserved $939.81 | filled 138 @ 6.11 on 2026-11-02, stop 5.81 | STOP 2026-11-06 @ 5.81 | -$43.89 |
 | 2026-10-30 | ASUR | FIXED5 | KOD | order 92 @ <= 10.34, reserved $952.71 | filled 92 @ 9.98 on 2026-11-02, stop 9.49 | STOP 2026-11-02 @ 9.49 | -$47.79 |
 | 2026-11-05 | APP | FIXED5 | KOD | order 2 @ <= 391.7, reserved $783.79 | filled 2 @ 356 on 2026-11-06, stop 338.2 | TIME_EXIT_AT_CLOSE 2026-11-13 @ 409.1 | $105.51 |
@@ -366,3 +377,14 @@ As of the latest record (2026-11-18T23:01:36Z). Paper only: no orders, no money.
 | 2026-11-18 | BTOC | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.91 would exceed 1.5% of equity 9787.01 | - | - | - |
 | 2026-11-18 | SVRE | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.90 would exceed 1.5% of equity 9787.01 | - | - | - |
 | 2026-11-18 | AKAN | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.90 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | ZKIN | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.84 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | MRKR | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.89 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | ELOG | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.93 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | LVWR | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.90 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | SEAT | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.89 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | BAER | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.93 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | HTCR | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.92 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | MPU | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.82 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | RAYA | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.92 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | POAS | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.74 would exceed 1.5% of equity 9787.01 | - | - | - |
+| 2026-11-19 | VIVS | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.92 would exceed 1.5% of equity 9787.01 | - | - | - |
