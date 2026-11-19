@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-19T23:02:41Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-19T23:02:53Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 32 over 11 signal sessions; events seen: SEALED 32; coverage gaps 0.
+Sets 33 over 12 signal sessions; events seen: SEALED 33; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 17, FIRE 15
+- Classes: ABSTAIN 17, FIRE 16
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 263 tags: 63 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP RILY (BRC Group Holdings, Inc.) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-121662`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 3.03 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-121662` by RILEY BRYANT R (Chairman and Co-CEO); purchases USD 116,767; top executive yes; holding up n/a.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001213900-26-121662.
-Twins (band+liq+mom+dd): CTMX 1.88, CCCC 2.475, JBI 3.23, DFDV 2.61, ACDC 2.84, WRD 3.67, ALMS 4.395, BIOA 4.77, ALOY 4.51, CYH 1.86, KOPN 2.98, TMQ 1.85, AUTL 1.06, NFGC 1.27, UPB 2.08, JMIA 2.74, NEWP 4.9, LTBR 3.63, ARTV 3.77, USAS 2.17.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP XTIA (XTI Aerospace, Inc.) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
 Set `CAT-FORM4_SHARP-0001213900-26-121959`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 0.8801 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0000902664-26-004629` by CARRONADE CAPITAL MANAGEMENT, LP; Item 4 intent
 Coverage **FIRE**; pre-entry move +1.16%, market value USD 2,079.7M, dilution filings 0.
 Twins (band+liq+mom+dd): SFL 10.55, GO 11.43, MBC 6.02, RVLV 18.85, VSTM 6.86.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 BKD (Brookdale Senior Living Inc.) - accepted 2026-11-19T08:30:19-05:00, sealed 2026-11-19T23:02:51Z, cutoff 2026-11-20T14:15:00Z
+Set `CAT-SEC13D_V2-0000902664-26-004629`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 8.69 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000902664-26-004629` by CARRONADE CAPITAL MANAGEMENT, LP; cover page max 5.8% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 2,079.7M from XBRL; parent CAT-SEC13D-0000902664-26-004629.
+Twins (band+liq+mom+dd): SFL 10.55, GO 11.43, MBC 6.02, RVLV 18.85, VSTM 6.86, NTLA 9.52, PBI 14.67, DLO 12.67, GPRE 11.66, AVAH 10.7, OMER 14.01, NIQ 16.79, TALO 15.08, NAT 6.18, EC 13.37, RES 5.06, PAX 9.05, DXC 13.33, TDAY 5.96, AI 10.04.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
