@@ -27,13 +27,17 @@ import xml.etree.ElementTree as ET
 
 from . import guidance_margin_reader as reader
 from .guidance_margin_facts import qualify
-from .guidance_margin_identity import resolve_identity
+from .guidance_margin_directory import refresh as refresh_directory
+from .guidance_margin_identity import LISTING_TAG, resolve_identity
 from .provenance import publish_bytes
 
 FEED_URL = "https://www.prnewswire.com/rss/financial-services-latest-news/earnings-list.rss"
 DEFAULT_MODEL = "gpt-5.4-2026-03-05"
 EXPIRY = "2026-12-03T13:41:10+00:00"
-PRICE = {"gpt-5.4-2026-03-05": (2.5, 0.25, 15), "gpt-5.4-mini-2026-03-17": (0.75, 0.075, 4.5)}
+PRICE = {
+    "gpt-5.4-2026-03-05": (2.5, 0.25, 15),
+    "gpt-5.4-mini-2026-03-17": (0.75, 0.075, 4.5),
+}
 REVIEW_FIELDS = (
     "same_issuer",
     "correct_full_year_columns",
@@ -231,7 +235,8 @@ def load_cik_map(path):
 
 def ticker_from_text(text, mapping):
     matches = re.findall(
-        r"\b(?:NASDAQ|Nasdaq|NYSE|NYSE American)\s*[:：]\s*([A-Z][A-Z0-9.\-]{0,7})\b", text
+        r"\b(?:NASDAQ|Nasdaq|NYSE|NYSE American)\s*[:：]\s*([A-Z][A-Z0-9.\-]{0,7})\b",
+        text,
     )
     matches = list(dict.fromkeys(matches))
     return (
@@ -243,7 +248,9 @@ def ticker_from_text(text, mapping):
 
 def screen(text):
     annual = re.search(
-        r"full[ -]year|fiscal\s+(?:year\s+)?20\d\d|(?:20\d\d\s+(?:outlook|guidance))", text, re.I
+        r"full[ -]year|fiscal\s+(?:year\s+)?20\d\d|(?:20\d\d\s+(?:outlook|guidance))",
+        text,
+        re.I,
     )
     sales = re.search(r"\b(?:revenue|sales)\b", text, re.I)
     operating = re.search(r"operating\s+(?:income|profit|margin|loss)", text, re.I)
@@ -304,53 +311,80 @@ def inventory(root, current, fetcher=fetch):
         + ("&" if "?" in current["history_url"] else "?")
         + "page=1&pagesize=100"
     )
-    archive = retain_source(root, archive_url, fetcher)
     cutoff = moment(current["published_at"]) - timedelta(days=200)
-    docs, errors, prior = [], [], None
+    docs, errors, pages = [], [], {}
+    prior = None
     previous = moment(current["published_at"])
     reached_cutoff = False
-    for item in archive["archive_links"]:
-        if item["url"] == current["url"]:
-            continue
-        try:
-            doc = retain_source(root, item["url"], fetcher)
-        except Exception as exc:
-            errors.append({"url": item["url"], "error": type(exc).__name__})
-            continue
-        if not doc["published_at"]:
-            errors.append({"url": item["url"], "error": "MissingPublicationClock"})
-            continue
-        published = moment(doc["published_at"])
-        if published >= moment(current["published_at"]):
-            continue
-        if published > previous:
-            errors.append({"url": item["url"], "error": "ArchiveNotChronological"})
-        previous = published
-        if published < cutoff:
-            reached_cutoff = True
-            break
-        docs.append(doc)
+    visited = {current["url"]}
+    page = archive_url
+    while page and not (prior or reached_cutoff):
         if (
-            current.get("wire_account")
-            and doc.get("wire_account") == current["wire_account"]
-            and screen(doc["text"])
+            page in pages
+            or urllib.parse.urlsplit(page)[:3] != urllib.parse.urlsplit(archive_url)[:3]
         ):
-            prior = doc
+            errors.append({"url": page, "error": "ArchivePaginationInvalid"})
             break
-    complete = (
-        bool(archive["archive_links"])
-        and not errors
-        and (prior is not None or reached_cutoff or not archive["next_url"])
-    )
+        archive = retain_source(root, page, fetcher)
+        pages[page] = archive["raw_sha256"]
+        if not archive["archive_links"]:
+            errors.append({"url": page, "error": "EmptyArchivePage"})
+            break
+        if len(pages) > 1 and all(item["url"] in visited for item in archive["archive_links"]):
+            errors.append({"url": page, "error": "RepeatedArchivePage"})
+            break
+        for item in archive["archive_links"]:
+            url = item["url"]
+            if url in visited:
+                continue
+            visited.add(url)
+            try:
+                doc = retain_source(root, url, fetcher)
+            except Exception as exc:
+                errors.append({"url": url, "error": type(exc).__name__})
+                continue
+            if not doc["published_at"]:
+                errors.append({"url": url, "error": "MissingPublicationClock"})
+                continue
+            published = moment(doc["published_at"])
+            if published >= moment(current["published_at"]):
+                continue
+            if published > previous:
+                errors.append({"url": url, "error": "ArchiveNotChronological"})
+            previous = published
+            if published < cutoff:
+                reached_cutoff = True
+                break
+            docs.append(doc)
+            if (
+                current.get("wire_account")
+                and doc.get("wire_account") == current["wire_account"]
+                and screen(doc["text"])
+            ):
+                prior = doc
+                break
+        page = archive["next_url"]
+    complete = bool(pages) and not errors and (prior is not None or reached_cutoff or not page)
     result = {
         "scope": "Every retained PRNewswire issuer release through first earlier guidance candidate, max 200 days; not all SEC disclosures",
         "archive_url": archive_url,
-        "archive_raw_sha256": archive["raw_sha256"],
+        "archive_raw_sha256": pages.get(archive_url),
+        "archive_pages": pages,
         "complete": complete,
         "reached_lookback_boundary": reached_cutoff,
         "errors": errors,
         "releases": [
-            {k: d[k] for k in ("id", "url", "published_at", "text_sha256", "wire_account")}
+            {
+                k: d[k]
+                for k in (
+                    "id",
+                    "url",
+                    "published_at",
+                    "raw_sha256",
+                    "text_sha256",
+                    "wire_account",
+                )
+            }
             for d in docs
         ],
     }
@@ -680,7 +714,11 @@ def apply_review(
             safe_url(prior_url)
             earlier = retained_for_review(
                 root,
-                dict(id=sha(prior_url.encode())[:24], url=prior_url, source_sha256=prior_sha256),
+                dict(
+                    id=sha(prior_url.encode())[:24],
+                    url=prior_url,
+                    source_sha256=prior_sha256,
+                ),
             )
             if (
                 not doc.get("wire_account")
@@ -693,7 +731,14 @@ def apply_review(
                 )
         identity = None
         if ticker:
-            identity = resolve_identity(doc["text"], doc.get("issuer_name"), title=entry["title"])
+            directory_path = root / "issuer_directory.json"
+            directory = json.loads(directory_path.read_text()) if directory_path.exists() else None
+            identity = resolve_identity(
+                doc["text"],
+                doc.get("issuer_name"),
+                title=entry["title"],
+                directory=directory,
+            )
             if not identity or (
                 identity["ticker"],
                 identity["issuer_cik"],
@@ -714,11 +759,16 @@ def apply_review(
                 release_received_at=entry["received_at"],
                 identity=identity,
             )
-            publish_bytes(path, (json.dumps(receipt, ensure_ascii=False, indent=2) + "\n").encode())
+            publish_bytes(
+                path,
+                (json.dumps(receipt, ensure_ascii=False, indent=2) + "\n").encode(),
+            )
         entry.setdefault("applied_reviews", []).append(key)
         if identity:
             entry.update(
-                ticker=ticker, issuer_cik=issuer_cik, identity_evidence=receipt["identity"]
+                ticker=ticker,
+                issuer_cik=issuer_cik,
+                identity_evidence=receipt["identity"],
             )
         if decision == "RETRY_IDENTITY":
             entry.update(
@@ -752,7 +802,15 @@ def status(root, state):
             "feed_gap_count",
         )
     }
+    historical = [
+        row
+        for key, row in state.get("api_reservations", {}).items()
+        if key.startswith("replay-") and row["status"] != "NOT_CALLED"
+    ]
     result.update(
+        replay_api_calls=len(historical),
+        replay_api_estimated_usd=sum(row["usd"] for row in historical),
+        live_api_calls=state["api_calls"] - len(historical),
         updated_at=now(),
         state="DEGRADED" if state["last_error"] else "RUNNING",
         discovered_count=len(entries),
@@ -769,13 +827,22 @@ def status(root, state):
             for e in entries
         ),
         pending_reviews=[
-            {"title": e["title"], "status": e["status"], "reason": REVIEW_REASONS[e["status"]]}
+            {
+                "title": e["title"],
+                "status": e["status"],
+                "reason": REVIEW_REASONS[e["status"]],
+            }
             for e in entries
             if e["status"] in REVIEW_REASONS
         ],
         excluded_count=sum(
             e["status"]
-            in ("SCREENED_OUT", "SOURCE_INCOMPARABLE", "FACTS_NOT_ELIGIBLE", "REVIEWED_EXCLUDED")
+            in (
+                "SCREENED_OUT",
+                "SOURCE_INCOMPARABLE",
+                "FACTS_NOT_ELIGIBLE",
+                "REVIEWED_EXCLUDED",
+            )
             for e in entries
         ),
         api_remaining_estimate_usd=max(
@@ -792,11 +859,191 @@ def status(root, state):
     return result
 
 
+def retry_identities(root, directory):
+    state = json.loads((root / "feed_state.json").read_text())
+    for entry in state["entries"].values():
+        if entry["status"] != "IDENTITY_UNKNOWN":
+            continue
+        doc = retained_for_review(root, entry)
+        identity = resolve_identity(doc["text"], doc.get("issuer_name"), directory=directory)
+        if not identity:
+            continue
+        quote = LISTING_TAG.search(doc["text"])[0]
+        urls = [entry["url"], *(s["url"] for s in identity.get("sources", []))]
+        if identity["source_url"] not in urls:
+            urls.append(identity["source_url"])
+        apply_review(
+            root,
+            event_id=entry["id"],
+            expected_status="IDENTITY_UNKNOWN",
+            source_sha256=entry["source_sha256"],
+            reviewer="KOD verified issuer directory",
+            reason="Publishing issuer and explicit listing match the dated listing evidence.",
+            decision="RETRY_IDENTITY",
+            evidence_urls=urls,
+            evidence_quote=quote,
+            ticker=identity["ticker"],
+            issuer_cik=identity["issuer_cik"],
+            identity_evidence_url=identity["source_url"],
+        )
+
+
+def process_packet(
+    root, state, entry, packet, inv, attempt_id, *, transport=None, review_transport=None
+):
+    current = packet["current"]["source"]
+    prior = packet["prior"]["source"]
+    reason = allowance(state, len(json.dumps(packet).encode()), now())
+    if reason:
+        entry.update(status=reason, reason=reason)
+        return
+    out = root / "reader" / attempt_id
+    # Intent directory prevents a crash from causing an automatic paid retry.
+    if out.exists():
+        entry.update(
+            status="REVIEW_PENDING",
+            reason="Prior reader intent exists; inspect retained result before any retry",
+        )
+        return
+    reason = reserve_call(
+        root,
+        state,
+        len(json.dumps(packet).encode()),
+        attempt_id + ":extract",
+    )
+    if reason:
+        entry.update(status=reason, reason=reason)
+        return
+    extracted = reader.run_once(packet, out, state["model"], transport=transport)
+    settle_call(root, state, attempt_id + ":extract", extracted)
+    entry["extraction"] = extracted["status"]
+    if not (out / "candidate.json").exists():
+        entry.update(
+            status="EXTRACTION_REJECTED",
+            reason="Retained model response needs source review",
+        )
+        return
+    candidate = json.loads((out / "candidate.json").read_text())
+    entry.update(
+        status="REVIEW_PENDING",
+        candidate_path=str(out / "candidate.json"),
+        reason="Source-bound candidate; independent semantic review pending",
+    )
+    inv["intervening_source_texts"] = []
+    for item in inv["releases"]:
+        if prior["published_at"] < item["published_at"] < current["published_at"]:
+            # Sources are already retained by inventory().
+            saved = root / "sources" / item["id"] / (item["raw_sha256"] + ".json")
+            doc = json.loads(saved.read_text())
+            if doc["url"] != item["url"] or sha(doc["text"].encode()) != item["text_sha256"]:
+                raise ValueError("Intermediate release differs from source inventory")
+            inv["intervening_source_texts"].append(
+                {
+                    "url": doc["url"],
+                    "published_at": doc["published_at"],
+                    "text": doc["text"],
+                }
+            )
+    request = review_request(packet, candidate, inv, state["model"])
+    reason = allowance(state, len(json.dumps(request).encode()), now())
+    if reason:
+        entry["reason"] = reason
+        return
+    reason = reserve_call(
+        root,
+        state,
+        len(json.dumps(request).encode()),
+        attempt_id + ":review",
+    )
+    if reason:
+        entry["reason"] = reason
+        return
+    reviewed = run_review(
+        packet,
+        candidate,
+        inv,
+        root / "review" / attempt_id,
+        state["model"],
+        transport=review_transport,
+    )
+    settle_call(root, state, attempt_id + ":review", reviewed)
+    entry["semantic_review"] = reviewed.get("review")
+    if reviewed.get("review") and all(
+        reviewed["review"].get(k) == "SUPPORTED" for k in REVIEW_FIELDS
+    ):
+        result = copy.deepcopy(candidate)
+        result["external"].update(
+            attestor="source-bound-two-pass-agent-review",
+            evidence_notes="Wire-only prior coverage. " + reviewed["review"]["evidence_notes"],
+            latest_prior_source_id=prior["id"],
+        )
+        for key in (
+            "source_authenticity",
+            "metric_binding",
+            "prior_completeness",
+            "basis_comparable",
+            "perimeter_comparable",
+        ):
+            result["external"][key] = "VERIFIED"
+        result["clocks"]["decision_at"] = now()
+        qualified = qualify(result)
+        entry["qualification"] = qualified
+        if qualified["status"] != "FACTS_READY":
+            entry.update(
+                status="FACTS_NOT_ELIGIBLE",
+                reason="; ".join(qualified["reasons"]),
+            )
+        if qualified["status"] == "FACTS_READY":
+            ready = root / "reviewed" / (entry["id"] + ".json")
+            write_json(ready, result)
+            if entry["cohort"] in ("new_release", "initial_recent"):
+                prospective = copy.deepcopy(result)
+                prospective.update(
+                    purpose="prospective",
+                    schema_version="guidance-margin-prospective/v1",
+                )
+                write_json(
+                    root / "approved" / (entry["id"] + ".json"),
+                    {
+                        "ticker": entry["ticker"],
+                        "reviewer": "source-bound-two-pass-agent-review",
+                        "cohort": entry["cohort"],
+                        "fact_pair": prospective,
+                    },
+                )
+            entry.update(
+                status="AGENT_REVIEWED",
+                reviewed_path=str(ready),
+                reason="Two source-only passes agree; wire coverage explicitly limited; paper admission still checks clocks",
+            )
+    elif reviewed.get("review") and any(
+        reviewed["review"].get(k) == "CONTRADICTED" for k in REVIEW_FIELDS
+    ):
+        entry.update(
+            status="SOURCE_INCOMPARABLE",
+            reason=reviewed["review"]["evidence_notes"],
+        )
+
+
 def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=None):
     root = Path(root)
+    directory = None
+    directory_error = None
+    if live and fetcher is fetch:
+        try:
+            directory = refresh_directory(root)
+        except Exception as exc:
+            directory_error = type(exc).__name__ + ": " + str(exc)[:180]
+        if directory:
+            retry_identities(root, directory)
     with (root / ".feed.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         state = json.loads((root / "feed_state.json").read_text())
+        if directory or directory_error:
+            metadata = (
+                {k: directory[k] for k in ("verified_at", "mode", "sources")} if directory else {}
+            )
+            state["issuer_directory"] = {**metadata, "error": directory_error}
         mapping, _ = load_cik_map(root / "cik_map.csv")
         try:
             raw = fetcher(state["feed_url"])
@@ -844,7 +1091,8 @@ def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=N
                     entry["published_at"]
                 ):
                     entry.update(
-                        status="REVIEW_PENDING", reason="Feed and page publication clocks differ"
+                        status="REVIEW_PENDING",
+                        reason="Feed and page publication clocks differ",
                     )
                     continue
                 current["published_at"] = entry["published_at"]
@@ -858,14 +1106,22 @@ def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=N
                     identity = entry["identity_evidence"]
                     ticker, cik = identity["ticker"], identity["issuer_cik"]
                 else:
-                    ticker, cik = ticker_from_text(current["text"], mapping)
-                    if not ticker:
-                        identity = resolve_identity(
-                            current["text"], current.get("issuer_name"), title=entry["title"]
-                        )
-                        if identity:
-                            ticker, cik = identity["ticker"], identity["issuer_cik"]
-                            entry["identity_evidence"] = identity
+                    identity = resolve_identity(
+                        current["text"],
+                        current.get("issuer_name"),
+                        title=entry["title"],
+                        directory=directory,
+                    )
+                    if identity:
+                        ticker, cik = identity["ticker"], identity["issuer_cik"]
+                        entry["identity_evidence"] = identity
+                    else:
+                        ticker, cik = ticker_from_text(current["text"], mapping)
+                        if directory and (
+                            ticker in directory["listings"]
+                            or ticker in directory.get("unresolved_tickers", ())
+                        ):
+                            ticker, cik = None, None
                 if not ticker:
                     entry.update(
                         status="IDENTITY_UNKNOWN",
@@ -874,16 +1130,16 @@ def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=N
                     continue
                 entry.update(ticker=ticker, issuer_cik=cik)
                 inv, prior = inventory(root, current, fetcher)
-                if not prior:
-                    entry.update(
-                        status="MISSING_PRIOR",
-                        reason="No earlier matching guidance release in retained wire archive",
-                    )
-                    continue
                 if not inv["complete"]:
                     entry.update(
                         status="INCOMPLETE_INVENTORY",
                         reason="Prior wire inventory incomplete; needs review",
+                    )
+                    continue
+                if not prior:
+                    entry.update(
+                        status="MISSING_PRIOR",
+                        reason="No earlier matching guidance release in retained wire archive",
                     )
                     continue
                 packet = {
@@ -895,132 +1151,22 @@ def cycle(root, *, live=False, fetcher=fetch, transport=None, review_transport=N
                 packet_path = root / "packets" / (entry["id"] + ".json")
                 write_json(packet_path, packet)
                 entry.update(
-                    status="PREPARED", packet_path=str(packet_path), prior_url=prior["url"]
+                    status="PREPARED",
+                    packet_path=str(packet_path),
+                    prior_url=prior["url"],
                 )
                 if not live:
                     continue
-                reason = allowance(state, len(json.dumps(packet).encode()), now())
-                if reason:
-                    entry.update(status=reason, reason=reason)
-                    continue
-                out = root / "reader" / entry["id"]
-                # Intent directory prevents a crash from causing an automatic paid retry.
-                if out.exists():
-                    entry.update(
-                        status="REVIEW_PENDING",
-                        reason="Prior reader intent exists; inspect retained result before any retry",
-                    )
-                    continue
-                reason = reserve_call(
-                    root, state, len(json.dumps(packet).encode()), entry["id"] + ":extract"
-                )
-                if reason:
-                    entry.update(status=reason, reason=reason)
-                    continue
-                extracted = reader.run_once(packet, out, state["model"], transport=transport)
-                settle_call(root, state, entry["id"] + ":extract", extracted)
-                entry["extraction"] = extracted["status"]
-                if not (out / "candidate.json").exists():
-                    entry.update(
-                        status="EXTRACTION_REJECTED",
-                        reason="Retained model response needs source review",
-                    )
-                    continue
-                candidate = json.loads((out / "candidate.json").read_text())
-                entry.update(
-                    status="REVIEW_PENDING",
-                    candidate_path=str(out / "candidate.json"),
-                    reason="Source-bound candidate; independent semantic review pending",
-                )
-                inv["intervening_source_texts"] = []
-                for item in inv["releases"]:
-                    if prior["published_at"] < item["published_at"] < current["published_at"]:
-                        # Sources are already retained by inventory().
-                        saved = sorted((root / "sources" / item["id"]).glob("*.json"))
-                        if saved:
-                            doc = json.loads(saved[-1].read_text())
-                            inv["intervening_source_texts"].append(
-                                {
-                                    "url": doc["url"],
-                                    "published_at": doc["published_at"],
-                                    "text": doc["text"],
-                                }
-                            )
-                request = review_request(packet, candidate, inv, state["model"])
-                reason = allowance(state, len(json.dumps(request).encode()), now())
-                if reason:
-                    entry["reason"] = reason
-                    continue
-                reason = reserve_call(
-                    root, state, len(json.dumps(request).encode()), entry["id"] + ":review"
-                )
-                if reason:
-                    entry["reason"] = reason
-                    continue
-                reviewed = run_review(
+                process_packet(
+                    root,
+                    state,
+                    entry,
                     packet,
-                    candidate,
                     inv,
-                    root / "review" / entry["id"],
-                    state["model"],
-                    transport=review_transport,
+                    entry["id"],
+                    transport=transport,
+                    review_transport=review_transport,
                 )
-                settle_call(root, state, entry["id"] + ":review", reviewed)
-                entry["semantic_review"] = reviewed.get("review")
-                if reviewed.get("review") and all(
-                    reviewed["review"].get(k) == "SUPPORTED" for k in REVIEW_FIELDS
-                ):
-                    result = copy.deepcopy(candidate)
-                    result["external"].update(
-                        attestor="source-bound-two-pass-agent-review",
-                        evidence_notes="Wire-only prior coverage. "
-                        + reviewed["review"]["evidence_notes"],
-                        latest_prior_source_id=prior["id"],
-                    )
-                    for key in (
-                        "source_authenticity",
-                        "metric_binding",
-                        "prior_completeness",
-                        "basis_comparable",
-                        "perimeter_comparable",
-                    ):
-                        result["external"][key] = "VERIFIED"
-                    result["clocks"]["decision_at"] = now()
-                    qualified = qualify(result)
-                    entry["qualification"] = qualified
-                    if qualified["status"] != "FACTS_READY":
-                        entry.update(
-                            status="FACTS_NOT_ELIGIBLE", reason="; ".join(qualified["reasons"])
-                        )
-                    if qualified["status"] == "FACTS_READY":
-                        ready = root / "reviewed" / (entry["id"] + ".json")
-                        write_json(ready, result)
-                        if entry["cohort"] in ("new_release", "initial_recent"):
-                            prospective = copy.deepcopy(result)
-                            prospective.update(
-                                purpose="prospective",
-                                schema_version="guidance-margin-prospective/v1",
-                            )
-                            write_json(
-                                root / "approved" / (entry["id"] + ".json"),
-                                {
-                                    "ticker": ticker,
-                                    "reviewer": "source-bound-two-pass-agent-review",
-                                    "cohort": entry["cohort"],
-                                    "fact_pair": prospective,
-                                },
-                            )
-                        entry.update(
-                            status="AGENT_REVIEWED",
-                            reviewed_path=str(ready),
-                            reason="Two source-only passes agree; wire coverage explicitly limited; paper admission still checks clocks",
-                        )
-                elif reviewed.get("review") and any(
-                    reviewed["review"].get(k) == "CONTRADICTED" for k in REVIEW_FIELDS
-                ):
-                    entry.update(
-                        status="SOURCE_INCOMPARABLE", reason=reviewed["review"]["evidence_notes"]
-                    )
             except Exception as exc:
                 entry.update(status="FETCH_ERROR", reason=type(exc).__name__)
                 state["fetch_error_count"] += 1

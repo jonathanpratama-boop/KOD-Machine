@@ -242,7 +242,10 @@ function evidence(experiment) {
   if (experiment.id === 'guidance_margin') {
     const trial = guidanceMargin.trial || {}, feed = guidanceMargin.feed || {};
     box.append(element('strong','',count(trial.filled_pairs)),element('p','metric-label','paired paper entries'));
-    box.append(element('p','capture',count(trial.admitted) + ' admitted · ' + count(trial.excluded) + ' excluded at paper admission'));
+    const waiting = [trial.admitted, trial.filled_pairs, trial.missed_entries].every(Number.isInteger)
+      ? trial.admitted - trial.filled_pairs - trial.missed_entries : null;
+    box.append(element('p','capture',count(trial.admitted) + ' admitted' + (waiting > 0 ? ' · ' + count(waiting) + ' awaiting paper entry' : '') + ' · ' + count(trial.excluded) + ' excluded at paper admission'));
+    if (trial.informative_admissions != null) box.append(element('p','capture','Admissions where the margin check changed the decision · ' + count(trial.informative_admissions)));
     box.append(element('p','capture',count(feed.discovered_count) + ' releases found · ' + count(feed.extraction_attempted_count) + ' read by the API'));
     const reviewed = feed.review_closed_count == null ? '' : ' (' + count(feed.review_closed_count) + ' after review)';
     box.append(element('p','capture',count(feed.excluded_count) + ' releases ruled out' + reviewed + ' · ' + count(feed.review_pending_count) + ' awaiting review'));
@@ -402,6 +405,22 @@ function guidanceResultBlock() {
     body.append(row);
   }
   table.append(body);box.append(table);
+  const replay = guidanceMargin.historical_replay;
+  const replayGroups = [replay?.pilot, replay?.expansion];
+  const noEntries = replayGroups.every(group => group?.primary?.scored_pairs === 0 && group?.revenue_signals === 0);
+  if (noEntries) {
+    const releases = replayGroups.reduce((total, group) => total + group.release_count, 0);
+    const issuers = replayGroups.reduce((total, group) => total + group.issuer_count, 0);
+    box.append(element('p','result-note','2025 historical replay · ' + count(releases) + ' releases from ' + count(issuers) + ' companies. No release qualified for a paper trade. There are no returns to compare.'));
+  }
+  for (const [key, label] of [['pilot','first group'], ['expansion','second group']]) {
+    const group = replay?.[key];
+    if (noEntries || !group?.primary) continue;
+    const h = group.primary;
+    const pnl = h.scored_pairs > 0 ? ' · revenue only ' + money(h.revenue_usd) + ' · revenue + margin ' + money(h.margin_usd) + ' · difference ' + money(h.difference_usd) : '';
+    box.append(element('p','result-note','2025 replay, ' + label + ': ' + count(group.release_count) + ' releases from ' + count(group.issuer_count) + ' companies · ' + count(h.scored_pairs) + ' scored at 20 sessions · ' + count(h.informative_pairs) + ' where the rules chose differently' + pnl + '.'));
+  }
+  if (replay?.state === 'UNAVAILABLE') box.append(element('p','result-note','Historical replay results unavailable.'));
   const cost = number(trial.policy?.cost_per_side_fraction);
   box.append(element('p','result-note','Figures are total modeled P&L on the matching observations at each horizon, not actual fills. ' + (cost === null ? 'Cost assumption unavailable.' : 'Assumed costs: ' + (100*cost).toFixed(2) + '% each way.')));
   box.append(element('p','result-note','The 1-, 3- and 5-session rows are early observations. The main comparison holds for 20 trading sessions. A few results do not establish a repeatable edge.'));
@@ -411,7 +430,7 @@ function guidanceResultBlock() {
   const spent = credits.estimated_spend_usd ?? credits.estimated_cost_usd ?? feed.api_estimated_usd;
   const expiry = credits.expires_at ?? feed.credit_expiry_at;
   const calls = credits.calls ?? feed.api_calls;
-  box.append(element('p','result-note','API: ' + count(calls) + ' calls · estimated usage ' + money(spent) + (expiry ? ' · credits expire ' + date(expiry,true) : ' · credit expiry unavailable') + '. Usage is an estimate, not a billing balance.'));
+  box.append(element('p','result-note','API: ' + count(calls) + ' calls' + (feed.replay_api_calls == null ? '' : ' (' + count(feed.live_api_calls) + ' live, ' + count(feed.replay_api_calls) + ' historical)') + ' · estimated usage ' + money(spent) + (expiry ? ' · credits expire ' + date(expiry,true) : ' · credit expiry unavailable') + '. Usage is an estimate, not a billing balance.'));
   if (guidanceMargin.reason) box.append(element('p','result-note result-warning',text(guidanceMargin.reason)));
   if (feed.fetch_error_count > 0 || feed.state === 'DEGRADED') box.append(element('p','result-note result-warning','Source collection needs attention: ' + count(feed.fetch_error_count) + ' fetch errors. The saved observations are retained.'));
   const source=element('a','source-path','Saved guidance experiment status');

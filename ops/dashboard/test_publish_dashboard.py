@@ -251,12 +251,16 @@ class DashboardPublicationTests(unittest.TestCase):
                 'entries':[{'raw_response':private}]},
             'credits':{'expires_at':'2026-12-03T13:41:10Z', 'authorization':private}}
         publisher.GUIDANCE_STATE.write_text(json.dumps(source))
+        replay = {'release_count':8, 'issuer_count':2, 'private':private,
+                  'horizons':{'20':{'scored_pairs':0, 'difference_usd':None, 'raw':private}}}
+        publisher.GUIDANCE_STATE.with_name('HISTORICAL_REPLAY_SUMMARY.json').write_text(json.dumps({'pilot':replay}))
         result = publisher.publish()
         self.assertEqual(result['status'], 'PUBLISHED')
         self.assertNotEqual(result['commit'], first['commit'])
         public = (self.repository/'GUIDANCE_MARGIN_STATUS.json').read_text()
         self.assertNotIn(private, public)
         decoded = json.loads(public)
+        self.assertEqual(decoded['historical_replay']['pilot']['primary'], {'scored_pairs':0, 'difference_usd':None})
         self.assertEqual(decoded['trial']['admitted'],1)
         self.assertEqual(decoded['trial']['horizons']['1']['paired_events'],0)
         self.assertEqual(decoded['feed']['api_calls'],2)

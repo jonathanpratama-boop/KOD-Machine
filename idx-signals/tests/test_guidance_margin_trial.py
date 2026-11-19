@@ -169,6 +169,32 @@ class TrialTests(unittest.TestCase):
             cohort["net_pnl_usd"]["revenue"], cohort["net_pnl_usd"]["revenue_and_margin"]
         )
 
+    def test_status_counts_only_admitted_events_with_known_arm_choices(self):
+        rows = trial.records(self.path)
+        variants = [
+            ("ADMITTED", {"revenue": True, "revenue_and_margin": True}),
+            ("ADMITTED", {"revenue": True, "revenue_and_margin": False}),
+            ("EXCLUDED", {"revenue": True, "revenue_and_margin": False}),
+            ("ADMITTED", {}),
+        ]
+        rows.extend(
+            {
+                "kind": "ADMISSION",
+                "status": status,
+                "arms": arms,
+                "cohort": "NEW_RELEASE",
+                "event_id": str(i),
+                "recorded_at": rows[0]["recorded_at"],
+            }
+            for i, (status, arms) in enumerate(variants)
+        )
+        with patch.object(trial, "records", return_value=rows):
+            result = trial.status(self.path)
+        self.assertEqual(result["admitted"], 3)
+        self.assertEqual(result["informative_admissions"], 1)
+        self.assertEqual(result["matching_admissions"], 1)
+        self.assertEqual(result["filled_pairs"], 0)
+
     def test_margin_arm_cash_and_session_horizons_do_not_count_weekends(self):
         self.admit(facts(margin_up=False))
         self.observe(self.bar(price=90))

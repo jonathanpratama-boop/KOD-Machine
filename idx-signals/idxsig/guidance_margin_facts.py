@@ -11,6 +11,7 @@ from decimal import Decimal, InvalidOperation
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 
 from .guidance_revision import moment
@@ -74,6 +75,10 @@ def _decimal(value, where):
     return Decimal(str(value))
 
 
+_SCALE = re.compile(r"(?i)(billions?|bn|b|millions?|mm|mn|m)\b")
+_SCALE_END = re.compile(r"(?i)(?<=\d)\s*(billions?|bn|b|millions?|mm|mn|m)$")
+
+
 def _token_value(token):
     token = token.strip().replace(",", "")
     if token.endswith("%"):
@@ -85,6 +90,7 @@ def _token_value(token):
         token = token[1:-1].strip()
         if token.startswith("$"):
             token = token[1:].strip()
+    token = _SCALE_END.sub("", token).strip()
     try:
         value = Decimal(token)
     except InvalidOperation as exc:
@@ -112,12 +118,51 @@ def _number(obj, raw, where, review):
     return number
 
 
+def _explicit_scale(raw, span):
+    """Find an attached or adjacent scale without using a different table cell."""
+    if not isinstance(span, dict) or raw is None:
+        return None
+    start, end = span.get("start"), span.get("end")
+    if type(start) is not int or type(end) is not int:
+        return None
+    token = raw[start:end].strip().rstrip(")")
+    match = _SCALE_END.search(token) or _SCALE.match(raw[end:].lstrip(" \t\xa0"))
+    if match:
+        return "USD_BILLIONS" if match[1].lower().startswith("b") else "USD_MILLIONS"
+    return None
+
+
 def _metric(obj, raw, expected_unit, where, review):
+    value = _metric_value(obj, raw, expected_unit, where, review)
+    if value is None or not isinstance(obj, dict):
+        return value
+    slots = {"point": ("point",), "range": ("low", "high"), "center_spread": ("center", "spread")}
+    spans = [obj.get(key) for key in slots.get(obj.get("form"), ())]
+    scales = [_explicit_scale(raw, span) for span in spans]
+    unit = obj.get("unit")
+    if any(scale and scale != unit for scale in scales):
+        review.add("INCOMPARABLE", f"{where}: source scale conflicts with supplied unit")
+    if unit == "USD_BILLIONS":
+        # In "$5 to $6 billion" the last scale applies to the whole range.
+        if None in scales:
+            shared = False
+            if len(spans) == 2 and scales == [None, unit] and raw is not None:
+                between = raw[spans[0]["end"]:spans[1]["start"]].strip()
+                shared = between.lower() in ("to", "-", "–", "—", "±", "+/-")
+            if not shared:
+                review.add("UNVERIFIED", f"{where}: billion scale lacks direct source evidence")
+        return value * 1000
+    return value
+
+
+def _metric_value(obj, raw, expected_unit, where, review):
     obj = _object(obj, where, review)
     form = review.required(obj, "form", where)
     unit = review.required(obj, "unit", where)
     qualifier = review.required(obj, "qualifier", where)
-    if unit is not None and unit != expected_unit:
+    if unit is not None and unit != expected_unit and not (
+        unit == "USD_BILLIONS" and expected_unit == "USD_MILLIONS"
+    ):
         review.add("INCOMPARABLE", f"{where}: unsupported unit {unit!r}")
     if qualifier == "ambiguous":
         review.add("INCOMPARABLE", f"{where}: ambiguous bounds")

@@ -413,6 +413,14 @@ def status(path):
     rows = records(path)
     policy = _require_started(rows)
     admitted = [r for r in rows if r.get("kind") == "ADMISSION"]
+    paired_choices = [
+        arms["revenue"] != arms["revenue_and_margin"]
+        for row in admitted
+        if row["status"] == "ADMITTED"
+        and isinstance(arms := row.get("arms"), dict)
+        and isinstance(arms.get("revenue"), bool)
+        and isinstance(arms.get("revenue_and_margin"), bool)
+    ]
     latest = {}
     horizons = {str(day): [] for day in [*policy["descriptive_sessions"], policy["hold_sessions"]]}
     for row in rows:
@@ -449,6 +457,8 @@ def status(path):
         "candidates": len(admitted),
         "admitted": sum(r["status"] == "ADMITTED" for r in admitted),
         "excluded": sum(r["status"] == "EXCLUDED" for r in admitted),
+        "informative_admissions": paired_choices.count(True),
+        "matching_admissions": paired_choices.count(False),
         "filled_pairs": len(latest),
         "closed_pairs": sum(r["kind"] == "CLOSE" for r in latest.values()),
         "missing_terminal_outcomes": sum(

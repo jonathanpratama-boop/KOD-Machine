@@ -57,7 +57,7 @@ def guidance_public_status(path):
     output['schema'] = 'guidance-margin-status/v1'
     trial = raw.get('trial', {})
     output['trial'] = fields(trial, ('started_at', 'last_record_at', 'status', 'candidates',
-        'admitted', 'excluded', 'filled_pairs', 'closed_pairs', 'missed_entries', 'missing_terminal_outcomes',
+        'admitted', 'informative_admissions', 'excluded', 'filled_pairs', 'closed_pairs', 'missed_entries', 'missing_terminal_outcomes',
         'conclusion', 'real_trade_permission'))
     output['trial']['policy'] = fields(trial.get('policy', {}) if isinstance(trial, dict) else {},
         ('capital_per_arm_usd', 'slot_usd', 'max_positions', 'entry_time_et',
@@ -96,7 +96,7 @@ def guidance_public_status(path):
         'discovered_count', 'prospective_count', 'development_count', 'screened_out_count',
         'extraction_attempted_count', 'candidate_count', 'review_pending_count', 'review_closed_count', 'excluded_count',
         'fetch_error_count', 'api_estimated_usd', 'credit_expiry_at', 'credit_budget_usd',
-        'api_remaining_estimate_usd'))
+        'api_remaining_estimate_usd', 'live_api_calls', 'replay_api_calls', 'replay_api_estimated_usd'))
     feed = raw.get('feed', {})
     pending = feed.get('pending_reviews') if isinstance(feed, dict) else None
     if isinstance(pending, list):
@@ -114,6 +114,22 @@ def guidance_public_status(path):
         ]
     output['credits'] = fields(raw.get('credits', {}), ('estimated_spend_usd', 'estimated_cost_usd',
         'available_usd', 'budget_usd', 'remaining_estimate_usd', 'expires_at', 'calls', 'status'))
+    replay_path = Path(path).with_name('HISTORICAL_REPLAY_SUMMARY.json')
+    if replay_path.is_file():
+        try:
+            replay = json.loads(replay_path.read_text())
+            cohorts = {}
+            for name in ('pilot', 'expansion'):
+                if name not in replay:
+                    continue
+                subset = replay[name]
+                public = fields(subset, ('release_count', 'issuer_count', 'revenue_signals', 'margin_signals'))
+                public['primary'] = fields(subset['horizons']['20'], ('scored_pairs', 'informative_pairs',
+                                         'unavailable', 'revenue_usd', 'margin_usd', 'difference_usd'))
+                cohorts[name] = public
+            output['historical_replay'] = cohorts
+        except (OSError, ValueError, KeyError, TypeError):
+            output['historical_replay'] = {'state': 'UNAVAILABLE'}
     return output
 
 
@@ -161,6 +177,7 @@ def publish():
         signature = hashlib.sha256(json.dumps({
             'cloud':{k:results.get(k) for k in ('events','prospective_check','arms','status')},
             'source_sha256':hashlib.sha256((HERE/'dashboard_data.json').read_bytes()).hexdigest(),
+            'template_sha256':hashlib.sha256((HERE/'one_page.html').read_bytes()).hexdigest(),
             'source_refresh':refresh,
             'guidance_margin':guidance,
         },sort_keys=True).encode()).hexdigest()

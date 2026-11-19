@@ -41,6 +41,11 @@ margin of "19.5%" is a point, not a center plus an invented spread. Never invent
 a zero spread for a point. The two tokens of a range or plus-minus must refer
 to distinct occurrences in the source. Read table headers and footnotes before
 choosing a forecast. If no forecast level or applicable unit is shown, abstain.
+For dollar amounts preserve the source scale: $5.20B or $5.20 billion is USD_BILLIONS,
+and $940M is USD_MILLIONS. Keep B or M when attached to the token. Do not multiply
+or rewrite printed amounts. A range such as "$14.52 billion to $14.57 billion"
+uses separate low and high tokens. Preserve the exact whitespace, punctuation
+and line breaks of the retained release when quoting a table.
 Do not make a trading recommendation or certify any source or prior history."""
 
 _SOURCE_KEYS = (
@@ -120,7 +125,7 @@ _METRIC_SCHEMA = {
         _object_schema(
             {
                 "form": {"type": "string", "enum": [form]},
-                "unit": {"type": "string", "enum": ["USD_MILLIONS", "PERCENT", "UNSUPPORTED"]},
+                "unit": {"type": "string", "enum": ["USD_MILLIONS", "USD_BILLIONS", "PERCENT", "UNSUPPORTED"]},
                 "qualifier": {"type": "string", "enum": ["exact", "approximate", "ambiguous"]},
                 **{
                     slot: _TOKEN_SCHEMA if slot in used else {"type": "null"}
@@ -247,7 +252,7 @@ def _bind_metric(metric, raw):
     form = metric["form"]
     if (
         form not in _SLOTS_BY_FORM
-        or metric["unit"] not in ("USD_MILLIONS", "PERCENT", "UNSUPPORTED")
+        or metric["unit"] not in ("USD_MILLIONS", "USD_BILLIONS", "PERCENT", "UNSUPPORTED")
         or metric["qualifier"] not in ("exact", "approximate", "ambiguous")
     ):
         raise ValueError("invalid metric enum")
@@ -503,7 +508,7 @@ def run_once(packet, out, model, transport=None):
                 _write_new(out / "candidate.json", pair)
                 result["qualification"] = qualify(pair)
         except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
-            result.update(status="REJECTED", error_type=type(exc).__name__)
+            result.update(status="REJECTED", error_type=type(exc).__name__, binding_error=str(exc)[:240])
     _write_new(out / "result.json", result)
     return result
 

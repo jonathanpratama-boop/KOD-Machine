@@ -146,7 +146,7 @@ class QueueReviews(unittest.TestCase):
         entry = report["entries"][0]
         self.assertEqual(
             (entry["status"], entry["ticker"], entry["issuer_cik"]),
-            ("MISSING_PRIOR", "ACME", "1234"),
+            ("INCOMPLETE_INVENTORY", "ACME", "1234"),
         )
         self.assertEqual(
             (
@@ -161,14 +161,14 @@ class QueueReviews(unittest.TestCase):
             [
                 {
                     "title": "Acme results",
-                    "status": "MISSING_PRIOR",
-                    "reason": feed.REVIEW_REASONS["MISSING_PRIOR"],
+                    "status": "INCOMPLETE_INVENTORY",
+                    "reason": feed.REVIEW_REASONS["INCOMPLETE_INVENTORY"],
                 }
             ],
         )
         self.assertEqual(report["api_calls"], 0)
         self.apply(decision="RETRY_IDENTITY", **self.identity_args)
-        self.assertEqual(self.state()["entries"][self.event]["status"], "MISSING_PRIOR")
+        self.assertEqual(self.state()["entries"][self.event]["status"], "INCOMPLETE_INVENTORY")
 
     def test_held_prior_prevents_paid_call_and_accepts_only_bound_earlier_evidence(self):
         earlier_url = "https://www.prnewswire.com/news-releases/earlier.html"
@@ -221,5 +221,5 @@ class QueueReviews(unittest.TestCase):
         with patch.object(feed, "resolve_identity", return_value=self.identity):
             result = feed.cycle(self.root, live=True, fetcher=fetcher)
         self.assertEqual(result["entries"][0]["identity_evidence"], self.identity)
-        self.assertEqual(result["entries"][0]["status"], "MISSING_PRIOR")
+        self.assertEqual(result["entries"][0]["status"], "INCOMPLETE_INVENTORY")
         self.assertEqual(result["api_calls"], 0)
