@@ -4,33 +4,45 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-18T23:01:14.510598Z; latest US scan session: 2026-11-18.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-18T22:58:51Z (signal session 2026-11-18).
+- Assessed 2026-11-19T23:01:03.629269Z; latest US scan session: 2026-11-19.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-19T22:58:39Z (signal session 2026-11-19).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-18T23:01:14Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-19T23:01:03Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 180 spikes planned, 78 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 192 spikes planned, 78 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 164 | 90 | 66 | 12 | $-8,163 | -12.37% |
-| ALL | every spike | 180 | 94 | 78 | 15 | $-10,828 | -13.88% |
-| AVOIDED | every DONT_BUY (kept out) | 16 | 4 | 12 | 3 | $-2,665 | -22.21% |
+| KOD | every BUY_OK | 175 | 101 | 66 | 12 | $-8,163 | -12.37% |
+| ALL | every spike | 192 | 106 | 78 | 15 | $-10,828 | -13.88% |
+| AVOIDED | every DONT_BUY (kept out) | 17 | 5 | 12 | 3 | $-2,665 | -22.21% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
 ## Every spike
 
 | Signal | Ticker | Dump tomorrow | KOD | You | Status | Net |
 |---|---|---:|---|---|---|---:|
+| 2026-11-19 | ZKIN | 0.15 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | VIVS | 0.42 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | SEAT | 0.21 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | RAYA | 0.30 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | POAS | 0.31 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | MRKR | 0.20 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | MPU | 0.28 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | LVWR | 0.21 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | HTCR | 0.27 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | ELOG | 0.21 | BUY_OK | - | OPEN | - |
+| 2026-11-19 | BDMD | 0.52 | DONT_BUY | - | OPEN | - |
+| 2026-11-19 | BAER | 0.26 | BUY_OK | - | OPEN | - |
 | 2026-11-18 | VWAV | 0.51 | DONT_BUY | - | OPEN | - |
 | 2026-11-18 | SVRE | 0.31 | BUY_OK | - | OPEN | - |
 | 2026-11-18 | SKYA | 0.19 | BUY_OK | - | OPEN | - |
@@ -215,7 +227,7 @@ Generated 2026-11-18T23:01:14Z. Paper only: no orders, no money. Protocol: `rese
 
 ## Secondary view: split-unit assessments (display only, the frozen verdict above is unchanged)
 
-14 of 180 planned spikes are split artifacts on current evidence (7 confirmed, 7 probable): a reverse split left the previous close in pre-split units, so the recorded +30% day did not happen. 1 are unresolved and stay in every view. 1 carried an artifact tag that current evidence does not support. Ledgers: `paper/split_flags.jsonl` (rule `SPLIT_ARTIFACT_V11`, the tag at the time) and `paper/split_assessments.jsonl` (rule `SPLIT_UNITS_V1`, research/SPLIT_REVISIONS_v1).
+14 of 192 planned spikes are split artifacts on current evidence (7 confirmed, 7 probable): a reverse split left the previous close in pre-split units, so the recorded +30% day did not happen. 1 are unresolved and stay in every view. 1 carried an artifact tag that current evidence does not support. Ledgers: `paper/split_flags.jsonl` (rule `SPLIT_ARTIFACT_V11`, the tag at the time) and `paper/split_assessments.jsonl` (rule `SPLIT_UNITS_V1`, research/SPLIT_REVISIONS_v1).
 
 | Spike | Session | Tag at the time | Tag recorded before entry cutoff | Current assessment | Assessed |
 |---|---|---|---|---|---|
@@ -240,15 +252,15 @@ The same books three ways. As frozen counts every planned spike. Known at the ti
 
 | Book | View | Positions | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|
-| KOD | As frozen | 164 | 66 | 12 | $-8,163 | -12.37% |
-| KOD | Known at the time | 157 | 65 | 12 | $-7,337 | -11.29% |
-| KOD | Corrected | 155 | 65 | 12 | $-7,599 | -11.69% |
-| ALL | As frozen | 180 | 78 | 15 | $-10,828 | -13.88% |
-| ALL | Known at the time | 173 | 77 | 15 | $-10,003 | -12.99% |
-| ALL | Corrected | 166 | 72 | 13 | $-9,990 | -13.87% |
-| AVOIDED | As frozen | 16 | 12 | 3 | $-2,665 | -22.21% |
-| AVOIDED | Known at the time | 16 | 12 | 3 | $-2,665 | -22.21% |
-| AVOIDED | Corrected | 11 | 7 | 1 | $-2,391 | -34.16% |
+| KOD | As frozen | 175 | 66 | 12 | $-8,163 | -12.37% |
+| KOD | Known at the time | 168 | 65 | 12 | $-7,337 | -11.29% |
+| KOD | Corrected | 166 | 65 | 12 | $-7,599 | -11.69% |
+| ALL | As frozen | 192 | 78 | 15 | $-10,828 | -13.88% |
+| ALL | Known at the time | 185 | 77 | 15 | $-10,003 | -12.99% |
+| ALL | Corrected | 178 | 72 | 13 | $-9,990 | -13.87% |
+| AVOIDED | As frozen | 17 | 12 | 3 | $-2,665 | -22.21% |
+| AVOIDED | Known at the time | 17 | 12 | 3 | $-2,665 | -22.21% |
+| AVOIDED | Corrected | 12 | 7 | 1 | $-2,391 | -34.16% |
 | OWNER | As frozen | 0 | 0 | 0 | $+0 | - |
 | OWNER | Known at the time | 0 | 0 | 0 | $+0 | - |
 | OWNER | Corrected | 0 | 0 | 0 | $+0 | - |
