@@ -1,12 +1,12 @@
 # PREMOVE_SHADOW_v1: prospective shadow trial (paper only)
 
-Generated 2026-11-18T00:27:56Z from `paper/premove_shadow.jsonl`. Protocol `research/PREMOVE_SHADOW_v1/protocol.json`.
+Generated 2026-11-19T00:27:55Z from `paper/premove_shadow.jsonl`. Protocol `research/PREMOVE_SHADOW_v1/protocol.json`.
 
 **What are we predicting?** Each day, which five crypto pairs (not already up 10% today or 20% this week) will close above a volatility-scaled barrier (at least +10%) before closing below the mirror barrier, within 5 days.
 
 **What counts as success?** At the frozen end of the trial, the sequence arm beats the summary arm's early hit rate by at least 1% with a paired 95% interval above zero, and catches more distinct episodes. Order matters only if it also beats the shuffled control.
 
-**What evidence so far?** 18 days sealed, 13 resolved. Status: accumulating. No decision is taken before the end.
+**What evidence so far?** 19 days sealed, 13 resolved. Status: accumulating. No decision is taken before the end.
 
 Trial: decisions 2026-10-30 to 2027-10-29, final outcomes due 2027-11-05.
 
@@ -16,8 +16,8 @@ Trial: decisions 2026-10-30 to 2027-10-29, final outcomes due 2027-11-05.
 | sequence | 65 | 0 | 0 | 0.00% | 0 |
 | shuffled | 65 | 0 | 0 | 0.00% | 0 |
 
-Latest sealed day 2026-11-17 (427 early candidates):
+Latest sealed day 2026-11-18 (432 early candidates):
 
-- summary: JSTUSDT, UUSDT, SUNUSDT, OPGUSDT, RLUSDUSDT
-- sequence: OPGUSDT, JSTUSDT, UUSDT, RLUSDUSDT, PROMUSDT
-- shuffled: OPGUSDT, JSTUSDT, UUSDT, RLUSDUSDT, SPYBUSDT
+- summary: UUSDT, JSTUSDT, AMZNBUSDT, AAPLBUSDT, SUNUSDT
+- sequence: UUSDT, JSTUSDT, OPGUSDT, RLUSDUSDT, BTTCUSDT
+- shuffled: UUSDT, JSTUSDT, RLUSDUSDT, AMZNBUSDT, SPYBUSDT
