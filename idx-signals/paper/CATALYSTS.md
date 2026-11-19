@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-19T23:02:53Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-19T23:03:11Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 66 over 12 signal sessions; events seen: SEALED 66, SKIP_REPEAT_90D 51, SKIP_NO_TICKER 29, SKIP_NOT_IN_UNIVERSE 41, SKIP_NOT_OPERATING 1; coverage gaps 1.
+Sets 69 over 13 signal sessions; events seen: SEALED 69, SKIP_REPEAT_90D 54, SKIP_NO_TICKER 34, SKIP_NOT_IN_UNIVERSE 41, SKIP_NOT_OPERATING 1; coverage gaps 1.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,27 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 263 tags: 63 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP XTIA (XTI Aerospace, Inc.) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-121959`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 0.8801 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-121959` by Evans Allan Thomas (director); purchases USD 86,874; top executive no; holding up n/a.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001213900-26-121959.
-Twins (band+liq+mom+dd): IBIO 0.8481, LUCD 0.4095, CRMT 0.8291, CRIS 0.6143.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP BA (BOEING CO) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
-Set `CAT-FORM4_SHARP-0001225208-26-009059`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 162.91 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001225208-26-009059` by JOHRI AKHIL (director); purchases USD 500,067; top executive no; holding up +2000.0%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001225208-26-009059.
-Twins (band+liq+mom+dd): HTFL 45.89, NTAP 172.19, IT 178.84, SHOP 140.42, RVMD 159.82, NWSA 26.13, ASML 1395.27, DK 60.32, AFRM 58.91, NEU 703.23, BKR 47.375, PSX 244.83, SUPN 28.96, HXL 77.54, PBF 62.39, SM 28.82, VEEV 277.2, MTCH 39.6, MRNA 196.79, GOOGL 282.44.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP FLNA (FILANA THERAPEUTICS, INC.) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
-Set `CAT-FORM4_SHARP-0001437749-26-037544`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 0.545 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001437749-26-037544` by Cook Robert Christopher (Chief Operating& Legal Officer), Barry Richard (President & CEO); purchases USD 262,821; top executive yes; holding up +885.8%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001437749-26-037544.
-Twins (band+liq+mom+dd): GLDG 0.6769, SOAR 0.1651, BZFD 0.4037, LDI 0.4445, QUCY 0.584, VIVK 0.2501, MEDS 0.739, KSCP 0.39, NBP 0.9031, CNTX 0.1664, SKYX 0.5634, DBGI 0.188, NMG 0.7455, OGI 0.6766, INVZ 0.1447, OPTT 0.3167, AMOD 0.7829, DEFT 0.2839, AARD 0.91, MVIS 0.8711.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP USAR (USA Rare Earth, Inc.) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
 Set `CAT-FORM4_SHARP-0001458423-26-000012`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 6.56 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +186,25 @@ Filing `0000902664-26-004629` by CARRONADE CAPITAL MANAGEMENT, LP; cover page ma
 Coverage **FIRE**; market value USD 2,079.7M from XBRL; parent CAT-SEC13D-0000902664-26-004629.
 Twins (band+liq+mom+dd): SFL 10.55, GO 11.43, MBC 6.02, RVLV 18.85, VSTM 6.86, NTLA 9.52, PBI 14.67, DLO 12.67, GPRE 11.66, AVAH 10.7, OMER 14.01, NIQ 16.79, TALO 15.08, NAT 6.18, EC 13.37, RES 5.06, PAX 9.05, DXC 13.33, TDAY 5.96, AI 10.04.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### DILUTION_8K SEAT - event `0001140361-26-044808`, accepted 2026-11-19T06:50:32-05:00, sealed 2026-11-19T23:03:08Z, cutoff 2026-11-20T14:15:00Z
+Set `CAT-DILUTION_8K-0001140361-26-044808`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 2.09 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +63.28%.
+Twins (band+liq+mom+dd): TTGT 2.59, MRDN 3.76, PRQR 1.05, DAVA 1.18, ATOM 2.31.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K AIFA - event `0001213900-26-122019`, accepted 2026-11-19T08:01:12-05:00, sealed 2026-11-19T23:03:08Z, cutoff 2026-11-20T14:15:00Z
+Set `CAT-DILUTION_8K-0001213900-26-122019`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 2.94 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.68%.
+Twins (band+liq+mom+dd): YQ 2.62, AMBO 1.26, FOCL 2.82, RML 3.52, AXIL 4.505.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K NSIT - event `0000932696-26-000089`, accepted 2026-11-19T17:23:58-05:00, sealed 2026-11-19T23:03:08Z, cutoff 2026-11-20T14:15:00Z
+Set `CAT-DILUTION_8K-0000932696-26-000089`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 160.46 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): ZWS 44.6, MCB 92.58, RNST 39.24, FRPT 65.63, ACT 44.19.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
