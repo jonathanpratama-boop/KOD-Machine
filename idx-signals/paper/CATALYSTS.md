@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-19T10:38:25Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-19T23:02:41Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 34 (FIRE 13, ABSTAIN 21) over 12 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 17, SEALED 34, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 35 (FIRE 14, ABSTAIN 21) over 13 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 17, SEALED 35, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 1; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP PAL (Proficient Auto Logistics, Inc) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-121624`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 2.96 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-121624` by Gattoni James B (director), Lal Rohit (director); purchases USD 244,200; top executive no; holding up +97.4%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001213900-26-121624.
-Twins (band+liq+mom+dd): ARMP 3.17, HTCO 1.31, FTFT 3.76, XCH 3.34, PZG 1.02, RETO 4.87, MGN 3.7, BESS 2.54, TRVG 4.39, STAK 1.88, FISN 2.71, RGP 2.54, VCIG 3.0401, FFTT 2.82, NUWE 3.89.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP RILY (BRC Group Holdings, Inc.) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
 Set `CAT-FORM4_SHARP-0001213900-26-121662`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 3.03 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001213900-26-121662` by RILEY BRYANT R (Chairman and Co-CEO); purchases USD 116,767; top executive yes; holding up n/a.
@@ -207,4 +200,11 @@ Form 4 `0002045771-26-000010` by White Daniel James (director); purchases USD 99
 Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002045771-26-000010.
 Twins (band+liq+mom+dd): AVBC 21.89, CCNE 34.56, GABC 48.52, BSVN 57.07, IMKTA 85.07, HIPO 36.83, IRMD 82.31, TCBK 50.08, CWBC 24.46, SFST 58.49, DSGR 35.05, ORRF 42.41, FMBH 49.33, WS 38.29, RBCAA 89.28, PBAM 84.905, FSBC 42.6, IBCP 35.5, SYBT 76.91, BHRB 69.24.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D BKD (Brookdale Senior Living Inc.) - accepted 2026-11-19T08:30:19-05:00, sealed 2026-11-19T23:02:38Z, cutoff 2026-11-20T14:15:00Z
+Set `CAT-SEC13D-0000902664-26-004629`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 8.69 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20.
+Filing `0000902664-26-004629` by CARRONADE CAPITAL MANAGEMENT, LP; Item 4 intent words: board, merger, acquisition, director.
+Coverage **FIRE**; pre-entry move +1.16%, market value USD 2,079.7M, dilution filings 0.
+Twins (band+liq+mom+dd): SFL 10.55, GO 11.43, MBC 6.02, RVLV 18.85, VSTM 6.86.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
