@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T23:01:19Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T23:01:43Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 69 over 13 signal sessions; events seen: SEALED 69, SKIP_REPEAT_90D 54, SKIP_NO_TICKER 34, SKIP_NOT_IN_UNIVERSE 41, SKIP_NOT_OPERATING 1; coverage gaps 1.
+Sets 73 over 14 signal sessions; events seen: SEALED 73, SKIP_REPEAT_90D 59, SKIP_NO_TICKER 44, SKIP_NOT_IN_UNIVERSE 45, SKIP_NOT_OPERATING 1; coverage gaps 1.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -103,34 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP DX (DYNEX CAPITAL INC) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001283563-26-000006`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 9.85 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001283563-26-000006` by BOSTON BYRON L (Co-CEO & Chairman of the Board); purchases USD 50,003; top executive yes; holding up +0.6%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001283563-26-000006.
-Twins (band+liq+mom+dd): SGHC 10.55, BHVN 13.65, SHLS 7.19, RITM 8.24, NEO 15.09, ARLO 12.03, SHC 16.21, XRAY 8.49, TAL 10.02, EQPT 14.11, ADNT 15.08, WTTR 16.07, GNTX 19.17, GENI 5.82, MUFG 19.65, PTEN 9.72, RLAY 15.91, YELP 18.56, PZZA 18.35, GNW 7.69.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP IRTC (iRhythm Holdings, Inc.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001316065-26-000016`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 94.24 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001316065-26-000016` by TALWALKAR ABHIJIT Y (director); purchases USD 763,706; top executive no; holding up n/a.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001316065-26-000016.
-Twins (band+liq+mom+dd): GOOGL 272.66, DVN 42.05, UNM 77.04, APTV 37.36, TPL 277.72, HPQ 27.82, RNG 67.26, ENS 132.5, CTSH 56.31, SUPN 28.35, BROS 34.15, NWSA 25.31, FLUT 68.42, SM 29.34, ILMN 200.655, ANF 137.64, FTNT 131.46, CVS 80.04, GMED 68.6, PLTR 153.68.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP BCML (BayCom Corp) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001437749-26-037732`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 30.05 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001437749-26-037732` by PERDUE MICHAEL J (director); purchases USD 151,000; top executive no; holding up +62.5%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001437749-26-037732.
-Twins (band+liq+mom+dd): TSBK 45.6, SBFG 27.99, WTBA 28.8, FCCO 31.62, EFSI 44.4, OVBC 45.43, RGCO 21.49, ATMP 33.8813, FSBW 41.55, BSET 21.07, BPRN 43.31, IGIC 23.84, FNWD 41.69, FNLC 35.42, GCBC 34.3, PKBK 31.38, CFBK 33.96, DCBO 29.39, FXNC 28.91, TCI 45.77.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP SKYH (Sky Harbour Group Corp) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001437749-26-037735`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 10.94 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001437749-26-037735` by GESSOW ANDREW J (director); purchases USD 56,400; top executive no; holding up +21.8%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001437749-26-037735.
-Twins (band+liq+mom+dd): GRFS 8.2, ZGN 13.71, AOUT 18.54, PUBM 19.8, BBDC 8.36, RSKD 9.63, MATW 19.37, PERI 11.08, VLRS 8.09, HLMN 7.79, CASK 16.87, GBDC 12.3, INN 7.18, FVR 18.06, DDI 15.35, LILAK 9.42, CHCT 14.29, MOBI 11.86, YALA 5.69, SVRA 5.21.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP CRVO (CervoMed Inc.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
 Set `CAT-FORM4_SHARP-0001437749-26-037784`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 1.33 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001437749-26-037784` by ALAM JOHN J (CEO & President); purchases USD 152,621; top executive yes; holding up +6.7%.
@@ -207,4 +179,32 @@ Filing `0001193125-26-470458` by GTCR W Aggregator LP; cover page max 16.35% of 
 Coverage **FIRE**; market value USD 24,301.5M from XBRL; parent CAT-SEC13D-0001193125-26-470458.
 Twins (band+liq+mom+dd): PFGC 108.28, RTX 190.17, CART 57.31, LTH 46.33, PAG 212.25, DG 130.53, AXGN 55.75, BMRN 60.41, TXRH 178.05, DGX 258.28, GNRC 193.22, FMX 126.06, BCE 21.86, AWK 149.53, COST 1102.15, DIS 117.98, BAM 48.94, ROIV 38.655, BBIO 76.03, RYTM 112.36.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### DILUTION_8K CTSO - event `0001104659-26-130442`, accepted 2026-11-20T08:56:08-05:00, sealed 2026-11-20T23:01:37Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-DILUTION_8K-0001104659-26-130442`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 4.16 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move -18.91%.
+Twins (band+liq+mom+dd): XTLB 1.37, EHGO 1.3, FABC 1.02, BTOC 1.79, TNMG 2.12.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K ADVB - event `0001213900-26-122692`, accepted 2026-11-20T16:05:26-05:00, sealed 2026-11-20T23:01:37Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-DILUTION_8K-0001213900-26-122692`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 1.65 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): SINT 1.1, FBGL 1.73, NEUP 2.35, CLWT 1.05, RVSN 1.69.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K NRGV - event `0001828536-26-000123`, accepted 2026-11-20T16:30:43-05:00, sealed 2026-11-20T23:01:37Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-DILUTION_8K-0001828536-26-000123`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 2.77 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom): WIT 2.05, ARRY 3.785, COTY 3.95.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K APUS - event `0001213900-26-122743`, accepted 2026-11-20T16:45:18-05:00, sealed 2026-11-20T23:01:37Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-DILUTION_8K-0001213900-26-122743`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 1.6 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): JWEL 1.58, RML 2.98, THH 1.02, QNTM 1.29, AXIL 4.27.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
