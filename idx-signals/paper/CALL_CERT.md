@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-18T23:00:29Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-19T23:00:41Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 190 live forecasts, 29 calls, 10 wrong of 25 (40.0%); p that the true rate exceeds 50%: 0.885.
+- **Evidence so far:** 202 live forecasts, 31 calls, 10 wrong of 26 (38.5%); p that the true rate exceeds 50%: 0.916.
 
 ## The bar
 
@@ -18,19 +18,31 @@ Generated 2026-11-18T23:00:29Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-18 | VWAV | 0.590 | 0.562 | **DUMP** | 0.510 | pending |
-| 2026-11-18 | SVRE | 0.372 | 0.562 | - | 0.305 | pending |
-| 2026-11-18 | SKYA | 0.407 | 0.562 | - | 0.191 | pending |
+| 2026-11-19 | ZKIN | 0.332 | 0.563 | - | 0.153 | pending |
+| 2026-11-19 | VIVS | 0.672 | 0.563 | **DUMP** | 0.423 | pending |
+| 2026-11-19 | SEAT | 0.352 | 0.563 | - | 0.206 | pending |
+| 2026-11-19 | RAYA | 0.444 | 0.563 | - | 0.300 | pending |
+| 2026-11-19 | POAS | 0.482 | 0.563 | - | 0.313 | pending |
+| 2026-11-19 | MRKR | 0.415 | 0.563 | - | 0.204 | pending |
+| 2026-11-19 | MPU | 0.521 | 0.563 | - | 0.279 | pending |
+| 2026-11-19 | LVWR | 0.375 | 0.563 | - | 0.206 | pending |
+| 2026-11-19 | HTCR | 0.448 | 0.563 | - | 0.271 | pending |
+| 2026-11-19 | ELOG | 0.400 | 0.563 | - | 0.205 | pending |
+| 2026-11-19 | BDMD | 0.586 | 0.563 | **DUMP** | 0.516 | pending |
+| 2026-11-19 | BAER | 0.396 | 0.563 | - | 0.260 | pending |
+| 2026-11-18 | VWAV | 0.590 | 0.562 | **DUMP** | 0.510 | dumped |
+| 2026-11-18 | SVRE | 0.372 | 0.562 | - | 0.305 | did not dump |
+| 2026-11-18 | SKYA | 0.407 | 0.562 | - | 0.191 | did not dump |
 | 2026-11-18 | NUR | 0.392 | 0.562 | - | 0.240 | pending |
-| 2026-11-18 | MPU | 0.400 | 0.562 | - | 0.216 | pending |
-| 2026-11-18 | ICU | 0.356 | 0.562 | - | 0.244 | pending |
-| 2026-11-18 | HIHO | 0.389 | 0.562 | - | 0.186 | pending |
-| 2026-11-18 | CUE | 0.297 | 0.562 | - | 0.176 | pending |
-| 2026-11-18 | CLRO | 0.410 | 0.562 | - | 0.189 | pending |
-| 2026-11-18 | BTOC | 0.462 | 0.562 | - | 0.276 | pending |
-| 2026-11-18 | AZI | 0.399 | 0.562 | - | 0.213 | pending |
-| 2026-11-18 | ANPA | 0.334 | 0.562 | - | 0.204 | pending |
-| 2026-11-18 | AKAN | 0.557 | 0.562 | - | 0.317 | pending |
+| 2026-11-18 | MPU | 0.400 | 0.562 | - | 0.216 | did not dump |
+| 2026-11-18 | ICU | 0.356 | 0.562 | - | 0.244 | did not dump |
+| 2026-11-18 | HIHO | 0.389 | 0.562 | - | 0.186 | did not dump |
+| 2026-11-18 | CUE | 0.297 | 0.562 | - | 0.176 | did not dump |
+| 2026-11-18 | CLRO | 0.410 | 0.562 | - | 0.189 | dumped |
+| 2026-11-18 | BTOC | 0.462 | 0.562 | - | 0.276 | dumped |
+| 2026-11-18 | AZI | 0.399 | 0.562 | - | 0.213 | did not dump |
+| 2026-11-18 | ANPA | 0.334 | 0.562 | - | 0.204 | did not dump |
+| 2026-11-18 | AKAN | 0.557 | 0.562 | - | 0.317 | dumped |
 | 2026-11-17 | VAI | 0.385 | 0.561 | - | 0.174 | dumped |
 | 2026-11-17 | TGL | 0.568 | 0.561 | **DUMP** | 0.228 | did not dump |
 | 2026-11-17 | SYPR | 0.241 | 0.561 | - | 0.103 | pending |
