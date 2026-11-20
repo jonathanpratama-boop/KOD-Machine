@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T23:01:00Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T23:01:19Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 34 over 12 signal sessions; events seen: SEALED 34; coverage gaps 0.
+Sets 36 over 13 signal sessions; events seen: SEALED 36; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 17, FIRE 17
+- Classes: ABSTAIN 18, FIRE 18
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 278 tags: 65 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP PLD (Prologis, Inc.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-468660`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 123.36 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-468660` by KELLY ALFRED F JR (director); purchases USD 587,350; top executive no; holding up +1690.6%.
-Coverage **ABSTAIN** (NOT_SHARP, DILUTION_RECENT); dilution filings 1; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-468660.
-Twins (band+liq+mom+dd): WMB 66.13, WPM 116.13, NTES 104.94, FUTU 87.21, QLYS 192.425, FND 46.38, SNX 228.14, EXE 82.44, GIS 34.48, CI 273.04, STT 161.23, BAP 342.75, FSLR 151.95, KRMN 32.99, SBAC 169.66, ON 65.72, SHEL 94.01, GS 847.53, FOUR 37.97, AEIS 212.24.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP AIRJ (AirJoule Technologies Corp.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-468951`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 1.66 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-468951` by Murphy Thomas Edward (director); purchases USD 50,183; top executive no; holding up +49.4%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-468951.
-Twins (band+liq+mom+dd): FWDI 3.94, BTQ 1.14, DPRO 2, SUPV 4.76, GEMI 1.705, IAUX 1.05, XXI 4.31, IMSR 2.3, CCOI 3.15, SERV 2.29, VUZI 1.2, MDXG 3.11, GLAS 1.21, ABR 1.11, LODE 1.36, ZNTL 1.36, MNTN 4.67, SPRY 3.36, LAR 3.21, ARTV 3.83.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP DX (DYNEX CAPITAL INC) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
 Set `CAT-FORM4_SHARP-0001283563-26-000006`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 9.85 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +193,18 @@ Filing `0001193125-26-470458` by GTCR W Aggregator LP; Item 4 intent words: boar
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 24,301.5M, dilution filings 0.
 Twins (band+liq+mom+dd): PFGC 108.28, RTX 190.17, CART 57.31, LTH 46.33, PAG 212.25.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 SRXH (SRX Global Inc.) - accepted 2026-11-20T08:45:38-05:00, sealed 2026-11-20T23:01:17Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-SEC13D_V2-0000921895-26-003228`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 0.8 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000921895-26-003228` by EGAN KEVIN; cover page max 7.9% of class; strong intent: sale of the; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (MICROCAP); market value USD 16.2M from XBRL; parent CAT-SEC13D-0000921895-26-003228.
+Twins (band+liq+mom+dd): NMG 0.6705, GANX 0.9994, EHTH 0.3477, BTCS 0.653, DBGI 0.1602, CAN 0.1177, EMAT 0.6031, LIDR 0.644, SOAR 0.165, MYO 0.811, EU 0.4492, MVIS 0.8306, ARBE 0.3214, GLDG 0.6156, BIVI 0.8, CODX 0.1295, CNSY 0.6301, PROP 0.2881, GNS 0.4993, VENU 0.9929.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 GPN (GLOBAL PAYMENTS INC) - accepted 2026-11-20T17:01:47-05:00, sealed 2026-11-20T23:01:17Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-SEC13D_V2-0001193125-26-470458`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 91.83 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001193125-26-470458` by GTCR W Aggregator LP; cover page max 16.35% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 24,301.5M from XBRL; parent CAT-SEC13D-0001193125-26-470458.
+Twins (band+liq+mom+dd): PFGC 108.28, RTX 190.17, CART 57.31, LTH 46.33, PAG 212.25, DG 130.53, AXGN 55.75, BMRN 60.41, TXRH 178.05, DGX 258.28, GNRC 193.22, FMX 126.06, BCE 21.86, AWK 149.53, COST 1102.15, DIS 117.98, BAM 48.94, ROIV 38.655, BBIO 76.03, RYTM 112.36.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
