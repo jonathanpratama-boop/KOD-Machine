@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T10:37:32Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T23:01:00Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 36 (FIRE 15, ABSTAIN 21) over 13 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 17, SEALED 36, SKIP_NOT_OPERATING 4, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 1; coverage gaps 1.
+Sets 38 (FIRE 16, ABSTAIN 22) over 14 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 18, SEALED 38, SKIP_NOT_OPERATING 8, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 2; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,20 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP ITT (ITT INC.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-468584`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 206.26 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-468584` by Berryman Kevin C (director); purchases USD 501,561; top executive no; holding up +58.8%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-468584.
-Twins (band+liq+mom+dd): TTWO 208.65, ORKA 97.57, TRGP 285.42, VICI 24.19, WH 78.71, TMO 688.75, WEC 116.11, PNR 68.68, BAX 25.39, HAE 120.37, AAPL 349.21, JAZZ 236.45, AIZ 316.03, BOOT 139.37, WTW 331.26, DTE 136.13, PTC 195.63, NTSK 24.8, OPCH 31.61, IEX 227.01.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP APC (ARKO Petroleum Corp.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-468657`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 12.95 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-468657` by HEYER ANDREW R (director); purchases USD 279,000; top executive no; holding up +198.7%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-468657.
-Twins (band+liq+mom+dd): CODA 7.75, MTLS 6.31, BALY 9.9, AGCC 11.77, HQI 13.52, VINP 8.22, DMRC 6.04, CPIX 6.3, SOHU 10.74, TG 5.65, OPRX 7.01, INGN 5.42, FORR 8.76, AMWL 10.69, RRGB 6.28, SDHC 8.2, MFIN 9.67, TRAK 5.95, AUDC 9, CHCI 14.51.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP PLD (Prologis, Inc.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-468660`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 123.36 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001193125-26-468660` by KELLY ALFRED F JR (director); purchases USD 587,350; top executive no; holding up +1690.6%.
@@ -207,4 +193,18 @@ Form 4 `0002126029-26-000006` by Hagler Mark Arnold (Chief Commercial Officer); 
 Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002126029-26-000006.
 Twins (band+liq+mom+dd): IHRT 0.4766, KSCP 0.3593, SPRO 0.8263, FRGT 0.6001, DAVI 1, SUIG 0.741, RC 0.7, ZNB 0.4122, OXSQ 0.5648, BLND 0.8842, AXG 0.7571, TLSA 0.6756, CRBU 0.3105, REKR 0.2097, QNC 0.8963, GLDG 0.6158, JDZG 0.114, MVIS 0.861, SRFM 0.4101, MEDS 0.7277.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D SRXH (SRX Global Inc.) - accepted 2026-11-20T08:45:38-05:00, sealed 2026-11-20T23:00:57Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-SEC13D-0000921895-26-003228`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 0.8 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20.
+Filing `0000921895-26-003228` by EGAN KEVIN; Item 4 intent words: board, sale of the, director.
+Coverage **ABSTAIN** (MICROCAP); pre-entry move -22.33%, market value USD 16.2M, dilution filings 0.
+Twins (band+liq+mom+dd): NMG 0.6705, GANX 0.9994, EHTH 0.3477, BTCS 0.653, DBGI 0.1602.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D GPN (GLOBAL PAYMENTS INC) - accepted 2026-11-20T17:01:47-05:00, sealed 2026-11-20T23:00:57Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-SEC13D-0001193125-26-470458`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 91.83 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20.
+Filing `0001193125-26-470458` by GTCR W Aggregator LP; Item 4 intent words: board, acquisition, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 24,301.5M, dilution filings 0.
+Twins (band+liq+mom+dd): PFGC 108.28, RTX 190.17, CART 57.31, LTH 46.33, PAG 212.25.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
