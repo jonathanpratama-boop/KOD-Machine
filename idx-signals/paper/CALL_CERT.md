@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-19T23:00:41Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-20T22:59:14Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 202 live forecasts, 31 calls, 10 wrong of 26 (38.5%); p that the true rate exceeds 50%: 0.916.
+- **Evidence so far:** 212 live forecasts, 35 calls, 11 wrong of 27 (40.7%); p that the true rate exceeds 50%: 0.876.
 
 ## The bar
 
@@ -18,17 +18,27 @@ Generated 2026-11-19T23:00:41Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-19 | ZKIN | 0.332 | 0.563 | - | 0.153 | pending |
+| 2026-11-20 | YOUL | 0.630 | 0.536 | **DUMP** | 0.469 | pending |
+| 2026-11-20 | RAYA | 0.586 | 0.536 | **DUMP** | 0.408 | pending |
+| 2026-11-20 | NXAT | 0.518 | 0.536 | - | 0.401 | pending |
+| 2026-11-20 | NIXX | 0.630 | 0.536 | **DUMP** | 0.312 | pending |
+| 2026-11-20 | MSS | 0.464 | 0.536 | - | 0.329 | pending |
+| 2026-11-20 | MEDS | 0.470 | 0.536 | - | 0.323 | pending |
+| 2026-11-20 | LVWR | 0.429 | 0.536 | - | 0.236 | pending |
+| 2026-11-20 | CIGL | 0.434 | 0.536 | - | 0.290 | pending |
+| 2026-11-20 | BNAI | 0.353 | 0.536 | - | 0.251 | pending |
+| 2026-11-20 | AMCI | 0.546 | 0.536 | **DUMP** | 0.429 | pending |
+| 2026-11-19 | ZKIN | 0.332 | 0.563 | - | 0.153 | did not dump |
 | 2026-11-19 | VIVS | 0.672 | 0.563 | **DUMP** | 0.423 | pending |
-| 2026-11-19 | SEAT | 0.352 | 0.563 | - | 0.206 | pending |
-| 2026-11-19 | RAYA | 0.444 | 0.563 | - | 0.300 | pending |
-| 2026-11-19 | POAS | 0.482 | 0.563 | - | 0.313 | pending |
-| 2026-11-19 | MRKR | 0.415 | 0.563 | - | 0.204 | pending |
-| 2026-11-19 | MPU | 0.521 | 0.563 | - | 0.279 | pending |
-| 2026-11-19 | LVWR | 0.375 | 0.563 | - | 0.206 | pending |
-| 2026-11-19 | HTCR | 0.448 | 0.563 | - | 0.271 | pending |
-| 2026-11-19 | ELOG | 0.400 | 0.563 | - | 0.205 | pending |
-| 2026-11-19 | BDMD | 0.586 | 0.563 | **DUMP** | 0.516 | pending |
+| 2026-11-19 | SEAT | 0.352 | 0.563 | - | 0.206 | dumped |
+| 2026-11-19 | RAYA | 0.444 | 0.563 | - | 0.300 | did not dump |
+| 2026-11-19 | POAS | 0.482 | 0.563 | - | 0.313 | dumped |
+| 2026-11-19 | MRKR | 0.415 | 0.563 | - | 0.204 | dumped |
+| 2026-11-19 | MPU | 0.521 | 0.563 | - | 0.279 | did not dump |
+| 2026-11-19 | LVWR | 0.375 | 0.563 | - | 0.206 | did not dump |
+| 2026-11-19 | HTCR | 0.448 | 0.563 | - | 0.271 | dumped |
+| 2026-11-19 | ELOG | 0.400 | 0.563 | - | 0.205 | did not dump |
+| 2026-11-19 | BDMD | 0.586 | 0.563 | **DUMP** | 0.516 | did not dump |
 | 2026-11-19 | BAER | 0.396 | 0.563 | - | 0.260 | pending |
 | 2026-11-18 | VWAV | 0.590 | 0.562 | **DUMP** | 0.510 | dumped |
 | 2026-11-18 | SVRE | 0.372 | 0.562 | - | 0.305 | did not dump |
