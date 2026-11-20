@@ -4,26 +4,26 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-20T22:59:27.240414Z; latest US scan session: 2026-11-20.
+- Assessed 2026-11-20T22:59:52.431496Z; latest US scan session: 2026-11-20.
 - Latest compatible LEARNER v2.4 forecast: 2026-11-20T22:57:27Z (signal session 2026-11-20).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-20T22:59:27Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-20T22:59:52Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 202 spikes planned, 94 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 202 spikes planned, 106 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 184 | 90 | 82 | 17 | $-9,623 | -11.74% |
-| ALL | every spike | 202 | 96 | 94 | 20 | $-12,289 | -13.07% |
+| KOD | every BUY_OK | 184 | 75 | 94 | 20 | $-9,668 | -10.28% |
+| ALL | every spike | 202 | 81 | 106 | 23 | $-12,333 | -11.63% |
 | AVOIDED | every DONT_BUY (kept out) | 18 | 6 | 12 | 3 | $-2,665 | -22.21% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
@@ -112,21 +112,21 @@ Generated 2026-11-20T22:59:27Z. Paper only: no orders, no money. Protocol: `rese
 | 2026-11-13 | BGIN | 0.14 | BUY_OK | - | OPEN | - |
 | 2026-11-13 | AKAN | 0.28 | BUY_OK | - | OPEN | - |
 | 2026-11-13 | AEI | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | XLAB | 0.28 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | TGHL | 0.17 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | TGEN | 0.14 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | RIME | 0.15 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | POAS | 0.32 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | PLCE | 0.28 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | PARA | 0.29 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | ICMB | 0.16 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | GP | 0.25 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | DBGI | 0.35 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | BGIN | 0.16 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | ARAI | 0.33 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | AIMD | 0.22 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | ADXN | 0.19 | BUY_OK | - | OPEN | - |
-| 2026-11-12 | ADVB | 0.17 | BUY_OK | - | OPEN | - |
+| 2026-11-12 | XLAB | 0.28 | BUY_OK | - | TRADED | -42.50% |
+| 2026-11-12 | TGHL | 0.17 | BUY_OK | - | TRADED | -49.70% |
+| 2026-11-12 | TGEN | 0.14 | BUY_OK | - | TRADED | -30.38% |
+| 2026-11-12 | RIME | 0.15 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-12 | POAS | 0.32 | BUY_OK | - | TRADED | -26.80% |
+| 2026-11-12 | PLCE | 0.28 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-12 | PARA | 0.29 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-12 | ICMB | 0.16 | BUY_OK | - | TRADED | -15.37% |
+| 2026-11-12 | GP | 0.25 | BUY_OK | - | TRADED | +176.28% |
+| 2026-11-12 | DBGI | 0.35 | BUY_OK | - | TRADED | -8.01% |
+| 2026-11-12 | BGIN | 0.16 | BUY_OK | - | TRADED | +88.22% |
+| 2026-11-12 | ARAI | 0.33 | BUY_OK | - | TRADED | -46.99% |
+| 2026-11-12 | AIMD | 0.22 | BUY_OK | - | TRADED | +27.11% |
+| 2026-11-12 | ADXN | 0.19 | BUY_OK | - | TRADED | -27.68% |
+| 2026-11-12 | ADVB | 0.17 | BUY_OK | - | TRADED | -48.63% |
 | 2026-11-11 | WHLR | 0.41 | BUY_OK | - | TRADED | -39.23% |
 | 2026-11-11 | TANH | 0.16 | BUY_OK | - | TRADED | +14.69% |
 | 2026-11-11 | SLXN | 0.31 | BUY_OK | - | TRADED | -52.17% |
@@ -263,12 +263,12 @@ The same books three ways. As frozen counts every planned spike. Known at the ti
 
 | Book | View | Positions | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|
-| KOD | As frozen | 184 | 82 | 17 | $-9,623 | -11.74% |
-| KOD | Known at the time | 177 | 81 | 17 | $-8,798 | -10.86% |
-| KOD | Corrected | 175 | 79 | 17 | $-8,438 | -10.68% |
-| ALL | As frozen | 202 | 94 | 20 | $-12,289 | -13.07% |
-| ALL | Known at the time | 195 | 93 | 20 | $-11,464 | -12.33% |
-| ALL | Corrected | 188 | 86 | 18 | $-10,829 | -12.59% |
+| KOD | As frozen | 184 | 94 | 20 | $-9,668 | -10.28% |
+| KOD | Known at the time | 177 | 92 | 20 | $-8,373 | -9.10% |
+| KOD | Corrected | 175 | 90 | 20 | $-8,013 | -8.90% |
+| ALL | As frozen | 202 | 106 | 23 | $-12,333 | -11.63% |
+| ALL | Known at the time | 195 | 104 | 23 | $-11,038 | -10.61% |
+| ALL | Corrected | 188 | 97 | 21 | $-10,404 | -10.73% |
 | AVOIDED | As frozen | 18 | 12 | 3 | $-2,665 | -22.21% |
 | AVOIDED | Known at the time | 18 | 12 | 3 | $-2,665 | -22.21% |
 | AVOIDED | Corrected | 13 | 7 | 1 | $-2,391 | -34.16% |
