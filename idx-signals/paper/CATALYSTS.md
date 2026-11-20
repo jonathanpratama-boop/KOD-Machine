@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T10:30:09Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T10:30:20Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 33 over 12 signal sessions; events seen: SEALED 33; coverage gaps 0.
+Sets 34 over 12 signal sessions; events seen: SEALED 34; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 17, FIRE 16
+- Classes: ABSTAIN 17, FIRE 17
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 278 tags: 65 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP VIVO (VivoPower PLC) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
-Set `CAT-FORM4_SHARP-0001493152-26-053023`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 1.82 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001493152-26-053023` by Chin Kevin (Chairman & CEO); purchases USD 553,910; top executive yes; holding up +9.3%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001493152-26-053023.
-Twins (band+liq+mom+dd): SRI 5, ADAG 1.82, HRZN 3.09, CNTN 1.335, MNTS 1.96, GSIT 2.755, DGNX 1.03, STEM 1.155, SY 1.83, IFRX 1.095, GYRE 4.61, PEW 1.35, PASW 1.39, ATNM 1.08, ELVA 3.905, GRDX 3.36, MSGM 3.69, ARAI 1.85, MGNX 1.97, IPSC 1.38.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP STXS (Stereotaxis, Inc.) - filed 2026-11-18, sealed 2026-11-19T10:37:50Z, cutoff 2026-11-19T14:15:00Z
 Set `CAT-FORM4_SHARP-0001493152-26-053130`, scan `SCAN-US-2026-11-18-G2_RET30`; signal close 0.9461 on 2026-11-18; entry: the entry session's opening print (2026-11-19). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001213900-26-122366` by Estate of Alvin Libin; Item 4 intent words: acq
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 838.6M, dilution filings 0.
 Twins (band+liq+mom+dd): ASTH 28.68, OPY 85.11, CSV 29.5, DRD 20.68, LQDT 33.03.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 REPX (Riley Exploration Permian, Inc.) - accepted 2026-11-19T21:50:13-05:00, sealed 2026-11-20T10:30:19Z, cutoff 2026-11-20T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-122366`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 41.11 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-122366` by Estate of Alvin Libin; cover page max 10.11% of class; strong intent: none; Item 5(c): no transactions.
+Coverage **FIRE**; market value USD 838.6M from XBRL; parent CAT-SEC13D-0001213900-26-122366.
+Twins (band+liq+mom+dd): ASTH 28.68, OPY 85.11, CSV 29.5, DRD 20.68, LQDT 33.03, AD 26.66, INVX 23.48, MMI 23.01, DMC 25.16, FLXS 68.66, SLGL 54.08, NGVC 27.15, IMCR 26.63, XPEL 37.61, XRN 25.7, PXED 20.52, APEI 40.84, HVT 24.28, ROOT 42, NSSC 29.83.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
