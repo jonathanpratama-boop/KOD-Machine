@@ -1,0 +1,99 @@
+{
+  "study_type": "exploratory_paired_event_study",
+  "return_units": "fractions",
+  "rule": "accept if status=ok and predicted_return > 0.02; rejected events hold cash; failed forecasts retain baseline",
+  "round_trip_cost": 0.02,
+  "counts": {
+    "submitted": 128,
+    "usable_outcomes": 128,
+    "missing_or_nonfinite_outcomes": 0,
+    "invalid_or_failed_forecasts": 1,
+    "selected": 4,
+    "rejected": 123,
+    "fallback": 1,
+    "decision_utc_dates": 114
+  },
+  "outcome_coverage": 1.0,
+  "fallback_fraction_of_usable": 0.0078125,
+  "baseline": {
+    "n": 128,
+    "mean_net_return": -0.04938573098692274,
+    "median_net_return": -0.060949553205069715,
+    "profitable_fraction": 0.1953125
+  },
+  "combined_on_same_opportunities": {
+    "n": 128,
+    "mean_net_return": -0.0034167839705699686,
+    "median_net_return": 0.0,
+    "profitable_fraction": 0.0
+  },
+  "cash_baseline_mean_net_return": 0.0,
+  "combined_beats_cash": false,
+  "paired_mean_delta": 0.045968947016352776,
+  "paired_delta_95pct_date_cluster_bootstrap": [
+    0.025705021695693078,
+    0.0666979406076757
+  ],
+  "bootstrap": {
+    "seed": 20261108,
+    "resamples": 2000,
+    "cluster": "decision UTC date",
+    "interval": "percentile"
+  },
+  "selected": {
+    "n": 4,
+    "mean_net_return": -0.09369878918589856,
+    "median_net_return": -0.10140838562186875,
+    "profitable_fraction": 0.0
+  },
+  "rejected_counterfactual": {
+    "n": 123,
+    "mean_net_return": -0.047837603399131345,
+    "median_net_return": -0.0584815392615705,
+    "profitable_fraction": 0.2032520325203252
+  },
+  "fallback": {
+    "n": 1,
+    "mean_net_return": -0.06255319148936177,
+    "median_net_return": -0.06255319148936177,
+    "profitable_fraction": 0.0
+  },
+  "forecast_error_count": 127,
+  "forecast_mae": 0.11632925369239522,
+  "flat_zero_return_mae": 0.1111454070203778,
+  "runtime_seconds": {
+    "n": 128,
+    "median": 9.569477028000165,
+    "max": 25.113058423999973
+  },
+  "largest_selected_winner_removed": {
+    "removed_event_id": "NEIROUSDT|2026-05-05T09:00:00+00:00",
+    "baseline": {
+      "n": 127,
+      "mean_net_return": -0.04941762627928827,
+      "median_net_return": -0.062126379137412244,
+      "profitable_fraction": 0.1968503937007874
+    },
+    "combined": {
+      "n": 127,
+      "mean_net_return": -0.0030867190502083144,
+      "median_net_return": 0.0,
+      "profitable_fraction": 0.0
+    },
+    "paired_mean_delta": 0.04633090722907996
+  },
+  "missing_outcome_event_ids": [],
+  "invalid_forecast_event_ids": [
+    "BTTCUSDT|2026-01-05T10:00:00+00:00"
+  ],
+  "verdict": "INSUFFICIENT_EVIDENCE",
+  "promotion_authorized": false,
+  "limitations": [
+    "Historical screening is exploratory, not independent prospective validation.",
+    "Per-event equal opportunity weights do not model overlapping positions or constrained capital.",
+    "A better forecast error or exploratory interval does not establish a profitable strategy."
+  ],
+  "protocol_sha256": "1a6b7efef773dab4a3013b29f758b51b273460b6350e4f6fe4fcb487edc41b24",
+  "predictions_sha256": "9575829f8e0b722aa213ec532e532dbc93e64298957afacad2a8e3fbe8c0a97e",
+  "outcomes_sha256": "783d7f5f8f7edb17f170ec70795f1479b9c73873940d63591386422da4c725ce"
+}

@@ -1,0 +1,32 @@
+{
+  "protocol_sha256": "1a6b7efef773dab4a3013b29f758b51b273460b6350e4f6fe4fcb487edc41b24",
+  "cohort_sha256": "c439b35b768a8eacd33a0bde048838b94b233d6cf4e890db75e0513f5f906a6d",
+  "input_manifest_sha256": "39669204111cd075c13c08d9d37ded0716857cb107227f5a57ab28d0567f1215",
+  "adapter_sha256": "c57680b5716ca094eb84a894e38c88dc94c430e8ac76824e68ded02f8b925c76",
+  "upstream_commit": "67b630e67f6a18c9e9be918d9b4337c960db1e9a",
+  "torch": "2.5.1+cpu",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "device": "cpu",
+  "threads": 4,
+  "models": {
+    "Kronos-small": {
+      "repo": "NeoQuasar/Kronos-small",
+      "sha": "901c26c1332695a2a8f243eb2f37243a37bea320",
+      "weights_sha256": "b082dfcbd8e8c142a725c8bbb99781802f38fec81210e13479effb32b3c3e020",
+      "config_sha256": "5e0f6a605d5f81b5c9b559fe5cf716a1acb041c744e6f41bd05b097b7a685396"
+    },
+    "Kronos-Tokenizer-base": {
+      "repo": "NeoQuasar/Kronos-Tokenizer-base",
+      "sha": "0e0117387f39004a9016484a186a908917e22426",
+      "weights_sha256": "59d85f6af76a2c3b8240ea06cb21db4213b4eeca053f246b23e29cf832fc6bee",
+      "config_sha256": "2366e7ccfec76cbc19cf3c4c1b9c5d901be336ca1e83f2d2292c9bff381b77a2"
+    }
+  },
+  "events": 128,
+  "started_at": "2026-11-08T13:14:37.233297+00:00",
+  "finished_at": "2026-11-08T13:36:21.845995+00:00",
+  "inference_total_seconds": 1303.6127091110002,
+  "peak_rss_mib": 482.8359375,
+  "predictions_sha256": "9575829f8e0b722aa213ec532e532dbc93e64298957afacad2a8e3fbe8c0a97e"
+}
