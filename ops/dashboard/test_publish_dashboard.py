@@ -73,6 +73,7 @@ class DashboardPublicationTests(unittest.TestCase):
                         'comparison_inputs':{'status':'READY'}, 'prospective_check':{'enabled':True}}
         self.patches = mock.patch.multiple(publisher, HERE=self.here,
             STATE=self.root/'unused-read-state', OPERATIONS=self.operations,
+            GUIDANCE_STATE=self.root/'guidance'/'STATUS.json',
             BRANCH=self.branch, REMOTE=str(self.remote))
         self.patches.start()
         self.export = mock.patch.object(publisher, 'export_results', return_value=self.results)
@@ -221,6 +222,65 @@ class DashboardPublicationTests(unittest.TestCase):
         self.assertEqual(data['build'][0]['kod_commit'], 'new-source')
         self.assertEqual(data['build'][0]['cloud_refreshed_at'], self.results['as_of'])
         self.assertEqual(self.command('rev-parse', 'HEAD:HEAD.json').stdout.strip(), self.head_blob)
+
+
+    def test_missing_guidance_is_unavailable_not_zero_results(self):
+        result = publisher.publish()
+        self.assertEqual(result['status'], 'PUBLISHED')
+        summary = json.loads((self.repository/'GUIDANCE_MARGIN_STATUS.json').read_text())
+        self.assertEqual(summary['state'], 'UNAVAILABLE')
+        self.assertEqual(summary['trial'], {})
+        self.assertIsNone(summary['as_of'])
+        self.assertEqual(json.loads((self.repository/'DASHBOARD_RESULTS.json').read_text()), self.results)
+
+    def test_guidance_update_bypasses_throttle_and_publishes_only_summary(self):
+        self.results['as_of'] = dt.datetime.now(dt.timezone.utc).isoformat()
+        first = publisher.publish()
+        (self.here/'PUBLISH_HEALTH.json').write_text(json.dumps(first))
+        publisher.GUIDANCE_STATE.parent.mkdir()
+        private = 'do-not-publish-this-value'
+        source = {'schema':'guidance-margin-status/v1', 'as_of':'2026-11-16T11:00:00Z',
+            'state':'RUNNING', 'api_key':private,
+            'trial':{'admitted':1, 'filled_pairs':0, 'horizons':{'1':{'paired_events':0,
+                'net_pnl_usd':{'revenue':'0', 'revenue_and_margin':'0'}, 'raw_source':private}}},
+            'feed':{'api_calls':2, 'api_estimated_usd':0.12, 'review_pending_count':1,
+                'review_closed_count':9,
+                'pending_reviews':[{'title':'Dolby results', 'status':'MISSING_PRIOR',
+                                    'reason':private, 'receipt':private},
+                                   {'title':private, 'status':'INVALID'}, None],
+                'entries':[{'raw_response':private}]},
+            'credits':{'expires_at':'2026-12-03T13:41:10Z', 'authorization':private}}
+        publisher.GUIDANCE_STATE.write_text(json.dumps(source))
+        replay = {'release_count':8, 'issuer_count':2, 'private':private,
+                  'horizons':{'20':{'scored_pairs':0, 'difference_usd':None, 'raw':private}}}
+        publisher.GUIDANCE_STATE.with_name('HISTORICAL_REPLAY_SUMMARY.json').write_text(json.dumps({'pilot':replay}))
+        result = publisher.publish()
+        self.assertEqual(result['status'], 'PUBLISHED')
+        self.assertNotEqual(result['commit'], first['commit'])
+        public = (self.repository/'GUIDANCE_MARGIN_STATUS.json').read_text()
+        self.assertNotIn(private, public)
+        decoded = json.loads(public)
+        self.assertEqual(decoded['historical_replay']['pilot']['primary'], {'scored_pairs':0, 'difference_usd':None})
+        self.assertEqual(decoded['trial']['admitted'],1)
+        self.assertEqual(decoded['trial']['horizons']['1']['paired_events'],0)
+        self.assertEqual(decoded['feed']['api_calls'],2)
+        self.assertEqual(decoded['feed']['review_closed_count'],9)
+        self.assertEqual(decoded['feed']['pending_reviews'],[
+            {'title':'Dolby results', 'status':'MISSING_PRIOR',
+             'reason':'Find an earlier forecast for the same fiscal year and accounting basis.'}])
+        rendered=(self.repository/'DASHBOARD.html').read_text()
+        self.assertNotIn(private,rendered)
+        self.assertIn('guidance_margin',rendered)
+        self.assertEqual(self.command('rev-parse','HEAD:HEAD.json').stdout.strip(),self.head_blob)
+
+    def test_invalid_guidance_cannot_interrupt_existing_dashboard(self):
+        publisher.GUIDANCE_STATE.parent.mkdir()
+        publisher.GUIDANCE_STATE.write_text('{malformed')
+        result=publisher.publish()
+        self.assertEqual(result['status'],'PUBLISHED')
+        summary=json.loads((self.repository/'GUIDANCE_MARGIN_STATUS.json').read_text())
+        self.assertEqual(summary['state'],'UNAVAILABLE')
+        self.assertEqual(json.loads((self.repository/'DASHBOARD_RESULTS.json').read_text()),self.results)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,2 @@
+# Needed when SEC is unavailable and the Nasdaq cross-checked reference uses Parquet.
+pyarrow==19.0.1

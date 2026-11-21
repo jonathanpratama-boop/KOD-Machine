@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh KOD guidance paper research every ten minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=10min
+AccuracySec=15s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

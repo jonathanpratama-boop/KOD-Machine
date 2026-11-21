@@ -1,0 +1,59 @@
+{
+  "kind": "supervised prospective paper admission",
+  "ticker": "P",
+  "issuer_cik": "1474432",
+  "event_id": "65117477e5f43f8c58636779",
+  "decision_at": "2026-11-19T05:56:32.207853+00:00",
+  "sealed_at": "2026-11-19T05:57:16.566279+00:00",
+  "journal_row_sha256": "0e1169c258aada17853b63cc0283206f870fa86afd31e79e884cf754ae13f7a0",
+  "sources": {
+    "current": {
+      "url": "https://www.prnewswire.com/news-releases/everpure-announces-third-quarter-fiscal-2027-financial-results-302944321.html",
+      "published_at": "2026-11-18T21:05:00+00:00",
+      "received_at": "2026-11-18T21:10:00.395168+00:00",
+      "sha256": "6fb3c5aad911a2ab0a54ad4b9ef8bb4a8e0f2341d59046be18980f866a5bdf9a"
+    },
+    "prior": {
+      "url": "https://www.prnewswire.com/news-releases/everpures-expanding-business-model-fuels-new-long-term-outlook-302888106.html",
+      "published_at": "2026-09-23T21:30:00+00:00",
+      "received_at": "2026-11-19T05:48:38.179623+00:00",
+      "sha256": "3946ceba19800c29a47bc1a8c6c778e646f592bcdf6808e0d18426b6febfd64e"
+    }
+  },
+  "supplemental_sources": {
+    "fiscal_calendar_and_consolidation": {
+      "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001474432/3fb0d892-1ca3-4214-a166-03182fb46220.pdf",
+      "accession": "0001474432-26-000088",
+      "sha256": "c697b8a490a959122337839f96d1e4a36a324e8d580af55cc69baaa684f5fe32"
+    },
+    "earlier_earnings_release": {
+      "url": "https://www.prnewswire.com/news-releases/everpure-announces-second-quarter-fiscal-2027-financial-results-302860903.html",
+      "published_at": "2026-08-26T20:05:00+00:00",
+      "text_sha256": "8094ce7b976772135fd600c79f7ea16f7b242c2411faed27dab025cf32c4152f"
+    }
+  },
+  "review_method": "A supervised review supplied the issuer fiscal calendar, consolidation evidence and earlier results. An independent model checked the amended candidate against those sources before the planned open. Prior coverage is limited to the retained issuer wire.",
+  "review": {
+    "same_issuer": "SUPPORTED",
+    "correct_full_year_columns": "SUPPORTED",
+    "numeric_binding": "SUPPORTED",
+    "same_fiscal_period": "SUPPORTED",
+    "same_accounting_definition": "SUPPORTED",
+    "same_consolidation_perimeter": "SUPPORTED",
+    "latest_prior_within_retained_wire_inventory": "SUPPORTED"
+  },
+  "qualification": {
+    "derived": {
+      "margin_revision_pp": "2.03345983013286919470044987",
+      "revenue_revision_pct": "3.069306930693069306930693100"
+    },
+    "reasons": [],
+    "status": "FACTS_READY"
+  },
+  "arms": {
+    "revenue": true,
+    "revenue_and_margin": true
+  },
+  "planned_entry_utc": "2026-11-19T14:30:00+00:00",
+  "planned_exit_utc": "2026-12-17T21:00:00+00:00"
+}

@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-11-16T08:20:06.184331+00:00",
+  "source_snapshot_method": "SQLite online backup from read-only source connection",
+  "db_snapshot_sha256": "7077781598c335a27acfb6fb37d17a4a48d5b1776a1b6ad23773fa05215c69d2",
+  "db_bytes": 173817856,
+  "db_meta": {
+    "config_hash": "\"603df236948e82987f32c66c8a5c0122bdec53df6819341ca7cd398cf4f2e42a\"",
+    "export_seq": "183158",
+    "next_cutoff": "1794816900.0",
+    "watermark": "1794816840.0"
+  },
+  "ledger_tip": [
+    212720,
+    "5e81f0f2640a3767b4bfe59ec00df5b577f66afd3444528a21f93a182a4a6a9b"
+  ],
+  "retained": [
+    {
+      "source": "/var/lib/kod/research-r2/HEALTH.json",
+      "retained": "before/0-HEALTH.json",
+      "sha256": "00e7416eb88e86820b1053b3318e4fe68c692073f1428efd38eef809d5652d48"
+    },
+    {
+      "source": "/var/lib/kod/research-r2/RESEARCH_CAPTURE_HEARTBEAT.json",
+      "retained": "before/1-RESEARCH_CAPTURE_HEARTBEAT.json",
+      "sha256": "78019adff309548815b541be6c91461e1514fa3b8f3d07ca77f5990f5f3bf869"
+    },
+    {
+      "source": "/var/lib/kod/research-r2/RESEARCH_ENGINE_HEALTH.json",
+      "retained": "before/2-RESEARCH_ENGINE_HEALTH.json",
+      "sha256": "753cc41c523f46a948371adbb84f106e0c29c50b1095493c60f349e5ce30af66"
+    },
+    {
+      "source": "/var/lib/kod/research-r2/RESEARCH_CAPTURE_STATE.json",
+      "retained": "before/3-RESEARCH_CAPTURE_STATE.json",
+      "sha256": "dfc5356e072cbca3158ffd625aae47d6e3be942a731a10a88e7ad986db18a0c5"
+    },
+    {
+      "source": "/var/lib/kod-research-r2-ops/BACKUP_ACK.json",
+      "retained": "before/4-BACKUP_ACK.json",
+      "sha256": "21b00c5e179fe36d89c573f45ccae55950d2d37a82a88e82a0b9f3d8b9c51b91"
+    },
+    {
+      "source": "/etc/systemd/system/kod-research-r2.service.d/95-provider-recovery.conf",
+      "retained": "before/5-95-provider-recovery.conf",
+      "sha256": "be013c1ed85f5bc1f205956c511acdcecd52df22be167fdb3e06f731000bb022"
+    }
+  ],
+  "live_service": "NRestarts=85\nActiveState=active\n",
+  "frozen_code_files_verified": 452,
+  "full_before_manifest_sha256": "b86d0cbf4e4014efe3f6196c4881da5883274c0d2ef8bc8e8cbc343d86b9133c",
+  "full_before_manifest_location": "server evidence directory / BEFORE.json"
+}

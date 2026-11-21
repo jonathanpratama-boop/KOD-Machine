@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-16T07:56:23.611780+00:00",
+  "status": "PASS",
+  "independently_authored_test_methods": 31,
+  "final_revision_rerun": "PASS after formatting-only changes",
+  "ruff_version": "0.14.3",
+  "lint": "PASS on new maintained code/tests and runnable recovery modules",
+  "fixture_rehearsal": "4 retained observations;3 real non-ready,1 synthetic FACTS_READY; ledger chain read back",
+  "calls": 0,
+  "orders": 0,
+  "sha256": {
+    "idx-signals/idxsig/guidance_margin_facts.py": "2094d82dd1e504c72d2d9372a1863a7e004818606e9444bf3c938491b8aec703",
+    "idx-signals/tests/test_guidance_margin_facts_independent.py": "335fbd83d36aa12ee243ac5e3c37fd536851084700d752de2a5753bdeca82a61",
+    "idx-signals/research/GUIDANCE_MARGIN_FACTS_v1/CONTRACT.md": "50e7acc50560a1f5b9dc8b4344981619c932184f44633d0c83389723b846fef4",
+    "idx-signals/research/GUIDANCE_MARGIN_FACTS_v1/fixtures.json": "072ae4a556319ee42ddb0fd8430614fbd28b072b230cd93d49ffbf1745f443c9"
+  },
+  "limitations": [
+    "external attestations are trusted inputs, not automatically certified",
+    "no automated source collection or LLM extraction has run",
+    "no trading policy, returns or account comparison implemented for this candidate"
+  ]
+}
