@@ -1,0 +1,23 @@
+{
+  "verdict": "PASS",
+  "completed_at": "2026-11-08T13:26:23.374555+00:00",
+  "event_id": "RSRUSDT|2024-07-11T12:00:00+00:00",
+  "seed": 3941881381,
+  "input_sha256": "12bf6ab6b8d0bf4c99403a977d81a394dd3b08be7d9c7013d0e3cefb0c76a8c8",
+  "adapter_sha256": "c57680b5716ca094eb84a894e38c88dc94c430e8ac76824e68ded02f8b925c76",
+  "protocol_sha256": "1a6b7efef773dab4a3013b29f758b51b273460b6350e4f6fe4fcb487edc41b24",
+  "upstream_commit": "67b630e67f6a18c9e9be918d9b4337c960db1e9a",
+  "torch": "2.5.1+cpu",
+  "threads": 4,
+  "device": "cpu",
+  "sample_count": 8,
+  "pred_len": 25,
+  "original_forecast_sha256": "ac45ea39a160723169387abb4061a06ebeb08efb4e779a7b7c0d75bd309da317",
+  "replay_forecast_sha256": "ac45ea39a160723169387abb4061a06ebeb08efb4e779a7b7c0d75bd309da317",
+  "forecast_csv_bytes_identical": true,
+  "original_predicted_return": -0.10809801779123962,
+  "replay_predicted_return": -0.10809801779123962,
+  "terminal_return_exactly_equal": true,
+  "replay_seconds": 12.770093421000183,
+  "scope": "One-event exact CPU replay of actual model output with pinned settings, model/config/input hashes verified. No actual outcomes were read. Does not establish determinism for every event or across other hardware/library versions."
+}

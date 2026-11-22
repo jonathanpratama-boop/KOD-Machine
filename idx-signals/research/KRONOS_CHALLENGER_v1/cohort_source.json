@@ -1,0 +1,18 @@
+{
+  "repository": "jonathanpratama-boop/KOD-Machine",
+  "ref": "c7398a18fbc880f508182831f38d8a4bd8493611",
+  "path": "idx-signals/research/HERMES_NOV3_REPRO_v1/out/entry_timing_trades.csv.gz",
+  "git_blob_sha": "208c0ec487f8279665c036b36a47439fe74b6d91",
+  "sha256": "f0fe17a608bcd2374db7c070e7af387734a799362a606b234525f6210d2a89a7",
+  "bytes": 798473,
+  "selection": "128 smallest sha256(20261108|sym|trigger_hour.isoformat()) from already-exposed event identifiers 2024-07-01..2026-10-31; earliest per sym/day",
+  "eligible_identifiers": 4413,
+  "selected": 128,
+  "cohort_sha256": "c439b35b768a8eacd33a0bde048838b94b233d6cf4e890db75e0513f5f906a6d",
+  "source_columns_read": [
+    "seg",
+    "sym",
+    "trigger_hour"
+  ],
+  "timestamp_semantics": "trigger_hour is opening timestamp of final completed 1h trigger candle; decision_time=trigger_hour+1h; immediate legacy fill is open at decision_time"
+}

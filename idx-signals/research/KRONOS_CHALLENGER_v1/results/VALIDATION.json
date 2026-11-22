@@ -1,0 +1,14 @@
+{
+  "tests": {
+    "command": "python -m unittest discover -s idx-signals/research/KRONOS_CHALLENGER_v1 -p 'test_*.py' -q",
+    "passed": 24,
+    "failed": 0
+  },
+  "python": "3.12.14",
+  "lookahead": "PASS; actual causal-input selection; see LOOKAHEAD_CHECK.json",
+  "first_forecast_replay": "PASS; exact CSV bytes; see REPLAY_CHECK.json",
+  "partial_scoring_guard": "PASS; refused unfinished inference before joining outcomes",
+  "all_events_retained": true,
+  "all_forecast_paths_hash_verified": true,
+  "no_trading_promotion": true
+}

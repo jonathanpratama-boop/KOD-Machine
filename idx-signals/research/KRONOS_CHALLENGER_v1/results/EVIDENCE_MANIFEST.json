@@ -1,0 +1,50 @@
+{
+  "LOOKAHEAD_CHECK.json": {
+    "bytes": 5955,
+    "sha256": "99ef46f232816cf8c90f75d6ba81351676918cfdbc082fe1eb3a3ad323e3d86b"
+  },
+  "REPLAY_CHECK.json": {
+    "bytes": 1238,
+    "sha256": "0566d2ff208d044251db543614c9fd368ac841504ec36f48347395d58062cc2c"
+  },
+  "REPORT.md": {
+    "bytes": 4676,
+    "sha256": "a0e7040b16fd9a3165f607987d6da14227ecb922cfeb9bddb9495c0cfde4c756"
+  },
+  "RESULT.json": {
+    "bytes": 3198,
+    "sha256": "05c1ed5f9c7f0bcb1c82d81f930f63b4e864e89fa5825839270ef7c0d23a9e92"
+  },
+  "VALIDATION.json": {
+    "bytes": 538,
+    "sha256": "c12338c68097c052aec344241a4540fd39cd57b4ebe53f955f72f400df376659"
+  },
+  "failure_diagnostics/BTTCUSDT_20260105T100000Z_reproduced_raw_forecast.csv": {
+    "bytes": 2668,
+    "sha256": "8d964b44c717e67256d180105a315d45738daa1a4ebe25ee1ef67e76159bce2d"
+  },
+  "failure_diagnostics/FAILURE_DIAGNOSTIC.json": {
+    "bytes": 2128,
+    "sha256": "9dccb2cc7c294b549f8c5c2dfe1fd51d1fe198da8fc953d8670ce23ce704cf62"
+  },
+  "forecasts.tar.gz": {
+    "bytes": 116859,
+    "sha256": "d1b628d7f3aa4547250fa2517d5b302e917ad24ce1c4434dcff209617098f9fc"
+  },
+  "inputs.tar.gz": {
+    "bytes": 619991,
+    "sha256": "5326298077084e82a4bede94d61986f488ed87c04a5fcb9066047cd3f620579d"
+  },
+  "predictions.jsonl": {
+    "bytes": 74277,
+    "sha256": "9575829f8e0b722aa213ec532e532dbc93e64298957afacad2a8e3fbe8c0a97e"
+  },
+  "records.jsonl": {
+    "bytes": 93045,
+    "sha256": "1e1af83cf7fc183be9d8e61084f0e0ed2457ca807896e62559ecdb170e7cace6"
+  },
+  "run_manifest.json": {
+    "bytes": 1473,
+    "sha256": "ecc1834253ea338dd3e8c47fd5a40e76c2aa6811abb0032af4093d9094596c71"
+  }
+}

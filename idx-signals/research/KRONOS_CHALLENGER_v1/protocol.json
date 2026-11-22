@@ -1,0 +1,90 @@
+{
+  "id": "KOD-KRONOS-CHALLENGER-v1",
+  "locked_at": "2026-11-08T13:06:57.175983+00:00",
+  "status": "EXPLORATORY_FIXED_PILOT",
+  "authorization": "Owner 2026-11-08: can we try combining it and see if it produces anything meaningful? Narrow exception to price-entry closure for this frozen comparison only. No live deployment or strategy promotion.",
+  "question": "Does filtering existing KOD legacy ignition events using pretrained Kronos-small improve equal-opportunity 24h net returns versus accepting all the same events?",
+  "source_commit": "c7398a18fbc880f508182831f38d8a4bd8493611",
+  "upstream_commit": "67b630e67f6a18c9e9be918d9b4337c960db1e9a",
+  "models": {
+    "Kronos-small": {
+      "repo": "NeoQuasar/Kronos-small",
+      "sha": "901c26c1332695a2a8f243eb2f37243a37bea320"
+    },
+    "Kronos-Tokenizer-base": {
+      "repo": "NeoQuasar/Kronos-Tokenizer-base",
+      "sha": "0e0117387f39004a9016484a186a908917e22426"
+    }
+  },
+  "cohort": {
+    "repository": "jonathanpratama-boop/KOD-Machine",
+    "ref": "c7398a18fbc880f508182831f38d8a4bd8493611",
+    "path": "idx-signals/research/HERMES_NOV3_REPRO_v1/out/entry_timing_trades.csv.gz",
+    "git_blob_sha": "208c0ec487f8279665c036b36a47439fe74b6d91",
+    "sha256": "f0fe17a608bcd2374db7c070e7af387734a799362a606b234525f6210d2a89a7",
+    "bytes": 798473,
+    "selection": "128 smallest sha256(20261108|sym|trigger_hour.isoformat()) from already-exposed event identifiers 2024-07-01..2026-10-31; earliest per sym/day",
+    "eligible_identifiers": 4413,
+    "selected": 128,
+    "cohort_sha256": "c439b35b768a8eacd33a0bde048838b94b233d6cf4e890db75e0513f5f906a6d",
+    "source_columns_read": [
+      "seg",
+      "sym",
+      "trigger_hour"
+    ],
+    "timestamp_semantics": "trigger_hour is opening timestamp of final completed 1h trigger candle; decision_time=trigger_hour+1h; immediate legacy fill is open at decision_time"
+  },
+  "input": {
+    "bars": 168,
+    "interval": "1h",
+    "features": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "volume",
+      "amount"
+    ],
+    "availability": "completed candles only, last open=trigger_hour, all close_time < decision_time; exact contiguous hourly grid required",
+    "source": "Binance monthly spot archive ZIP and published SHA256 checksums; timestamp units normalized individually (2025+ microseconds)"
+  },
+  "inference": {
+    "device": "cpu",
+    "threads": 4,
+    "pred_len": 25,
+    "sample_count": 8,
+    "temperature": 1.0,
+    "top_p": 0.9,
+    "top_k": 0,
+    "clip": 5,
+    "per_event_seed": "first8hex sha256(event_id|20261108), integer",
+    "max_runtime_seconds_per_event": 3600
+  },
+  "decision_rule": {
+    "accept": "mean sampled terminal forecast close / last observed close - 1 > 0.02",
+    "reject": "cash (return 0), no later switching",
+    "failed_forecast": "fallback to baseline entry, retain loss and failure",
+    "entry": "decision_time + 1h at observed open, allowing one full hour for computation",
+    "exit": "entry_time + 24h at observed open",
+    "round_trip_cost": 0.02,
+    "net_return": "exit_open/entry_open -1 -0.02"
+  },
+  "primary": "Mean per-opportunity (combined net with rejects cash) minus unchanged baseline net on identical evaluable event denominator. Events may overlap; no capital allocation or portfolio simulation.",
+  "uncertainty": "paired resampling by UTC decision date;2000 bootstrap samples, seed20261108; descriptive interval only",
+  "baselines": [
+    "KOD accepts all same evaluable events",
+    "cash zero",
+    "flat-price forecast zero return"
+  ],
+  "missing_data": "keep all128 attempts; count exclusions and failures; no zero imputation of missing outcomes, no replacing selected events",
+  "promotion": "No automatic promotion. Exploratory interest only if >=50 evaluable, >=10 selected, >=10 dates, <=5% forecast failures, paired95%CI lower >0 and improvement remains positive after removing largest combined winner. Then separately frozen prospective evaluation required.",
+  "limitations": [
+    "Historical source already reported, not an untouched holdout.",
+    "Source event inclusion required future72h data; inherited availability selection.",
+    "Post-June2024 eligibility follows authors stated pretraining cutoff; full training membership not independently audited.",
+    "Historical archive close availability does not prove original KOD receipt time.",
+    "One seed/sample setup and one threshold; do not tune after seeing results.",
+    "2% cost is an assumption; no detailed spread,depth,position sizing,broker fills or portfolio drawdown.",
+    "This tests continuation filtering of known signals, not earlier detection."
+  ]
+}

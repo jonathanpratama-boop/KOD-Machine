@@ -1,0 +1,169 @@
+{
+  "version": "KOD-LOOKAHEAD-CHECK-v1",
+  "mode": "module",
+  "verdict": "PASS",
+  "checks": [
+    {
+      "version": "KOD-LOOKAHEAD-CHECK-v1",
+      "verdict": "PASS",
+      "check": "TRUNCATION",
+      "time_column": "decision_time",
+      "key_columns": [
+        "event_id"
+      ],
+      "value_columns": [
+        "decision_time",
+        "input_sha256"
+      ],
+      "assume_utc": false,
+      "input_rows": 588,
+      "scrambled_columns": [],
+      "unscrambled_columns": [],
+      "value_lags": {},
+      "seed": null,
+      "missing_share": null,
+      "cutoffs": [
+        {
+          "cutoff": "2024-07-11T13:00:00Z",
+          "rows_removed": 420,
+          "values_hidden": 0,
+          "values_replaced": null,
+          "reference_rows": 3,
+          "candidate_rows": 1,
+          "reference_in_scope": 1,
+          "candidate_in_scope": 1,
+          "decisions_compared": 1,
+          "decisions_differing": 0,
+          "first_difference": null
+        },
+        {
+          "cutoff": "2024-07-28T08:00:00Z",
+          "rows_removed": 83,
+          "values_hidden": 0,
+          "values_replaced": null,
+          "reference_rows": 3,
+          "candidate_rows": 2,
+          "reference_in_scope": 2,
+          "candidate_in_scope": 2,
+          "decisions_compared": 2,
+          "decisions_differing": 0,
+          "first_difference": null
+        },
+        {
+          "cutoff": "2024-07-29T11:00:00Z",
+          "rows_removed": 29,
+          "values_hidden": 0,
+          "values_replaced": null,
+          "reference_rows": 3,
+          "candidate_rows": 3,
+          "reference_in_scope": 3,
+          "candidate_in_scope": 3,
+          "decisions_compared": 3,
+          "decisions_differing": 0,
+          "first_difference": null
+        }
+      ],
+      "first_leak": null
+    },
+    {
+      "version": "KOD-LOOKAHEAD-CHECK-v1",
+      "verdict": "PASS",
+      "check": "SCRAMBLE",
+      "time_column": "decision_time",
+      "key_columns": [
+        "event_id"
+      ],
+      "value_columns": [
+        "decision_time",
+        "input_sha256"
+      ],
+      "assume_utc": false,
+      "input_rows": 588,
+      "scrambled_columns": [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "amount"
+      ],
+      "unscrambled_columns": [
+        "timestamps",
+        "close_time",
+        "symbol"
+      ],
+      "value_lags": {},
+      "seed": 20261108,
+      "missing_share": 0.25,
+      "cutoffs": [
+        {
+          "cutoff": "2024-07-11T13:00:00Z",
+          "rows_removed": null,
+          "values_hidden": null,
+          "values_replaced": 2520,
+          "reference_rows": 3,
+          "candidate_rows": 1,
+          "reference_in_scope": 1,
+          "candidate_in_scope": 1,
+          "decisions_compared": 1,
+          "decisions_differing": 0,
+          "first_difference": null
+        },
+        {
+          "cutoff": "2024-07-28T08:00:00Z",
+          "rows_removed": null,
+          "values_hidden": null,
+          "values_replaced": 498,
+          "reference_rows": 3,
+          "candidate_rows": 2,
+          "reference_in_scope": 2,
+          "candidate_in_scope": 2,
+          "decisions_compared": 2,
+          "decisions_differing": 0,
+          "first_difference": null
+        },
+        {
+          "cutoff": "2024-07-29T11:00:00Z",
+          "rows_removed": null,
+          "values_hidden": null,
+          "values_replaced": 174,
+          "reference_rows": 3,
+          "candidate_rows": 3,
+          "reference_in_scope": 3,
+          "candidate_in_scope": 3,
+          "decisions_compared": 3,
+          "decisions_differing": 0,
+          "first_difference": null
+        }
+      ],
+      "first_leak": null
+    }
+  ],
+  "completed_at": "2026-11-08T13:15:20.924811+00:00",
+  "scope": "Causal input selection and exact input hash through prepare.causal_context on the first three frozen cohort events. Does not rerun or validate model inference, original source event inclusion, pretraining membership, receipt latency, scoring, or portfolio execution.",
+  "probe_sha256": "73a53414547ad3c9bf5b4fea3dca7a77bbbd84e9153e2657277efedb429a76a9",
+  "loader_sha256": "f1b7ff6a4f15c9b069eed6d7f3d0a7c177add42ebe8a1825617f001c35392ed7",
+  "checker_sha256": "b70f23b40a45fef43c61b6b42c75b1f455659a78c712cd68d0890d3c46dc5e31",
+  "library_sha256": "f63e422ce85d5305d977c0c4b8ad46e3aba6676697d23fb642141509b5aaaec0",
+  "probe_input_sha256": "56233c131980e0cb0857c785e752380de08cf02a1f0ead5af7bc471ab3745f78",
+  "probe_input_rows": 588,
+  "real_archives": [
+    {
+      "url": "https://data.binance.vision/data/spot/monthly/klines/RSRUSDT/1h/RSRUSDT-1h-2024-07.zip",
+      "sha256": "d4a63e2fa7b8744aa5fba32253601a4f34429852e782d41407e3488321c28f7d",
+      "published_checksum_matched": true
+    },
+    {
+      "url": "https://data.binance.vision/data/spot/monthly/klines/RADUSDT/1h/RADUSDT-1h-2024-07.zip",
+      "sha256": "158266d0030e1ecb2b7347a9db280b78ab3cd8c9c8fad0f1be45415b20256026",
+      "published_checksum_matched": true
+    },
+    {
+      "url": "https://data.binance.vision/data/spot/monthly/klines/MAVUSDT/1h/MAVUSDT-1h-2024-07.zip",
+      "sha256": "dcbe5e1696cacca7f73e50243469147a67c66e5ced96ccf3ccf5143ca7cbb7aa",
+      "published_checksum_matched": true
+    }
+  ],
+  "command": "python tools/check_no_lookahead.py module idx-signals/research/KRONOS_CHALLENGER_v1/lookahead_probe.py LOOKAHEAD_PROBE_INPUT.csv --data-time-column close_time --time-column decision_time --key-columns event_id --cutoff 2024-07-11T13:00:00Z 2024-07-28T08:00:00Z 2024-07-29T11:00:00Z --check both --scramble-columns open high low close volume amount --seed 20261108",
+  "probe_input_recipe": "For RSRUSDT@2024-07-11T13:00Z, RADUSDT@2024-07-28T08:00Z, MAVUSDT@2024-07-29T11:00Z: read each verified July2024 archive through prepare.read_archive; retain timestamp >=decision-168h and <=decision+27h, append symbol column, concatenate in that order, to_csv(index=False)."
+}

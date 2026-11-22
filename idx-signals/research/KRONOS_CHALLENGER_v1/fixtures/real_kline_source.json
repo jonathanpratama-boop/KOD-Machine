@@ -1,0 +1,6 @@
+{
+  "source_url": "https://data.binance.vision/data/spot/monthly/klines/0GUSDT/1h/0GUSDT-1h-2025-11.zip",
+  "source_archive_sha256": "283775fa159b4ab2fc79ebca2d338eda73a66d84423a744c8e3c1414eb39e80a",
+  "fixture_sha256": "9e4e474d6fd0c1a4df8e2e22f51ddec40e4e9e3b0526081c0de4e5aae95c1c0a",
+  "selection": "first two literal CSV rows from the lexicographically first cached 2025 ZIP; parser evidence only, no returns computed"
+}
