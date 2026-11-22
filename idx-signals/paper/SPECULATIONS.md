@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-20T22:59:08Z from `paper/speculations.jsonl`: 356 sets sealed, 564 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-22T00:27:11Z from `paper/speculations.jsonl`: 356 sets sealed, 565 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -56,26 +56,26 @@ PATH20 windows resolved: 0; NEXT1: 207.
 | UP10_1 | 207 | 0.217 | 0.049 | 0.238 | 0.1850 | 0.2500 | 0.1877 |
 | BEATS_TWINS_1 | 202 | 0.485 | 0.502 | 0.500 | 0.2500 | 0.2500 | 0.2529 |
 
-## CRYPTO: 19 sets over 15 signal sessions (2026-10-27 .. 2026-11-18, 0.79 sets per scan)
+## CRYPTO: 19 sets over 15 signal sessions (2026-10-27 .. 2026-11-18, 0.73 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
-| BASE5 | 15 | 15 | 15 | 11 | -29.19% | -34.56% | -7.59% | -21.60% | -4.26 | 0.999 | - / next 60 | accumulating (no look reached) |
+| BASE5 | 16 | 16 | 16 | 12 | -26.65% | -31.24% | -7.37% | -19.28% | -3.35 | 0.997 | - / next 60 | accumulating (no look reached) |
 
 Projection (labelled): sessions of resolved sets needed for t >= 3 if the true paired effect were 2, 5 or 10 points per set, and sessions to the next look at the current candidate rate.
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.174 (register per-session sd) | 682 | 110 | 28 | 57 |
+| 0.199 (register per-session sd) | 889 | 143 | 36 | 61 |
 
 PATH20 windows resolved: 5; NEXT1: 17.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| RUN30_5 | 15 | 0.067 | 0.027 | 0.185 | 0.0761 | 0.2500 | 0.2500 |
-| FADE10_5 | 15 | 0.867 | 0.427 | 0.511 | 0.2421 | 0.2500 | 0.2500 |
-| GAIN0_5 | 15 | 0.133 | 0.200 | 0.314 | 0.1482 | 0.2500 | 0.2500 |
-| BEATS_TWINS_5 | 15 | 0.200 | 0.480 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| RUN30_5 | 16 | 0.062 | 0.025 | 0.185 | 0.0735 | 0.2500 | 0.2500 |
+| FADE10_5 | 16 | 0.812 | 0.400 | 0.511 | 0.2432 | 0.2500 | 0.2500 |
+| GAIN0_5 | 16 | 0.188 | 0.200 | 0.314 | 0.1683 | 0.2500 | 0.2500 |
+| BEATS_TWINS_5 | 16 | 0.250 | 0.475 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | RUN30_20 | 5 | 0.000 | 0.120 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | DOUBLE_20 | 5 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | DOWN10_1 | 17 | 0.471 | 0.059 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
@@ -368,7 +368,6 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 
 | Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |
 |---|---|---|---|---:|---:|---:|---|
-| CRYPTO-2026-10-30-G2_RET30-BEAMX | PATH20 | RESOLVED | PATH | n/a | n/a | n/a | RUN30_20=0/0.00, DOUBLE_20=0/0.00 |
 | CRYPTO-2026-11-13-G2_RET30-SHELL | BASE5 | RESOLVED | TRADED | -27.92% | -16.42% | -11.50% | RUN30_5=0/0.00, FADE10_5=1/0.60, GAIN0_5=0/0.00, BEATS_TWINS_5=0/0.40 |
 | CRYPTO-2026-11-13-G2_RET30-SOPH | BASE5 | RESOLVED | TRADED | -43.17% | -11.86% | -31.31% | RUN30_5=0/0.00, FADE10_5=1/0.80, GAIN0_5=0/0.00, BEATS_TWINS_5=0/0.40 |
 | CRYPTO-2026-11-18-G2_RET30-MMT | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=1/0.00, BEATS_TWINS_1=1/0.60 |
@@ -408,4 +407,5 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | US-2026-11-19-G2_RET30-HTCR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.20, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
 | US-2026-11-19-G2_RET30-BAER | NEXT1 | UNRESOLVABLE (recorded signal close 0.3124 does not reconcile with the scoring bars (rtol 0.001)) |  | n/a | n/a | n/a |  |
 | US-2026-11-19-G2_RET30-BDMD | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.67, UP10_1=0/0.00, BEATS_TWINS_1=0 |
+| CRYPTO-2026-11-15-G2_RET30-RARE | BASE5 | RESOLVED | TRADED | +11.34% | -4.13% | +15.47% | RUN30_5=0/0.00, FADE10_5=0/0.00, GAIN0_5=1/0.20, BEATS_TWINS_5=1/0.40 |
 
