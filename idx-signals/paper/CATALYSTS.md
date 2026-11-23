@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-23T10:29:23Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-23T10:29:38Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 36 over 13 signal sessions; events seen: SEALED 36; coverage gaps 0.
+Sets 37 over 13 signal sessions; events seen: SEALED 37; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 18, FIRE 18
+- Classes: ABSTAIN 18, FIRE 19
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 292 tags: 68 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP ARR (Armour Residential REIT, Inc.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001469064-26-000010`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 10.83 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001469064-26-000010` by ULM SCOTT (CEO); purchases USD 52,248; top executive yes; holding up +6.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001469064-26-000010.
-Twins (band+liq+mom+dd): DNA 8.2, AESI 5.62, SSL 11.71, UUUU 5.48, TGB 5.61, ATEC 6.9, STNE 7.22, BBNX 13.32, NRIX 13.6, SVM 7.26, IE 5.76, NVCR 10.69, UMAC 10.15, WYFI 7.65, APPS 6.22, NVAX 7.72, INFQ 7.3, PGY 14.62, NNE 9.97, AMPX 6.4.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP PALI (PALISADE BIO, INC.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
 Set `CAT-FORM4_SHARP-0001493152-26-053267`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 0.9254 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001213900-26-122856` by Xu Jin Justing; Item 4 intent words: none.
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 2,206.1M, dilution filings 0.
 Twins (band+liq+mom+dd): REVB 3.5, NTRB 4.92, UCAR 3, PSNYW 2.7899, CGTL 2.2.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 NAMI (Jinxin Technology Holding Co) - accepted 2026-11-20T21:44:38-05:00, sealed 2026-11-23T10:29:33Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-122856`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 1.55 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-122856` by Xu Jin Justing; cover page max 26.5% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 2,206.1M from XBRL; parent CAT-SEC13D-0001213900-26-122856.
+Twins (band+liq+mom+dd): REVB 3.5, NTRB 4.92, UCAR 3, PSNYW 2.7899, CGTL 2.2, QTI 1.92, EJH 1.1071, NNNN 3.32, DWTX 1.035, CRE 2.3, BTLN 2.75, GITS 1.09, FEMY 1.24, SUNE 1.71, MCHX 1.1, STKS 1.03, JFIN 1.16, MNOV 1.31, LIMN 2.51, LBGJ 1.35.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
