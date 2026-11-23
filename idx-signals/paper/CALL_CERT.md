@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-20T22:59:14Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-23T23:03:25Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 212 live forecasts, 35 calls, 11 wrong of 27 (40.7%); p that the true rate exceeds 50%: 0.876.
+- **Evidence so far:** 248 live forecasts, 41 calls, 14 wrong of 31 (45.2%); p that the true rate exceeds 50%: 0.763.
 
 ## The bar
 
@@ -18,16 +18,52 @@ Generated 2026-11-20T22:59:14Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-20 | YOUL | 0.630 | 0.536 | **DUMP** | 0.469 | pending |
-| 2026-11-20 | RAYA | 0.586 | 0.536 | **DUMP** | 0.408 | pending |
-| 2026-11-20 | NXAT | 0.518 | 0.536 | - | 0.401 | pending |
-| 2026-11-20 | NIXX | 0.630 | 0.536 | **DUMP** | 0.312 | pending |
-| 2026-11-20 | MSS | 0.464 | 0.536 | - | 0.329 | pending |
-| 2026-11-20 | MEDS | 0.470 | 0.536 | - | 0.323 | pending |
-| 2026-11-20 | LVWR | 0.429 | 0.536 | - | 0.236 | pending |
+| 2026-11-23 | ZSQR | 0.312 | 0.536 | - | 0.201 | pending |
+| 2026-11-23 | XCH | 0.344 | 0.536 | - | 0.191 | pending |
+| 2026-11-23 | VIVS | 0.492 | 0.536 | - | 0.276 | pending |
+| 2026-11-23 | TOPP | 0.634 | 0.536 | **DUMP** | 0.277 | pending |
+| 2026-11-23 | SRTM | 0.655 | 0.536 | **DUMP** | 0.467 | pending |
+| 2026-11-23 | SMTK | 0.420 | 0.536 | - | 0.229 | pending |
+| 2026-11-23 | SCWO | 0.293 | 0.536 | - | 0.137 | pending |
+| 2026-11-23 | SCAG | 0.437 | 0.536 | - | 0.238 | pending |
+| 2026-11-23 | RSSS | 0.199 | 0.536 | - | 0.078 | pending |
+| 2026-11-23 | RIME | 0.531 | 0.536 | - | 0.218 | pending |
+| 2026-11-23 | PTHS | 0.267 | 0.536 | - | 0.174 | pending |
+| 2026-11-23 | PRFX | 0.259 | 0.536 | - | 0.151 | pending |
+| 2026-11-23 | PARA | 0.625 | 0.536 | **DUMP** | 0.287 | pending |
+| 2026-11-23 | PAAI | 0.268 | 0.536 | - | 0.143 | pending |
+| 2026-11-23 | OTLY | 0.357 | 0.536 | - | 0.160 | pending |
+| 2026-11-23 | NVDA | 0.149 | 0.536 | - | 0.080 | pending |
+| 2026-11-23 | MRM | 0.286 | 0.536 | - | 0.187 | pending |
+| 2026-11-23 | LSTA | 0.542 | 0.536 | **DUMP** | 0.298 | pending |
+| 2026-11-23 | LINK | 0.317 | 0.536 | - | 0.221 | pending |
+| 2026-11-23 | KYMR | 0.198 | 0.536 | - | 0.111 | pending |
+| 2026-11-23 | ITP | 0.584 | 0.536 | **DUMP** | 0.265 | pending |
+| 2026-11-23 | INTJ | 0.325 | 0.536 | - | 0.149 | pending |
+| 2026-11-23 | IMCC | 0.434 | 0.536 | - | 0.224 | pending |
+| 2026-11-23 | GRRR | 0.231 | 0.536 | - | 0.130 | pending |
+| 2026-11-23 | FFR | 0.258 | 0.536 | - | 0.150 | pending |
+| 2026-11-23 | DTSS | 0.301 | 0.536 | - | 0.183 | pending |
+| 2026-11-23 | DCGO | 0.367 | 0.536 | - | 0.169 | pending |
+| 2026-11-23 | CYAB | 0.573 | 0.536 | **DUMP** | 0.235 | pending |
+| 2026-11-23 | CUE | 0.180 | 0.536 | - | 0.097 | pending |
+| 2026-11-23 | CELU | 0.255 | 0.536 | - | 0.167 | pending |
+| 2026-11-23 | BYSI | 0.354 | 0.536 | - | 0.217 | pending |
+| 2026-11-23 | BUUU | 0.203 | 0.536 | - | 0.111 | pending |
+| 2026-11-23 | BNAI | 0.379 | 0.536 | - | 0.187 | pending |
+| 2026-11-23 | AUUD | 0.469 | 0.536 | - | 0.201 | pending |
+| 2026-11-23 | ALZN | 0.359 | 0.536 | - | 0.226 | pending |
+| 2026-11-23 | AEON | 0.386 | 0.536 | - | 0.214 | pending |
+| 2026-11-20 | YOUL | 0.630 | 0.536 | **DUMP** | 0.469 | did not dump |
+| 2026-11-20 | RAYA | 0.586 | 0.536 | **DUMP** | 0.408 | dumped |
+| 2026-11-20 | NXAT | 0.518 | 0.536 | - | 0.401 | dumped |
+| 2026-11-20 | NIXX | 0.630 | 0.536 | **DUMP** | 0.312 | did not dump |
+| 2026-11-20 | MSS | 0.464 | 0.536 | - | 0.329 | did not dump |
+| 2026-11-20 | MEDS | 0.470 | 0.536 | - | 0.323 | did not dump |
+| 2026-11-20 | LVWR | 0.429 | 0.536 | - | 0.236 | did not dump |
 | 2026-11-20 | CIGL | 0.434 | 0.536 | - | 0.290 | pending |
-| 2026-11-20 | BNAI | 0.353 | 0.536 | - | 0.251 | pending |
-| 2026-11-20 | AMCI | 0.546 | 0.536 | **DUMP** | 0.429 | pending |
+| 2026-11-20 | BNAI | 0.353 | 0.536 | - | 0.251 | did not dump |
+| 2026-11-20 | AMCI | 0.546 | 0.536 | **DUMP** | 0.429 | did not dump |
 | 2026-11-19 | ZKIN | 0.332 | 0.563 | - | 0.153 | did not dump |
 | 2026-11-19 | VIVS | 0.672 | 0.563 | **DUMP** | 0.423 | pending |
 | 2026-11-19 | SEAT | 0.352 | 0.563 | - | 0.206 | dumped |

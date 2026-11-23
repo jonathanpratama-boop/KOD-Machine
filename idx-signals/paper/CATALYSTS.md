@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-23T10:35:41Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-23T23:08:57Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 39 (FIRE 17, ABSTAIN 22) over 14 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 18, SEALED 39, SKIP_NOT_OPERATING 8, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 2; coverage gaps 1.
+Sets 39 (FIRE 17, ABSTAIN 22) over 14 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 20, SEALED 39, SKIP_NOT_OPERATING 9, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 2; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 73 over 14 signal sessions; events seen: SEALED 73, SKIP_REPEAT_90D 59, SKIP_NO_TICKER 44, SKIP_NOT_IN_UNIVERSE 45, SKIP_NOT_OPERATING 1; coverage gaps 1.
+Sets 75 over 15 signal sessions; events seen: SEALED 75, SKIP_REPEAT_90D 61, SKIP_NO_TICKER 52, SKIP_NOT_IN_UNIVERSE 47, SKIP_NOT_OPERATING 1; coverage gaps 1.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -99,23 +99,9 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## DILUTION_RECENT tags on Speculation Register sets
 
-292 tags: 68 true, 0 unknown.
+328 tags: 79 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP SAGT (SAGTEC GLOBAL Ltd) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-122442`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 1.11 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-122442` by Ng Chen Lok (Chief Executive Officer); purchases USD 267,800; top executive yes; holding up +3.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001213900-26-122442.
-Twins (band+liq+mom+dd): CLAR 4.75, TUSK 2.94, POWW 2.58, MYPS 4.94, SJT 4.37, COSM 2.81, SMRT 1.47, RYDE 1.07, GCL 1.47, ENTX 3.305, SND 4.65, FLNT 3.725, SPWH 1.22, USEA 2.82, TPET 1.75, CVGI 3.06, PSHG 1.83, ARQ 2.82, RERE 3.92, JVA 4.93.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP PICS (PicS N.V.) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-122444`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 5.02 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-122444` by Teixeira Linares Marcio Antonio (director), Pruett William Rodney (director); purchases USD 531,900; top executive no; holding up +40.0%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001213900-26-122444.
-Twins (band+liq+mom+dd): ADIG 8.96, HNRG 8.94, GLUE 8.64, CMCL 16.26, MTA 5.84, SWMR 6.95, RMIX 5.85, MPLT 5.94, CIM 6.36, IDR 13.85, CLB 7.76, SCTX 12.07, ORIC 7.36, ARCT 7.45, METC 5.41, HMH 10.98, LAND 6.2, NPKI 8.14, ENTA 7.62, SECZ 6.09.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP MED (MEDIFAST INC) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
 Set `CAT-FORM4_SHARP-0001213900-26-122629`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 11.75 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +193,18 @@ Form 4 `0002127484-26-000025` by Pittas Aristeidis P (director); purchases USD 5
 Coverage **ABSTAIN** (NOT_SHARP, DILUTION_RECENT); dilution filings 1; routine owners 0 of 1; parent CAT-FORM4-0002127484-26-000025.
 Twins (band+liq+mom+dd): OFLX 21.15, AIRT 21.43, OLP 20.64, TWIN 21.21, TAYD 53.16, HNVR 21.37, NKSH 36.86, INBK 24.28, PPIH 25.5, ELMD 22.98, KEN 54.16, DJP 45.97, NC 30.2, MNSB 20.13, HBB 28.91, SMID 20.68, DCBO 27.82, SBR 60.83.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### DILUTION_8K ALTG - event `0001193125-26-472368`, accepted 2026-11-23T16:15:23-05:00, sealed 2026-11-23T23:07:02Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-DILUTION_8K-0001193125-26-472368`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 4.61 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): AMPG 1.85, AISP 1.52, WRN 1.28, SRI 4.26, HRZN 3.23.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K INHD - event `0001493152-26-053790`, accepted 2026-11-23T16:45:22-05:00, sealed 2026-11-23T23:07:02Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-DILUTION_8K-0001493152-26-053790`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 1.92 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): EZGO 1.62, ASTC 3.58, LOBO 2.38, LFT 3.35, OPAD 1.31.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
