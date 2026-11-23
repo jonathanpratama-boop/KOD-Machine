@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-20T23:02:29Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-23T10:29:23Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 38 (FIRE 16, ABSTAIN 22) over 14 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 18, SEALED 38, SKIP_NOT_OPERATING 8, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 2; coverage gaps 1.
+Sets 39 (FIRE 17, ABSTAIN 22) over 14 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 18, SEALED 39, SKIP_NOT_OPERATING 8, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 2; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -99,16 +99,9 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## DILUTION_RECENT tags on Speculation Register sets
 
-288 tags: 68 true, 0 unknown.
+292 tags: 68 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP CRVO (CervoMed Inc.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
-Set `CAT-FORM4_SHARP-0001437749-26-037784`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 1.33 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001437749-26-037784` by ALAM JOHN J (CEO & President); purchases USD 152,621; top executive yes; holding up +6.7%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001437749-26-037784.
-Twins (band+liq+mom+dd): EXFY 1.57, CDXS 1.05, ELTX 1.5, SSII 1.28, MRDN 3.76, HURA 1.36, CURR 1.87, HSCS 2.03, VIVO 1.67, BMM 2.73, CANG 1.64, ICU 1.05, PSNY 2.53, BWEN 2.16, PMN 3.21, QTRX 2.03, MGNX 1.98, TAOX 1.73, ALTG 4.73, ACET 2.46.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP ARR (Armour Residential REIT, Inc.) - filed 2026-11-19, sealed 2026-11-20T10:36:58Z, cutoff 2026-11-20T14:15:00Z
 Set `CAT-FORM4_SHARP-0001469064-26-000010`, scan `SCAN-US-2026-11-19-G2_RET30`; signal close 10.83 on 2026-11-19; entry: the entry session's opening print (2026-11-20). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): JWEL 1.58, RML 2.98, THH 1.02, QNTM 1.29, AXIL 4.27.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D NAMI (Jinxin Technology Holding Co) - accepted 2026-11-20T21:44:38-05:00, sealed 2026-11-23T10:29:21Z, cutoff 2026-11-23T14:15:00Z
+Set `CAT-SEC13D-0001213900-26-122856`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 1.55 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20.
+Filing `0001213900-26-122856` by Xu Jin Justing; Item 4 intent words: none.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 2,206.1M, dilution filings 0.
+Twins (band+liq+mom+dd): REVB 3.5, NTRB 4.92, UCAR 3, PSNYW 2.7899, CGTL 2.2.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
