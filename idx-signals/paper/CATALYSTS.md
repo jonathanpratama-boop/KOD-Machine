@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T10:29:32Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T10:29:53Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 39 (FIRE 17, ABSTAIN 22) over 14 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 20, SEALED 39, SKIP_NOT_OPERATING 9, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 2; coverage gaps 1.
+Sets 42 (FIRE 18, ABSTAIN 24) over 15 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 21, SEALED 42, SKIP_NOT_OPERATING 9, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 3; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,27 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP MED (MEDIFAST INC) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-122629`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 11.75 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-122629` by Kiai Parsa (director); purchases USD 1,133,816; top executive no; holding up n/a.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001213900-26-122629.
-Twins (band+liq+mom+dd): KROS 11.08, XTER 9.8, CARL 17.42, GLRE 16.3, RDAG 10.505, FNRN 16.92, LSBK 18.36, LAW 5.89, DMII 10.23, JRSH 7.01, PACH 10.42, LFCR 6.39, PSBD 9.5, LTGR 10.07, BCSS 10.26, BPAC 10.3, BRTM 9.8, CEPS 10.11, PXLW 6.705, CPAC 13.04.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP ALTO (Alto Ingredients, Inc.) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-122704`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 2.98 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-122704` by NATHAN GILBERT E (director); purchases USD 81,362; top executive no; holding up +2.9%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001213900-26-122704.
-Twins (band+liq+mom+dd): AMBP 4.32, TSHA 3.72, VGZ 2.27, MOMO 4.075, GDRX 2.92, TV 2.11, EGHT 1.96, CRON 3.04, IMRX 3.38, HLLY 2.29, TOYO 3.7, ICL 4.08, TKC 4.42, ARKO 3.21, BUR 3.24, HNST 4.44, ASTL 4.31, ABUS 4.02, LPL 2.33, IVA 3.14.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP GBCI (GLACIER BANCORP, INC.) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001347688-26-000006`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 45.49 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001347688-26-000006` by Langel Craig A (director); purchases USD 53,452; top executive no; holding up +1.2%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001347688-26-000006.
-Twins (band+liq+mom+dd): DSGX 89.205, SFNC 21.56, WSBC 36.37, KWR 147.48, TS 55.17, HIW 29.55, FELE 95.44, HOMB 28.35, SSB 99.18, HMC 32.58, UGI 35.51, TRMK 43.58, FOX 56.14, LTC 42.24, UCB 35.23, JOYY 73.87, PAGP 25.53, MMSI 84.34, TXCP 95.28, BKE 44.15.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP HBCP (HOME BANCORP, INC.) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
 Set `CAT-FORM4_SHARP-0001436425-26-000078`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 60.54 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001436425-26-000078` by Hill Darren M (Chief Risk Officer); purchases USD 315,013; top executive no; holding up +255.2%.
@@ -207,4 +186,25 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): EZGO 1.62, ASTC 3.58, LOBO 2.38, LFT 3.35, OPAD 1.31.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D WIX (Wix.com Ltd.) - accepted 2026-11-23T18:35:18-05:00, sealed 2026-11-24T10:29:44Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-SEC13D-0001418812-26-000003`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 62.88 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20.
+Filing `0001418812-26-000003` by VA Partners I, LLC; Item 4 intent words: board, merger, acquisition, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 3,457.7M, dilution filings 0.
+Twins (band+liq+mom+dd): PARR 63.41, GEF 66.27, KMT 23.17, NGVT 57.11, RHI 38.55.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D MNTS (Momentus Inc.) - accepted 2026-11-23T20:33:42-05:00, sealed 2026-11-24T10:29:44Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-SEC13D-0000905148-26-005136`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 2.05 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20.
+Filing `0000905148-26-005136` by OA3, LLC; Item 4 intent words: board, merger, acquisition, strategic alternatives, director.
+Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 49.3M, dilution filings 0.
+Twins (band+liq+mom+dd): EQ 1.14, DTI 1.63, VYGR 1.58, EDSA 2.38, ELTX 1.46.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D HPK (HighPeak Energy, Inc.) - accepted 2026-11-23T21:33:19-05:00, sealed 2026-11-24T10:29:44Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-SEC13D-0001437749-26-038124`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 6.55 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20.
+Filing `0001437749-26-038124` by PT Danantara Energy International; Item 4 intent words: board, merger, strategic alternatives, director, letter.
+Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 828.8M, dilution filings 1.
+Twins (band+liq+mom+dd): IDR 14.86, OFIX 6.17, KE 19.21, GENB 10.21, LIME 19.69.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
