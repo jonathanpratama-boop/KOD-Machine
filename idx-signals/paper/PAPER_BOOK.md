@@ -4,33 +4,60 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-23T23:04:41.713434Z; latest US scan session: 2026-11-23.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-23T23:00:51Z (signal session 2026-11-23).
+- Assessed 2026-11-24T23:03:07.205484Z; latest US scan session: 2026-11-24.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-24T22:58:56Z (signal session 2026-11-24).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-23T23:04:41Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-24T23:03:07Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 238 spikes planned, 119 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 265 spikes planned, 119 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 219 | 91 | 107 | 22 | $-11,208 | -10.47% |
-| ALL | every spike | 238 | 98 | 119 | 25 | $-13,873 | -11.66% |
-| AVOIDED | every DONT_BUY (kept out) | 19 | 7 | 12 | 3 | $-2,665 | -22.21% |
+| KOD | every BUY_OK | 243 | 115 | 107 | 22 | $-11,208 | -10.47% |
+| ALL | every spike | 265 | 125 | 119 | 25 | $-13,873 | -11.66% |
+| AVOIDED | every DONT_BUY (kept out) | 22 | 10 | 12 | 3 | $-2,665 | -22.21% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
 ## Every spike
 
 | Signal | Ticker | Dump tomorrow | KOD | You | Status | Net |
 |---|---|---:|---|---|---|---:|
+| 2026-11-24 | TNYA | 0.14 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | SMXT | 0.16 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | RMSG | 0.22 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | RBNE | 0.34 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | PLAG | 0.30 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | PARA | 0.37 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | ONFO | 0.51 | DONT_BUY | - | OPEN | - |
+| 2026-11-24 | MTR | 0.20 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | LVWR | 0.26 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | LGHL | 0.45 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | JAGX | 0.65 | DONT_BUY | - | OPEN | - |
+| 2026-11-24 | ISPC | 0.22 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | IBIO | 0.17 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | GLXG | 0.27 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | GFAI | 0.26 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | FGL | 0.51 | DONT_BUY | - | OPEN | - |
+| 2026-11-24 | EMBC | 0.14 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | CODX | 0.41 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | CD | 0.13 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | CCTG | 0.20 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | BENF | 0.25 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | BDRX | 0.28 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | APUS | 0.24 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | ALXO | 0.12 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | ALTG | 0.13 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | ALDX | 0.19 | BUY_OK | - | OPEN | - |
+| 2026-11-24 | AKAN | 0.42 | BUY_OK | - | OPEN | - |
 | 2026-11-23 | ZSQR | 0.20 | BUY_OK | - | OPEN | - |
 | 2026-11-23 | XCH | 0.19 | BUY_OK | - | OPEN | - |
 | 2026-11-23 | VIVS | 0.28 | BUY_OK | - | OPEN | - |
@@ -273,7 +300,7 @@ Generated 2026-11-23T23:04:41Z. Paper only: no orders, no money. Protocol: `rese
 
 ## Secondary view: split-unit assessments (display only, the frozen verdict above is unchanged)
 
-15 of 238 planned spikes are split artifacts on current evidence (8 confirmed, 7 probable): a reverse split left the previous close in pre-split units, so the recorded +30% day did not happen. 10 are unresolved and stay in every view. 1 carried an artifact tag that current evidence does not support. Ledgers: `paper/split_flags.jsonl` (rule `SPLIT_ARTIFACT_V11`, the tag at the time) and `paper/split_assessments.jsonl` (rule `SPLIT_UNITS_V1`, research/SPLIT_REVISIONS_v1).
+24 of 265 planned spikes are split artifacts on current evidence (15 confirmed, 9 probable): a reverse split left the previous close in pre-split units, so the recorded +30% day did not happen. 7 are unresolved and stay in every view. 1 carried an artifact tag that current evidence does not support. Ledgers: `paper/split_flags.jsonl` (rule `SPLIT_ARTIFACT_V11`, the tag at the time) and `paper/split_assessments.jsonl` (rule `SPLIT_UNITS_V1`, research/SPLIT_REVISIONS_v1).
 
 | Spike | Session | Tag at the time | Tag recorded before entry cutoff | Current assessment | Assessed |
 |---|---|---|---|---|---|
@@ -294,29 +321,37 @@ Generated 2026-11-23T23:04:41Z. Paper only: no orders, no money. Protocol: `rese
 | SGRX | 2026-11-17 | ARTIFACT_V11 | yes | ARTIFACT_PROBABLE | 2026-11-17 |
 | TGL | 2026-11-17 | ARTIFACT_V11 | yes | ARTIFACT_PROBABLE | 2026-11-17 |
 | NIXX | 2026-11-20 | INDETERMINATE | yes | ARTIFACT_CONFIRMED | 2026-11-23 |
-| AUUD | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| CYAB | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| ITP | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| LSTA | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| PARA | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| RIME | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| SMTK | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| SRTM | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
-| TOPP | 2026-11-23 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-23 |
+| AUUD | 2026-11-23 | INDETERMINATE | yes | ARTIFACT_CONFIRMED | 2026-11-24 |
+| CYAB | 2026-11-23 | INDETERMINATE | yes | ARTIFACT_CONFIRMED | 2026-11-24 |
+| IMCC | 2026-11-23 | NOT_FLAGGED | yes | ARTIFACT_CONFIRMED | 2026-11-24 |
+| ITP | 2026-11-23 | INDETERMINATE | yes | REAL_MOVE_UNITS_CONTAMINATED | 2026-11-24 |
+| LSTA | 2026-11-23 | INDETERMINATE | yes | ARTIFACT_CONFIRMED | 2026-11-24 |
+| PARA | 2026-11-23 | INDETERMINATE | yes | ARTIFACT_PROBABLE | 2026-11-24 |
+| RIME | 2026-11-23 | INDETERMINATE | yes | ARTIFACT_CONFIRMED | 2026-11-24 |
+| SMTK | 2026-11-23 | INDETERMINATE | yes | ARTIFACT_CONFIRMED | 2026-11-24 |
+| SRTM | 2026-11-23 | INDETERMINATE | yes | REAL_MOVE_UNITS_CONTAMINATED | 2026-11-24 |
+| TOPP | 2026-11-23 | INDETERMINATE | yes | ARTIFACT_CONFIRMED | 2026-11-24 |
+| CCTG | 2026-11-24 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-24 |
+| CODX | 2026-11-24 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-24 |
+| GFAI | 2026-11-24 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-24 |
+| ISPC | 2026-11-24 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-24 |
+| JAGX | 2026-11-24 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-24 |
+| PARA | 2026-11-24 | ARTIFACT_V11 | yes | ARTIFACT_PROBABLE | 2026-11-24 |
+| RBNE | 2026-11-24 | INDETERMINATE | yes | UNEXPLAINED_EXTREME_MOVE | 2026-11-24 |
 
 The same books three ways. As frozen counts every planned spike. Known at the time leaves out only the spikes whose artifact tag was recorded before their entry cutoff: it is what a filter could have done on the day. Corrected leaves out the spikes that current evidence classes as artifacts: it uses evidence that arrived later and is not a filter that was available before the trade. This is a disclosure, not a second verdict: the planned look and the bounds above are computed on every planned spike, as frozen.
 
 | Book | View | Positions | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|
-| KOD | As frozen | 219 | 107 | 22 | $-11,208 | -10.47% |
-| KOD | Known at the time | 212 | 105 | 22 | $-9,913 | -9.44% |
-| KOD | Corrected | 209 | 103 | 22 | $-9,553 | -9.27% |
-| ALL | As frozen | 238 | 119 | 25 | $-13,873 | -11.66% |
-| ALL | Known at the time | 231 | 117 | 25 | $-12,578 | -10.75% |
-| ALL | Corrected | 223 | 110 | 23 | $-11,944 | -10.86% |
-| AVOIDED | As frozen | 19 | 12 | 3 | $-2,665 | -22.21% |
-| AVOIDED | Known at the time | 19 | 12 | 3 | $-2,665 | -22.21% |
-| AVOIDED | Corrected | 14 | 7 | 1 | $-2,391 | -34.16% |
+| KOD | As frozen | 243 | 107 | 22 | $-11,208 | -10.47% |
+| KOD | Known at the time | 235 | 105 | 22 | $-9,913 | -9.44% |
+| KOD | Corrected | 224 | 103 | 22 | $-9,553 | -9.27% |
+| ALL | As frozen | 265 | 119 | 25 | $-13,873 | -11.66% |
+| ALL | Known at the time | 257 | 117 | 25 | $-12,578 | -10.75% |
+| ALL | Corrected | 241 | 110 | 23 | $-11,944 | -10.86% |
+| AVOIDED | As frozen | 22 | 12 | 3 | $-2,665 | -22.21% |
+| AVOIDED | Known at the time | 22 | 12 | 3 | $-2,665 | -22.21% |
+| AVOIDED | Corrected | 17 | 7 | 1 | $-2,391 | -34.16% |
 | OWNER | As frozen | 0 | 0 | 0 | $+0 | - |
 | OWNER | Known at the time | 0 | 0 | 0 | $+0 | - |
 | OWNER | Corrected | 0 | 0 | 0 | $+0 | - |
