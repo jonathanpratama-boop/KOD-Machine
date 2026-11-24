@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T10:29:53Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T10:30:21Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 37 over 13 signal sessions; events seen: SEALED 37; coverage gaps 0.
+Sets 40 over 14 signal sessions; events seen: SEALED 40; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 18, FIRE 19
+- Classes: ABSTAIN 20, FIRE 20
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,27 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 330 tags: 80 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP HBCP (HOME BANCORP, INC.) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001436425-26-000078`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 60.54 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001436425-26-000078` by Hill Darren M (Chief Risk Officer); purchases USD 315,013; top executive no; holding up +255.2%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001436425-26-000078.
-Twins (band+liq+mom+dd): TNC 73.99, OSBC 24.17, GIII 30.55, CAE 26.71, APOG 43.43, SI 20.15, GTY 28.36, DSGR 35, MPB 33.93, ONT 21.69, LCLN 26.55, OBK 51.65, CBLL 27.39, NRP 114.45, BWFG 67.71, JAKK 33.44, HBT 35.26, RRBI 101.66, CBNK 40.4, WCCB 60.94.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP BOTJ (BANK OF THE JAMES FINANCIAL GROUP INC) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001437749-26-037847`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 24.67 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001437749-26-037847` by FOSTER WATT R JR (director); purchases USD 50,300; top executive no; holding up +1.6%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001437749-26-037847.
-Twins (band+liq+mom+dd): SBR 60.83, DCBO 27.82, KEN 54.16, DJP 45.97, TWIN 21.21, AIRT 21.43, OLP 20.64, NKSH 36.86, OFLX 21.15, HNVR 21.37, SMID 20.68, TAYD 53.16, INBK 24.28, HBB 28.91, PPIH 25.5, NC 30.2, MNSB 20.13, ELMD 22.98.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP CLIK (Click Holdings Ltd.) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
-Set `CAT-FORM4_SHARP-0001493152-26-053366`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 0.6702 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001493152-26-053366` by Chan Chun Sing (Chief Executive Officer); purchases USD 63,856; top executive yes; holding up +1.9%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001493152-26-053366.
-Twins (band+liq+mom+dd): HCWB 0.7491, BRLS 0.7, LIQT 0.1929, DTSS 0.361, CNEY 0.365, VS 0.5705, IVDA 0.17, MGX 0.565, GMEX 0.192, GFAI 0.0841, TPST 0.287, LCFY 0.7015, GXAI 0.3613, OLB 0.115, XTNT 0.21, ZTG 0.2605, SLGB 0.1402, HPAI 0.2201, TURB 0.6446, FRSX 0.44.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP SEI (Solaris Energy Infrastructure, Inc.) - filed 2026-11-20, sealed 2026-11-23T10:35:17Z, cutoff 2026-11-23T14:15:00Z
 Set `CAT-FORM4_SHARP-0001628280-26-075232`, scan `SCAN-US-2026-11-20-G2_RET30`; signal close 54.67 on 2026-11-20; entry: the entry session's opening print (2026-11-23). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +186,25 @@ Filing `0001437749-26-038124` by PT Danantara Energy International; Item 4 inten
 Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 828.8M, dilution filings 1.
 Twins (band+liq+mom+dd): IDR 14.86, OFIX 6.17, KE 19.21, GENB 10.21, LIME 19.69.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 WIX (Wix.com Ltd.) - accepted 2026-11-23T18:35:18-05:00, sealed 2026-11-24T10:30:15Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-SEC13D_V2-0001418812-26-000003`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 62.88 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001418812-26-000003` by VA Partners I, LLC; cover page max 7.0% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 3,457.7M from XBRL; parent CAT-SEC13D-0001418812-26-000003.
+Twins (band+liq+mom+dd): PARR 63.41, GEF 66.27, KMT 23.17, NGVT 57.11, RHI 38.55, LPG 45.84, FTRE 20.38, AGIO 28.65, TNET 62.97, VAL 71.6, WBI 24.95, PRDO 27.81, MGY 22.3, MTDR 47.46, NE 37.73, IMO 114.73, LAUR 32.53, DGII 56.07, DFTX 29.33, NBR 70.39.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 MNTS (Momentus Inc.) - accepted 2026-11-23T20:33:42-05:00, sealed 2026-11-24T10:30:15Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-SEC13D_V2-0000905148-26-005136`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 2.05 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0000905148-26-005136` by OA3, LLC; cover page max 10.6% of class; strong intent: strategic alternatives; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (MICROCAP); market value USD 49.3M from XBRL; parent CAT-SEC13D-0000905148-26-005136.
+Twins (band+liq+mom+dd): EQ 1.14, DTI 1.63, VYGR 1.58, EDSA 2.38, ELTX 1.46, HOVR 1.12, FAC 3.65, TONX 2.59, MGNX 2.16, GANX 1.03, MX 2.34, FHTX 1.92, TGEN 1.76, LUCK 3.74, IPSC 1.32, NSLR 4.94, NEOV 2.11, KULR 1.44, IKT 1.43, GALT 2.8.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 HPK (HighPeak Energy, Inc.) - accepted 2026-11-23T21:33:19-05:00, sealed 2026-11-24T10:30:15Z, cutoff 2026-11-24T14:15:00Z
+Set `CAT-SEC13D_V2-0001437749-26-038124`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 6.55 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001437749-26-038124` by PT Danantara Energy International; cover page max 17.2% of class; strong intent: strategic alternatives; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 828.8M from XBRL; parent CAT-SEC13D-0001437749-26-038124.
+Twins (band+liq+mom+dd): IDR 14.86, OFIX 6.17, KE 19.21, GENB 10.21, LIME 19.69, OFRM 11.75, ENTA 8.06, SSYS 5.32, XPRO 11.93, AVBP 11.26, BBAR 9.2, CRESY 8.21, BCAX 8.75, YARW 12.94, AGRO 7.93, EAF 8.02, NRDS 7.43, NPKI 8.57, HIMX 7.86, GILT 5.01.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
