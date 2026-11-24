@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T10:36:47Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T23:05:20Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 42 (FIRE 18, ABSTAIN 24) over 15 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 21, SEALED 42, SKIP_NOT_OPERATING 9, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 3; coverage gaps 1.
+Sets 43 (FIRE 19, ABSTAIN 24) over 16 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 22, SEALED 43, SKIP_NOT_OPERATING 10, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP URI (UNITED RENTALS, INC.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-472335`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 1040.7 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-472335` by Taussig Alexander R. (director); purchases USD 150,086; top executive no; holding up n/a.
-Coverage **ABSTAIN** (DILUTION_RECENT); dilution filings 1; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-472335.
-Twins (band+liq+mom+dd): AEIS 214.07, HSBC 83.01, CSGP 30.2, JPM 316.66, HRB 45.98, DASH 161.35, ZS 229.24, CDNS 304.13, DY 218.37, HAL 30.57, HUM 383.68, BKNG 144.94, BAC 48.14, MDGL 398.87, GFS 38.95, BHP 70.6, UBER 64.07, VSAT 61.02, TRGP 277.27, SNPS 426.99.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP CCAP (Crescent Capital BDC, Inc.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-472359`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 9.92 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001193125-26-472359` by Chung Henry (President); purchases USD 88,380; top executive yes; holding up +36.2%.
@@ -207,4 +200,11 @@ Form 4 `0002127484-26-000026` by Pittas Aristeidis P (director); purchases USD 6
 Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002127484-26-000026.
 Twins (band+liq+mom+dd): DGP 102, KRT 30.06, DRUG 20.11, VPG 46.36, TBN 21.93, IMOS 41.88, SILC 25.53, KRUS 23.59, KOP 29.49.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D VNDA (Vanda Pharmaceuticals Inc.) - accepted 2026-11-24T16:22:35-05:00, sealed 2026-11-24T23:05:17Z, cutoff 2026-11-25T14:15:00Z
+Set `CAT-SEC13D-0001193125-26-475804`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 3.75 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20.
+Filing `0001193125-26-475804` by Polymeropoulos Mihael Hristos; Item 4 intent words: board, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 226.8M, dilution filings 0.
+Twins (band+liq+mom+dd): ICL 4.23, EVH 3.9, TOYO 3.66, SFIX 2.61, GAU 1.8.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
