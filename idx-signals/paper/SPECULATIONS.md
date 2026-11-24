@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-24T10:29:22Z from `paper/speculations.jsonl`: 398 sets sealed, 615 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-24T22:58:50Z from `paper/speculations.jsonl`: 425 sets sealed, 615 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -30,7 +30,7 @@ PATH20 windows resolved: 0; NEXT1: 75.
 | UP10_1 | 74 | 0.216 | 0.022 | 0.352 | 0.1822 | 0.2500 | 0.1784 |
 | BEATS_TWINS_1 | 74 | 0.378 | 0.489 | 0.500 | 0.2500 | 0.2500 | 0.2401 |
 
-## US: 300 sets over 20 signal sessions (2026-10-27 .. 2026-11-23, 15.00 sets per scan)
+## US: 327 sets over 21 signal sessions (2026-10-27 .. 2026-11-24, 15.57 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -84,11 +84,11 @@ PATH20 windows resolved: 5; NEXT1: 17.
 
 ## Latest sealed sets (postcards from the future)
 
-### US MRM (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-MRM` (PASS), bound to ledger record `452eb837fa28`; set `a6de9310a0f7`.
-Signal close 0.3691 (reference 0.23); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): CIGL 0.2222, BQ 0.492, PMAX 0.6298, RCON 0.9954, ZEO 0.2874.
+### US BENF (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-BENF` (PASS), bound to ledger record `7d427f5cdf22`; set `92610ca76f57`.
+Signal close 0.915 (reference 0.455); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): HUDI 0.4984, ZEO 0.2647, AXNX 0.8997, UCL 0.2754, LNKS 0.6113.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -98,17 +98,17 @@ Twins (band+liq+mom+dd): CIGL 0.2222, BQ 0.492, PMAX 0.6298, RCON 0.9954, ZEO 0.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US PAAI (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-PAAI` (PASS), bound to ledger record `d9707063e0ce`; set `5a03ba190852`.
-Signal close 0.7129 (reference 0.36); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): RKDA 0.1733, AXNX 0.8361, ZEO 0.2874, VTGN 0.1707, HUDI 0.494.
+### US RMSG (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-RMSG` (PASS), bound to ledger record `1787d978bced`; set `7d5dbf1e510d`.
+Signal close 0.2101 (reference 0.14); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): CLLS 0.969, YYAI 0.688, BQ 0.4902, VNTG 0.4366, EQS 0.54.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -118,17 +118,17 @@ Twins (band+liq+mom+dd): RKDA 0.1733, AXNX 0.8361, ZEO 0.2874, VTGN 0.1707, HUDI
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US SCAG (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-SCAG` (PASS), bound to ledger record `b95779e9c0f9`; set `172d5bddcc95`.
-Signal close 1.1 (reference 0.658); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq): SGRX 2.28, CINT 2.91, WXM 2.36, FMFC 1.22, FOXX 1.3.
+### US PLAG (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-PLAG` (PASS), bound to ledger record `52dd4b4ea645`; set `ae46df72db86`.
+Signal close 0.4844 (reference 0.34); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): AIMD 1, GIFT 0.5, RKDA 0.1786, MRM 0.4256, VTGN 0.1765.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -138,17 +138,17 @@ Twins (band+liq): SGRX 2.28, CINT 2.91, WXM 2.36, FMFC 1.22, FOXX 1.3.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US BNAI (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-BNAI` (PASS), bound to ledger record `b0c8edce2de0`; set `fa3bab96a645`.
-Signal close 7.32 (reference 3.36); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): NCT 5.41, RPGL 9.235, PMI 6.46, IMUX 7.76, QVCG 8.53.
+### US AKAN (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-AKAN` (PASS), bound to ledger record `d059e02c403d`; set `4e8352816b0d`.
+Signal close 5.2 (reference 2.58); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): MCAH 10.13, FUSB 16.72, CHPG 10.53, PONO 10.07, GIW 10.24.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -158,17 +158,17 @@ Twins (band+liq+mom+dd): NCT 5.41, RPGL 9.235, PMI 6.46, IMUX 7.76, QVCG 8.53.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US RSSS (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-RSSS` (PASS), bound to ledger record `1d63efbc73de`; set `1843a368f7fa`.
-Signal close 3.13 (reference 2.15); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): BCG 1.61, GRAN 1.2501, ANGH 3.45, MNDO 1.26, YIBO 1.17.
+### US FGL (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-FGL` (PASS), bound to ledger record `302a397e2e03`; set `85e05cbf59b3`.
+Signal close 0.63 (reference 0.44); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): PFSA 0.2775, CSTE 0.8415, CNCK 0.68, SDA 0.2001, AEON 0.18.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -178,17 +178,17 @@ Twins (band+liq+mom+dd): BCG 1.61, GRAN 1.2501, ANGH 3.45, MNDO 1.26, YIBO 1.17.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US DCGO (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-DCGO` (PASS), bound to ledger record `074457c31a7c`; set `d3e85039faa1`.
-Signal close 0.2898 (reference 0.175); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): RVP 0.578, MITQ 0.5299, GIFT 0.5637, YCBD 0.3799, FBDT 0.8389.
+### US APUS (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-APUS` (PASS), bound to ledger record `da9ec65e93f7`; set `6e4b78b71616`.
+Signal close 2.31 (reference 1.5); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): KLRS 1.31, AIOS 4.93, FCDH 2.375, TWAV 1.08, CLIR 1.45.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -198,17 +198,17 @@ Twins (band+liq+mom+dd): RVP 0.578, MITQ 0.5299, GIFT 0.5637, YCBD 0.3799, FBDT 
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US OTLY (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-OTLY` (PASS), bound to ledger record `93263ba4ea81`; set `45a33fa5e1ed`.
-Signal close 14.5 (reference 6.935); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): VPV 10.782, DBCA 10.09, PXLW 6.89, PMM 6.03, IPVV 9.86.
+### US LGHL (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-LGHL` (PASS), bound to ledger record `0a6e905445f1`; set `2dff23307893`.
+Signal close 0.9244 (reference 0.652); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): CNET 0.5973, VIDA 0.5301, NTRP 0.7246, SEED 0.5403, BGL 0.091.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -218,17 +218,17 @@ Twins (band+liq+mom+dd): VPV 10.782, DBCA 10.09, PXLW 6.89, PMM 6.03, IPVV 9.86.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US FFR (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-FFR` (PASS), bound to ledger record `15e8b7ba0d36`; set `ae08155d5d7e`.
-Signal close 0.5202 (reference 0.357); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): SNES 0.63, AMOD 0.7206, BAOS 0.1269, YRD 0.2768, MTNB 0.81.
+### US ONFO (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-ONFO` (PASS), bound to ledger record `fa67a48445d8`; set `241c5536e548`.
+Signal close 0.5656 (reference 0.418); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): EDVA 0.1651, BRFH 0.7522, ZEO 0.2647, UCL 0.2754, CBAT 0.9201.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -238,17 +238,17 @@ Twins (band+liq+mom+dd): SNES 0.63, AMOD 0.7206, BAOS 0.1269, YRD 0.2768, MTNB 0
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US VIVS (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-VIVS` (PASS), bound to ledger record `87b0cd00ae30`; set `23780adc0c75`.
-Signal close 0.354 (reference 0.26); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): ELUT 0.9241, JF 0.905, ORKT 1, GMHS 0.8705, EDTK 0.98.
+### US GLXG (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-GLXG` (PASS), bound to ledger record `1de998849ddc`; set `cb031617471d`.
+Signal close 1.04 (reference 0.7); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): DSWL 3.03, SJ 1.06, AYTU 2.67, MLCI 3.25, MGLD 1.97.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -258,17 +258,17 @@ Twins (band+liq+mom+dd): ELUT 0.9241, JF 0.905, ORKT 1, GMHS 0.8705, EDTK 0.98.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US CUE (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-CUE` (PASS), bound to ledger record `bbc1e52f2958`; set `008f273e2e2c`.
-Signal close 5.75 (reference 4.15); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): KC 6.01, ETD 14.99, ELE 12.58, CRESY 8.21, IDR 14.86.
+### US BDRX (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-BDRX` (PASS), bound to ledger record `ca9584fde5e7`; set `49fcd9a46c52`.
+Signal close 2.6 (reference 1.96); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): IONR 2.17, CTW 1.17, DWSN 1.56, ASTC 3.28, UONEK 1.75.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -278,17 +278,17 @@ Twins (band+liq+mom+dd): KC 6.01, ETD 14.99, ELE 12.58, CRESY 8.21, IDR 14.86.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US DTSS (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-DTSS` (PASS), bound to ledger record `9f2ec508cc34`; set `b8ab2462e248`.
-Signal close 0.4975 (reference 0.361); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): USBC 0.3429, NTRP 0.6961, IBG 0.6215, CHAI 0.1357, SXTP 0.4501.
+### US LVWR (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-LVWR` (PASS), bound to ledger record `36dbea0b1a69`; set `5fa2b2490671`.
+Signal close 1.87 (reference 0.98); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): CAMP 4.3, GCL 1.57, BOSC 4.32, USEA 3.05, ENTX 3.23.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -298,17 +298,17 @@ Twins (band+liq+mom+dd): USBC 0.3429, NTRP 0.6961, IBG 0.6215, CHAI 0.1357, SXTP
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US AEON (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-AEON` (PASS), bound to ledger record `0adefc9cd11f`; set `e6ea7a90e20b`.
-Signal close 0.2026 (reference 0.123); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): TRNR 0.6544, ICU 0.9526, EQS 0.545, BFRI 0.507, JAGU 0.655.
+### US JAGX (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-JAGX` (PASS), bound to ledger record `2a5abc406a55`; set `be61534d53f8`.
+Signal close 12.8 (reference 0.227); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): ZYN 10.15, PROV 18.36, JLS 16.09, RFI 10.43, VHCP 10.11.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -318,17 +318,17 @@ Twins (band+liq+mom+dd): TRNR 0.6544, ICU 0.9526, EQS 0.545, BFRI 0.507, JAGU 0.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US KYMR (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-KYMR` (PASS), bound to ledger record `2d9fcdbdbead`; set `6ed8d5ca2192`.
-Signal close 150.37 (reference 115.31); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): V 409.4, BIIB 256.71, KVYO 23.3, KNSL 396.34, RSG 247.69.
+### US EMBC (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-EMBC` (PASS), bound to ledger record `f180d95931b5`; set `def9dd33f3e6`.
+Signal close 8.08 (reference 5.745); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): JFR 7.15, AEYE 12.73, OBIO 6.9, RQI 11.41, ESRT 5.17.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -338,17 +338,17 @@ Twins (band+liq+mom+dd): V 409.4, BIIB 256.71, KVYO 23.3, KNSL 396.34, RSG 247.6
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US BYSI (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-BYSI` (PASS), bound to ledger record `cdbaf085a4ab`; set `f1d1a75da78f`.
-Signal close 0.475 (reference 0.33); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): CIGL 0.2222, PMAX 0.6298, RCON 0.9954, ZEO 0.2874, CBAT 0.9306.
+### US ALTG (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-ALTG` (PASS), bound to ledger record `357caa466598`; set `0d05d0db0034`.
+Signal close 6.14 (reference 4.61); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): SOHU 10.74, BWG 6.46, GWRS 6.59, AGD 10.55, BBCP 9.32.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -358,17 +358,17 @@ Twins (band+liq+mom+dd): CIGL 0.2222, PMAX 0.6298, RCON 0.9954, ZEO 0.2874, CBAT
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US SCWO (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-SCWO` (PASS), bound to ledger record `3d81bd6c35cd`; set `6454fdb25bbe`.
-Signal close 2.29 (reference 1.74); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): GRCE 1.76, GROW 2.48, ATTT 2.34, CRE 2.25, SQNS 2.26.
+### US MTR (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-MTR` (PASS), bound to ledger record `8823018073ba`; set `0b0f888eea2c`.
+Signal close 2.14 (reference 1.59); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): XBIT 1.85, SILO 1.8, DFSC 3, WNW 2.22, SFHG 2.0701.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -378,17 +378,17 @@ Twins (band+liq+mom+dd): GRCE 1.76, GROW 2.48, ATTT 2.34, CRE 2.25, SQNS 2.26.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US ALZN (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-ALZN` (PASS), bound to ledger record `32b923ba0de0`; set `f2e982a3692f`.
-Signal close 1.02 (reference 0.776); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): FEMY 1.26, ACCS 3.61, NCTY 2.98, KUST 2.66, ATPC 1.2.
+### US IBIO (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-IBIO` (PASS), bound to ledger record `0415e640fadb`; set `081f81501520`.
+Signal close 1.115 (reference 0.8); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): GNLX 2.1, ACIU 2.44, COSM 2.53, KXIN 2.4, CCLD 2.08.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -398,17 +398,17 @@ Twins (band+liq+mom+dd): FEMY 1.26, ACCS 3.61, NCTY 2.98, KUST 2.66, ATPC 1.2.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US ITP (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-ITP` (PASS), bound to ledger record `b9b66e0b9ef6`; set `f08a0d2e6fc6`.
-Signal close 3.3 (reference 0.06); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): PIM 2.98, AWX 2.61, GYRO 4.99, AYTU 2.67, MLCI 3.3.
+### US ALDX (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-ALDX` (PASS), bound to ledger record `a3a6f00edc9a`; set `81a9b3babbb0`.
+Signal close 1.04 (reference 0.76); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): PLBY 1.15, TPET 1.78, OKUR 3.08, CCLD 2.08, PSHG 1.82.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -418,17 +418,17 @@ Twins (band+liq+mom+dd): PIM 2.98, AWX 2.61, GYRO 4.99, AYTU 2.67, MLCI 3.3.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US PRFX (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-PRFX` (PASS), bound to ledger record `da6b4d5b52cf`; set `01f461aab88e`.
-Signal close 0.66 (reference 0.476); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): MNY 0.5389, PMEC 0.3614, VNRX 0.1668, VNTG 0.43, EDVA 0.1525.
+### US ALXO (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-ALXO` (PASS), bound to ledger record `a083fd6b8ed2`; set `b15bbbb0a5cc`.
+Signal close 1.52 (reference 1.16); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): GECC 4.91, IPSC 1.52, LZM 3.99, KXIN 2.4, ACRE 3.66.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -438,17 +438,17 @@ Twins (band+liq+mom+dd): MNY 0.5389, PMEC 0.3614, VNRX 0.1668, VNTG 0.43, EDVA 0
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US NVDA (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-NVDA` (PASS), bound to ledger record `d77c7b2d0527`; set `0514b1d38f8e`.
-Signal close 165.05 (reference 125.53); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): HPQ 28.9, CRWD 208.97, FANG 173.2, SU 62.97, PR 20.82.
+### US TNYA (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-TNYA` (PASS), bound to ledger record `cf92e3a0c959`; set `6c4300517098`.
+Signal close 0.4153 (reference 0.309); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom): GNS 0.4096, HUMA 0.5141, CRDF 0.8796, BURU 0.216, RYDE 0.91.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -458,17 +458,17 @@ Twins (band+liq+mom+dd): HPQ 28.9, CRWD 208.97, FANG 173.2, SU 62.97, PR 20.82.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US INTJ (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-INTJ` (PASS), bound to ledger record `69091fa0f716`; set `d34997f49d89`.
-Signal close 2.47 (reference 1.9); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): CUVL 4.65, AENT 4.755, ACXP 1.05, LXEH 1.36, DOYU 3.315.
+### US SMXT (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-SMXT` (PASS), bound to ledger record `b8d89454fca0`; set `6c89dcac0793`.
+Signal close 4.14 (reference 2.94); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): JBDI 2.34, KOSS 3.3, SERA 1.86, BLIV 2.23, GURE 2.8.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -478,17 +478,17 @@ Twins (band+liq+mom+dd): CUVL 4.65, AENT 4.755, ACXP 1.05, LXEH 1.36, DOYU 3.315
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US GRRR (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-GRRR` (PASS), bound to ledger record `1e6f9fab9621`; set `e9881021a091`.
-Signal close 7.59 (reference 5.255); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): DSGN 9.49, AGEN 5.94, MEC 12.73, EPRX 5.89, KARD 12.02.
+### US CD (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-CD` (PASS), bound to ledger record `f9de9f48ed62`; set `10445348313b`.
+Signal close 5.88 (reference 4.51); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): IQMX 6.14, AMTD 10.57, AGPU 6.41, NDLS 7.65, AGCC 8.42.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -498,17 +498,17 @@ Twins (band+liq+mom+dd): DSGN 9.49, AGEN 5.94, MEC 12.73, EPRX 5.89, KARD 12.02.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US LINK (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-LINK` (PASS), bound to ledger record `ce4de6a7df32`; set `417f22b5faec`.
-Signal close 2.84 (reference 2.11); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): IDAI 1.9005, FATN 3.72, DTST 1.91, CHR 1.01, ODYS 1.55.
+### US CODX (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-CODX` (PASS), bound to ledger record `7589fcb16d98`; set `577ed33f56bf`.
+Signal close 3.94 (reference 0.13); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): GCL 1.57, CLNN 4.59, DH 1.3, SPWH 1.28, CVGI 3.09.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -518,17 +518,17 @@ Twins (band+liq+mom+dd): IDAI 1.9005, FATN 3.72, DTST 1.91, CHR 1.01, ODYS 1.55.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US ZSQR (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-ZSQR` (PASS), bound to ledger record `c125a869327b`; set `9a2055563df7`.
-Signal close 2.275 (reference 1.735); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): CYCU 1.63, BDTX 1.36, VIVO 1.89, MOB 1.34, INDO 2.08.
+### US ISPC (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-ISPC` (PASS), bound to ledger record `0d5e641b9153`; set `2a38d681ea2c`.
+Signal close 2.9 (reference 0.456); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): SPPL 2.775, JCTC 2.8, GYRO 4.75, ATER 1.47, RECT 1.25.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -538,17 +538,17 @@ Twins (band+liq+mom+dd): CYCU 1.63, BDTX 1.36, VIVO 1.89, MOB 1.34, INDO 2.08.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US IMCC (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-IMCC` (PASS), bound to ledger record `aa1a53725d24`; set `3ba0d5e87f1a`.
-Signal close 1.6 (reference 0.5); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): VCIG 2.95, TULP 2.29, REED 1.41, BOF 1.73, NCRA 1.43.
+### US GFAI (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-GFAI` (PASS), bound to ledger record `a6edc01c5467`; set `1cd3166a575c`.
+Signal close 2.9 (reference 0.084); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): GIGM 1.36, JCTC 2.8, ORIO 1.08, MNDO 1.25, AWX 2.63.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -558,17 +558,17 @@ Twins (band+liq+mom+dd): VCIG 2.95, TULP 2.29, REED 1.41, BOF 1.73, NCRA 1.43.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US BUUU (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-BUUU` (PASS), bound to ledger record `59d52777fbaf`; set `e0d576e08869`.
-Signal close 4.41 (reference 3.29); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): SION 2.8, DDD 1.53, OGG 1.97, FWDI 3.68, CABA 1.02.
+### US CCTG (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-CCTG` (PASS), bound to ledger record `e8bd9b5a0b97`; set `875fca019db9`.
+Signal close 4.65 (reference 0.298); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): SJ 1.06, SELF 4.8, SLSN 1.7, MGLD 1.97, RSSS 3.14.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -578,17 +578,17 @@ Twins (band+liq+mom+dd): SION 2.8, DDD 1.53, OGG 1.97, FWDI 3.68, CABA 1.02.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US PTHS (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-PTHS` (PASS), bound to ledger record `6d4c7622f6e1`; set `9926d2134779`.
-Signal close 9.01 (reference 6.38); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): NREF 11.56, MAKO 6.44, ACR 8.07, AIIO 5.78, NLOP 6.69.
+### US RBNE (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-RBNE` (PASS), bound to ledger record `0558fb413e6c`; set `0af48a639079`.
+Signal close 3.18 (reference 0.123); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq+mom+dd): BGS 3.8, OPK 1.66, TCPC 4.16, RZLT 4.49, MNKD 4.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -598,17 +598,17 @@ Twins (band+liq+mom+dd): NREF 11.56, MAKO 6.44, ACR 8.07, AIIO 5.78, NLOP 6.69.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### US XCH (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-XCH` (PASS), bound to ledger record `5cebaa9b454d`; set `abdbb0b73c9f`.
-Signal close 4.1 (reference 2.775); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): OCG 1.58, ROC 3.45, CNVS 1.78, QRHC 1.2, ZYBT 1.48.
+### US PARA (2026-11-24) - sealed 2026-11-24T22:56:51Z, cutoff 2026-11-25T13:30:00Z
+Decision `SCAN-US-2026-11-24-G2_RET30-PARA` (PASS), bound to ledger record `bdfc3b787d15`; set `68e0b42c4484`.
+Signal close 3.04 (reference 0.028); entry: the next session's opening print.
+Tag: 27 flags today vs trailing median 13.0 -> hot_day = True.
+Twins (band+liq): ACRS 3.66, NXDR 2.01, WVE 3.1, NRXP 2.14, BUR 3.36.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -618,188 +618,8 @@ Twins (band+liq+mom+dd): OCG 1.58, ROC 3.45, CNVS 1.78, QRHC 1.2, ZYBT 1.48.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US CELU (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-CELU` (PASS), bound to ledger record `3c628e5f1df2`; set `71de485d2923`.
-Signal close 0.6053 (reference 0.463); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): ELBM 0.3555, IRIX 0.4421, NTRP 0.6961, TURB 0.6603, ZBAO 0.11.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US SRTM (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-SRTM` (PASS), bound to ledger record `55e6ce3ee653`; set `2e6a75e0c817`.
-Signal close 1.03 (reference 0.084); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): GP 2.43, UZX 1.02, NCRA 1.43, MBAI 2.03, WYHG 2.54.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US LSTA (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-LSTA` (PASS), bound to ledger record `41b8976613ff`; set `cd4cb5f8cd00`.
-Signal close 12.61 (reference 0.9); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): TRAD 10.13, NL 7, MBBC 14.98, CUB 10.9999, KFFB 5.6.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US RIME (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-RIME` (PASS), bound to ledger record `3073aef23a4d`; set `39148671636a`.
-Signal close 0.5252 (reference 0.05); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom): RYDE 0.92, CRDF 0.8195, HOWL 0.99, KTTA 0.49, FJET 0.7988.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US AUUD (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-AUUD` (PASS), bound to ledger record `1b0a91fee62e`; set `f125241e1c5f`.
-Signal close 2.48 (reference 0.173); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): YIBO 1.17, DSWL 3.02, SJ 1.075, MNDO 1.26, AWX 2.61.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US TOPP (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-TOPP` (PASS), bound to ledger record `a38e397edfea`; set `b52b5a66f45e`.
-Signal close 0.4381 (reference 0.108); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): EDTK 0.98, GMHS 0.8705, JF 0.905, ORKT 1, ELUT 0.9241.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US CYAB (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-CYAB` (PASS), bound to ledger record `484efe1cc195`; set `1bc4bfa83b92`.
-Signal close 1.6 (reference 0.06); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): MPU 4.79, DAIO 2.64, CVKD 1.71, DSWL 3.02, BCG 1.61.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US SMTK (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-SMTK` (PASS), bound to ledger record `802e62481414`; set `44913fd12991`.
-Signal close 1.31 (reference 0.242); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq+mom+dd): LPCN 1.57, CVV 4.38, TRVG 4.21, NTHI 3.3, CSHR 3.78.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
-| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
-
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
-
-### US PARA (2026-11-23) - sealed 2026-11-23T22:57:51Z, cutoff 2026-11-24T13:30:00Z
-Decision `SCAN-US-2026-11-23-G2_RET30-PARA` (PASS), bound to ledger record `b2520b1eb647`; set `788e62752ff2`.
-Signal close 2.72 (reference 0.028); entry: the next session's opening print.
-Tag: 36 flags today vs trailing median 12.5 -> hot_day = True.
-Twins (band+liq): NAUT 2.21, EGHT 2.01, TMQ 1.58, MDXG 3.08, SION 2.8.
-
-| Statement | Prior | Resolves with |
-|---|---:|---|
-| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.154 | BASE5 |
-| FADE10_5: the BASE5 net return is <= -0.10 | 0.403 | BASE5 |
-| GAIN0_5: the BASE5 net return is > 0 | 0.425 | BASE5 |
-| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
-| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
-| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
-| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.300 | NEXT1 |
-| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.217 | NEXT1 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.296 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.222 | NEXT1 |
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
