@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T23:05:20Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-24T23:05:33Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 40 over 14 signal sessions; events seen: SEALED 40; coverage gaps 0.
+Sets 41 over 15 signal sessions; events seen: SEALED 41; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 20, FIRE 20
+- Classes: ABSTAIN 20, FIRE 21
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 330 tags: 80 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP CCAP (Crescent Capital BDC, Inc.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-472359`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 9.92 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-472359` by Chung Henry (President); purchases USD 88,380; top executive yes; holding up +36.2%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-472359.
-Twins (band+liq+mom+dd): SGU 13.16, APXT 10.21, AESP 10.08, BDCI 10.19, BBCP 9.44, PROV 18.46, RDCM 11.05, LFAC 10.15, NWAX 10.11, FINW 14.36, GNE 18.06, GCGR 10, HBIO 8.6, BCSS 10.255, ELC 18.29, BCBP 9, JRSH 7.28, III 6.18, WHF 8, RSVR 10.1.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP FRMI (Fermi Inc.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
 Set `CAT-FORM4_SHARP-0001213900-26-123347`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 2.1 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001193125-26-475804` by Polymeropoulos Mihael Hristos; Item 4 intent wo
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 226.8M, dilution filings 0.
 Twins (band+liq+mom+dd): ICL 4.23, EVH 3.9, TOYO 3.66, SFIX 2.61, GAU 1.8.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 VNDA (Vanda Pharmaceuticals Inc.) - accepted 2026-11-24T16:22:35-05:00, sealed 2026-11-24T23:05:30Z, cutoff 2026-11-25T14:15:00Z
+Set `CAT-SEC13D_V2-0001193125-26-475804`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 3.75 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001193125-26-475804` by Polymeropoulos Mihael Hristos; cover page max 5.01% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 226.8M from XBRL; parent CAT-SEC13D-0001193125-26-475804.
+Twins (band+liq+mom+dd): ICL 4.23, EVH 3.9, TOYO 3.66, SFIX 2.61, GAU 1.8, TKC 4.45, TV 2.07, LPL 2.39, CERS 2.04, IVA 3.53, CLNE 1.42, TSHA 4.08, CCCC 3.1, EVLV 4.11, HUCK 2.87, JBI 3.73, CIG 1.79, NUS 4.12, ASTL 4.43, ANNX 3.54.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
