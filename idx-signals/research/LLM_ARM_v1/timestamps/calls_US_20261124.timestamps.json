@@ -1,0 +1,16 @@
+{
+  "calls_US_20261124.jsonl": {
+    "sha256": "72c1e23a65a8fd36250a9d9e769399c33cfb69f9cbdf1b7c39b8d88b82f75ecc",
+    "tokens": [
+      {
+        "authority": "freetsa",
+        "time": "2026-11-24 23:21:23+00:00"
+      },
+      {
+        "authority": "sectigo",
+        "time": "2026-11-24 23:21:23+00:00"
+      }
+    ],
+    "errors": []
+  }
+}
