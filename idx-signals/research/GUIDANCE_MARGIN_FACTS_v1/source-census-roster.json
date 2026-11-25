@@ -1,0 +1,109 @@
+{
+  "source": "https://github.com/jonathanpratama-boop/KOD-Machine/blob/c22b2e1682c0322fc65569e159a257d147a1f86f/idx-signals/research/E10/filings.csv",
+  "source_blob_sha": "caaf2108a2fae0e94467305dab0d88bc195f808b",
+  "source_row_count": 36215,
+  "source_unique_ciks": 2843,
+  "selection": "first 20 numeric CIKs ascending",
+  "selected": [
+    {
+      "ordinal": 1,
+      "cik": 1750,
+      "ticker": "AIR"
+    },
+    {
+      "ordinal": 2,
+      "cik": 1800,
+      "ticker": "ABT"
+    },
+    {
+      "ordinal": 3,
+      "cik": 2098,
+      "ticker": "ACU"
+    },
+    {
+      "ordinal": 4,
+      "cik": 2488,
+      "ticker": "AMD"
+    },
+    {
+      "ordinal": 5,
+      "cik": 2969,
+      "ticker": "APD"
+    },
+    {
+      "ordinal": 6,
+      "cik": 3197,
+      "ticker": "CECO"
+    },
+    {
+      "ordinal": 7,
+      "cik": 3453,
+      "ticker": "MATX"
+    },
+    {
+      "ordinal": 8,
+      "cik": 3545,
+      "ticker": "ALCO"
+    },
+    {
+      "ordinal": 9,
+      "cik": 3570,
+      "ticker": "LNG"
+    },
+    {
+      "ordinal": 10,
+      "cik": 4127,
+      "ticker": "SWKS"
+    },
+    {
+      "ordinal": 11,
+      "cik": 4281,
+      "ticker": "HWM"
+    },
+    {
+      "ordinal": 12,
+      "cik": 4904,
+      "ticker": "AEP"
+    },
+    {
+      "ordinal": 13,
+      "cik": 4962,
+      "ticker": "AXP"
+    },
+    {
+      "ordinal": 14,
+      "cik": 4977,
+      "ticker": "AFL"
+    },
+    {
+      "ordinal": 15,
+      "cik": 5272,
+      "ticker": "AIG"
+    },
+    {
+      "ordinal": 16,
+      "cik": 5513,
+      "ticker": "UNM"
+    },
+    {
+      "ordinal": 17,
+      "cik": 5981,
+      "ticker": "AVD"
+    },
+    {
+      "ordinal": 18,
+      "cik": 6201,
+      "ticker": "AAL"
+    },
+    {
+      "ordinal": 19,
+      "cik": 6281,
+      "ticker": "ADI"
+    },
+    {
+      "ordinal": 20,
+      "cik": 6845,
+      "ticker": "APOG"
+    }
+  ]
+}

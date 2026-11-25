@@ -1,0 +1,272 @@
+{
+  "source_blob_sha": "caaf2108a2fae0e94467305dab0d88bc195f808b",
+  "parent_commit": "c22b2e1682c0322fc65569e159a257d147a1f86f",
+  "selection_rule": "source-census-v2-selection.md",
+  "fixed_salt": "KOD_MARGIN_SOURCE_CENSUS_V2_20261116",
+  "source_unique_ciks": 2843,
+  "original_ciks_excluded": [
+    1750,
+    1800,
+    2098,
+    2488,
+    2969,
+    3197,
+    3453,
+    3545,
+    3570,
+    4127,
+    4281,
+    4904,
+    4962,
+    4977,
+    5272,
+    5513,
+    5981,
+    6201,
+    6281,
+    6845
+  ],
+  "remaining_population": 2823,
+  "selected": [
+    {
+      "ordinal": 1,
+      "cik": 1439725,
+      "ticker": "BDSX",
+      "selection_sha256": "002947bed468731c6db08bbee5bfa8c2767f894c9553f8eaaf023b2af90d315d"
+    },
+    {
+      "ordinal": 2,
+      "cik": 1739445,
+      "ticker": "ACA",
+      "selection_sha256": "002fb09325184aa1dce09e90f57140032f080e41cdd606773f9dd41310dc03a3"
+    },
+    {
+      "ordinal": 3,
+      "cik": 913277,
+      "ticker": "CLAR",
+      "selection_sha256": "004517eca89bdb79a0ffd4fa862c8f1d51788272f723edc9c54891b9716de321"
+    },
+    {
+      "ordinal": 4,
+      "cik": 1669162,
+      "ticker": "KNSL",
+      "selection_sha256": "0047710c593b97e9f36ce87f11edea65630dc5bb571d3c332f02044a8b141418"
+    },
+    {
+      "ordinal": 5,
+      "cik": 64463,
+      "ticker": "SLNH",
+      "selection_sha256": "00bd61be7b5bdb5819c9d8902c9f185d62223aae08b49b3aa2e92478f973cf65"
+    },
+    {
+      "ordinal": 6,
+      "cik": 883984,
+      "ticker": "ICUI",
+      "selection_sha256": "00c1545208c0958acf4ae7e9a39e539b2959d18200a0e9c5a1f6b3b5ae6994ad"
+    },
+    {
+      "ordinal": 7,
+      "cik": 47217,
+      "ticker": "HPQ",
+      "selection_sha256": "00d084b036f3ed1477b122cd112976ff894132ac171bf59aabe1a2b0e592fa91"
+    },
+    {
+      "ordinal": 8,
+      "cik": 72573,
+      "ticker": "MOV",
+      "selection_sha256": "00ef77f43d73bfd8a1f7226e36c85e4d91a2dcd38bed5c1ef207a901ad2b2ad2"
+    },
+    {
+      "ordinal": 9,
+      "cik": 1069258,
+      "ticker": "KTOS",
+      "selection_sha256": "012289999b35934c6a9bf0a2790650f6595b87de8f8611f480d5e8017df84fcc"
+    },
+    {
+      "ordinal": 10,
+      "cik": 1145986,
+      "ticker": "ASPN",
+      "selection_sha256": "01315f295d43efc0b19a1ca210ec279a1e90025d9082a41a1e389a0c7afc2799"
+    },
+    {
+      "ordinal": 11,
+      "cik": 1613103,
+      "ticker": "MDT",
+      "selection_sha256": "016dd8210bed8cb23c0790af5cb97a0ac17cf9039587993d6811b7a952436bcd"
+    },
+    {
+      "ordinal": 12,
+      "cik": 1341439,
+      "ticker": "ORCL",
+      "selection_sha256": "0188b415b82b3caae6b0e9d0bd2f5e17c1010c2c191ea1ba6559445e0ce29f51"
+    },
+    {
+      "ordinal": 13,
+      "cik": 783325,
+      "ticker": "WEC",
+      "selection_sha256": "019ea0dcd590fe0d021f7216098c467a20acc9be409a05d929e27233d729ba99"
+    },
+    {
+      "ordinal": 14,
+      "cik": 1682149,
+      "ticker": "DVLT",
+      "selection_sha256": "01a458599822c3e5f14d2159afa3bb2f04c005a5a89e2475c3c59abd886f6010"
+    },
+    {
+      "ordinal": 15,
+      "cik": 1448893,
+      "ticker": "ESNT",
+      "selection_sha256": "01c202107391aa915b5a040b4000e9279d1d4361f3a714ef289dec8677ac5b2e"
+    },
+    {
+      "ordinal": 16,
+      "cik": 1871509,
+      "ticker": "PTLO",
+      "selection_sha256": "01c6cd9cc033b9829b25157062cc4a36757e6315333abdf31ff0d518b08e68c2"
+    },
+    {
+      "ordinal": 17,
+      "cik": 889900,
+      "ticker": "PTEN",
+      "selection_sha256": "01e91bbb4328ea2755bf10df51cba82383fe645bba50314c9f3a0294b0170d73"
+    },
+    {
+      "ordinal": 18,
+      "cik": 1524472,
+      "ticker": "XYL",
+      "selection_sha256": "01ea05792cfc76f1c4c30645de4fa9dc59d72685dd19e2aa8b5032e59aaa63a5"
+    },
+    {
+      "ordinal": 19,
+      "cik": 1711279,
+      "ticker": "KRYS",
+      "selection_sha256": "01faca220575e3e3eb301dd2c564ad8cf72050cd86e1c021b20e17a296d49ff9"
+    },
+    {
+      "ordinal": 20,
+      "cik": 1077183,
+      "ticker": "NEO",
+      "selection_sha256": "024c660a0ed744c21dd69fb0bc876a25d19eed3f9f8e95e67746f9efc82776c8"
+    },
+    {
+      "ordinal": 21,
+      "cik": 1584207,
+      "ticker": "OMF",
+      "selection_sha256": "0253e6c991032ffd220fc3693f795e6e9c2cee520b67928d8810692944754f1e"
+    },
+    {
+      "ordinal": 22,
+      "cik": 1289490,
+      "ticker": "EXR",
+      "selection_sha256": "0260efb4e102063102ebb97cad20a761e79df9be159c4f1a5d0534f98a1e5659"
+    },
+    {
+      "ordinal": 23,
+      "cik": 1230245,
+      "ticker": "PIPR",
+      "selection_sha256": "026bed3798b415c7879d4d3db4667484eb9fe2758f1146c783e902c0cb2f2d66"
+    },
+    {
+      "ordinal": 24,
+      "cik": 1755237,
+      "ticker": "KRSA",
+      "selection_sha256": "0278d0bcbb6e16db1f8211ba8cd0eb4a421527e17f4de4af86c525ac8838c84d"
+    },
+    {
+      "ordinal": 25,
+      "cik": 877860,
+      "ticker": "NHI",
+      "selection_sha256": "02bc02abdde5babc6df91aeb14eb18284a005c4a9cdfaa8bedc6c4861db31386"
+    },
+    {
+      "ordinal": 26,
+      "cik": 1117297,
+      "ticker": "QNST",
+      "selection_sha256": "02d3803e6725aaa983914463736c6901a566e7832b66974b9f48efdb856d6b58"
+    },
+    {
+      "ordinal": 27,
+      "cik": 60714,
+      "ticker": "LXU",
+      "selection_sha256": "02d96d0c397039b7e61c22482879829e8a3bb0fdad0d62621f4f59092934ba5f"
+    },
+    {
+      "ordinal": 28,
+      "cik": 275053,
+      "ticker": "NATR",
+      "selection_sha256": "02f0e8cc2a677e5a3c8a795eb35ec0659317654e75c8c042f2862116e9a7ca93"
+    },
+    {
+      "ordinal": 29,
+      "cik": 1602658,
+      "ticker": "ISTR",
+      "selection_sha256": "02ffca3cb3903de9f4c659ce9b2682e0a60e8fe6cdc54b2796d2277c83f9f6a9"
+    },
+    {
+      "ordinal": 30,
+      "cik": 1682639,
+      "ticker": "HYPD",
+      "selection_sha256": "030485a60b0b686ca56a8b9e1f1c3a157dac905bbbcc085592b55375f7d50655"
+    },
+    {
+      "ordinal": 31,
+      "cik": 1275014,
+      "ticker": "UCTT",
+      "selection_sha256": "035815d0a0e3287d37935e74b9b566c29d37d8873eb87cdcda744afacd3b4cf7"
+    },
+    {
+      "ordinal": 32,
+      "cik": 912767,
+      "ticker": "UFPI",
+      "selection_sha256": "035edacc9537f9a1da47163750891714f9a459e07542ec2a1f151274146cc690"
+    },
+    {
+      "ordinal": 33,
+      "cik": 34782,
+      "ticker": "SRCE",
+      "selection_sha256": "038d74fe97ce711dba5d36799b35253f399823acfbc0e5b27a292002e7e4cfe3"
+    },
+    {
+      "ordinal": 34,
+      "cik": 1803696,
+      "ticker": "ADEA",
+      "selection_sha256": "0396b04e737419796fd5d5a249456e34bb0c4187ed814130de3e10feee232798"
+    },
+    {
+      "ordinal": 35,
+      "cik": 45012,
+      "ticker": "HAL",
+      "selection_sha256": "03a282835cf4be3662e11d6ef952cf70235174435462b7aaa0e7639e64d9147b"
+    },
+    {
+      "ordinal": 36,
+      "cik": 57131,
+      "ticker": "LZB",
+      "selection_sha256": "03a431eabefb65b2558ee8c91b6027d99382be405526409351f42255f57dee1c"
+    },
+    {
+      "ordinal": 37,
+      "cik": 1708055,
+      "ticker": "RBBN",
+      "selection_sha256": "03aa39b26a4bae4e06fd52fa47ff8d119116ee0145fd9dffc8d81acddb68adde"
+    },
+    {
+      "ordinal": 38,
+      "cik": 797468,
+      "ticker": "OXY",
+      "selection_sha256": "03ae245101921ed8f1ad16e7dbf4006f619c6b8745e12b565c6ad015fe8445e6"
+    },
+    {
+      "ordinal": 39,
+      "cik": 354707,
+      "ticker": "HE",
+      "selection_sha256": "03b3c1f6cf7304bee5c04592749705e2911acccc4468a5f801de1c4f5cc5d949"
+    },
+    {
+      "ordinal": 40,
+      "cik": 1050377,
+      "ticker": "CNXN",
+      "selection_sha256": "03b853fe52d0c606b4a463da799295c860b1f6dd871754f28239e46da8ff4d34"
+    }
+  ]
+}

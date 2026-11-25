@@ -1,0 +1,50 @@
+{
+  "commit": "16502a02bd3411eb5a0d6ac0b1feac11434f6209",
+  "source": "Unchanged existing scheduled backup; no forced retry",
+  "verified_on": "2026-11-16",
+  "health": {
+    "emitted_at": "2026-11-16T08:35:31.350433Z",
+    "status": "OK",
+    "phase": "RUNNING",
+    "service": {
+      "ActiveState": "active",
+      "ControlGroup": "/kod.slice/kod-research.slice/kod-research-r2.slice/kod-research-r2.service",
+      "ExecMainStatus": "0",
+      "MainPID": "447512",
+      "Slice": "kod-research-r2.slice",
+      "SubState": "running"
+    },
+    "capture_at": "2026-11-16T08:35:28.477776Z",
+    "last_commit": "2026-11-16T08:35:00.441341Z",
+    "valid": 1596140,
+    "coverage": 0.8044817193028436,
+    "engine_as_of": "2026-11-16T08:35:27.531545Z",
+    "issues": []
+  },
+  "engine_head": {
+    "file_count": 226,
+    "recovered": [
+      [
+        "engine/ledger-0000183159-0000206039-afc5af5d4e77dcee7dd2b526a8e3330db56fe685dd9b997520bbcda3fe84cdf9.jsonl.gz",
+        {
+          "bytes": 1430686,
+          "sha256": "afc5af5d4e77dcee7dd2b526a8e3330db56fe685dd9b997520bbcda3fe84cdf9"
+        }
+      ]
+    ]
+  },
+  "bundle": {
+    "path": "bundles/99f32c12839d3fe432484e7ea445d9dba779cac313e8721d4126da38a092e7df.json",
+    "sha256": "99f32c12839d3fe432484e7ea445d9dba779cac313e8721d4126da38a092e7df",
+    "bytes": 3724107,
+    "archive_sequence": 211,
+    "file_count": 333,
+    "recovered": [
+      {
+        "bytes": 1430686,
+        "path": "engine/ledger-0000183159-0000206039-afc5af5d4e77dcee7dd2b526a8e3330db56fe685dd9b997520bbcda3fe84cdf9.jsonl.gz",
+        "sha256": "afc5af5d4e77dcee7dd2b526a8e3330db56fe685dd9b997520bbcda3fe84cdf9"
+      }
+    ]
+  }
+}

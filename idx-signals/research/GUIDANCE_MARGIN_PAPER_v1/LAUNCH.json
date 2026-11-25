@@ -1,0 +1,40 @@
+{
+  "deployed_at": "2026-11-16T10:56:14.680413+00:00",
+  "trial_started_at": "2026-11-16T10:51:25.028121+00:00",
+  "timer_enabled": "enabled",
+  "old_r2_active": "active",
+  "package_sha256": "65eba47647bf6224afa4820ac18d345406a4f7ff05d9c085db75c90d140e56d7",
+  "verified_at": "2026-11-16T10:58:53.690384+00:00",
+  "mode": "paper only; modeled daily-bar execution",
+  "schedule": "Ten minutes after each completed cycle",
+  "initial_audit": {
+    "disclosures": 20,
+    "mechanical_screen_exclusions": 18,
+    "source_review_exclusions": 2,
+    "eligible": 0,
+    "paper_trades": 0,
+    "api_calls": 2,
+    "estimated_api_cost_usd": 0.2482525,
+    "notes": "Cineverse provided unchanged revenue and EBITDA, not the required operating-profit forecast. Suncrete provided revenue, net income and EBITDA; ticker identity remains unresolved but the missing required metric independently excludes it. These initial source records are prelaunch audit, not trade outcomes."
+  },
+  "first_operational_review": "2026-11-20",
+  "early_horizons_exchange_sessions": [
+    1,
+    3,
+    5
+  ],
+  "primary_horizon_exchange_sessions": 20,
+  "api_credit_expiry_utc": "2026-12-03T13:41:10Z",
+  "validation": {
+    "focused_tests_passed": 104,
+    "independent_trial_tests": 5,
+    "independent_price_runner_tests": 5,
+    "python_lint": "passed",
+    "dashboard_js_checks": "passed"
+  },
+  "limitations": [
+    "Source coverage is observed PRNewswire earnings releases and the retained issuer wire archive, not all US filings.",
+    "Two model reads and numerical checks are not a guarantee of extraction accuracy.",
+    "No eligible entry or trading return exists yet. First trade results depend on qualifying source arrivals."
+  ]
+}

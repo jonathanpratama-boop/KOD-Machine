@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-11-16T07:46:51.822146+00:00",
+  "status": "PASS",
+  "test_methods": 31,
+  "test_scope": "independent behavioral qualification and append-only revision tests; no provider, network, prices or trades",
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=idx-signals <bundled-python> -B -m unittest discover -s idx-signals/tests -p test_guidance_margin_facts_independent.py -v",
+  "sha256": {
+    "idx-signals/idxsig/guidance_margin_facts.py": "14c8e41a6d09e84a933de543bf8bb070774159bf63cd3f1e976630eb23e0995b",
+    "idx-signals/tests/test_guidance_margin_facts_independent.py": "4bce12a271c16f27d80fe7055511baeea33d380aab0b0531d496a54dba20cd03",
+    "idx-signals/research/GUIDANCE_MARGIN_FACTS_v1/CONTRACT.md": "50e7acc50560a1f5b9dc8b4344981619c932184f44633d0c83389723b846fef4",
+    "idx-signals/research/GUIDANCE_MARGIN_FACTS_v1/fixtures.json": "072ae4a556319ee42ddb0fd8430614fbd28b072b230cd93d49ffbf1745f443c9"
+  },
+  "implementation_inspected_to_author_tests": false,
+  "defects_found_and_fixed": [
+    "Ordinary macOS /var temp path failed due to unnecessary ancestor-symlink rejection; unchanged tests pass after implementation correction."
+  ],
+  "limits": [
+    "External verification attestations are trusted inputs, not independently certified by code.",
+    "No proof of source completeness, live receipt, LLM extraction skill, trading profitability or unattended operational readiness.",
+    "Concurrency check covers competing same-head revisions in two threads, not a filesystem crash or all possible multiprocess interleavings."
+  ]
+}

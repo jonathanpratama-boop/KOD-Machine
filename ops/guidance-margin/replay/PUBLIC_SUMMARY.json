@@ -1,0 +1,58 @@
+{
+  "study": "source-bounded retrospective feasibility",
+  "as_of": "2026-11-19",
+  "cohorts": [
+    {
+      "cohort": "original",
+      "publication_year": 2025,
+      "issuers": [
+        "LOW",
+        "PANW"
+      ],
+      "releases": 8,
+      "qualified_pairs": 0,
+      "revenue_buys": 0,
+      "margin_buys": 0,
+      "reasons": {
+        "Source review unresolved": 5,
+        "Extraction REJECTED": 3
+      },
+      "missing_source_reasons": {},
+      "decisions_sha256": "69328bc9c45fe6a66b5afedc84a3046277d985d52a0c264a64d29ee7ae7d55e6",
+      "sealed_at": "2026-11-19T05:50:36.244077+00:00",
+      "api_calls": 13,
+      "estimated_cost_usd": 0.87663
+    },
+    {
+      "cohort": "expansion",
+      "publication_year": 2025,
+      "issuers": [
+        "KLIC",
+        "PSTG",
+        "RRGB",
+        "TGT",
+        "UTI",
+        "ZIM",
+        "ZKH"
+      ],
+      "releases": 28,
+      "qualified_pairs": 0,
+      "revenue_buys": 0,
+      "margin_buys": 0,
+      "reasons": {
+        "Source review unresolved": 10,
+        "Missing source evidence": 8,
+        "Extraction REJECTED": 9,
+        "Qualification MISSING": 1
+      },
+      "missing_source_reasons": {
+        "Missing source evidence: unexpected source path": 2,
+        "Missing source evidence: No matching earlier guidance in retained issuer feed": 6
+      },
+      "decisions_sha256": "a0d3310b07b06068ead2196e22d0e01b5db2243bdc2180ebe3025c1b31fa756f",
+      "sealed_at": "2026-11-19T05:53:59.613288+00:00",
+      "api_calls": 31,
+      "estimated_cost_usd": 2.57101
+    }
+  ]
+}
