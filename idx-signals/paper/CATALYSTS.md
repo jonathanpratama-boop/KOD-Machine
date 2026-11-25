@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T11:31:55Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T11:32:06Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 79 over 16 signal sessions; events seen: SEALED 79, SKIP_REPEAT_90D 63, SKIP_NO_TICKER 70, SKIP_NOT_IN_UNIVERSE 47, SKIP_NOT_OPERATING 1; coverage gaps 1.
+Sets 80 over 16 signal sessions; events seen: SEALED 80, SKIP_REPEAT_90D 63, SKIP_NO_TICKER 72, SKIP_NOT_IN_UNIVERSE 47, SKIP_NOT_OPERATING 1; coverage gaps 1.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 361 tags: 89 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP HYLN (Hyliion Holdings Corp.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-075493`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 1.85 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-075493` by Boehm Rodger L (director); purchases USD 80,400; top executive no; holding up n/a.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-075493.
-Twins (band+liq+mom+dd): PACK 2.8, EH 2.45, XNDU 2.01, PDYN 2.57, TROX 1.64, GRML 3.24, ANNX 3.12, NXH 1.27, STTK 4.58, BTQ 1.19, LTBR 3.35, ALMS 4.11, ALT 1.36, UROY 2.39, OSS 4.32, JMIA 2.49, TDUP 1.54, ARTV 3.78, LODE 1.36, FWDI 3.68.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP ECVT (Ecovyst Inc.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
 Set `CAT-FORM4_SHARP-0001708035-26-000113`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 9.34 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001193125-26-476713` by Rees-Jones David; cover page max 5.3% of class;
 Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 385.5M from COVER_PAGE; parent CAT-SEC13D-0001193125-26-476713.
 Twins (band+liq+mom+dd): SSMR 10.53, GENB 10.91, ADAM 5.01, NPKI 8.34, ASYS 10.95, BBAR 9.15, KE 18.1, SPIR 7.07, AGRO 7.75, ABX 6.44, LIME 19.79, HPP 8.02, ADIG 9.76, ENTA 8.41, KC 6.21, CMCL 16.7, CIM 6.88, STDN 7.68, PXED 18.76, YARW 15.82.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### DILUTION_8K PLAG - event `0001213900-26-123863`, accepted 2026-11-24T21:30:54-05:00, sealed 2026-11-25T11:32:04Z, cutoff 2026-11-25T14:15:00Z
+Set `CAT-DILUTION_8K-0001213900-26-123863`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 0.4844 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): GIFT 0.5, MRM 0.4256, UCL 0.2754, BRFH 0.7522, CIGL 0.2303.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
