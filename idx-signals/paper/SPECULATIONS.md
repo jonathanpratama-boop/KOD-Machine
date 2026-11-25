@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-25T00:26:43Z from `paper/speculations.jsonl`: 426 sets sealed, 667 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-25T00:26:49Z from `paper/speculations.jsonl`: 426 sets sealed, 668 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -60,22 +60,22 @@ PATH20 windows resolved: 5; NEXT1: 246.
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
-| BASE5 | 18 | 18 | 18 | 14 | -26.92% | -31.24% | -7.66% | -19.26% | -3.66 | 0.999 | - / next 60 | accumulating (no look reached) |
+| BASE5 | 19 | 19 | 19 | 15 | -25.57% | -27.92% | -7.66% | -17.92% | -3.38 | 0.998 | - / next 60 | accumulating (no look reached) |
 
 Projection (labelled): sessions of resolved sets needed for t >= 3 if the true paired effect were 2, 5 or 10 points per set, and sessions to the next look at the current candidate rate.
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.197 (register per-session sd) | 870 | 140 | 35 | 61 |
+| 0.201 (register per-session sd) | 905 | 145 | 37 | 60 |
 
 PATH20 windows resolved: 5; NEXT1: 17.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| RUN30_5 | 18 | 0.056 | 0.022 | 0.185 | 0.0691 | 0.2500 | 0.2500 |
-| FADE10_5 | 18 | 0.833 | 0.400 | 0.511 | 0.2428 | 0.2500 | 0.2500 |
-| GAIN0_5 | 18 | 0.167 | 0.178 | 0.314 | 0.1606 | 0.2500 | 0.2500 |
-| BEATS_TWINS_5 | 18 | 0.222 | 0.478 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| RUN30_5 | 19 | 0.053 | 0.021 | 0.185 | 0.0673 | 0.2500 | 0.2500 |
+| FADE10_5 | 19 | 0.789 | 0.389 | 0.511 | 0.2438 | 0.2500 | 0.2500 |
+| GAIN0_5 | 19 | 0.158 | 0.168 | 0.314 | 0.1573 | 0.2500 | 0.2500 |
+| BEATS_TWINS_5 | 19 | 0.263 | 0.474 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | RUN30_20 | 5 | 0.000 | 0.120 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | DOUBLE_20 | 5 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 | DOWN10_1 | 17 | 0.471 | 0.059 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
@@ -688,7 +688,6 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 
 | Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |
 |---|---|---|---|---:|---:|---:|---|
-| US-2026-11-16-G2_RET30-VIVK | BASE5 | RESOLVED | TRADED | -39.73% | -21.02% | -18.71% | RUN30_5=0/0.00, FADE10_5=1/0.75, GAIN0_5=0/0.25, BEATS_TWINS_5=0/0.50 |
 | US-2026-11-16-G2_RET30-CLRO | BASE5 | RESOLVED | TRADED | -4.31% | -8.08% | +3.77% | RUN30_5=1/0.20, FADE10_5=0/0.60, GAIN0_5=0/0.20, BEATS_TWINS_5=1/0.40 |
 | US-2026-11-16-G2_RET30-ETS | BASE5 | RESOLVED | TRADED | -15.85% | -5.16% | -10.69% | RUN30_5=0/0.00, FADE10_5=1/0.20, GAIN0_5=0/0.20, BEATS_TWINS_5=0/0.40 |
 | US-2026-11-16-G2_RET30-COSM | BASE5 | RESOLVED | TRADED | +1.00% | -8.27% | +9.27% | RUN30_5=0/0.00, FADE10_5=0/0.40, GAIN0_5=1/0.20, BEATS_TWINS_5=1/0.40 |
@@ -728,4 +727,5 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | US-2026-11-23-G2_RET30-CYAB | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
 | US-2026-11-23-G2_RET30-SMTK | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | US-2026-11-23-G2_RET30-PARA | NEXT1 | UNRESOLVABLE (recorded signal close 2.72 does not reconcile with the scoring bars (rtol 0.001)) |  | n/a | n/a | n/a |  |
+| CRYPTO-2026-11-18-G2_RET30-MMT | BASE5 | RESOLVED | TRADED | -1.34% | -7.61% | +6.28% | RUN30_5=0/0.00, FADE10_5=0/0.20, GAIN0_5=0/0.00, BEATS_TWINS_5=1/0.40 |
 
