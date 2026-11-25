@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T11:31:22Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T11:31:34Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 43 (FIRE 19, ABSTAIN 24) over 16 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 22, SEALED 43, SKIP_NOT_OPERATING 10, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
+Sets 45 (FIRE 19, ABSTAIN 26) over 16 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 22, SEALED 45, SKIP_NOT_OPERATING 11, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,20 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP BWFG (Bankwell Financial Group, Inc.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-075380`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 68.45 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-075380` by SEIDMAN LAWRENCE B (director); purchases USD 167,972; top executive no; holding up +16.5%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-075380.
-Twins (band+liq+mom+dd): DLX 25.2, KIDS 32.64, RUSHB 58.63, EGBN 33.18, SMP 44.62, GLIBK 26.86, ASR 278.27, TNC 76.47, BBUC 27.97, LEGH 28.51, MTW 22.42, AVBH 34.34, ALRS 32.66, OBK 52.66, QNBC 46.07, SI 20.24, APOG 45.37, PMTS 26.08, BWB 20.52, CVEO 32.83.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP BORR (Borr Drilling Ltd) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-075382`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 3.81 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-075382` by Troim Tor Olav (director); purchases USD 30,451,500; top executive no; holding up +22.4%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-075382.
-Twins (band+liq+mom+dd): AMC 2.86, SBS 4.63, ABEV 2.64, UAA 4.51, ORC 4.59.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP BG (Bunge Global SA) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
 Set `CAT-FORM4_SHARP-0001628280-26-075421`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 91.97 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001628280-26-075421` by Mahoney Christopher (director); purchases USD 1,161,650; top executive no; holding up +84.3%.
@@ -207,4 +193,18 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): DOMH 0.8644, BTCS 0.5389, AVD 0.7584, PROP 0.293, SEGG 0.8352.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D ZONE (Zone Frontier Inc.) - accepted 2026-11-24T19:30:24-05:00, sealed 2026-11-25T11:31:31Z, cutoff 2026-11-25T14:15:00Z
+Set `CAT-SEC13D-0001213900-26-123820`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 3.59 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20.
+Filing `0001213900-26-123820` by Field Jacob Robert; Item 4 intent words: board, merger, acquisition, strategic alternatives, director.
+Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 30.5M, dilution filings 0.
+Twins (band+liq+mom+dd): JRVR 2.73, IPWR 1.73, GRML 3.07, MNTK 1.06, PMVP 1.04.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D RMIX (Suncrete, Inc.) - accepted 2026-11-25T06:12:06-05:00, sealed 2026-11-25T11:31:31Z, cutoff 2026-11-25T14:15:00Z
+Set `CAT-SEC13D-0001193125-26-476713`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 7.01 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20.
+Filing `0001193125-26-476713` by Rees-Jones David; Item 4 intent words: board, merger, acquisition.
+Coverage **ABSTAIN** (DILUTION_RECENT, MV_UNKNOWN); pre-entry move +0.00%, market value n/a, dilution filings 2.
+Twins (band+liq+mom+dd): SSMR 10.53, GENB 10.91, ADAM 5.01, NPKI 8.34, ASYS 10.95.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
