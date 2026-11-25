@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T23:04:56Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T23:05:17Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 80 over 16 signal sessions; events seen: SEALED 80, SKIP_REPEAT_90D 63, SKIP_NO_TICKER 72, SKIP_NOT_IN_UNIVERSE 47, SKIP_NOT_OPERATING 1; coverage gaps 1.
+Sets 82 over 17 signal sessions; events seen: SEALED 82, SKIP_REPEAT_90D 68, SKIP_NO_TICKER 83, SKIP_NOT_IN_UNIVERSE 50, SKIP_NOT_OPERATING 1; coverage gaps 1.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 361 tags: 89 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP DTM (DT Midstream, Inc.) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
-Set `CAT-FORM4_SHARP-0001140361-26-045502`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 114.23 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001140361-26-045502` by Baker Stephen W (director); purchases USD 56,640; top executive no; holding up +17.8%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001140361-26-045502.
-Twins (band+liq+mom+dd): SEI 56.53, EXPE 239.26, HONA 154.77, SUPN 29.84, NTRS 165.94, TRI 107.23, CDNS 296.6, LSCC 100.37, FUTU 88.09, MS 168.79, ONON 31.48, MOD 131.13, SLB 46.99, FCFS 168.87, HSBC 82.03, ZM 88.4, BCS 21.29, JBHT 223.47, Z 28.63, WCC 289.47.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP USEA (United Maritime Corp) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
-Set `CAT-FORM4_SHARP-0001140361-26-045513`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 3.05 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001140361-26-045513` by Tsantanis Stamatios (Director, CEO); purchases USD 131,274; top executive yes; holding up +3.2%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001140361-26-045513.
-Twins (band+liq+mom+dd): CLNN 4.59, NGEN 2.08, POWW 2.88, ABLV 2.76, FLNT 3.68, ARQ 2.98, AFCG 3.52, FPH 4.6, CLAR 4.69, SMRT 1.54, YHGJ 3.5, CVGI 3.09, SPWH 1.28, SAGT 1.01, CAMP 4.3, BOSC 4.32, SJT 4.38, CMRC 3.43, ENTX 3.23, MYPS 4.93.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP RNA (Atrium Therapeutics, Inc.) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-475635`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 7.49 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +193,18 @@ Filing `0001829126-26-012896` by Greenland Energy Co; cover page max 9.66% of cl
 Coverage **ABSTAIN** (MICROCAP); market value USD 3.5M from XBRL; parent CAT-SEC13D-0001829126-26-012896.
 Twins (band+liq+mom+dd): KG 3.3, UK 1.02, FMFC 1.255, KTCC 1.21, OFAL 1.7386, AIFA 2.88, INHD 1.67, IVF 1.77, CTRM 1.04, FABC 1.23, XTLB 1.32, UONEK 1.77, PAVM 1.2, RML 2.4, FXHO 4.13, CITR 1.98, ASTC 3, ZSTK 2.36, DUKR 1.83, PBM 2.72.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### DILUTION_8K FE - event `0001193125-26-476850`, accepted 2026-11-25T07:40:45-05:00, sealed 2026-11-25T23:05:14Z, cutoff 2026-11-27T14:15:00Z
+Set `CAT-DILUTION_8K-0001193125-26-476850`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 47.62 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.55%.
+Twins (band+liq+mom+dd): LPX 79.6, JKHY 182.08, DG 139.27, RBLX 55.63, EVRG 87.77.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K XTIA - event `0001213900-26-124079`, accepted 2026-11-25T13:16:51-05:00, sealed 2026-11-25T23:05:14Z, cutoff 2026-11-27T14:15:00Z
+Set `CAT-DILUTION_8K-0001213900-26-124079`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 0.8132 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +3.46%.
+Twins (band+liq+mom): IHRT 0.343, CVRX 0.7553, BTCS 0.5522, AIB 0.516, OXSQ 0.657.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
