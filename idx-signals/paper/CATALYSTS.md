@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T23:04:42Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T23:04:56Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 43 over 15 signal sessions; events seen: SEALED 43; coverage gaps 0.
+Sets 44 over 16 signal sessions; events seen: SEALED 44; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 22, FIRE 21
+- Classes: ABSTAIN 23, FIRE 21
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 361 tags: 89 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP CTSO (Cytosorbents Corp) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
-Set `CAT-FORM4_SHARP-0001104659-26-131710`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 4.37 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001104659-26-131710` by Chan Phillip P. (Chief Executive Officer); purchases USD 355,001; top executive yes; holding up +67.9%.
-Coverage **ABSTAIN** (DILUTION_RECENT); dilution filings 2; routine owners 0 of 1; parent CAT-FORM4-0001104659-26-131710.
-Twins (band+liq+mom+dd): BIYA 1.2, FLYE 1.69, MINE 2.055, STKS 1.02, ALZN 1.11, ZEPP 2.25, SER 1.41, SIEB 1.665, INLX 3.6001, BRTX 1.15, FBGL 2.052, FIEE 2.65, JFIN 1.22, ZKIN 1.4, LGVN 1.68, PAVS 2.56, RYOJ 2.06, LIMN 2.7, WYHG 2.6, SWAG 1.14.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP DTM (DT Midstream, Inc.) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
 Set `CAT-FORM4_SHARP-0001140361-26-045502`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 114.23 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001829126-26-012896` by Greenland Energy Co; Item 4 intent words: board
 Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 3.5M, dilution filings 0.
 Twins (band+liq+mom+dd): KG 3.3, UK 1.02, FMFC 1.255, KTCC 1.21, OFAL 1.7386.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 VMAR (Vision Marine Technologies Inc.) - accepted 2026-11-25T17:22:57-05:00, sealed 2026-11-25T23:04:54Z, cutoff 2026-11-27T14:15:00Z
+Set `CAT-SEC13D_V2-0001829126-26-012896`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 4.93 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001829126-26-012896` by Greenland Energy Co; cover page max 9.66% of class; strong intent: none; Item 5(c): 18 price(s).
+Coverage **ABSTAIN** (MICROCAP); market value USD 3.5M from XBRL; parent CAT-SEC13D-0001829126-26-012896.
+Twins (band+liq+mom+dd): KG 3.3, UK 1.02, FMFC 1.255, KTCC 1.21, OFAL 1.7386, AIFA 2.88, INHD 1.67, IVF 1.77, CTRM 1.04, FABC 1.23, XTLB 1.32, UONEK 1.77, PAVM 1.2, RML 2.4, FXHO 4.13, CITR 1.98, ASTC 3, ZSTK 2.36, DUKR 1.83, PBM 2.72.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
