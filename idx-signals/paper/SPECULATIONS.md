@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-24T23:02:18Z from `paper/speculations.jsonl`: 425 sets sealed, 667 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-25T00:26:43Z from `paper/speculations.jsonl`: 426 sets sealed, 667 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -56,7 +56,7 @@ PATH20 windows resolved: 5; NEXT1: 246.
 | UP10_1 | 246 | 0.228 | 0.051 | 0.235 | 0.1885 | 0.2500 | 0.1908 |
 | BEATS_TWINS_1 | 238 | 0.466 | 0.497 | 0.500 | 0.2500 | 0.2500 | 0.2517 |
 
-## CRYPTO: 19 sets over 15 signal sessions (2026-10-27 .. 2026-11-18, 0.68 sets per scan)
+## CRYPTO: 20 sets over 16 signal sessions (2026-10-27 .. 2026-11-24, 0.69 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -66,7 +66,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.197 (register per-session sd) | 870 | 140 | 35 | 62 |
+| 0.197 (register per-session sd) | 870 | 140 | 35 | 61 |
 
 PATH20 windows resolved: 5; NEXT1: 17.
 
@@ -624,11 +624,11 @@ Twins (band+liq): ACRS 3.66, NXDR 2.01, WVE 3.1, NRXP 2.14, BUR 3.36.
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### CRYPTO MMT (2026-11-18) - sealed 2026-11-19T00:27:14Z, cutoff 2026-11-19T02:00:00Z
-Decision `SCAN-CRYPTO-2026-11-18-G2_RET30-MMT` (PASS), bound to ledger record `da4125a86cc2`; set `9a8d76677033`.
-Signal close 0.2288 (reference 0.1454); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.2224 at 2026-11-19T00:27:18Z.
+### CRYPTO ATM (2026-11-24) - sealed 2026-11-25T00:26:37Z, cutoff 2026-11-25T02:00:00Z
+Decision `SCAN-CRYPTO-2026-11-24-G2_RET30-ATM` (PASS), bound to ledger record `d80758bb47e8`; set `da2417194187`.
+Signal close 0.974 (reference 0.736); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.987 at 2026-11-25T00:26:39Z.
 Tag: 1 flags today vs trailing median 1.0 -> hot_day = False.
-Twins (band+liq+mom): ACM 0.213, LUMIA 0.0727, ADX 0.0444, KAIA 0.0298, SUN 0.01495.
+Twins (band+liq+mom+dd): YB 0.0548, XTZ 0.2118, ACM 0.203, SUN 0.01464, AIGENSYN 0.01683.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
