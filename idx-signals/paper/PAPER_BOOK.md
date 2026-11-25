@@ -4,27 +4,27 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-25T23:02:42.065665Z; latest US scan session: 2026-11-25.
+- Assessed 2026-11-25T23:03:09.887809Z; latest US scan session: 2026-11-25.
 - Latest compatible LEARNER v2.4 forecast: 2026-11-25T22:58:41Z (signal session 2026-11-25).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-25T23:02:42Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-25T23:03:09Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
 - **What does it do?** For every US stock that just closed +30%, KOD says DONT_BUY when its dump-tomorrow probability is 0.46 or more, otherwise BUY_OK. The KOD book buys every BUY_OK at the next open and sells five sessions later; $1,000 a position, real costs.
-- **Evidence so far?** 289 spikes planned, 129 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
+- **Evidence so far?** 289 spikes planned, 141 trades closed. The verdict waits for the planned look at 300 closed trades; until then the numbers are a running tally.
 - **What counts as success?** Two separate questions, each at the planned look: DONT_BUY works if the skipped spikes do worse than the bought ones (95% bound below zero); the KOD book makes money if its average trade is above zero (95% bound above zero).
 
 ## The books
 
 | Book | What it holds | Positions | Open | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|---:|
-| KOD | every BUY_OK | 265 | 127 | 116 | 27 | $-10,721 | -9.24% |
-| ALL | every spike | 289 | 138 | 129 | 30 | $-13,784 | -10.69% |
-| AVOIDED | every DONT_BUY (kept out) | 24 | 11 | 13 | 3 | $-3,063 | -23.56% |
+| KOD | every BUY_OK | 265 | 114 | 127 | 31 | $-11,664 | -9.18% |
+| ALL | every spike | 289 | 123 | 141 | 34 | $-15,023 | -10.65% |
+| AVOIDED | every DONT_BUY (kept out) | 24 | 9 | 14 | 3 | $-3,358 | -23.99% |
 | OWNER | spikes you confirmed BUY | 0 | 0 | 0 | 0 | $+0 | - |
 
 ## Every spike
@@ -153,22 +153,22 @@ Generated 2026-11-25T23:02:42Z. Paper only: no orders, no money. Protocol: `rese
 | 2026-11-18 | AZI | 0.21 | BUY_OK | - | OPEN | - |
 | 2026-11-18 | ANPA | 0.20 | BUY_OK | - | OPEN | - |
 | 2026-11-18 | AKAN | 0.32 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | VAI | 0.17 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | TGL | 0.23 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | SYPR | 0.10 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | SMTK | 0.49 | DONT_BUY | - | OPEN | - |
-| 2026-11-17 | SLS | 0.22 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | SGRX | 0.22 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | NCT | 0.61 | DONT_BUY | - | OPEN | - |
-| 2026-11-17 | MPU | 0.23 | BUY_OK | - | OPEN | - |
+| 2026-11-17 | VAI | 0.17 | BUY_OK | - | TRADED | -9.96% |
+| 2026-11-17 | TGL | 0.23 | BUY_OK | - | TRADED | -31.72% |
+| 2026-11-17 | SYPR | 0.10 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-17 | SMTK | 0.49 | DONT_BUY | - | UNRESOLVABLE | - |
+| 2026-11-17 | SLS | 0.22 | BUY_OK | - | TRADED | -34.74% |
+| 2026-11-17 | SGRX | 0.22 | BUY_OK | - | TRADED | -5.75% |
+| 2026-11-17 | NCT | 0.61 | DONT_BUY | - | TRADED | -29.58% |
+| 2026-11-17 | MPU | 0.23 | BUY_OK | - | TRADED | +100.70% |
 | 2026-11-17 | KALA | 0.15 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | GP | 0.27 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | GLSI | 0.13 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | FRTT | 0.19 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | DFSC | 0.25 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | CVKD | 0.16 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | AZI | 0.23 | BUY_OK | - | OPEN | - |
-| 2026-11-17 | AYTU | 0.13 | BUY_OK | - | OPEN | - |
+| 2026-11-17 | GP | 0.27 | BUY_OK | - | TRADED | -34.11% |
+| 2026-11-17 | GLSI | 0.13 | BUY_OK | - | TRADED | +2.70% |
+| 2026-11-17 | FRTT | 0.19 | BUY_OK | - | UNRESOLVABLE | - |
+| 2026-11-17 | DFSC | 0.25 | BUY_OK | - | TRADED | +0.01% |
+| 2026-11-17 | CVKD | 0.16 | BUY_OK | - | TRADED | -20.91% |
+| 2026-11-17 | AZI | 0.23 | BUY_OK | - | TRADED | -60.61% |
+| 2026-11-17 | AYTU | 0.13 | BUY_OK | - | TRADED | +0.12% |
 | 2026-11-16 | VIVK | 0.55 | DONT_BUY | - | TRADED | -39.73% |
 | 2026-11-16 | TDTH | 0.28 | BUY_OK | - | TRADED | -65.38% |
 | 2026-11-16 | HIHO | 0.22 | BUY_OK | - | TRADED | +7.32% |
@@ -369,15 +369,15 @@ The same books three ways. As frozen counts every planned spike. Known at the ti
 
 | Book | View | Positions | Closed | Wins | P&L | Average trade |
 |---|---|---:|---:|---:|---:|---:|
-| KOD | As frozen | 265 | 116 | 27 | $-10,721 | -9.24% |
-| KOD | Known at the time | 257 | 113 | 26 | $-9,436 | -8.35% |
-| KOD | Corrected | 241 | 111 | 26 | $-9,076 | -8.18% |
-| ALL | As frozen | 289 | 129 | 30 | $-13,784 | -10.69% |
-| ALL | Known at the time | 281 | 126 | 29 | $-12,499 | -9.92% |
-| ALL | Corrected | 260 | 119 | 27 | $-11,865 | -9.97% |
-| AVOIDED | As frozen | 24 | 13 | 3 | $-3,063 | -23.56% |
-| AVOIDED | Known at the time | 24 | 13 | 3 | $-3,063 | -23.56% |
-| AVOIDED | Corrected | 19 | 8 | 1 | $-2,788 | -34.85% |
+| KOD | As frozen | 265 | 127 | 31 | $-11,664 | -9.18% |
+| KOD | Known at the time | 257 | 121 | 29 | $-10,005 | -8.27% |
+| KOD | Corrected | 241 | 119 | 29 | $-9,645 | -8.10% |
+| ALL | As frozen | 289 | 141 | 34 | $-15,023 | -10.65% |
+| ALL | Known at the time | 281 | 135 | 32 | $-13,363 | -9.90% |
+| ALL | Corrected | 260 | 128 | 30 | $-12,729 | -9.94% |
+| AVOIDED | As frozen | 24 | 14 | 3 | $-3,358 | -23.99% |
+| AVOIDED | Known at the time | 24 | 14 | 3 | $-3,358 | -23.99% |
+| AVOIDED | Corrected | 19 | 9 | 1 | $-3,084 | -34.27% |
 | OWNER | As frozen | 0 | 0 | 0 | $+0 | - |
 | OWNER | Known at the time | 0 | 0 | 0 | $+0 | - |
 | OWNER | Corrected | 0 | 0 | 0 | $+0 | - |
