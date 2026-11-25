@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T11:39:25Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T23:04:42Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 45 (FIRE 19, ABSTAIN 26) over 16 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 22, SEALED 45, SKIP_NOT_OPERATING 11, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
+Sets 46 (FIRE 19, ABSTAIN 27) over 17 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 26, SEALED 46, SKIP_NOT_OPERATING 11, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP ASTS (AST SpaceMobile, Inc.) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
-Set `CAT-FORM4_SHARP-0001104659-26-131559`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 23.6 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001104659-26-131559` by Cisneros Adriana (director); purchases USD 1,025,401; top executive no; holding up +5.5%.
-Coverage **ABSTAIN** (NOT_SHARP, DILUTION_RECENT); dilution filings 2; routine owners 0 of 1; parent CAT-FORM4-0001104659-26-131559.
-Twins (band+liq+mom+dd): CLS 196.64, MU 629.79, BE 156.41, NBIS 87.31, TPL 251.4, TSEM 123.47, PRIM 55.35, TWLO 180.61, ASX 29.33, CCJ 59.79, IONQ 22.4, OUST 24.99, DOCN 74.01, ALB 80.63, SANM 138.28, SCCO 136.85, VICR 125.55, FFIV 316.87, PBF 57.81, DAVE 229.96.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP CTSO (Cytosorbents Corp) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
 Set `CAT-FORM4_SHARP-0001104659-26-131710`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 4.37 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001104659-26-131710` by Chan Phillip P. (Chief Executive Officer); purchases USD 355,001; top executive yes; holding up +67.9%.
@@ -207,4 +200,11 @@ Form 4 `0001959455-26-000143` by Svensen Lars-Christian (Contracted CEO); purcha
 Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001959455-26-000143.
 Twins (band+liq+mom+dd): SPTX 19.77, GSBD 7.76, ASIX 13.44, OIS 7.56, DBI 5.9, KEP 9.12, AUPH 15.21, NMFC 6.62, HTLD 9.87, GLUE 9.88, RMR 16.29, CRVS 10.34, DAKT 17.63, NEWT 10.34, DEC 12.55, CPS 18.19, SHEN 9.23, KRNY 8.8, LXU 8.94, DRTS 12.475.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D VMAR (Vision Marine Technologies Inc.) - accepted 2026-11-25T17:22:57-05:00, sealed 2026-11-25T23:04:40Z, cutoff 2026-11-27T14:15:00Z
+Set `CAT-SEC13D-0001829126-26-012896`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 4.93 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20.
+Filing `0001829126-26-012896` by Greenland Energy Co; Item 4 intent words: board, director.
+Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 3.5M, dilution filings 0.
+Twins (band+liq+mom+dd): KG 3.3, UK 1.02, FMFC 1.255, KTCC 1.21, OFAL 1.7386.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
