@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-24T23:02:25Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-25T23:01:58Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 275 live forecasts, 48 calls, 15 wrong of 36 (41.7%); p that the true rate exceeds 50%: 0.879.
+- **Evidence so far:** 299 live forecasts, 50 calls, 18 wrong of 43 (41.9%); p that the true rate exceeds 50%: 0.889.
 
 ## The bar
 
@@ -18,33 +18,57 @@ Generated 2026-11-24T23:02:25Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-24 | TNYA | 0.282 | 0.537 | - | 0.144 | pending |
-| 2026-11-24 | SMXT | 0.281 | 0.537 | - | 0.160 | pending |
-| 2026-11-24 | RMSG | 0.375 | 0.537 | - | 0.223 | pending |
-| 2026-11-24 | RBNE | 0.602 | 0.537 | **DUMP** | 0.345 | pending |
+| 2026-11-25 | TRAW | 0.367 | 0.538 | - | 0.239 | pending |
+| 2026-11-25 | TOPP | 0.332 | 0.538 | - | 0.213 | pending |
+| 2026-11-25 | TMCR | 0.317 | 0.538 | - | 0.218 | pending |
+| 2026-11-25 | SVRE | 0.376 | 0.538 | - | 0.278 | pending |
+| 2026-11-25 | SLSN | 0.348 | 0.538 | - | 0.180 | pending |
+| 2026-11-25 | RMTX | 0.521 | 0.538 | - | 0.426 | pending |
+| 2026-11-25 | RAYA | 0.504 | 0.538 | - | 0.379 | pending |
+| 2026-11-25 | RADX | 0.267 | 0.538 | - | 0.214 | pending |
+| 2026-11-25 | NXAT | 0.486 | 0.538 | - | 0.326 | pending |
+| 2026-11-25 | NRSN | 0.352 | 0.538 | - | 0.347 | pending |
+| 2026-11-25 | MWYN | 0.208 | 0.538 | - | 0.119 | pending |
+| 2026-11-25 | LONA | 0.383 | 0.538 | - | 0.245 | pending |
+| 2026-11-25 | KYNB | 0.344 | 0.538 | - | 0.229 | pending |
+| 2026-11-25 | JDZG | 0.616 | 0.538 | **DUMP** | 0.612 | pending |
+| 2026-11-25 | GLXG | 0.430 | 0.538 | - | 0.238 | pending |
+| 2026-11-25 | FNUC | 0.572 | 0.538 | **DUMP** | 0.380 | pending |
+| 2026-11-25 | FCUV | 0.395 | 0.538 | - | 0.285 | pending |
+| 2026-11-25 | DKI | 0.464 | 0.538 | - | 0.534 | pending |
+| 2026-11-25 | CURR | 0.295 | 0.538 | - | 0.185 | pending |
+| 2026-11-25 | CGTX | 0.331 | 0.538 | - | 0.178 | pending |
+| 2026-11-25 | BYAH | 0.465 | 0.538 | - | 0.310 | pending |
+| 2026-11-25 | BGLC | 0.523 | 0.538 | - | 0.303 | pending |
+| 2026-11-25 | BBCI | 0.350 | 0.538 | - | 0.316 | pending |
+| 2026-11-25 | ALGS | 0.416 | 0.538 | - | 0.227 | pending |
+| 2026-11-24 | TNYA | 0.282 | 0.537 | - | 0.144 | did not dump |
+| 2026-11-24 | SMXT | 0.281 | 0.537 | - | 0.160 | did not dump |
+| 2026-11-24 | RMSG | 0.375 | 0.537 | - | 0.223 | dumped |
+| 2026-11-24 | RBNE | 0.602 | 0.537 | **DUMP** | 0.345 | dumped |
 | 2026-11-24 | PLAG | 0.453 | 0.537 | - | 0.300 | pending |
-| 2026-11-24 | PARA | 0.699 | 0.537 | **DUMP** | 0.370 | pending |
-| 2026-11-24 | ONFO | 0.592 | 0.537 | **DUMP** | 0.509 | pending |
-| 2026-11-24 | MTR | 0.321 | 0.537 | - | 0.196 | pending |
-| 2026-11-24 | LVWR | 0.469 | 0.537 | - | 0.262 | pending |
-| 2026-11-24 | LGHL | 0.419 | 0.537 | - | 0.448 | pending |
-| 2026-11-24 | JAGX | 0.813 | 0.537 | **DUMP** | 0.654 | pending |
-| 2026-11-24 | ISPC | 0.481 | 0.537 | - | 0.221 | pending |
+| 2026-11-24 | PARA | 0.699 | 0.537 | **DUMP** | 0.370 | dumped |
+| 2026-11-24 | ONFO | 0.592 | 0.537 | **DUMP** | 0.509 | dumped |
+| 2026-11-24 | MTR | 0.321 | 0.537 | - | 0.196 | did not dump |
+| 2026-11-24 | LVWR | 0.469 | 0.537 | - | 0.262 | did not dump |
+| 2026-11-24 | LGHL | 0.419 | 0.537 | - | 0.448 | did not dump |
+| 2026-11-24 | JAGX | 0.813 | 0.537 | **DUMP** | 0.654 | did not dump |
+| 2026-11-24 | ISPC | 0.481 | 0.537 | - | 0.221 | did not dump |
 | 2026-11-24 | IBIO | 0.353 | 0.537 | - | 0.169 | pending |
-| 2026-11-24 | GLXG | 0.450 | 0.537 | - | 0.265 | pending |
-| 2026-11-24 | GFAI | 0.574 | 0.537 | **DUMP** | 0.264 | pending |
-| 2026-11-24 | FGL | 0.446 | 0.537 | - | 0.505 | pending |
-| 2026-11-24 | EMBC | 0.267 | 0.537 | - | 0.142 | pending |
-| 2026-11-24 | CODX | 0.686 | 0.537 | **DUMP** | 0.407 | pending |
-| 2026-11-24 | CD | 0.307 | 0.537 | - | 0.133 | pending |
-| 2026-11-24 | CCTG | 0.500 | 0.537 | - | 0.205 | pending |
-| 2026-11-24 | BENF | 0.391 | 0.537 | - | 0.246 | pending |
-| 2026-11-24 | BDRX | 0.372 | 0.537 | - | 0.281 | pending |
-| 2026-11-24 | APUS | 0.342 | 0.537 | - | 0.245 | pending |
-| 2026-11-24 | ALXO | 0.273 | 0.537 | - | 0.119 | pending |
-| 2026-11-24 | ALTG | 0.230 | 0.537 | - | 0.129 | pending |
-| 2026-11-24 | ALDX | 0.337 | 0.537 | - | 0.194 | pending |
-| 2026-11-24 | AKAN | 0.579 | 0.537 | **DUMP** | 0.420 | pending |
+| 2026-11-24 | GLXG | 0.450 | 0.537 | - | 0.265 | did not dump |
+| 2026-11-24 | GFAI | 0.574 | 0.537 | **DUMP** | 0.264 | did not dump |
+| 2026-11-24 | FGL | 0.446 | 0.537 | - | 0.505 | did not dump |
+| 2026-11-24 | EMBC | 0.267 | 0.537 | - | 0.142 | did not dump |
+| 2026-11-24 | CODX | 0.686 | 0.537 | **DUMP** | 0.407 | dumped |
+| 2026-11-24 | CD | 0.307 | 0.537 | - | 0.133 | did not dump |
+| 2026-11-24 | CCTG | 0.500 | 0.537 | - | 0.205 | dumped |
+| 2026-11-24 | BENF | 0.391 | 0.537 | - | 0.246 | did not dump |
+| 2026-11-24 | BDRX | 0.372 | 0.537 | - | 0.281 | dumped |
+| 2026-11-24 | APUS | 0.342 | 0.537 | - | 0.245 | did not dump |
+| 2026-11-24 | ALXO | 0.273 | 0.537 | - | 0.119 | did not dump |
+| 2026-11-24 | ALTG | 0.230 | 0.537 | - | 0.129 | did not dump |
+| 2026-11-24 | ALDX | 0.337 | 0.537 | - | 0.194 | did not dump |
+| 2026-11-24 | AKAN | 0.579 | 0.537 | **DUMP** | 0.420 | did not dump |
 | 2026-11-23 | ZSQR | 0.312 | 0.536 | - | 0.201 | dumped |
 | 2026-11-23 | XCH | 0.344 | 0.536 | - | 0.191 | did not dump |
 | 2026-11-23 | VIVS | 0.492 | 0.536 | - | 0.276 | pending |
