@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T11:31:34Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-25T11:31:55Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 41 over 15 signal sessions; events seen: SEALED 41; coverage gaps 0.
+Sets 43 over 15 signal sessions; events seen: SEALED 43; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 20, FIRE 21
+- Classes: ABSTAIN 22, FIRE 21
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 361 tags: 89 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP BG (Bunge Global SA) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-075421`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 91.97 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-075421` by Mahoney Christopher (director); purchases USD 1,161,650; top executive no; holding up +84.3%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-075421.
-Twins (band+liq+mom+dd): UBS 44.88, BX 115.86, GPC 120.27, HAL 30.57, MTCH 40.33, MOH 197.23, STT 161.25, MAA 113.19, FUTU 88.5, DAR 50.54, AEM 159.7, EOG 145.34, BKNG 144.94, IBKR 76.47, BMY 59.84, ECHO 88.25, ELV 379.55, HUM 383.68, STLD 215.52, RVMD 168.19.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP SUNS (Sunrise Realty Trust, Inc.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-075460`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 6.6 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-075460` by TANNENBAUM LEONARD M (Executive Chairman); purchases USD 344,500; top executive no; holding up +8.5%.
-Coverage **ABSTAIN** (DILUTION_RECENT); dilution filings 1; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-075460.
-Twins (band+liq+mom+dd): DIBS 5.28, PROF 6.55, BNR 13.69, ELA 12.01, DMAC 8.82, QUIK 9.38, AGBK 5.54, UFI 5.69, ADSE 9.35, AUC 7.955, SVCO 7.49, TZOO 5.25, MF 17, ANTX 5.14, USCB 19.72, FGBI 11.45, FGC 6.2, EGAN 6.1, TCX 12.745, SKIN 12.07.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP HYLN (Hyliion Holdings Corp.) - filed 2026-11-23, sealed 2026-11-24T10:36:19Z, cutoff 2026-11-24T14:15:00Z
 Set `CAT-FORM4_SHARP-0001628280-26-075493`, scan `SCAN-US-2026-11-23-G2_RET30`; signal close 1.85 on 2026-11-23; entry: the entry session's opening print (2026-11-24). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +193,18 @@ Filing `0001193125-26-476713` by Rees-Jones David; Item 4 intent words: board, m
 Coverage **ABSTAIN** (DILUTION_RECENT, MV_UNKNOWN); pre-entry move +0.00%, market value n/a, dilution filings 2.
 Twins (band+liq+mom+dd): SSMR 10.53, GENB 10.91, ADAM 5.01, NPKI 8.34, ASYS 10.95.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 ZONE (Zone Frontier Inc.) - accepted 2026-11-24T19:30:24-05:00, sealed 2026-11-25T11:31:50Z, cutoff 2026-11-25T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-123820`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 3.59 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-123820` by Field Jacob Robert; cover page max 9.48% of class; strong intent: strategic alternatives; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (MICROCAP); market value USD 30.5M from XBRL; parent CAT-SEC13D-0001213900-26-123820.
+Twins (band+liq+mom+dd): JRVR 2.73, IPWR 1.73, GRML 3.07, MNTK 1.06, PMVP 1.04, SOTK 4.11, XLAB 1.37, PSNY 2.74, MEDS 1.48, ZH 2.42, BBDO 2.15, AIRJ 1.61, TAOX 1.62, DFNS 1.19, HUBC 1.015, REA 3.53, GRDX 3.55, SUJA 4.96, PMN 3.15, NKTX 1.21.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 RMIX (Suncrete, Inc.) - accepted 2026-11-25T06:12:06-05:00, sealed 2026-11-25T11:31:50Z, cutoff 2026-11-25T14:15:00Z
+Set `CAT-SEC13D_V2-0001193125-26-476713`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 7.01 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001193125-26-476713` by Rees-Jones David; cover page max 5.3% of class; strong intent: none; Item 5(c): 9 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 385.5M from COVER_PAGE; parent CAT-SEC13D-0001193125-26-476713.
+Twins (band+liq+mom+dd): SSMR 10.53, GENB 10.91, ADAM 5.01, NPKI 8.34, ASYS 10.95, BBAR 9.15, KE 18.1, SPIR 7.07, AGRO 7.75, ABX 6.44, LIME 19.79, HPP 8.02, ADIG 9.76, ENTA 8.41, KC 6.21, CMCL 16.7, CIM 6.88, STDN 7.68, PXED 18.76, YARW 15.82.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
