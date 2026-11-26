@@ -4,13 +4,13 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-25T23:03:09.887809Z; latest US scan session: 2026-11-25.
+- Assessed 2026-11-26T22:56:30.998206Z; latest US scan session: 2026-11-25.
 - Latest compatible LEARNER v2.4 forecast: 2026-11-25T22:58:41Z (signal session 2026-11-25).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-Generated 2026-11-25T23:03:09Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
+Generated 2026-11-26T22:56:31Z. Paper only: no orders, no money. Protocol: `research/PAPER_BOOK_v1/protocol.json`.
 
 ## The three plain answers
 
