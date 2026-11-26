@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-26T00:27:51Z from `paper/speculations.jsonl`: 458 sets sealed, 731 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-26T00:28:01Z from `paper/speculations.jsonl`: 458 sets sealed, 734 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -68,7 +68,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 |---|---:|---:|---:|---:|
 | 0.201 (register per-session sd) | 905 | 145 | 37 | 52 |
 
-PATH20 windows resolved: 5; NEXT1: 17.
+PATH20 windows resolved: 7; NEXT1: 18.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -76,11 +76,11 @@ PATH20 windows resolved: 5; NEXT1: 17.
 | FADE10_5 | 19 | 0.789 | 0.389 | 0.511 | 0.2438 | 0.2500 | 0.2500 |
 | GAIN0_5 | 19 | 0.158 | 0.168 | 0.314 | 0.1573 | 0.2500 | 0.2500 |
 | BEATS_TWINS_5 | 19 | 0.263 | 0.474 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| RUN30_20 | 5 | 0.000 | 0.120 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| DOUBLE_20 | 5 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| DOWN10_1 | 17 | 0.471 | 0.059 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| UP10_1 | 17 | 0.294 | 0.059 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| BEATS_TWINS_1 | 17 | 0.471 | 0.494 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| RUN30_20 | 7 | 0.000 | 0.086 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| DOUBLE_20 | 7 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| DOWN10_1 | 18 | 0.500 | 0.056 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| UP10_1 | 18 | 0.278 | 0.056 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| BEATS_TWINS_1 | 18 | 0.444 | 0.500 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 
 ## Latest sealed sets (postcards from the future)
 
@@ -728,9 +728,6 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 
 | Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |
 |---|---|---|---|---:|---:|---:|---|
-| US-2026-11-17-G2_RET30-GP | BASE5 | RESOLVED | TRADED | -34.11% | -15.98% | -18.13% | RUN30_5=0/0.20, FADE10_5=1/0.40, GAIN0_5=0/0.40, BEATS_TWINS_5=0/0.60 |
-| US-2026-11-17-G2_RET30-AZI | BASE5 | RESOLVED | TRADED | -60.61% | +10.03% | -70.64% | RUN30_5=1/0.00, FADE10_5=1/0.50, GAIN0_5=0/0.50, BEATS_TWINS_5=0/0.50 |
-| US-2026-11-17-G2_RET30-SMTK | BASE5 | UNRESOLVABLE (split record 1:5 effective 2026-11-23 is not corroborated by an SEC filing (MENTION_ONLY)) |  | n/a | n/a | n/a |  |
 | US-2026-11-17-G2_RET30-AYTU | BASE5 | RESOLVED | TRADED | +0.12% | -6.53% | +6.65% | RUN30_5=0/0.00, FADE10_5=0/0.40, GAIN0_5=1/0.40, BEATS_TWINS_5=1/0.60 |
 | US-2026-11-17-G2_RET30-SLS | BASE5 | RESOLVED | TRADED | -34.74% | -1.17% | -33.57% | RUN30_5=0/0.00, FADE10_5=1/0.00, GAIN0_5=0/0.20, BEATS_TWINS_5=0/0.60 |
 | US-2026-11-17-G2_RET30-VAI | BASE5 | RESOLVED | TRADED | -9.96% | +1.29% | -11.25% | RUN30_5=0/0.00, FADE10_5=0/0.00, GAIN0_5=0/0.20, BEATS_TWINS_5=0/0.40 |
@@ -768,4 +765,7 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | US-2026-11-24-G2_RET30-CCTG | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.20, BEATS_TWINS_1=0/0.60 |
 | US-2026-11-24-G2_RET30-RBNE | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
 | US-2026-11-24-G2_RET30-PARA | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
+| CRYPTO-2026-11-05-G2_RET30-UVXYB | PATH20 | RESOLVED | PATH | n/a | n/a | n/a | RUN30_20=0/0.00, DOUBLE_20=0/0.00 |
+| CRYPTO-2026-11-05-G2_RET30-SOXSB | PATH20 | RESOLVED | PATH | n/a | n/a | n/a | RUN30_20=0/0.00, DOUBLE_20=0/0.00 |
+| CRYPTO-2026-11-24-G2_RET30-ATM | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 
