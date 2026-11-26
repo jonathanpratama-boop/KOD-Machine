@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-26T10:30:29Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-26T10:30:42Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 46 (FIRE 19, ABSTAIN 27) over 17 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 26, SEALED 46, SKIP_NOT_OPERATING 11, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
+Sets 47 (FIRE 20, ABSTAIN 27) over 17 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 27, SEALED 47, SKIP_NOT_OPERATING 11, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP RNA (Atrium Therapeutics, Inc.) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-475635`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 7.49 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-475635` by Winslow Brendan R. (Chief Financial Officer); purchases USD 249,417; top executive yes; holding up +95.0%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-475635.
-Twins (band+liq+mom+dd): NEGG 8.36, SLQT 6.71, WYY 6.28, PAMT 10.45, FOA 9.39, NSLR 5.04, BAFN 5.39, JSPR 13.3, MAAS 10.15, PMI 6.45, MSLE 5.82, AEHL 6.9, AFYA 9.74, RFIL 6.54.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP TEN (TSAKOS ENERGY NAVIGATION LTD) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-475722`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 45.06 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001193125-26-475722` by TSAKOS NIKOLAOS (Chief Executive Officer); purchases USD 853,966; top executive yes; holding up +1.3%.
@@ -207,4 +200,11 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +3.46%.
 Twins (band+liq+mom): IHRT 0.343, CVRX 0.7553, BTCS 0.5522, AIB 0.516, OXSQ 0.657.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D OTLY (Oatly Group AB) - accepted 2026-11-25T19:08:06-05:00, sealed 2026-11-26T10:30:39Z, cutoff 2026-11-27T14:15:00Z
+Set `CAT-SEC13D-0001104659-26-132204`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 16.08 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20.
+Filing `0001104659-26-132204` by Platin S.a r.l.; Item 4 intent words: none.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 10,042.0M, dilution filings 0.
+Twins (band+liq+mom+dd): FNRN 17.11, SGC 13.53, TASK 9.34, AFRI 12.86, DGICA 19.04.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
