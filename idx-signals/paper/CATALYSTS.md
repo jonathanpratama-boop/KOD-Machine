@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-26T10:30:42Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-26T10:30:57Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 44 over 16 signal sessions; events seen: SEALED 44; coverage gaps 0.
+Sets 45 over 16 signal sessions; events seen: SEALED 45; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 23, FIRE 21
+- Classes: ABSTAIN 23, FIRE 22
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 388 tags: 93 true, 1 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP TEN (TSAKOS ENERGY NAVIGATION LTD) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-475722`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 45.06 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-475722` by TSAKOS NIKOLAOS (Chief Executive Officer); purchases USD 853,966; top executive yes; holding up +1.3%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-475722.
-Twins (band+liq+mom+dd): PFSI 59.35, GLNG 39.62, ZD 50.54, BCC 65.77, CWEN 29.35, INGR 89.82, NWS 28.735, DAC 143.33, UGI 34.65, LB 70.38, RUSHA 44.86, PAGP 25.5, DCO 140.22, KNF 49.81, PNTG 35.32, LAUR 32.94, ATRC 56.71, NBHC 36.72, PLAB 24.52, CNS 68.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP OTF (Blue Owl Technology Finance Corp.) - filed 2026-11-24, sealed 2026-11-25T11:38:58Z, cutoff 2026-11-25T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-475725`, scan `SCAN-US-2026-11-24-G2_RET30`; signal close 9.24 on 2026-11-24; entry: the entry session's opening print (2026-11-25). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001104659-26-132204` by Platin S.a r.l.; Item 4 intent words: none.
 Coverage **FIRE**; pre-entry move +0.00%, market value USD 10,042.0M, dilution filings 0.
 Twins (band+liq+mom+dd): FNRN 17.11, SGC 13.53, TASK 9.34, AFRI 12.86, DGICA 19.04.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 OTLY (Oatly Group AB) - accepted 2026-11-25T19:08:06-05:00, sealed 2026-11-26T10:30:55Z, cutoff 2026-11-27T14:15:00Z
+Set `CAT-SEC13D_V2-0001104659-26-132204`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 16.08 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001104659-26-132204` by Platin S.a r.l.; cover page max 22.3% of class; strong intent: none; Item 5(c): 2 price(s).
+Coverage **FIRE**; market value USD 10,042.0M from XBRL; parent CAT-SEC13D-0001104659-26-132204.
+Twins (band+liq+mom+dd): FNRN 17.11, SGC 13.53, TASK 9.34, AFRI 12.86, DGICA 19.04, RDAG 10.51, DMII 10.26, RDCM 10.89, PXLW 6.82, WHF 8.19, YICC 9.88, TRGS 10.01, KMDA 8.32, WENC 10.055, FTRA 9.8955, BCSS 10.26, ACOG 9.47, LAW 6.12, RLGT 9.41, GCGR 10.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
