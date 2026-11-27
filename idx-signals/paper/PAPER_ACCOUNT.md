@@ -4,7 +4,7 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-25T23:04:32.247938Z; latest US scan session: 2026-11-25.
+- Assessed 2026-11-26T22:56:57.106511Z; latest US scan session: 2026-11-25.
 - Latest compatible LEARNER v2.4 forecast: 2026-11-25T22:58:41Z (signal session 2026-11-25).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
