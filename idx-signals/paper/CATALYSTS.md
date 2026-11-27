@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T10:30:04Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T23:04:12Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 47 (FIRE 20, ABSTAIN 27) over 17 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 27, SEALED 47, SKIP_NOT_OPERATING 11, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
+Sets 48 (FIRE 20, ABSTAIN 28) over 18 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 27, SEALED 48, SKIP_NOT_OPERATING 11, SKIP_LATE 2, SKIP_NO_TICKER 6, SKIP_REPEAT_90D 4; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4_SHARP NANO (Forge Nano Holdings, Inc.) - filed 2026-11-25, sealed 2026-11-26T10:36:34Z, cutoff 2026-11-27T14:15:00Z
-Set `CAT-FORM4_SHARP-0000950142-26-003161`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 3.97 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0000950142-26-003161` by Smith Shane (Pres. of Forge Battery, Inc.); purchases USD 250,647; top executive no; holding up n/a.
-Coverage **ABSTAIN** (DILUTION_RECENT); dilution filings 2; routine owners 0 of 1; parent CAT-FORM4-0000950142-26-003161.
-Twins (band+liq+mom+dd): VYGR 1.78, SEV 1.5, FISN 2.83, PRQR 1.235, AVIR 3.88, AIRG 3.56, GCTS 1.22, LUCK 3.84, DTI 1.66, XNET 3.075, MGNX 2.36, NEPH 2.83, CVM 1.57, BBDO 2.21, GANX 1.1, SEAT 2.06, WHWK 3.15, ATYR 4.77, OSTX 1.12, WRAP 1.13.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP NOVT (NOVANTA INC) - filed 2026-11-25, sealed 2026-11-26T10:36:34Z, cutoff 2026-11-27T14:15:00Z
 Set `CAT-FORM4_SHARP-0001076930-26-000090`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 109.53 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001076930-26-000090` by Wilson Frank Anders (director); purchases USD 52,200; top executive no; holding up n/a.
@@ -207,4 +200,11 @@ Form 4 `0002125667-26-000005` by Schuetz Arthur Josef Hermann (CFO Schmid Group 
 Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0002125667-26-000005.
 Twins (band+liq+mom+dd): GYRE 4.14, PSNY 2.4, IMDX 2.265, CNXU 1.55, TTGT 2.08, PODC 1.77, BMM 2.47, IXHL 2.16, FRMM 2.35, HOVR 1.07, SSII 1.24, HURA 1.28, ALTI 1.31, OWLT 3.08, GSIT 2.605, AIXI 1.46, UPLD 1.53, GEOS 2.23, DFNS 1.21, CYAB 1.53.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D XGPU (Reliance Global Group, Inc.) - accepted 2026-11-27T16:09:56-05:00, sealed 2026-11-27T23:04:06Z, cutoff 2026-11-30T14:15:00Z
+Set `CAT-SEC13D-0001493152-26-054496`, scan `SCAN-US-2026-11-27-G2_RET30`; signal close 1.62 on 2026-11-27; entry: the entry session's opening print (2026-11-30). Windows: H20: entry +1, hold 20.
+Filing `0001493152-26-054496` by Beyman Ezra; Item 4 intent words: board, director.
+Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 2.9M, dilution filings 0.
+Twins (band+liq+mom+dd): UK 1.03, ANTA 1.19, CITR 1.9435, YHC 1.56, EEIQ 3.04.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
