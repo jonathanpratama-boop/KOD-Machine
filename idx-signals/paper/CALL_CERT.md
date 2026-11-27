@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-26T22:56:26Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-27T23:01:19Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 299 live forecasts, 50 calls, 18 wrong of 43 (41.9%); p that the true rate exceeds 50%: 0.889.
+- **Evidence so far:** 328 live forecasts, 56 calls, 19 wrong of 45 (42.2%); p that the true rate exceeds 50%: 0.884.
 
 ## The bar
 
@@ -18,30 +18,59 @@ Generated 2026-11-26T22:56:26Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
+| 2026-11-27 | YAAS | 0.604 | 0.543 | **DUMP** | 0.466 | pending |
+| 2026-11-27 | XCUR | 0.381 | 0.543 | - | 0.248 | pending |
+| 2026-11-27 | WXM | 0.333 | 0.543 | - | 0.264 | pending |
+| 2026-11-27 | UFG | 0.279 | 0.543 | - | 0.238 | pending |
+| 2026-11-27 | SPRC | 0.629 | 0.543 | **DUMP** | 0.603 | pending |
+| 2026-11-27 | SIDU | 0.284 | 0.543 | - | 0.166 | pending |
+| 2026-11-27 | SGLY | 0.671 | 0.543 | **DUMP** | 0.546 | pending |
+| 2026-11-27 | SCLX | 0.375 | 0.543 | - | 0.244 | pending |
+| 2026-11-27 | RETO | 0.504 | 0.543 | - | 0.425 | pending |
+| 2026-11-27 | RAYA | 0.373 | 0.543 | - | 0.208 | pending |
+| 2026-11-27 | POM | 0.401 | 0.543 | - | 0.268 | pending |
+| 2026-11-27 | PDC | 0.270 | 0.543 | - | 0.161 | pending |
+| 2026-11-27 | NXAT | 0.441 | 0.543 | - | 0.310 | pending |
+| 2026-11-27 | MPU | 0.403 | 0.543 | - | 0.232 | pending |
+| 2026-11-27 | MNDR | 0.271 | 0.543 | - | 0.221 | pending |
+| 2026-11-27 | LOT | 0.337 | 0.543 | - | 0.214 | pending |
+| 2026-11-27 | KIDZ | 0.318 | 0.543 | - | 0.219 | pending |
+| 2026-11-27 | HUDI | 0.564 | 0.543 | **DUMP** | 0.381 | pending |
+| 2026-11-27 | GOVX | 0.451 | 0.543 | - | 0.374 | pending |
+| 2026-11-27 | GMEX | 0.585 | 0.543 | **DUMP** | 0.525 | pending |
+| 2026-11-27 | FOFO | 0.442 | 0.543 | - | 0.245 | pending |
+| 2026-11-27 | FISN | 0.220 | 0.543 | - | 0.195 | pending |
+| 2026-11-27 | ECX | 0.191 | 0.543 | - | 0.107 | pending |
+| 2026-11-27 | DOGZ | 0.386 | 0.543 | - | 0.219 | pending |
+| 2026-11-27 | DCX | 0.586 | 0.543 | **DUMP** | 0.553 | pending |
+| 2026-11-27 | BBCI | 0.358 | 0.543 | - | 0.290 | pending |
+| 2026-11-27 | AMOD | 0.378 | 0.543 | - | 0.275 | pending |
+| 2026-11-27 | AIIO | 0.421 | 0.543 | - | 0.369 | pending |
+| 2026-11-27 | AEHL | 0.493 | 0.543 | - | 0.292 | pending |
 | 2026-11-25 | TRAW | 0.367 | 0.538 | - | 0.239 | pending |
-| 2026-11-25 | TOPP | 0.332 | 0.538 | - | 0.213 | pending |
-| 2026-11-25 | TMCR | 0.317 | 0.538 | - | 0.218 | pending |
-| 2026-11-25 | SVRE | 0.376 | 0.538 | - | 0.278 | pending |
-| 2026-11-25 | SLSN | 0.348 | 0.538 | - | 0.180 | pending |
+| 2026-11-25 | TOPP | 0.332 | 0.538 | - | 0.213 | did not dump |
+| 2026-11-25 | TMCR | 0.317 | 0.538 | - | 0.218 | did not dump |
+| 2026-11-25 | SVRE | 0.376 | 0.538 | - | 0.278 | dumped |
+| 2026-11-25 | SLSN | 0.348 | 0.538 | - | 0.180 | did not dump |
 | 2026-11-25 | RMTX | 0.521 | 0.538 | - | 0.426 | pending |
-| 2026-11-25 | RAYA | 0.504 | 0.538 | - | 0.379 | pending |
-| 2026-11-25 | RADX | 0.267 | 0.538 | - | 0.214 | pending |
-| 2026-11-25 | NXAT | 0.486 | 0.538 | - | 0.326 | pending |
-| 2026-11-25 | NRSN | 0.352 | 0.538 | - | 0.347 | pending |
-| 2026-11-25 | MWYN | 0.208 | 0.538 | - | 0.119 | pending |
-| 2026-11-25 | LONA | 0.383 | 0.538 | - | 0.245 | pending |
-| 2026-11-25 | KYNB | 0.344 | 0.538 | - | 0.229 | pending |
-| 2026-11-25 | JDZG | 0.616 | 0.538 | **DUMP** | 0.612 | pending |
-| 2026-11-25 | GLXG | 0.430 | 0.538 | - | 0.238 | pending |
-| 2026-11-25 | FNUC | 0.572 | 0.538 | **DUMP** | 0.380 | pending |
-| 2026-11-25 | FCUV | 0.395 | 0.538 | - | 0.285 | pending |
-| 2026-11-25 | DKI | 0.464 | 0.538 | - | 0.534 | pending |
-| 2026-11-25 | CURR | 0.295 | 0.538 | - | 0.185 | pending |
-| 2026-11-25 | CGTX | 0.331 | 0.538 | - | 0.178 | pending |
-| 2026-11-25 | BYAH | 0.465 | 0.538 | - | 0.310 | pending |
-| 2026-11-25 | BGLC | 0.523 | 0.538 | - | 0.303 | pending |
-| 2026-11-25 | BBCI | 0.350 | 0.538 | - | 0.316 | pending |
-| 2026-11-25 | ALGS | 0.416 | 0.538 | - | 0.227 | pending |
+| 2026-11-25 | RAYA | 0.504 | 0.538 | - | 0.379 | did not dump |
+| 2026-11-25 | RADX | 0.267 | 0.538 | - | 0.214 | did not dump |
+| 2026-11-25 | NXAT | 0.486 | 0.538 | - | 0.326 | did not dump |
+| 2026-11-25 | NRSN | 0.352 | 0.538 | - | 0.347 | did not dump |
+| 2026-11-25 | MWYN | 0.208 | 0.538 | - | 0.119 | did not dump |
+| 2026-11-25 | LONA | 0.383 | 0.538 | - | 0.245 | did not dump |
+| 2026-11-25 | KYNB | 0.344 | 0.538 | - | 0.229 | did not dump |
+| 2026-11-25 | JDZG | 0.616 | 0.538 | **DUMP** | 0.612 | dumped |
+| 2026-11-25 | GLXG | 0.430 | 0.538 | - | 0.238 | did not dump |
+| 2026-11-25 | FNUC | 0.572 | 0.538 | **DUMP** | 0.380 | did not dump |
+| 2026-11-25 | FCUV | 0.395 | 0.538 | - | 0.285 | did not dump |
+| 2026-11-25 | DKI | 0.464 | 0.538 | - | 0.534 | did not dump |
+| 2026-11-25 | CURR | 0.295 | 0.538 | - | 0.185 | did not dump |
+| 2026-11-25 | CGTX | 0.331 | 0.538 | - | 0.178 | dumped |
+| 2026-11-25 | BYAH | 0.465 | 0.538 | - | 0.310 | did not dump |
+| 2026-11-25 | BGLC | 0.523 | 0.538 | - | 0.303 | did not dump |
+| 2026-11-25 | BBCI | 0.350 | 0.538 | - | 0.316 | did not dump |
+| 2026-11-25 | ALGS | 0.416 | 0.538 | - | 0.227 | did not dump |
 | 2026-11-24 | TNYA | 0.282 | 0.537 | - | 0.144 | did not dump |
 | 2026-11-24 | SMXT | 0.281 | 0.537 | - | 0.160 | did not dump |
 | 2026-11-24 | RMSG | 0.375 | 0.537 | - | 0.223 | dumped |
