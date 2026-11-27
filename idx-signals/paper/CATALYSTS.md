@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T23:04:25Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T23:04:43Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 82 over 17 signal sessions; events seen: SEALED 82, SKIP_REPEAT_90D 68, SKIP_NO_TICKER 83, SKIP_NOT_IN_UNIVERSE 50, SKIP_NOT_OPERATING 1; coverage gaps 1.
+Sets 84 over 18 signal sessions; events seen: SEALED 84, SKIP_REPEAT_90D 71, SKIP_NO_TICKER 84, SKIP_NOT_IN_UNIVERSE 50, SKIP_NOT_OPERATING 1; coverage gaps 1.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 391 tags: 94 true, 1 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP TMC (TMC the metals Co Inc.) - filed 2026-11-25, sealed 2026-11-26T10:36:34Z, cutoff 2026-11-27T14:15:00Z
-Set `CAT-FORM4_SHARP-0001104659-26-131894`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 1.94 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001104659-26-131894` by Karkar Andrei (director), ERAS Capital LLC (officer); purchases USD 805,000; top executive no; holding up +0.8%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001104659-26-131894.
-Twins (band+liq+mom+dd): GDRX 2.38, BYND 4.45, TMQ 1.4, UROY 2.27, HYLN 1.97, SGML 3.98, ABR 1.26, XTND 1.39, XGN 3.97, LAES 1.07, SERV 2.29, DC 3.61, AIOT 1.99, DDD 1.4, BNC 3.04, VRRM 1.77, WVE 3.04, DFDV 2.245, MITT 4.22, LAR 3.33.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP PATK (PATRICK INDUSTRIES INC) - filed 2026-11-25, sealed 2026-11-26T10:36:34Z, cutoff 2026-11-27T14:15:00Z
-Set `CAT-FORM4_SHARP-0001189422-26-000034`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 85.49 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001189422-26-000034` by WELCH M SCOTT (director); purchases USD 432,941; top executive no; holding up +3.3%.
-Coverage **ABSTAIN** (DILUTION_RECENT); dilution filings 2; routine owners 0 of 1; parent CAT-FORM4-0001189422-26-000034.
-Twins (band+liq+mom+dd): SBRA 21.16, SIBN 24.79, FTDR 93.87, ITRI 100.81, EPR 60.5, VNT 45.51, COGT 36.08, HASI 37.61, THO 79.32, ULS 77.02, PRM 29.02, SKWD 64.73, GIB 83.46, TEX 59.01, LEVI 24.49, ADUS 122.53, LZB 30.24, WWW 25.34, BIRK 35.73, AXTA 36.06.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP ADV (Advantage Solutions Inc.) - filed 2026-11-25, sealed 2026-11-26T10:36:34Z, cutoff 2026-11-27T14:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-478513`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 27.85 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +193,18 @@ Filing `0001493152-26-054496` by Beyman Ezra; cover page max 17.9% of class; str
 Coverage **ABSTAIN** (MICROCAP); market value USD 2.9M from XBRL; parent CAT-SEC13D-0001493152-26-054496.
 Twins (band+liq+mom+dd): UK 1.03, ANTA 1.19, CITR 1.9435, YHC 1.56, EEIQ 3.04, ASTC 3.06, KLRS 1.33, BTOC 1.45, NCI 3.5395, AHT 1.81, AIFA 2.81, KYNB 2.29, ELWT 3.02, CTRM 1.06, SUNE 1.78, TNON 1.1, ISPC 3.18, BIAF 1.46, NNVC 1.16, ARBK 1.048.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### DILUTION_8K PPCB - event `0001493152-26-054492`, accepted 2026-11-27T16:01:33-05:00, sealed 2026-11-27T23:04:38Z, cutoff 2026-11-30T14:15:00Z
+Set `CAT-DILUTION_8K-0001493152-26-054492`, scan `SCAN-US-2026-11-27-G2_RET30`; signal close 1.86 on 2026-11-27; entry: the entry session's opening print (2026-11-30). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): LFT 3.65, SCOR 3.3, SIEB 1.75, RAVE 2.01, NXTT 4.31.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K GURE - event `0001493152-26-054508`, accepted 2026-11-27T16:45:12-05:00, sealed 2026-11-27T23:04:38Z, cutoff 2026-11-30T14:15:00Z
+Set `CAT-DILUTION_8K-0001493152-26-054508`, scan `SCAN-US-2026-11-27-G2_RET30`; signal close 2.7 on 2026-11-27; entry: the entry session's opening print (2026-11-30). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): OKYO 1.35, TXMD 1.79, MGIH 1.17, ISPR 1.27, LND 3.15.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
