@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T23:04:12Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T23:04:25Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 45 over 16 signal sessions; events seen: SEALED 45; coverage gaps 0.
+Sets 46 over 17 signal sessions; events seen: SEALED 46; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 23, FIRE 22
+- Classes: ABSTAIN 24, FIRE 22
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 391 tags: 94 true, 1 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP NOVT (NOVANTA INC) - filed 2026-11-25, sealed 2026-11-26T10:36:34Z, cutoff 2026-11-27T14:15:00Z
-Set `CAT-FORM4_SHARP-0001076930-26-000090`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 109.53 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001076930-26-000090` by Wilson Frank Anders (director); purchases USD 52,200; top executive no; holding up n/a.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001076930-26-000090.
-Twins (band+liq+mom+dd): NBR 73.31, HRI 136.64, DGII 53.3, ALGM 27.13, IDCC 254.475, GEF 68.26, UVV 32.55, PNTG 34.77, DFTX 31.09, AGIO 31.5, NUTX 165.95, LOPE 114.59, MUR 32.56, LIFE 32.56, BLLN 94.15, POWI 41.4, ECO 81.59, LMND 37.99, CRC 44.66, NE 37.97.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP TMC (TMC the metals Co Inc.) - filed 2026-11-25, sealed 2026-11-26T10:36:34Z, cutoff 2026-11-27T14:15:00Z
 Set `CAT-FORM4_SHARP-0001104659-26-131894`, scan `SCAN-US-2026-11-25-G2_RET30`; signal close 1.94 on 2026-11-25; entry: the entry session's opening print (2026-11-27). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +200,11 @@ Filing `0001493152-26-054496` by Beyman Ezra; Item 4 intent words: board, direct
 Coverage **ABSTAIN** (MICROCAP); pre-entry move +0.00%, market value USD 2.9M, dilution filings 0.
 Twins (band+liq+mom+dd): UK 1.03, ANTA 1.19, CITR 1.9435, YHC 1.56, EEIQ 3.04.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 XGPU (Reliance Global Group, Inc.) - accepted 2026-11-27T16:09:56-05:00, sealed 2026-11-27T23:04:23Z, cutoff 2026-11-30T14:15:00Z
+Set `CAT-SEC13D_V2-0001493152-26-054496`, scan `SCAN-US-2026-11-27-G2_RET30`; signal close 1.62 on 2026-11-27; entry: the entry session's opening print (2026-11-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001493152-26-054496` by Beyman Ezra; cover page max 17.9% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (MICROCAP); market value USD 2.9M from XBRL; parent CAT-SEC13D-0001493152-26-054496.
+Twins (band+liq+mom+dd): UK 1.03, ANTA 1.19, CITR 1.9435, YHC 1.56, EEIQ 3.04, ASTC 3.06, KLRS 1.33, BTOC 1.45, NCI 3.5395, AHT 1.81, AIFA 2.81, KYNB 2.29, ELWT 3.02, CTRM 1.06, SUNE 1.78, TNON 1.1, ISPC 3.18, BIAF 1.46, NNVC 1.16, ARBK 1.048.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
