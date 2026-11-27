@@ -4,13 +4,13 @@
 
 **PARTIAL_INPUT — The latest US scan has unscanned names; full input coverage cannot be claimed.**
 
-- Assessed 2026-11-26T22:56:57.106511Z; latest US scan session: 2026-11-25.
-- Latest compatible LEARNER v2.4 forecast: 2026-11-25T22:58:41Z (signal session 2026-11-25).
+- Assessed 2026-11-27T23:03:54.222959Z; latest US scan session: 2026-11-27.
+- Latest compatible LEARNER v2.4 forecast: 2026-11-27T22:58:18Z (signal session 2026-11-27).
 - Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
 - Existing plan and account totals below are historical records, not proof that new input is flowing.
 - SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
 
-As of the latest record (2026-11-25T23:03:33Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
+As of the latest record (2026-11-27T23:02:47Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
 
 ## The three plain answers
 
@@ -22,17 +22,17 @@ As of the latest record (2026-11-25T23:03:33Z). Paper only: no orders, no money.
 
 | Arm | Cash | Reserved | Available | Open value | Equity | Realized | Unrealized | Pending | Filled | Rejected | Cancelled | Declined | Closed |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| BASE | $9,279.25 | $2,089.92 | $7,189.33 | $819.54 | $10,098.79 | $105.51 | -$10.84 | 3 | 2 | 14 | 0 | 246 | 1 |
-| FIXED5 | $9,746.46 | $2,449.97 | $7,296.49 | $0.00 | $9,746.46 | -$253.54 | $0.00 | 3 | 9 | 0 | 0 | 253 | 9 |
+| BASE | $9,279.25 | $1,755.85 | $7,523.40 | $819.54 | $10,098.79 | $105.51 | -$10.84 | 2 | 2 | 15 | 0 | 270 | 1 |
+| FIXED5 | $9,714.14 | $1,720.24 | $7,993.90 | $0.00 | $9,714.14 | -$285.86 | $0.00 | 2 | 10 | 0 | 0 | 277 | 10 |
 
 ## Open positions and valuation
 
-- BASE RSSS: $819.54, valued at the close of 2026-11-25 (-0.32% since entry)
+- BASE RSSS: $819.54, valued at the close of 2026-11-27 (-0.32% since entry)
 
 ## Drawdown (from recorded nightly marks only)
 
-- BASE: -0.32% across 19 mark(s), trough at the close of 2026-11-12
-- FIXED5: -2.58% across 19 mark(s), trough at the close of 2026-11-24
+- BASE: -0.32% across 20 mark(s), trough at the close of 2026-11-12
+- FIXED5: -2.90% across 20 mark(s), trough at the close of 2026-11-27
 
 ## Every decision
 
@@ -295,7 +295,7 @@ As of the latest record (2026-11-25T23:03:33Z). Paper only: no orders, no money.
 | 2026-11-25 | LONA | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.43 would exceed 1.5% of equity 10098.79 | - | - | - |
 | 2026-11-25 | SVRE | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.46 would exceed 1.5% of equity 10098.79 | - | - | - |
 | 2026-11-25 | FCUV | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.40 would exceed 1.5% of equity 10098.79 | - | - | - |
-| 2026-11-25 | BGLC | BASE | KOD | order 530 @ <= 0.621, reserved $334.07 | pending: next open (before 2026-11-27T14:30:00Z) | - | - |
+| 2026-11-25 | BGLC | BASE | KOD | order 530 @ <= 0.621, reserved $334.07 | REJECTED_STOP_TOO_WIDE: open 1.12 is above the permitted entry 0.621: the stop at 0.59 would be 47.32% away, more than 5% | - | - |
 | 2026-11-25 | BYAH | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.98 + 50.45 would exceed 1.5% of equity 10098.79 | - | - | - |
 | 2026-11-25 | BBCI | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.98 + 50.48 would exceed 1.5% of equity 10098.79 | - | - | - |
 | 2026-11-25 | NXAT | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.98 + 50.49 would exceed 1.5% of equity 10098.79 | - | - | - |
@@ -303,6 +303,30 @@ As of the latest record (2026-11-25T23:03:33Z). Paper only: no orders, no money.
 | 2026-11-25 | RAYA | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.98 + 50.48 would exceed 1.5% of equity 10098.79 | - | - | - |
 | 2026-11-25 | FNUC | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.98 + 50.46 would exceed 1.5% of equity 10098.79 | - | - | - |
 | 2026-11-25 | RMTX | BASE | KOD | declined: LIMIT_PLANNED_RISK: 133.98 + 50.15 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | ECX | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.49 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | PDC | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.45 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | SIDU | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.48 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | FISN | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.47 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | RAYA | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.44 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | LOT | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.48 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | KIDZ | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.47 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | DOGZ | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.48 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | MNDR | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.45 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | MPU | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.27 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | UFG | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.37 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | SCLX | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.47 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | FOFO | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.44 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | XCUR | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.44 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | WXM | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.46 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | POM | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.46 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | AMOD | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.45 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | BBCI | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.48 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | AEHL | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.27 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | NXAT | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.45 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | AIIO | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.22 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | GOVX | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.46 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | HUDI | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.37 would exceed 1.5% of equity 10098.79 | - | - | - |
+| 2026-11-27 | RETO | BASE | KOD | declined: LIMIT_PLANNED_RISK: 107.67 + 50.22 would exceed 1.5% of equity 10098.79 | - | - | - |
 | 2026-10-30 | FMC | FIXED5 | KOD | order 138 @ <= 6.8, reserved $939.81 | filled 138 @ 6.11 on 2026-11-02, stop 5.81 | STOP 2026-11-06 @ 5.81 | -$43.89 |
 | 2026-10-30 | ASUR | FIXED5 | KOD | order 92 @ <= 10.34, reserved $952.71 | filled 92 @ 9.98 on 2026-11-02, stop 9.49 | STOP 2026-11-02 @ 9.49 | -$47.79 |
 | 2026-11-05 | APP | FIXED5 | KOD | order 2 @ <= 391.7, reserved $783.79 | filled 2 @ 356 on 2026-11-06, stop 338.2 | TIME_EXIT_AT_CLOSE 2026-11-13 @ 409.1 | $105.51 |
@@ -560,7 +584,7 @@ As of the latest record (2026-11-25T23:03:33Z). Paper only: no orders, no money.
 | 2026-11-25 | LONA | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.73 would exceed 1.5% of equity 9746.46 | - | - | - |
 | 2026-11-25 | SVRE | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.69 would exceed 1.5% of equity 9746.46 | - | - | - |
 | 2026-11-25 | FCUV | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.66 would exceed 1.5% of equity 9746.46 | - | - | - |
-| 2026-11-25 | BGLC | FIXED5 | KOD | order 530 @ <= 1.37, reserved $729.73 | pending: next open (before 2026-11-27T14:30:00Z) | - | - |
+| 2026-11-25 | BGLC | FIXED5 | KOD | order 530 @ <= 1.37, reserved $729.73 | filled 530 @ 1.12 on 2026-11-27, stop 1.07 | STOP 2026-11-27 @ 1.07 | -$32.32 |
 | 2026-11-25 | BYAH | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 138.09 + 48.67 would exceed 1.5% of equity 9746.46 | - | - | - |
 | 2026-11-25 | BBCI | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 138.09 + 48.62 would exceed 1.5% of equity 9746.46 | - | - | - |
 | 2026-11-25 | NXAT | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 138.09 + 48.70 would exceed 1.5% of equity 9746.46 | - | - | - |
@@ -568,3 +592,27 @@ As of the latest record (2026-11-25T23:03:33Z). Paper only: no orders, no money.
 | 2026-11-25 | RAYA | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 138.09 + 48.70 would exceed 1.5% of equity 9746.46 | - | - | - |
 | 2026-11-25 | FNUC | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 138.09 + 48.59 would exceed 1.5% of equity 9746.46 | - | - | - |
 | 2026-11-25 | RMTX | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 138.09 + 47.83 would exceed 1.5% of equity 9746.46 | - | - | - |
+| 2026-11-27 | ECX | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.53 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | PDC | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.56 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | SIDU | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.57 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | FISN | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.34 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | RAYA | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.50 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | LOT | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.57 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | KIDZ | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.56 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | DOGZ | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.55 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | MNDR | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.56 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | MPU | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.42 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | UFG | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.51 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | SCLX | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.51 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | FOFO | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.41 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | XCUR | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.50 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | WXM | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.56 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | POM | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.42 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | AMOD | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.54 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | BBCI | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.54 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | AEHL | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.29 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | NXAT | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.53 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | AIIO | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.38 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | GOVX | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.45 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | HUDI | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.34 would exceed 1.5% of equity 9714.14 | - | - | - |
+| 2026-11-27 | RETO | FIXED5 | KOD | declined: LIMIT_PLANNED_RISK: 99.01 + 48.37 would exceed 1.5% of equity 9714.14 | - | - | - |
