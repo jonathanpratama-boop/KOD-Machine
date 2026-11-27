@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T23:06:21Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-27T23:06:50Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -8,12 +8,12 @@ Sets 48 (FIRE 20, ABSTAIN 28) over 18 signal sessions; events seen: SKIP_NOT_IN_
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
-| FIRE | 0 | 0 | n/a | n/a | n/a | n/a |
-| ABSTAIN | 0 | 0 | n/a | n/a | n/a | n/a |
+| FIRE | 1 | 1 | -1.57% | +5.62% | n/a | n/a |
+| ABSTAIN | 1 | 1 | +7.16% | +4.61% | n/a | n/a |
 
 Primaries (`research/CATALYST_REGISTER_v1/prereg_2.json`), looks at [60, 120, 240, 480, 960, 1920] FIRE pairs, t at least [3.75, 3.0, 3.0, 3.0, 3.0, 3.0]:
 - MEAN (plan net minus twins' mean): **accumulating (no look reached)**
-- WIN_RATE (plan beats twins' median): 0 of 0 (n/a), t n/a: **accumulating (no look reached)**
+- WIN_RATE (plan beats twins' median): 1 of 1 (100.0%), t n/a: **accumulating (no look reached)**
 
 ## IDX_INDEX (descriptive)
 
@@ -25,8 +25,8 @@ Sets 14 over 1 sessions.
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
 Sets 84 over 18 signal sessions; events seen: SEALED 84, SKIP_REPEAT_90D 71, SKIP_NO_TICKER 84, SKIP_NOT_IN_UNIVERSE 50, SKIP_NOT_OPERATING 1; coverage gaps 1.
-- MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
-- WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
+- MEAN (signed edge over the twins) +1.67% over 1 pairs: **accumulating (no look reached)**
+- WIN_RATE 1 of 1 (100.0%): **accumulating (no look reached)**
 
 ## FORM4 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-FORM4-v1`)
 
@@ -59,25 +59,25 @@ Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 ## DOCUMENT_CLASS (pooled, pre-registered; `KOD-CATALYST-REGISTER-v1-PREREG-3-DOCUMENT-CLASS`)
 
 Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paired excess signed by direction; window H20, FIRE sets.
-- MEAN (signed edge over the twins) n/a over 0 pairs in 0 sessions: **accumulating (no look reached)**
-- Win rate (descriptive, never a primary): none yet
-- By family: SEC13D 0 (n/a), DILUTION_8K 0 (n/a), FORM4 0 (n/a)
-- By price band: close_ge_20 0 (n/a), close_lt_20 0 (n/a), close_unknown 0 (n/a)
+- MEAN (signed edge over the twins) +3.65% over 2 pairs in 1 sessions: **accumulating (no look reached)**
+- Win rate (descriptive, never a primary): 2 of 2 (100.0%)
+- By family: SEC13D 1 (+5.62%), DILUTION_8K 1 (+1.67%), FORM4 0 (n/a)
+- By price band: close_ge_20 2 (+3.65%), close_lt_20 0 (n/a), close_unknown 0 (n/a)
 
 ## Calibration
 
 | Family | Statement | n | Realised | Mean prior | Twins | Brier | Brier at 0.5 |
 |---|---|---|---|---|---|---|---|
-| SEC13D | GAIN0_20 | 0 | | | | | |
-| SEC13D | BEATS_TWINS_20 | 0 | | | | | |
-| SEC13D | FADE10_20 | 0 | | | | | |
-| SEC13D | RUN30_20 | 0 | | | | | |
+| SEC13D | GAIN0_20 | 2 | 0.50 | 0.55 | 0.50 | 0.253 | 0.250 |
+| SEC13D | BEATS_TWINS_20 | 2 | 1.00 | 0.50 | n/a | 0.250 | 0.250 |
+| SEC13D | FADE10_20 | 2 | 0.00 | 0.50 | 0.20 | 0.250 | 0.250 |
+| SEC13D | RUN30_20 | 2 | 0.00 | 0.50 | 0.10 | 0.250 | 0.250 |
 | IDX_INDEX | WITH_FLOW_RUNUP | 14 | 0.64 | 0.50 | n/a | 0.250 | 0.250 |
 | IDX_INDEX | REVERSAL_POST20 | 14 | 0.79 | 0.50 | n/a | 0.250 | 0.250 |
-| DILUTION_8K | LOSES_TO_TWINS_20 | 0 | | | | | |
-| DILUTION_8K | GAIN0_20 | 0 | | | | | |
-| DILUTION_8K | FADE10_20 | 0 | | | | | |
-| DILUTION_8K | RUN30_20 | 0 | | | | | |
+| DILUTION_8K | LOSES_TO_TWINS_20 | 1 | 1.00 | 0.55 | n/a | 0.202 | 0.250 |
+| DILUTION_8K | GAIN0_20 | 1 | 0.00 | 0.50 | 0.60 | 0.250 | 0.250 |
+| DILUTION_8K | FADE10_20 | 1 | 0.00 | 0.50 | 0.20 | 0.250 | 0.250 |
+| DILUTION_8K | RUN30_20 | 1 | 0.00 | 0.50 | 0.00 | 0.250 | 0.250 |
 | FORM4 | BEATS_TWINS_20 | 0 | | | | | |
 | FORM4 | GAIN0_20 | 0 | | | | | |
 | FORM4 | FADE10_20 | 0 | | | | | |
